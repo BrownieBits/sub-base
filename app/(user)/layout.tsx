@@ -1,0 +1,28 @@
+import { UserChecker } from '@/components/amaze-ui/UserChecker';
+import { DashboardNav } from '../components/amaze-ui/DashboardNav';
+import { DashboardSideNav } from '../components/amaze-ui/DashboardSideNav';
+
+export default function UserLayout({
+  children, // will be a page or nested layout
+}: {
+  children: React.ReactNode;
+}) {
+  return (
+    <section className="w-full overflow-hidden">
+      <section className="w-full">
+        <DashboardNav />
+      </section>
+      <section className="w-full grid grid-cols-[0_auto] xl:grid-cols-[250px_auto]">
+        <nav
+          className={`flex border-r-[1px] border-r-border bg-layer-one h-[calc(100vh-56px)] min-h-[calc(100vh-56px)]`}
+        >
+          <DashboardSideNav menu="Dashboard Menu" />
+        </nav>
+        <main className="h-[calc(100vh-56px)] overflow-x-hidden pb-[250px]">
+          {children}
+        </main>
+      </section>
+      <UserChecker />
+    </section>
+  );
+}
