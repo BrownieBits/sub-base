@@ -26,6 +26,12 @@ const nextConfig = {
         port: '',
         pathname: '/**',
       },
+      {
+        protocol: 'https',
+        hostname: 'amaze-dash.netlify.app',
+        port: '',
+        pathname: '/**',
+      },
     ],
   },
 };
