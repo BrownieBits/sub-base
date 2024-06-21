@@ -1,0 +1,13 @@
+[context.production]
+  command = "yarn build"
+  publish = ".next"
+
+[context.staging]
+  command = "yarn build"
+  publish = ".next" 
+
+[functions]
+  external_node_modules = ["sharp"]
+
+[[plugins]]
+  package = "@netlify/plugin-nextjs"
