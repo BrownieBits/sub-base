@@ -255,7 +255,9 @@ export default function Edit(props: { data: DocumentData; id: string }) {
               </Button>
             )}
             <Button variant="outline" asChild>
-              <Link href={`/store/${props.id}/collection/${props.id}`}>
+              <Link
+                href={`/store/${props.data.store_id}/collection/${props.id}`}
+              >
                 View Collection
               </Link>
             </Button>
