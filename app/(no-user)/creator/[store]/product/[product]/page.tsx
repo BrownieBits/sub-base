@@ -12,7 +12,7 @@ import {
   QuerySnapshot,
 } from 'firebase/firestore';
 import { Metadata, ResolvingMetadata } from 'next';
-import ShowAvatar from '../../ShowAvatar';
+// import ShowAvatar from '../../ShowAvatar';
 import ProductCard from '@/components/amaze-ui/ProductCard';
 import { SubsciberButton } from '@/components/amaze-ui/SubscribeButton';
 import { Separator } from '@/components/ui/separator';
@@ -96,7 +96,7 @@ export default async function CreatorStoreProduct({ params }: Props) {
               href={`/creator/${params.store}`}
               className="flex gap-[15px] items-center mb-[15px]"
             >
-              <ShowAvatar data={data.store.data()} size="sm" />
+              {/* <ShowAvatar data={data.store.data()} size="sm" /> */}
               <p className="font-bold text-sm">
                 {data.store.data().display_name}
               </p>
@@ -125,7 +125,7 @@ export default async function CreatorStoreProduct({ params }: Props) {
                 href={`/creator/${params.store}`}
                 className="flex gap-[15px] items-center mb-[30px]"
               >
-                <ShowAvatar data={data.store.data()} size="sm" />
+                {/* <ShowAvatar data={data.store.data()} size="sm" /> */}
                 <p className="font-bold text-md">
                   {data.store.data().display_name}
                 </p>
