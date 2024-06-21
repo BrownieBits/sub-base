@@ -1,9 +1,9 @@
 [context.production]
-  command = "yarn build"
+  command = "yarn add sharp --ignore-engines && yarn build"
   publish = ".next"
 
 [context.staging]
-  command = "yarn build"
+  command = "yarn add sharp --ignore-engines && yarn build"
   publish = ".next" 
 
 [functions]
