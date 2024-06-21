@@ -1,4 +1,5 @@
 'use client';
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Skeleton } from '@/components/ui/skeleton';
 import { db } from '@/firebase';
 import { doc } from 'firebase/firestore';
@@ -22,26 +23,30 @@ export default function CreatorCard({ id }: { id: string }) {
     );
   }
 
+  if (error || !value?.exists()) {
+    return <></>;
+  }
+
   return (
     <>
       <Link
-        href={`/creator/${id}`}
+        href={`/store/${id}`}
         className="flex flex-col items-center justify-center group w-full"
       >
         <div className="flex justify-center items-center aspect-square rounded-full overflow-hidden w-full">
-          <Image
-            src={value?.data()?.logo}
-            width="300"
-            height="300"
-            alt={value?.data()?.display_name}
-            className="flex w-full"
-          />
+          <Avatar className="w-full h-full aspect-square">
+            <AvatarImage
+              src={value?.data()?.avatar_url!}
+              alt={value?.data()?.name}
+            />
+            <AvatarFallback>
+              {value?.data()?.name.slice(0, 1).toUpperCase()}
+            </AvatarFallback>
+          </Avatar>
         </div>
-        <p className="font-bold text-lg mt-[10px]">
-          {value?.data()?.display_name}
-        </p>
+        <p className="font-bold text-lg mt-[10px]">{value?.data()?.name}</p>
         <p className="text-muted-foreground">
-          {value?.data()?.subscribers} subscriber
+          {value?.data()?.subscription_count} subscriber
           {value?.data()?.subscribers > 1 ? <>s</> : <></>}
         </p>
       </Link>

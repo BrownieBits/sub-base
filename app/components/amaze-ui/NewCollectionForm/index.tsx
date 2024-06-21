@@ -90,7 +90,7 @@ export default function NewCollectionForm({
         user_id: currentUser?.email,
         store_id: displayName,
       });
-      push(`/dashboard/${displayName}/products/collections/${encodedTitle}`);
+      push(`/dashboard/products/collections/${encodedTitle}`);
       return;
     }
   }

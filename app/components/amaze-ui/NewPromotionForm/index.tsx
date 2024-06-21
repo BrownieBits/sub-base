@@ -122,7 +122,7 @@ export default function NewPromotionForm({
       show_in_banner: false,
     });
     form.reset();
-    revalidate(displayName);
+    revalidate();
     setOpen(false);
   }
 

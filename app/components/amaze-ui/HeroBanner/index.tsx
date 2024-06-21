@@ -4,14 +4,12 @@ import ContentfulImage from '../ConentfulImage';
 import Link from 'next/link';
 import { draftMode } from 'next/headers';
 
-export const HeroBanner = async (props: {
-  page_slug: string;
-  displayName: string;
-}) => {
+export const HeroBanner = async (props: { page_slug: string }) => {
   const { isEnabled } = draftMode();
-  const currentClient = isEnabled ? previewClient : client;
+  // const currentClient = isEnabled ? previewClient : client;
+  const currentClient = client;
   const data = await currentClient.getEntries({
-    content_type: 'heroBanner',
+    content_type: 'banners',
     'fields.slug': `${props.page_slug}`,
   });
   return (
@@ -21,7 +19,7 @@ export const HeroBanner = async (props: {
       ) : (
         <div className="flex justify-center w-full pb-[30px] px-[15px]">
           <Link
-            href={data.items[0].fields.url.replace('{user}', props.displayName)}
+            href={data.items[0].fields.url}
             className="w-full rounded-lg overflow-hidden"
             style={{ maxWidth: data.items[0].fields.maxWidth }}
           >

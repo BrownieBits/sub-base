@@ -4,7 +4,7 @@ import { db } from "@/firebase";
 import { deleteDoc, doc, updateDoc } from "firebase/firestore";
 import { revalidatePath } from "next/cache";
 
-export async function ChangeStatus(action: string | boolean, id: string, displayName: string, item: 'status' | 'show') {
+export async function ChangeStatus(action: string | boolean, id: string, item: 'status' | 'show') {
     'use server';
     const docRef = doc(db, 'promotions', id);
     if (action === 'Delete') {
@@ -21,6 +21,6 @@ export async function ChangeStatus(action: string | boolean, id: string, display
         });
     }
 
-    revalidatePath(`/dashboard/${displayName}/promotions`);
+    revalidatePath(`/dashboard/promotions`);
     return 'Success';
 }

@@ -7,18 +7,20 @@ import {
   DocumentData,
   DocumentReference,
   doc,
-  getDoc,
+  onSnapshot,
 } from 'firebase/firestore';
 import React from 'react';
 
 async function SetCookies(user: User) {
   const userDataRef: DocumentReference = doc(db, 'users', user.uid);
-  const data: DocumentData = await getDoc(userDataRef);
   setCookie('user_id', user.uid);
-  setCookie('user_slug', user.displayName?.toLowerCase());
-  if (data.exists()) {
-    setCookie('user_role', data.data().role);
-  }
+  const data: DocumentData = await onSnapshot(userDataRef, (doc) => {
+    if (doc.exists()) {
+      setCookie('user_role', doc.data().role);
+      setCookie('default_store', doc.data().default_store);
+      setCookie('user_name', doc.data().name);
+    }
+  });
 }
 
 export default function AuthState() {
@@ -33,8 +35,9 @@ export default function AuthState() {
         setUser(user);
       } else {
         deleteCookie('user_id');
-        deleteCookie('user_slug');
+        deleteCookie('default_store');
         deleteCookie('user_role');
+        deleteCookie('user_name');
         setUser(null);
       }
     });

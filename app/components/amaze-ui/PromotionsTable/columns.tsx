@@ -2,15 +2,12 @@
 
 import { ColumnDef } from '@tanstack/react-table';
 import { Button } from '../../ui/button';
-import Link from 'next/link';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
-  faEye,
   faTrash,
   faArrowDown,
   faArrowUp,
 } from '@fortawesome/free-solid-svg-icons';
-import { faEyeSlash } from '@fortawesome/free-regular-svg-icons';
 import { ChangeStatus } from './actions';
 import { Switch } from '@/components/ui/switch';
 
@@ -213,9 +210,9 @@ export const columns: ColumnDef<Promotion>[] = [
           checked={on}
           onCheckedChange={(e) => {
             if (e) {
-              ChangeStatus('Active', id, store_id, 'status');
+              ChangeStatus('Active', id, 'status');
             } else {
-              ChangeStatus('Inactive', id, store_id, 'status');
+              ChangeStatus('Inactive', id, 'status');
             }
           }}
         />
@@ -273,9 +270,9 @@ export const columns: ColumnDef<Promotion>[] = [
           checked={row.getValue('show_in_banner')}
           onCheckedChange={(e) => {
             if (e) {
-              ChangeStatus(true, id, store_id, 'show');
+              ChangeStatus(true, id, 'show');
             } else {
-              ChangeStatus(false, id, store_id, 'show');
+              ChangeStatus(false, id, 'show');
             }
           }}
         />
@@ -293,8 +290,8 @@ export const columns: ColumnDef<Promotion>[] = [
           <Button
             variant="link"
             title="Make Active"
-            onClick={() => ChangeStatus('Delete', id, store_id, 'show')}
-            className="p-0"
+            onClick={() => ChangeStatus('Delete', id, 'show')}
+            className="p-0 text-foreground"
           >
             <FontAwesomeIcon className="icon" icon={faTrash} />
           </Button>

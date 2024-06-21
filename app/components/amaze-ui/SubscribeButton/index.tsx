@@ -16,7 +16,7 @@ import {
   AlertDialogTrigger,
 } from '@/components/ui/alert-dialog';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCirclePlus } from '@fortawesome/free-solid-svg-icons';
+import { faHeartCirclePlus } from '@fortawesome/free-solid-svg-icons';
 import { SubButton } from './SubButton';
 
 export const SubsciberButton = ({ store }: { store: string }) => {
@@ -34,7 +34,7 @@ export const SubsciberButton = ({ store }: { store: string }) => {
             <div>
               <FontAwesomeIcon
                 className="icon mr-2 h-4 w-4"
-                icon={faCirclePlus}
+                icon={faHeartCirclePlus}
               />
               Subscribe
             </div>
@@ -53,7 +53,7 @@ export const SubsciberButton = ({ store }: { store: string }) => {
           <AlertDialogFooter>
             <AlertDialogCancel>Cancel</AlertDialogCancel>
             <AlertDialogAction asChild>
-              <Link href={`sign-in?redirect=/creator/${store}`}>Sign In</Link>
+              <Link href={`/sign-in?redirect=/store/${store}`}>Sign In</Link>
             </AlertDialogAction>
           </AlertDialogFooter>
         </AlertDialogContent>

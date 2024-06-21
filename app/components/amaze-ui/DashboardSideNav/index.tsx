@@ -7,12 +7,13 @@ import { ScrollArea } from '@/components/ui/scroll-area';
 
 export const DashboardSideNav = async ({ menu }: { menu: string }) => {
   const { isEnabled } = draftMode();
-  const currentClient = isEnabled ? previewClient : client;
+  // const currentClient = isEnabled ? previewClient : client;
+  const currentClient = client;
   const data = await currentClient.getEntries({
     content_type: 'creatorMenu',
     'fields.title': menu,
   });
-  const items = data.items[0]?.fields.menuBlock;
+  const items = data.items[0]?.fields.menuBlocks;
   return (
     <ScrollArea className="flex flex-col h-full rounded-md">
       {items.map((item: any, i: number) => {
@@ -22,7 +23,7 @@ export const DashboardSideNav = async ({ menu }: { menu: string }) => {
         <Button
           asChild
           variant="link"
-          className="text-xs px-0 py-0 after:content-['|'] after:pl-[5px]"
+          className="text-xs text-foreground px-0 py-0 after:content-['|'] after:pl-[5px]"
         >
           <Link href="/sign-in" aria-label="Spring by Amaze">
             About
@@ -31,7 +32,7 @@ export const DashboardSideNav = async ({ menu }: { menu: string }) => {
         <Button
           asChild
           variant="link"
-          className="text-xs px-0 py-0 after:content-['|'] after:pl-[5px]"
+          className="text-xs text-foreground px-0 py-0 after:content-['|'] after:pl-[5px]"
         >
           <Link href="/sign-in" aria-label="Spring by Amaze">
             Press
@@ -40,7 +41,7 @@ export const DashboardSideNav = async ({ menu }: { menu: string }) => {
         <Button
           asChild
           variant="link"
-          className="text-xs px-0 py-0 after:content-['|'] after:pl-[5px]"
+          className="text-xs text-foreground px-0 py-0 after:content-['|'] after:pl-[5px]"
         >
           <Link href="/sign-in" aria-label="Spring by Amaze">
             Blog
@@ -49,7 +50,7 @@ export const DashboardSideNav = async ({ menu }: { menu: string }) => {
         <Button
           asChild
           variant="link"
-          className="text-xs px-0 py-0 after:content-['|'] after:pl-[5px]"
+          className="text-xs text-foreground px-0 py-0 after:content-['|'] after:pl-[5px]"
         >
           <Link href="/sign-in" aria-label="Spring by Amaze">
             Contact
@@ -58,13 +59,17 @@ export const DashboardSideNav = async ({ menu }: { menu: string }) => {
         <Button
           asChild
           variant="link"
-          className="text-xs px-0 py-0 after:content-['|'] after:pl-[5px]"
+          className="text-xs text-foreground px-0 py-0 after:content-['|'] after:pl-[5px]"
         >
           <Link href="/sign-in" aria-label="Spring by Amaze">
             Terms of Service
           </Link>
         </Button>
-        <Button asChild variant="link" className="text-xs px-0 py-0">
+        <Button
+          asChild
+          variant="link"
+          className="text-xs text-foreground px-0 py-0"
+        >
           <Link href="/sign-in" aria-label="Spring by Amaze">
             Privacy Policy
           </Link>

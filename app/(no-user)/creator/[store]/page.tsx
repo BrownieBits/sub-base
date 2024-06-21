@@ -33,12 +33,20 @@ async function getData(store: string) {
   const storeData: DocumentData = await getDoc(storeRef);
 
   const productsRef: CollectionReference = collection(db, 'products');
-  const q = query(productsRef, where('store_id', '==', store));
+  const q = query(
+    productsRef,
+    where('store_id', '==', store),
+    where('status', '==', 'Public')
+  );
   const productData: QuerySnapshot<DocumentData, DocumentData> =
     await getDocs(q);
 
   const collectionsRef: CollectionReference = collection(db, 'collections');
-  const colQuery = query(collectionsRef, where('store_id', '==', store));
+  const colQuery = query(
+    collectionsRef,
+    where('store_id', '==', store),
+    where('status', '==', 'Public')
+  );
   const collectionsData: QuerySnapshot<DocumentData, DocumentData> =
     await getDocs(colQuery);
 
@@ -78,50 +86,53 @@ export default async function CreatorStore({ params }: Props) {
   }
   return (
     <section>
-      <section className="flex w-full justify-between items-center px-[15px] py-[30px] gap-[15px]">
-        <Link href={`/creator/${params.store}`} className="flex gap-[30px]">
-          <ShowAvatar data={data.store.data()} />
-          <div className="">
-            <h1>{data.store.data().display_name}</h1>
-            <p>{data.store.data().subscribers} subscribers</p>
-          </div>
-        </Link>
+      <section className="w-full max-w-[3096px] mx-auto">
+        <section className="flex w-full justify-between items-center px-[15px] py-[30px] gap-[15px]">
+          <Link href={`/creator/${params.store}`} className="flex gap-[30px]">
+            <ShowAvatar data={data.store.data()} />
+            <div className="">
+              <h1>{data.store.data().display_name}</h1>
+              <p>{data.store.data().subscribers} subscribers</p>
+            </div>
+          </Link>
 
-        <SubsciberButton store={params.store} />
-      </section>
-
-      {data.collections.docs.length === 0 ? (
-        <></>
-      ) : (
-        <section className="flex w-full gap-[30px] justify-start px-[15px] pb-[10px]">
-          {data.collections?.docs?.map((doc) => (
-            <Button
-              asChild
-              variant="link"
-              className="px-0 text-md"
-              key={doc.id}
-            >
-              <Link
-                href={`/creator/${params.store}/collection/${doc.id}`}
-                aria-label="Products"
-              >
-                {doc.data().title}
-              </Link>
-            </Button>
-          ))}
+          <SubsciberButton store={params.store} />
         </section>
-      )}
-      <Separator />
 
-      {data.products.docs.length === 0 ? (
-        <span>Collection: No Data</span>
-      ) : (
-        <div className="grid grid-cols-1 md:grid-cols-3 xl:grid-cols-4  gap-x-[30px] gap-y-[60px] p-[15px]">
-          {data.products?.docs?.map((doc) => (
-            <ProductCard id={doc.id} show_creator={false} key={doc.id} />
-          ))}
-        </div>
-      )}
+        {data.collections.docs.length === 0 ? (
+          <></>
+        ) : (
+          <section className="flex w-full gap-[30px] justify-start px-[15px] border-transparent">
+            {data.collections?.docs?.map((doc) => (
+              <Button
+                asChild
+                variant="link"
+                className="px-0 text-md text-foreground border-b-[2px] border-transparent rounded-none hover:no-underline"
+                key={doc.id}
+              >
+                <Link
+                  href={`/creator/${params.store}/collection/${doc.id}`}
+                  aria-label="Products"
+                >
+                  {doc.data().title}
+                </Link>
+              </Button>
+            ))}
+          </section>
+        )}
+      </section>
+      <Separator />
+      <section className="w-full max-w-[3096px] mx-auto">
+        {data.products.docs.length === 0 ? (
+          <span>Collection: No Data</span>
+        ) : (
+          <div className="grid grid-cols-1 md:grid-cols-3 xl:grid-cols-4  gap-x-[30px] gap-y-[60px] p-[15px]">
+            {data.products?.docs?.map((doc) => (
+              <ProductCard id={doc.id} show_creator={false} key={doc.id} />
+            ))}
+          </div>
+        )}
+      </section>
     </section>
   );
 }

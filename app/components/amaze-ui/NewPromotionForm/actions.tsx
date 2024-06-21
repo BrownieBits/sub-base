@@ -2,7 +2,7 @@
 
 import { revalidatePath } from 'next/cache';
 
-export async function revalidate(displayName: string) {
+export async function revalidate() {
   'use server';
-  revalidatePath(`/dashboard/${displayName}/promotions`);
+  revalidatePath(`/dashboard/promotions`);
 }

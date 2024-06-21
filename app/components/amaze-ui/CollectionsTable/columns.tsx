@@ -268,9 +268,9 @@ export const columns: ColumnDef<Collection>[] = [
       const id = row.getValue('id') as string;
       return (
         <section className="flex gap-[15px] justify-end">
-          <Button asChild variant="link" className="p-0">
+          <Button asChild variant="link" className="p-0 text-foreground">
             <Link
-              href={`/dashboard/${row.getValue('store_id')}/products/collections/${row.getValue('id')}`}
+              href={`/dashboard/products/collections/${row.getValue('id')}`}
               aria-label="Create Product"
             >
               <FontAwesomeIcon className="icon" icon={faPenToSquare} />
@@ -281,7 +281,7 @@ export const columns: ColumnDef<Collection>[] = [
               variant="link"
               title="Make Private"
               onClick={() => Archive('Private', id)}
-              className="p-0"
+              className="p-0 text-foreground"
             >
               <FontAwesomeIcon className="icon" icon={faEyeSlash} />
             </Button>
@@ -290,7 +290,7 @@ export const columns: ColumnDef<Collection>[] = [
               variant="link"
               title="Make Public"
               onClick={() => Archive('Public', id)}
-              className="p-0"
+              className="p-0 text-foreground"
             >
               <FontAwesomeIcon className="icon" icon={faEye} />
             </Button>

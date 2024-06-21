@@ -58,7 +58,7 @@ export function DataTable<TData, TValue>({
   });
 
   return (
-    <div className="rounded-md border">
+    <div className="rounded-md">
       <div className="flex items-center pt-[10px] ml-[15px]">
         <Input
           placeholder="Filter"

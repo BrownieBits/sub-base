@@ -85,21 +85,25 @@ export default async function CreatorStoreProduct({ params }: Props) {
     );
   }
   return (
-    <section className="flex flex-col gap-[30px] p-[15px] max-w-[1440px] mx-auto">
+    <section className="flex flex-col gap-[30px] p-[15px] max-w-[2428px] mx-auto">
       <section
         key="productInfo"
         className="flex flex-col md:flex-row gap-[30px]"
       >
         <div className="flex flex-col md:hidden">
-          <Link
-            href={`/creator/${params.store}`}
-            className="flex gap-[15px] items-center mb-[15px]"
-          >
-            <ShowAvatar data={data.store.data()} size="sm" />
-            <p className="font-bold text-sm">
-              {data.store.data().display_name}
-            </p>
-          </Link>
+          <div className="flex justify-between">
+            <Link
+              href={`/creator/${params.store}`}
+              className="flex gap-[15px] items-center mb-[15px]"
+            >
+              <ShowAvatar data={data.store.data()} size="sm" />
+              <p className="font-bold text-sm">
+                {data.store.data().display_name}
+              </p>
+            </Link>
+            <SubsciberButton store={params.store} />
+          </div>
+
           <div className="flex justify-between">
             <h1 className="text-xl">{data.product.data().title}</h1>
             <span className="font-bold text-xl">
@@ -114,17 +118,20 @@ export default async function CreatorStoreProduct({ params }: Props) {
           </p>
         </div>
         <ProductImages images={data.product.data().images} />
-        <section className="w-full md:w-[600px] flex flex-col">
+        <section className="w-full md:w-[600px] lg:w-[1000px] flex flex-col">
           <div className="hidden md:flex flex-col">
-            <Link
-              href={`/creator/${params.store}`}
-              className="flex gap-[15px] items-center mb-[30px]"
-            >
-              <ShowAvatar data={data.store.data()} size="sm" />
-              <p className="font-bold text-md">
-                {data.store.data().display_name}
-              </p>
-            </Link>
+            <div className="flex justify-between">
+              <Link
+                href={`/creator/${params.store}`}
+                className="flex gap-[15px] items-center mb-[30px]"
+              >
+                <ShowAvatar data={data.store.data()} size="sm" />
+                <p className="font-bold text-md">
+                  {data.store.data().display_name}
+                </p>
+              </Link>
+              <SubsciberButton store={params.store} />
+            </div>
             <div className="flex justify-between">
               <h1 className="text-2xl">{data.product.data().title}</h1>
               <span className="font-bold text-2xl">
@@ -216,8 +223,8 @@ export default async function CreatorStoreProduct({ params }: Props) {
             </div>
           </div>
           <Button className="mt-[30px]">Add To Cart</Button>
-          <div className="flex gap-[15px] justify-between pt-[15px]">
-            <SubsciberButton store={params.store} />
+          <div className="flex gap-[15px] justify-start pt-[15px]">
+            {/* <SubsciberButton store={params.store} /> */}
             <LikeButton product={params.product} store={params.store} />
             <Button variant="outline" asChild>
               <div>

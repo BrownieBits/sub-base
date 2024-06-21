@@ -3,7 +3,7 @@ import { MenuItem } from './MenuItem';
 
 export const MenuItems = async (props: any) => {
   const data = await client.getEntry(props.id);
-  const items = data.fields.creatorMenuItems;
+  const items = data.fields.menuItems;
   return (
     <ul
       className={`flex flex-col py-[15px] border-b-[1px] border-b-border`}

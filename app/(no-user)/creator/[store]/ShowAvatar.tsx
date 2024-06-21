@@ -4,7 +4,7 @@ import { cva, type VariantProps } from 'class-variance-authority';
 import { DocumentData } from 'firebase/firestore';
 import React from 'react';
 
-const AvatarVariants = cva('text-white', {
+const AvatarVariants = cva('text-foreground', {
   variants: {
     size: {
       default: 'h-[75px] w-[75px]',
@@ -20,7 +20,7 @@ export default function ShowAvatar(props: {
   data: DocumentData;
   size?: 'sm' | undefined;
 }) {
-  let css = 'text-white';
+  let css = 'text-foreground';
   console.log(props.size);
   if (props.size === undefined) {
     css += ' h-[75px] w-[75px]';

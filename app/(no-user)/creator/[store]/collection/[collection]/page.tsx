@@ -19,6 +19,7 @@ import { Separator } from '@/components/ui/separator';
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
 import { redirect } from 'next/navigation';
+import { cn } from '@/lib/utils';
 
 type Props = {
   params: { store: string; collection: string };
@@ -45,7 +46,11 @@ async function getData(store: string, collectionId: string) {
   }
 
   const collectionsRef: CollectionReference = collection(db, 'collections');
-  const colQuery = query(collectionsRef, where('store_id', '==', store));
+  const colQuery = query(
+    collectionsRef,
+    where('store_id', '==', store),
+    where('status', '==', 'Public')
+  );
   const collectionsData: QuerySnapshot<DocumentData, DocumentData> =
     await getDocs(colQuery);
 
@@ -88,52 +93,58 @@ export default async function CreatorStoreCollection({ params }: Props) {
   }
   return (
     <section>
-      <section className="flex w-full justify-between items-center px-[15px] py-[30px] gap-[15px]">
-        <Link href={`/creator/${params.store}`} className="flex gap-[30px]">
-          <ShowAvatar data={data.store.data()} />
-          <div className="">
-            <h1>{data.store.data().display_name}</h1>
-            <p>{data.store.data().subscribers} subscribers</p>
-          </div>
-        </Link>
+      <section className="w-full max-w-[3096px] mx-auto">
+        <section className="flex w-full justify-between items-center px-[15px] py-[30px] gap-[15px]">
+          <Link href={`/creator/${params.store}`} className="flex gap-[30px]">
+            <ShowAvatar data={data.store.data()} />
+            <div className="">
+              <h1>{data.store.data().display_name}</h1>
+              <p>{data.store.data().subscribers} subscribers</p>
+            </div>
+          </Link>
 
-        <SubsciberButton store={params.store} />
-      </section>
-
-      {data.collections.docs.length === 0 ? (
-        <></>
-      ) : (
-        <section className="flex w-full gap-[30px] justify-start px-[15px] pb-[10px]">
-          {data.collections?.docs?.map((doc) => (
-            <Button
-              asChild
-              variant="link"
-              className="px-0 text-md"
-              key={doc.id}
-            >
-              <Link
-                href={`/creator/${params.store}/collection/${doc.id}`}
-                aria-label="Products"
-              >
-                {doc.data().title}
-              </Link>
-            </Button>
-          ))}
+          <SubsciberButton store={params.store} />
         </section>
-      )}
-      <Separator />
 
-      {data.collection.data().products.length === 0 ? (
-        <span className="p-[15px]">Nothing here yet...</span>
-      ) : (
-        <div className="grid grid-cols-1 md:grid-cols-3 xl:grid-cols-4  gap-x-[30px] gap-y-[60px] p-[15px]">
-          {data.collection
-            .data()
-            .products?.map((item: string) => (
-              <ProductCard id={item} show_creator={false} key={item} />
+        {data.collections.docs.length === 0 ? (
+          <></>
+        ) : (
+          <section className="flex w-full gap-[30px] justify-start px-[15px]">
+            {data.collections?.docs?.map((doc) => (
+              <Button
+                asChild
+                variant="link"
+                className={cn(
+                  'px-0 text-md text-foreground border-b-[2px] rounded-none hover:no-underline',
+                  { 'border-transparent': params.collection !== doc.id }
+                )}
+                key={doc.id}
+              >
+                <Link
+                  href={`/creator/${params.store}/collection/${doc.id}`}
+                  aria-label="Products"
+                >
+                  {doc.data().title}
+                </Link>
+              </Button>
             ))}
-        </div>
-      )}
+          </section>
+        )}
+      </section>
+      <Separator />
+      <section className="w-full max-w-[3096px] mx-auto">
+        {data.collection.data().products.length === 0 ? (
+          <span className="p-[15px]">Nothing here yet...</span>
+        ) : (
+          <div className="grid grid-cols-1 md:grid-cols-3 xl:grid-cols-4  gap-x-[30px] gap-y-[60px] p-[15px]">
+            {data.collection
+              .data()
+              .products?.map((item: string) => (
+                <ProductCard id={item} show_creator={false} key={item} />
+              ))}
+          </div>
+        )}
+      </section>
     </section>
   );
 }

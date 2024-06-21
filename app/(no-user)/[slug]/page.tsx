@@ -50,7 +50,8 @@ export default async function Recipe({ params }: { params: { slug: string } }) {
             />
           );
         } else if (item.sys.contentType.sys.id === 'imageTiles') {
-          return <ContentfulImageTiles id={item.sys.id} key={i} />;
+          return <></>;
+          // return <ContentfulImageTiles id={item.sys.id} key={i} />;
         }
         return <></>;
       })}

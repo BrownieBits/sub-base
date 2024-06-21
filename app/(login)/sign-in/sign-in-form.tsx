@@ -17,7 +17,8 @@ import {
   useSignInWithEmailAndPassword,
 } from 'react-firebase-hooks/auth';
 import { auth } from '@/firebase';
-import { redirect } from 'next/navigation';
+import { redirect, useRouter, useSearchParams } from 'next/navigation';
+import { useEffect } from 'react';
 
 const formSchema = z.object({
   email: z.string().email({ message: 'Invalid email address' }),
@@ -35,6 +36,8 @@ const formSchema = z.object({
 });
 
 export function SignInForm() {
+  const router = useRouter();
+  const searchParams = useSearchParams();
   const [loggedInUser, userLoading, userError] = useAuthState(auth);
   const [signInWithEmailAndPassword, user, loading, error] =
     useSignInWithEmailAndPassword(auth);
@@ -48,11 +51,19 @@ export function SignInForm() {
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
     await signInWithEmailAndPassword(values.email, values.password);
+    const redirectParam = searchParams.get('redirect');
+    if (redirectParam !== null) {
+      router.push(redirectParam);
+      return;
+    }
+    router.push('/dashboard');
   }
 
-  if (loggedInUser) {
-    redirect(`/dashboard/${loggedInUser.displayName?.toLowerCase()}`);
-  }
+  useEffect(() => {
+    if (loggedInUser) {
+      redirect(`/dashboard`);
+    }
+  }, [userLoading]);
 
   return (
     <>

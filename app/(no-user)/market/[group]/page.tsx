@@ -6,7 +6,6 @@ import { db } from '@/firebase';
 import {
   DocumentData,
   QuerySnapshot,
-  and,
   collection,
   getDocs,
   or,
@@ -14,7 +13,7 @@ import {
   query,
   where,
 } from 'firebase/firestore';
-import { Metadata, ResolvingMetadata } from 'next';
+import { Metadata } from 'next';
 import { draftMode } from 'next/headers';
 import ProductCard from '@/components/amaze-ui/ProductCard';
 
@@ -24,7 +23,8 @@ type Props = {
 
 async function getData(group: string) {
   const { isEnabled } = draftMode();
-  const currentClient = isEnabled ? previewClient : client;
+  // const currentClient = isEnabled ? previewClient : client;
+  const currentClient = client;
   const data = await currentClient.getEntries({
     content_type: 'marketplacePage',
     'fields.slug': `${group}`,
@@ -78,7 +78,8 @@ async function getData(group: string) {
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { isEnabled } = draftMode();
-  const currentClient = isEnabled ? previewClient : client;
+  // const currentClient = isEnabled ? previewClient : client;
+  const currentClient = client;
   const data = await currentClient.getEntries({
     content_type: 'marketplacePage',
     'fields.slug': `${params.group}`,
@@ -102,20 +103,26 @@ export default async function MarketplacePage({ params }: Props) {
 
   return (
     <section>
-      <section className="flex w-full justify-between items-center px-[15px] py-[30px] gap-[15px]">
-        <h1>{data.title}</h1>
-      </section>
-      <HeroBanner page_slug="creator-liked-items" displayName="" />
-      <Separator />
-      {data.products.length === 0 ? (
-        <NoSubscriptions />
-      ) : (
-        <section className="grid grid-cols-1 md:grid-cols-3 xl:grid-cols-4 gap-x-[30px] gap-y-[60px] p-[15px]">
-          {data.products.map((doc: any) => {
-            return <ProductCard id={doc.id} show_creator={true} key={doc.id} />;
-          })}
+      <section className="w-full max-w-[3096px] mx-auto">
+        <section className="flex w-full justify-between items-center px-[15px] py-[30px] gap-[15px]">
+          <h1>{data.title}</h1>
         </section>
-      )}
+        <HeroBanner page_slug="creator-liked-items" />
+      </section>
+      <Separator />
+      <section className="w-full max-w-[3096px] mx-auto">
+        {data.products.length === 0 ? (
+          <NoSubscriptions />
+        ) : (
+          <section className="grid grid-cols-1 md:grid-cols-3 xl:grid-cols-4 gap-x-[30px] gap-y-[60px] p-[15px]">
+            {data.products.map((doc: any) => {
+              return (
+                <ProductCard id={doc.id} show_creator={true} key={doc.id} />
+              );
+            })}
+          </section>
+        )}
+      </section>
     </section>
   );
 }

@@ -15,19 +15,59 @@ import { Input } from '@/components/ui/input';
 import {
   useAuthState,
   useCreateUserWithEmailAndPassword,
+  useUpdateProfile,
 } from 'react-firebase-hooks/auth';
-import { auth } from '@/firebase';
-import { redirect } from 'next/navigation';
+import { auth, db } from '@/firebase';
+import { redirect, useRouter } from 'next/navigation';
+import { useEffect } from 'react';
+import {
+  DocumentData,
+  DocumentReference,
+  Timestamp,
+  doc,
+  getDoc,
+  setDoc,
+} from 'firebase/firestore';
+import { generate, count } from 'random-words';
 
 const formSchema = z.object({
+  fullName: z
+    .string()
+    .min(1, { message: 'Full Name must be 1 or more characters long' })
+    .refine(
+      (value) => /^[a-zA-Z]+[-'s]?[a-zA-Z ]+$/.test(value ?? ''),
+      'Name should contain only alphabets'
+    )
+    .refine(
+      (value) => /^[a-zA-Z]+\s+[a-zA-Z]+$/.test(value ?? ''),
+      'Please enter both firstname and lastname'
+    ),
+  displayName: z
+    .string()
+    .min(6, { message: 'Display Name must be 6 or more characters long' })
+    .max(18, {
+      message: 'Display Name must be no more than 18 characters long',
+    })
+    .refine(
+      (value) => /^[a-zA-Z0-9_.-]+$/.test(value ?? ''),
+      'Please only use A-Z, 0-9, _, -, or .'
+    )
+    .refine(async (value) => {
+      const docRef: DocumentReference = doc(db, 'stores', value.toLowerCase());
+      const data: DocumentData = await getDoc(docRef);
+      if (data.exists()) {
+        return false;
+      }
+      return true;
+    }, 'Display Name already used.'),
   email: z.string().email({ message: 'Invalid email address' }),
   passwords: z
     .object({
       password: z
         .string()
         .min(8, { message: 'Password must be 8 or more characters long' })
-        .max(18, {
-          message: 'Password must be no more than 18 characters long',
+        .max(32, {
+          message: 'Password must be no more than 32 characters long',
         })
         .regex(new RegExp('.*[A-Z].*'), 'One uppercase character')
         .regex(new RegExp('.*[a-z].*'), 'One lowercase character')
@@ -45,12 +85,16 @@ const formSchema = z.object({
 });
 
 export function SignUpForm() {
+  const router = useRouter();
+  const [updateProfile, updating, updateProfileError] = useUpdateProfile(auth);
   const [loggedInUser, userLoading, userError] = useAuthState(auth);
   const [createUserWithEmailAndPassword, user, loading, error] =
     useCreateUserWithEmailAndPassword(auth);
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
+      fullName: '',
+      displayName: '',
       email: '',
       passwords: {
         password: '',
@@ -60,15 +104,72 @@ export function SignUpForm() {
   });
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
-    await createUserWithEmailAndPassword(
+    const words = generate({
+      exactly: 2,
+      formatter: (word) => {
+        return word.slice(0, 1).toUpperCase().concat(word.slice(1));
+      },
+    }) as string[];
+    const newUser = await createUserWithEmailAndPassword(
       values.email,
       values.passwords.password
     );
+    await updateProfile({
+      displayName: values.displayName.toLowerCase(),
+    });
+    const docRef: DocumentReference = doc(db, 'users', newUser?.user.uid!);
+    const storeRef: DocumentReference = doc(
+      db,
+      'stores',
+      values.displayName.toLowerCase()
+    );
+    await setDoc(storeRef, {
+      name: values.displayName.toLowerCase(),
+      description: '',
+      avatar_filename: '',
+      avatar_url: '',
+      color: '',
+      banner_url: '',
+      banner_filename: '',
+      products: [],
+      collections: [],
+      users: [
+        {
+          id: newUser?.user.uid!,
+          status: 'Active',
+          role: 'Owner',
+        },
+      ],
+      users_list: [newUser?.user.uid!],
+      status: 'Public',
+      password_protected: true,
+      password: words.join('-'),
+      subscription_count: 0,
+      owner_id: newUser?.user.uid!,
+      created_at: Timestamp.fromDate(new Date()),
+    });
+    await setDoc(docRef, {
+      name: values.fullName,
+      email: values.email,
+      stores: [values.displayName.toLowerCase()],
+      default_store: values.displayName.toLowerCase(),
+      addresses: [],
+      default_address: '',
+      ccs: [],
+      default_cc: '',
+      default_currency: 'USD',
+      role: 'user',
+      phone: '',
+      created_at: Timestamp.fromDate(new Date()),
+    });
+    router.push('/dashboard');
   }
 
-  if (loggedInUser) {
-    redirect(`/dashboard/${loggedInUser.displayName?.toLowerCase()}`);
-  }
+  useEffect(() => {
+    if (loggedInUser) {
+      redirect(`/dashboard`);
+    }
+  }, [userLoading]);
 
   return (
     <>
@@ -80,6 +181,30 @@ export function SignUpForm() {
             onSubmit={form.handleSubmit(onSubmit)}
             className="space-y-6 w-[300px]"
           >
+            <FormField
+              control={form.control}
+              name="fullName"
+              render={({ field }) => (
+                <FormItem>
+                  <FormControl>
+                    <Input placeholder="Full Name" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="displayName"
+              render={({ field }) => (
+                <FormItem>
+                  <FormControl>
+                    <Input placeholder="DisplayName" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
             <FormField
               control={form.control}
               name="email"

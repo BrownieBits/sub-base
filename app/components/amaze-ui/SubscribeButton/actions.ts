@@ -18,8 +18,8 @@ export async function UpdateSubStatus(
       if (!storeDoc.exists()) {
         return;
       }
-      const newSubs = storeDoc.data().subscribers + 1;
-      transaction.update(docRef, { subscribers: newSubs });
+      const newSubs = storeDoc.data().subscription_count + 1;
+      transaction.update(docRef, { subscription_count: newSubs });
     });
     await setDoc(subRef, {
       date: serverTimestamp()
@@ -30,11 +30,11 @@ export async function UpdateSubStatus(
       if (!storeDoc.exists()) {
         return;
       }
-      const newSubs = storeDoc.data().subscribers - 1;
-      transaction.update(docRef, { subscribers: newSubs });
+      const newSubs = storeDoc.data().subscription_count - 1;
+      transaction.update(docRef, { subscription_count: newSubs });
     });
     await deleteDoc(subRef)
   }
-  revalidatePath(`/creator/${store}`);
+  revalidatePath(`/store/${store}`);
   return 'Success';
 }

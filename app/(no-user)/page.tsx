@@ -23,7 +23,8 @@ export default async function Home() {
           );
         } else if (item.sys.contentType.sys.id === 'imageTiles') {
           return (
-            <ContentfulImageTiles id={item.sys.id} key={`image-tiles-${i}`} />
+            <></>
+            // <ContentfulImageTiles id={item.sys.id} key={`image-tiles-${i}`} />
           );
         }
         return <></>;

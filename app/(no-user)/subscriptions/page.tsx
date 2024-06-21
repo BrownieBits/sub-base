@@ -19,7 +19,7 @@ type Props = {
 
 async function getData(id: { [key: string]: string } | undefined) {
   if (id === undefined) {
-    redirect(`sign-in?redirect=/subscriptions`);
+    redirect(`/sign-in?redirect=/subscriptions`);
   }
   const userSubsRef = collection(db, 'users', id.value, 'subscribes');
   const data: QuerySnapshot<DocumentData, DocumentData> =
@@ -39,20 +39,24 @@ export default async function Subscriptions() {
   const data = await getData(user_id);
   return (
     <section>
-      <section className="flex w-full justify-between items-center px-[15px] py-[30px] gap-[15px]">
-        <h1>My Subscriptions</h1>
-      </section>
-      <HeroBanner page_slug="creator-liked-items" displayName="" />
-      <Separator />
-      {data.docs.length === 0 ? (
-        <NoSubscriptions />
-      ) : (
-        <section className="grid grid-cols-2 md:grid-cols-4 xl:grid-cols-6 gap-x-[30px] gap-y-[60px] p-[15px]">
-          {data.docs.map((doc) => {
-            return <CreatorCard id={doc.id} key={doc.id} />;
-          })}
+      <section className="w-full max-w-[3096px] mx-auto">
+        <section className="flex w-full justify-between items-center px-[15px] py-[30px] gap-[15px]">
+          <h1>My Subscriptions</h1>
         </section>
-      )}
+        <HeroBanner page_slug="creator-liked-items" />
+      </section>
+      <Separator />
+      <section className="w-full max-w-[3096px] mx-auto">
+        {data.docs.length === 0 ? (
+          <NoSubscriptions />
+        ) : (
+          <section className="grid grid-cols-2 md:grid-cols-4 xl:grid-cols-6 gap-x-[30px] gap-y-[60px] p-[15px]">
+            {data.docs.map((doc) => {
+              return <CreatorCard id={doc.id} key={doc.id} />;
+            })}
+          </section>
+        )}
+      </section>
     </section>
   );
 }
