@@ -155,8 +155,8 @@ export default async function CreatorStore({ params }: Props) {
             <Image
               src={data.store.data().banner_url}
               alt={data.store.data().name}
-              width={0}
-              height={0}
+              width={3096}
+              height={526}
               style={{ width: '100%', height: 'auto' }}
             ></Image>
           </section>

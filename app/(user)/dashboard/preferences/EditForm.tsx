@@ -506,8 +506,8 @@ export default function EditForm(props: {
                                 <Image
                                   src={selectedBanner}
                                   alt={selectedName}
-                                  width={0}
-                                  height={0}
+                                  width={3096}
+                                  height={526}
                                   style={{ width: '100%', height: 'auto' }}
                                 ></Image>
                               </section>
