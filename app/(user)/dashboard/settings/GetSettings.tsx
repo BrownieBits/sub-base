@@ -20,7 +20,6 @@ export default function GetSettings(props: { userID: string }) {
   React.useEffect(() => {
     const userDataRef: DocumentReference = doc(db, 'users', props.userID);
     const unsubscribe: Unsubscribe = onSnapshot(userDataRef, (doc) => {
-      console.log(doc);
       if (doc.exists()) {
         setUserSettings({
           name: doc.data().name,
@@ -33,7 +32,7 @@ export default function GetSettings(props: { userID: string }) {
       }
     });
     return () => unsubscribe();
-  }, []);
+  }, [props.userID]);
 
   React.useEffect(() => {
     console.log('boop');

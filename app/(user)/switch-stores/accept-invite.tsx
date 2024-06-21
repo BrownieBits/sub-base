@@ -4,7 +4,7 @@ import { Button } from '@/components/ui/button';
 import { db } from '@/firebase';
 import { DocumentReference, doc, updateDoc } from 'firebase/firestore';
 
-export default async function AcceptButton(props: {
+export default function AcceptButton(props: {
   storeID: string;
   revalidate: () => void;
   userID: string;
