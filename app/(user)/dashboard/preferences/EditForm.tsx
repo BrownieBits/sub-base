@@ -335,7 +335,7 @@ export default function EditForm(props: {
                 </div>
               </Button>
             )}
-            <Button variant="outline" type="submit" onClick={onSubmit} asChild>
+            <Button variant="outline" asChild>
               <Link href={`/store/${props.storeID}`}>View store</Link>
             </Button>
             <Button variant="outline" onClick={() => {}} asChild>

@@ -1,32 +1,46 @@
 'use client';
 
 import { ColumnDef } from '@tanstack/react-table';
-import { Button } from '../../ui/button';
+import { Button } from '@/components/ui/button';
 import Link from 'next/link';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faEye,
   faPenToSquare,
-  faGear,
-  faWrench,
   faArrowDown,
   faArrowUp,
 } from '@fortawesome/free-solid-svg-icons';
 import { faEyeSlash } from '@fortawesome/free-regular-svg-icons';
-import { ChangeStatus } from './actions';
+import { Revalidate } from './actions';
+import { DocumentReference, doc, updateDoc } from 'firebase/firestore';
+import { db } from '@/firebase';
+import { toast } from 'sonner';
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from '@/components/ui/tooltip';
 
-async function Archive(action: string, id: string) {
-  const value = await ChangeStatus(action, id);
+async function Archive(action: string, id: string, name: string) {
+  const docRef: DocumentReference = doc(db, 'collections', id);
+  await updateDoc(docRef, {
+    status: action,
+  });
+  toast('Colletion Updated', {
+    description: `The ${name} collection was made ${action}.`,
+  });
+  Revalidate();
 }
 
 export type Collection = {
   id: string;
   products: string[];
   status: 'Private' | 'Public';
-  title: string;
+  name: string;
   type: string;
-  user_id: string;
-  tags?: string[];
+  owner_id: string;
+  tags: string;
   store_id: string;
 };
 
@@ -42,7 +56,7 @@ export const columns: ColumnDef<Collection>[] = [
     cell: ({ row }) => <div className="hidden"></div>,
   },
   {
-    accessorKey: 'title',
+    accessorKey: 'name',
     header: ({ column }) => {
       if (column.getIsSorted() === 'asc') {
         return (
@@ -266,34 +280,62 @@ export const columns: ColumnDef<Collection>[] = [
     header: '',
     cell: ({ row }) => {
       const id = row.getValue('id') as string;
+      const name = row.getValue('name') as string;
       return (
         <section className="flex gap-[15px] justify-end">
-          <Button asChild variant="link" className="p-0 text-foreground">
-            <Link
-              href={`/dashboard/products/collections/${row.getValue('id')}`}
-              aria-label="Create Product"
-            >
-              <FontAwesomeIcon className="icon" icon={faPenToSquare} />
-            </Link>
-          </Button>
+          <TooltipProvider>
+            <Tooltip>
+              <TooltipTrigger>
+                <Button asChild variant="link" className="p-0 text-foreground">
+                  <Link
+                    href={`/dashboard/products/collections/${row.getValue('id')}`}
+                    aria-label="Create Product"
+                  >
+                    <FontAwesomeIcon className="icon" icon={faPenToSquare} />
+                  </Link>
+                </Button>
+              </TooltipTrigger>
+              <TooltipContent>
+                <p>Edit</p>
+              </TooltipContent>
+            </Tooltip>
+          </TooltipProvider>
           {row.getValue('status') === 'Public' ? (
-            <Button
-              variant="link"
-              title="Make Private"
-              onClick={() => Archive('Private', id)}
-              className="p-0 text-foreground"
-            >
-              <FontAwesomeIcon className="icon" icon={faEyeSlash} />
-            </Button>
+            <TooltipProvider>
+              <Tooltip>
+                <TooltipTrigger>
+                  <Button
+                    variant="link"
+                    title="Make Private"
+                    onClick={() => Archive('Private', id, name)}
+                    className="p-0 text-foreground"
+                  >
+                    <FontAwesomeIcon className="icon" icon={faEyeSlash} />
+                  </Button>
+                </TooltipTrigger>
+                <TooltipContent>
+                  <p>Make Private</p>
+                </TooltipContent>
+              </Tooltip>
+            </TooltipProvider>
           ) : (
-            <Button
-              variant="link"
-              title="Make Public"
-              onClick={() => Archive('Public', id)}
-              className="p-0 text-foreground"
-            >
-              <FontAwesomeIcon className="icon" icon={faEye} />
-            </Button>
+            <TooltipProvider>
+              <Tooltip>
+                <TooltipTrigger>
+                  <Button
+                    variant="link"
+                    title="Make Public"
+                    onClick={() => Archive('Public', id, name)}
+                    className="p-0 text-foreground"
+                  >
+                    <FontAwesomeIcon className="icon" icon={faEye} />
+                  </Button>
+                </TooltipTrigger>
+                <TooltipContent>
+                  <p>Make Public</p>
+                </TooltipContent>
+              </Tooltip>
+            </TooltipProvider>
           )}
         </section>
       );

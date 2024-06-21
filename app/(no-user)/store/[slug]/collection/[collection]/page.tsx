@@ -12,39 +12,43 @@ import {
   QuerySnapshot,
 } from 'firebase/firestore';
 import { Metadata, ResolvingMetadata } from 'next';
-import ShowAvatar from './ShowAvatar';
+import ShowAvatar from '../../ShowAvatar';
 import ProductCard from '@/components/amaze-ui/ProductCard';
 import { SubsciberButton } from '@/components/amaze-ui/SubscribeButton';
 import { Separator } from '@/components/ui/separator';
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
+import { redirect } from 'next/navigation';
+import { cn } from '@/lib/utils';
+import { cookies } from 'next/headers';
+import { StorePasswordForm } from '../../password-protection';
+import { revalidatePath } from 'next/cache';
 import Image from 'next/image';
 import { ShowMoreText } from '@/components/amaze-ui/ShowMoreText';
-import { cookies } from 'next/headers';
-import { revalidatePath } from 'next/cache';
-import { StorePasswordForm } from './password-protection';
 
 type Props = {
-  params: { slug: string };
+  params: { slug: string; collection: string };
 };
 type Data = {
   store: DocumentData;
-  products: QuerySnapshot<DocumentData, DocumentData>;
+  collection: DocumentData;
   collections: QuerySnapshot<DocumentData, DocumentData>;
 };
 
-async function getData(store: string) {
+async function getData(store: string, collectionId: string) {
   const storeRef: DocumentReference = doc(db, 'stores', store);
   const storeData: DocumentData = await getDoc(storeRef);
 
-  const productsRef: CollectionReference = collection(db, 'products');
-  const q = query(
-    productsRef,
-    where('store_id', '==', store),
-    where('status', '==', 'Public')
-  );
-  const productData: QuerySnapshot<DocumentData, DocumentData> =
-    await getDocs(q);
+  if (!storeData.exists()) {
+    return 'No Store';
+  }
+
+  const collectionRef: DocumentReference = doc(db, 'collections', collectionId);
+  const collectionData: DocumentData = await getDoc(collectionRef);
+
+  if (!collectionData.exists) {
+    redirect(`/store/${store}`);
+  }
 
   const collectionsRef: CollectionReference = collection(db, 'collections');
   const colQuery = query(
@@ -55,18 +59,15 @@ async function getData(store: string) {
   const collectionsData: QuerySnapshot<DocumentData, DocumentData> =
     await getDocs(colQuery);
 
-  if (!storeData.exists()) {
-    return 'No Store';
-  }
   return {
     store: storeData,
-    products: productData,
+    collection: collectionData,
     collections: collectionsData,
   };
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const data: Data | 'No Store' = await getData(params.slug);
+  const data: Data | 'No Store' = await getData(params.slug, params.collection);
   if (data === 'No Store') {
     return {
       title: 'No Store',
@@ -103,10 +104,10 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   };
 }
 
-export default async function Store({ params }: Props) {
+export default async function StoreCollection({ params }: Props) {
   const cookieStore = cookies();
   const store_pw = cookieStore.get(`${params.slug}-pw`);
-  const data: Data | 'No Store' = await getData(params.slug);
+  const data: Data | 'No Store' = await getData(params.slug, params.collection);
 
   async function revalidate() {
     'use server';
@@ -180,11 +181,11 @@ export default async function Store({ params }: Props) {
         {data.collections.docs.length === 0 ? (
           <></>
         ) : (
-          <section className="flex w-full gap-[30px] justify-start px-[15px] border-transparent">
+          <section className="flex w-full gap-[30px] justify-start px-[15px]">
             <Button
               asChild
               variant="link"
-              className="px-0 text-md text-foreground border-b-[2px] rounded-none hover:no-underline"
+              className="px-0 text-md text-foreground border-b-[2px] rounded-none hover:no-underline border-transparent"
             >
               <Link
                 href={`/store/${params.slug}`}
@@ -197,7 +198,10 @@ export default async function Store({ params }: Props) {
               <Button
                 asChild
                 variant="link"
-                className="px-0 text-md text-foreground border-b-[2px] border-transparent rounded-none hover:no-underline"
+                className={cn(
+                  'px-0 text-md text-foreground border-b-[2px] rounded-none hover:no-underline',
+                  { 'border-transparent': params.collection !== doc.id }
+                )}
                 key={doc.id}
               >
                 <Link
@@ -213,15 +217,15 @@ export default async function Store({ params }: Props) {
       </section>
       <Separator />
       <section className="w-full max-w-[3096px] mx-auto">
-        {data.products.docs.length === 0 ? (
-          <section className="px-[15px] py-[30px]">
-            <span>Collection: No Data</span>
-          </section>
+        {data.collection.data().products.length === 0 ? (
+          <span className="p-[15px]">Nothing here yet...</span>
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-3 xl:grid-cols-4  gap-x-[30px] gap-y-[60px] p-[15px]">
-            {data.products?.docs?.map((doc) => (
-              <ProductCard id={doc.id} show_creator={false} key={doc.id} />
-            ))}
+            {data.collection
+              .data()
+              .products?.map((item: string) => (
+                <ProductCard id={item} show_creator={false} key={item} />
+              ))}
           </div>
         )}
       </section>

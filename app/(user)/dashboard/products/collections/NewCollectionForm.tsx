@@ -28,6 +28,7 @@ import { faCirclePlus } from '@fortawesome/free-solid-svg-icons';
 import {
   DocumentData,
   DocumentReference,
+  Timestamp,
   doc,
   getDoc,
   setDoc,
@@ -35,6 +36,8 @@ import {
 import { auth, db } from '@/firebase';
 import { useRouter } from 'next/navigation';
 import { useFormStatus } from 'react-dom';
+import { getCookie } from 'cookies-next';
+import { toast } from 'sonner';
 
 const formSchema = z.object({
   name: z
@@ -48,11 +51,9 @@ const formSchema = z.object({
   }),
 });
 
-export default function NewCollectionForm({
-  displayName,
-}: {
-  displayName: string;
-}) {
+export default function NewCollectionForm() {
+  const default_store = getCookie('default_store');
+  const user_id = getCookie('user_id');
   const [open, setOpen] = React.useState(false);
   const [error, setError] = React.useState('');
   const { push } = useRouter();
@@ -66,7 +67,6 @@ export default function NewCollectionForm({
   });
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
-    const currentUser = await auth.currentUser;
     const encodedTitle = values.name
       .normalize('NFKD')
       .replace(/[\u0300-\u036f]/g, '')
@@ -83,12 +83,17 @@ export default function NewCollectionForm({
       return;
     } else {
       await setDoc(docRef, {
-        title: values.name,
+        name: values.name,
         type: values.type,
         products: [],
+        tags: '',
         status: 'Private',
-        user_id: currentUser?.email,
-        store_id: displayName,
+        owner_id: user_id,
+        store_id: default_store,
+        created_at: Timestamp.fromDate(new Date()),
+      });
+      toast('New Colletion Added', {
+        description: `The ${values.name} collection was added to your store.`,
       });
       push(`/dashboard/products/collections/${encodedTitle}`);
       return;
@@ -122,7 +127,7 @@ export default function NewCollectionForm({
                   control={form.control}
                   name="name"
                   render={({ field }) => (
-                    <FormItem>
+                    <FormItem className="text-foreground">
                       <FormLabel>Name</FormLabel>
                       <FormControl>
                         <Input {...field} />
@@ -135,7 +140,7 @@ export default function NewCollectionForm({
                   control={form.control}
                   name="type"
                   render={({ field }) => (
-                    <FormItem className="space-y-3">
+                    <FormItem className="space-y-3 text-foreground">
                       <FormLabel>Collection Type</FormLabel>
                       <FormControl>
                         <RadioGroup

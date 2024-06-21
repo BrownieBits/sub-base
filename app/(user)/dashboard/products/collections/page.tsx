@@ -1,6 +1,5 @@
 import Link from 'next/link';
 import { HeroBanner } from '@/components/amaze-ui/HeroBanner';
-import NewCollectionForm from '@/components/amaze-ui/NewCollectionForm';
 import { Button } from '@/components/ui/button';
 import { Metadata, ResolvingMetadata } from 'next';
 import {
@@ -15,20 +14,35 @@ import {
 import { db } from '@/firebase';
 import { redirect } from 'next/navigation';
 import { cookies } from 'next/headers';
-import { CollectionsTable } from '@/components/amaze-ui/CollectionsTable';
-import { NoCollections } from '@/components/amaze-ui/NoCollections';
 import { Separator } from '@/components/ui/separator';
+import NewCollectionForm from './NewCollectionForm';
+import { NoCollections } from './NoCollections';
+import { DataTable } from '@/components/amaze-ui/DataTable';
+import { columns } from './DataColums';
 
 async function getData(slug: { [key: string]: string } | undefined) {
   if (slug === undefined) {
-    redirect(`sign-in`);
+    redirect(`/sign-in?redirect=/dashboard/products`);
   }
   const collectionsRef: CollectionReference = collection(db, 'collections');
   const q = query(collectionsRef, where('store_id', '==', slug.value));
   const collectionsData: QuerySnapshot<DocumentData, DocumentData> =
     await getDocs(q);
 
-  return collectionsData;
+  const data = collectionsData.docs.map((item) => {
+    return {
+      id: item.id,
+      products: item.data().products,
+      status: item.data().status,
+      name: item.data().name,
+      type: item.data().type,
+      owner_id: item.data().owner_id,
+      tags: item.data().tags,
+      store_id: item.data().store_id,
+    };
+  });
+
+  return data;
 }
 
 export async function generateMetadata(): Promise<Metadata> {
@@ -39,14 +53,14 @@ export async function generateMetadata(): Promise<Metadata> {
 
 export default async function Collections() {
   const cookieStore = cookies();
-  const user_slug = cookieStore.get('user_slug');
-  const data = await getData(user_slug);
+  const default_store = cookieStore.get('default_store');
+  const data = await getData(default_store);
   return (
     <section>
       <section className="w-full max-w-[3096px] mx-auto">
         <section className="flex w-full justify-between items-center px-[15px] py-[30px] gap-[15px]">
           <h1>Collections</h1>
-          <NewCollectionForm displayName={user_slug?.value!} />
+          <NewCollectionForm />
         </section>
         <HeroBanner page_slug="creator-collections" />
         <section className="flex w-full gap-[30px] justify-start px-[15px]">
@@ -75,8 +89,8 @@ export default async function Collections() {
       </section>
       <Separator />
       <section className="w-full max-w-[3096px] mx-auto">
-        {data.docs?.length! > 0 ? (
-          <CollectionsTable snapshot={data!} />
+        {data.length! > 0 ? (
+          <DataTable columns={columns} data={data!} />
         ) : (
           <NoCollections />
         )}

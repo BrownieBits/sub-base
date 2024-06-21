@@ -38,8 +38,8 @@ export async function generateMetadata(): Promise<Metadata> {
 
 export default async function Products() {
   const cookieStore = cookies();
-  const user_slug = cookieStore.get('user_slug');
-  const data = await getData(user_slug);
+  const default_store = cookieStore.get('default_store');
+  const data = await getData(default_store);
   return (
     <section>
       <section className="w-full max-w-[3096px] mx-auto">
@@ -47,7 +47,7 @@ export default async function Products() {
           <h1>Products</h1>
           <Button asChild variant="outline">
             <Link
-              href={`/dashboard/${user_slug?.value!}/products/baseProducts`}
+              href={`/dashboard/products/baseProducts`}
               aria-label="Create Product"
               className="bg-layer hover:bg-layer-one hover:no-underline"
             >

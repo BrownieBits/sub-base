@@ -17,7 +17,6 @@ export default function AcceptButton(props: {
   async function accept() {
     const docRef: DocumentReference = doc(db, 'stores', props.storeID);
     const newList = props.usersList.map((item) => {
-      console.log(item.id !== props.userID);
       if (item.id !== props.userID) {
         return item;
       } else {

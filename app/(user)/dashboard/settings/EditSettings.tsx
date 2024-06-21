@@ -136,7 +136,6 @@ export default function EditSettings(props: {
   }
 
   React.useEffect(() => {
-    console.log('GOT NEW DATA');
     form.setValue('name', props.userSettings.name);
     form.setValue('email', props.userSettings.email);
     form.setValue('phone', props.userSettings.phone);

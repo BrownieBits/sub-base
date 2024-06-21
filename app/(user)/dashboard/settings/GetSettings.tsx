@@ -35,7 +35,6 @@ export default function GetSettings(props: { userID: string }) {
   }, [props.userID]);
 
   React.useEffect(() => {
-    console.log('boop');
     revalidate();
   }, [userSettings]);
 

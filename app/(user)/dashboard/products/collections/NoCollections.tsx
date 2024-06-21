@@ -1,5 +1,4 @@
-import Link from 'next/link';
-import { Button } from '../../ui/button';
+import NewCollectionForm from './NewCollectionForm';
 
 export const NoCollections = () => {
   return (
@@ -19,15 +18,7 @@ export const NoCollections = () => {
       <p className="mb-[30px]">
         Simple copy about creating collections to make it easier to find things
       </p>
-      <Button asChild variant="outline">
-        <Link
-          href="/dashboard/products/collections?new"
-          aria-label="Create Collection"
-        >
-          <i className="mr-2 h-4 w-4 fa-solid fa-circle-plus text-primary"></i>
-          Create Collection
-        </Link>
-      </Button>
+      <NewCollectionForm />
     </section>
   );
 };
