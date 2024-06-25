@@ -9,7 +9,7 @@ import {
 } from 'firebase/firestore';
 import { db } from '@/firebase';
 import { useCollection } from 'react-firebase-hooks/firestore';
-import { NoProducts } from '@/components/amaze-ui/NoProducts';
+import { NoProducts } from '@/components/sb-ui/NoProducts';
 import ProductCard from '../ProductCard';
 
 export default function ProductGrid({

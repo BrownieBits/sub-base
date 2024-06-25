@@ -1,4 +1,4 @@
-import { HeroBanner } from '@/components/amaze-ui/HeroBanner';
+import { HeroBanner } from '@/components/sb-ui/HeroBanner';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
 import { Separator } from '@/components/ui/separator';

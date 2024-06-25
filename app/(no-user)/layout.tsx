@@ -1,5 +1,5 @@
-import { DashboardSideNav } from '@/components/amaze-ui/DashboardSideNav';
-import { MarketingNav } from '../components/amaze-ui/MarketingNav';
+import { DashboardSideNav } from '@/components/sb-ui/DashboardSideNav';
+import { MarketingNav } from '../components/sb-ui/MarketingNav';
 
 export default function NoUserLayout({
   children, // will be a page or nested layout

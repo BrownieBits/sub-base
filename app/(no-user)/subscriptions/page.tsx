@@ -1,6 +1,6 @@
-import CreatorCard from '@/components/amaze-ui/CreatorCard';
-import { HeroBanner } from '@/components/amaze-ui/HeroBanner';
-import { NoSubscriptions } from '@/components/amaze-ui/NoSubscriptions';
+import CreatorCard from '@/components/sb-ui/CreatorCard';
+import { HeroBanner } from '@/components/sb-ui/HeroBanner';
+import { NoSubscriptions } from '@/components/sb-ui/NoSubscriptions';
 import { Separator } from '@/components/ui/separator';
 import { db } from '@/firebase';
 import {

@@ -1,5 +1,5 @@
 import { DocumentData, QuerySnapshot } from 'firebase/firestore';
-import { DataTable } from '@/components/amaze-ui/DataTable';
+import { DataTable } from '@/components/sb-ui/DataTable';
 import { columns } from './columns';
 
 export const PromotionsTable = (props: {

@@ -244,7 +244,7 @@ export default function EditSettings(props: {
                     name="default_currency"
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel>Email</FormLabel>
+                        <FormLabel>Default Currency</FormLabel>
                         <Select
                           onValueChange={updateForm}
                           defaultValue={field.value}

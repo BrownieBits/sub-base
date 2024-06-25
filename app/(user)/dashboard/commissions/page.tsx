@@ -1,5 +1,5 @@
 import { Button } from '@/components/ui/button';
-import { HeroBanner } from '@/components/amaze-ui/HeroBanner';
+import { HeroBanner } from '@/components/sb-ui/HeroBanner';
 import Link from 'next/link';
 import { Metadata, ResolvingMetadata } from 'next';
 import { Separator } from '@/components/ui/separator';

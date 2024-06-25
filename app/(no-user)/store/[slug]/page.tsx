@@ -13,13 +13,13 @@ import {
 } from 'firebase/firestore';
 import { Metadata, ResolvingMetadata } from 'next';
 import ShowAvatar from './ShowAvatar';
-import ProductCard from '@/components/amaze-ui/ProductCard';
-import { SubsciberButton } from '@/components/amaze-ui/SubscribeButton';
+import ProductCard from '@/components/sb-ui/ProductCard';
+import { SubsciberButton } from '@/components/sb-ui/SubscribeButton';
 import { Separator } from '@/components/ui/separator';
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
 import Image from 'next/image';
-import { ShowMoreText } from '@/components/amaze-ui/ShowMoreText';
+import { ShowMoreText } from '@/components/sb-ui/ShowMoreText';
 import { cookies } from 'next/headers';
 import { revalidatePath } from 'next/cache';
 import { StorePasswordForm } from './password-protection';
@@ -46,12 +46,11 @@ async function getData(store: string) {
   const productData: QuerySnapshot<DocumentData, DocumentData> =
     await getDocs(q);
 
-  const collectionsRef: CollectionReference = collection(db, 'collections');
-  const colQuery = query(
-    collectionsRef,
-    where('store_id', '==', store),
-    where('status', '==', 'Public')
+  const collectionsRef: CollectionReference = collection(
+    db,
+    `stores/${store}/collections`
   );
+  const colQuery = query(collectionsRef, where('status', '==', 'Public'));
   const collectionsData: QuerySnapshot<DocumentData, DocumentData> =
     await getDocs(colQuery);
 

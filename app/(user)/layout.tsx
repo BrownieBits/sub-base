@@ -1,6 +1,6 @@
-import { UserChecker } from '@/components/amaze-ui/UserChecker';
-import { DashboardNav } from '../components/amaze-ui/DashboardNav';
-import { DashboardSideNav } from '../components/amaze-ui/DashboardSideNav';
+import { UserChecker } from '@/components/sb-ui/UserChecker';
+import { DashboardNav } from '../components/sb-ui/DashboardNav';
+import { DashboardSideNav } from '../components/sb-ui/DashboardSideNav';
 
 export default function UserLayout({
   children, // will be a page or nested layout

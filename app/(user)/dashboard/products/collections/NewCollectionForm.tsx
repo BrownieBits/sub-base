@@ -75,7 +75,11 @@ export default function NewCollectionForm() {
       .replace(/[^a-z0-9 -]/g, '')
       .replace(/\s+/g, '-')
       .replace(/-+/g, '-');
-    const docRef: DocumentReference = doc(db, 'collections', encodedTitle);
+    const docRef: DocumentReference = doc(
+      db,
+      `stores/${default_store}/collections`,
+      encodedTitle
+    );
     const data: DocumentData = await getDoc(docRef);
 
     if (data.exists()) {

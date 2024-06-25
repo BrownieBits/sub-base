@@ -1,6 +1,6 @@
 import { client, previewClient } from '@/lib/contentful';
-import { HeroBanner } from '@/components/amaze-ui/HeroBanner';
-import { NoSubscriptions } from '@/components/amaze-ui/NoSubscriptions';
+import { HeroBanner } from '@/components/sb-ui/HeroBanner';
+import { NoSubscriptions } from '@/components/sb-ui/NoSubscriptions';
 import { Separator } from '@/components/ui/separator';
 import { db } from '@/firebase';
 import {
@@ -15,7 +15,7 @@ import {
 } from 'firebase/firestore';
 import { Metadata } from 'next';
 import { draftMode } from 'next/headers';
-import ProductCard from '@/components/amaze-ui/ProductCard';
+import ProductCard from '@/components/sb-ui/ProductCard';
 
 type Props = {
   params: { group: string };

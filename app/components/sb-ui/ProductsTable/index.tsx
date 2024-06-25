@@ -1,6 +1,6 @@
 import { DocumentData, QuerySnapshot } from 'firebase/firestore';
 import { columns } from './columns';
-import { DataTable } from '@/components/amaze-ui/DataTable';
+import { DataTable } from '@/components/sb-ui/DataTable';
 
 export const ProductsTable = (props: {
   snapshot: QuerySnapshot<DocumentData, DocumentData>;

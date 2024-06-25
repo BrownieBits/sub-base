@@ -5,8 +5,8 @@ import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBars } from '@fortawesome/free-solid-svg-icons';
 import { Button } from '@/components/ui/button';
-import { DashboardSideNav } from '@/components/amaze-ui/DashboardSideNav';
-import { Logo } from '@/components/amaze-ui/Logo';
+import { DashboardSideNav } from '@/components/sb-ui/DashboardSideNav';
+import { Logo } from '@/components/sb-ui/Logo';
 
 export const MarketingNav = () => {
   return (

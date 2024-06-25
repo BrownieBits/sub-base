@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { HeroBanner } from '@/components/amaze-ui/HeroBanner';
+import { HeroBanner } from '@/components/sb-ui/HeroBanner';
 import { Button } from '@/components/ui/button';
 import {
   CollectionReference,
@@ -14,8 +14,8 @@ import { db } from '@/firebase';
 import { Metadata, ResolvingMetadata } from 'next';
 import { cookies } from 'next/headers';
 import { redirect } from 'next/navigation';
-import { ProductsTable } from '@/components/amaze-ui/ProductsTable';
-import { NoProducts } from '@/components/amaze-ui/NoProducts';
+import { ProductsTable } from '@/components/sb-ui/ProductsTable';
+import { NoProducts } from '@/components/sb-ui/NoProducts';
 import { Separator } from '@/components/ui/separator';
 
 async function getData(slug: { [key: string]: string } | undefined) {

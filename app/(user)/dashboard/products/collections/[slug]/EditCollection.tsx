@@ -11,7 +11,7 @@ import {
   updateDoc,
   where,
 } from 'firebase/firestore';
-import AddProductsToCollectionForm from '@/components/amaze-ui/AddProductToCollectionForm';
+import AddProductsToCollectionForm from '@/components/sb-ui/AddProductToCollectionForm';
 import { db } from '@/firebase';
 import { useCollection } from 'react-firebase-hooks/firestore';
 import {
@@ -78,11 +78,15 @@ const formSchema = z.object({
   type: z.enum(['Manual', 'Smart'], {
     required_error: 'You need to select a collection type.',
   }),
-  description: z.string(),
+  description: z.string().optional(),
   tags: z.string().optional(),
 });
 
-export default function Edit(props: { data: DocumentData; id: string }) {
+export default function Edit(props: {
+  data: DocumentData;
+  id: string;
+  store_id: string;
+}) {
   const blogsRef = collection(db, 'products');
   const q = query(blogsRef, where('store_id', '==', props.id));
   const [blogSnapShots, loading1] = useCollection(q);
@@ -107,9 +111,12 @@ export default function Edit(props: { data: DocumentData; id: string }) {
   });
 
   async function onSubmit() {
-    const docRef: DocumentReference = doc(db, 'collections', props.id);
+    const docRef: DocumentReference = doc(
+      db,
+      `stores/${props.store_id}/collections`,
+      props.id
+    );
     setDisabled(true);
-    console.log(selectedTags);
     await updateDoc(docRef, {
       name: selectedName,
       type: selectedType,
@@ -123,12 +130,20 @@ export default function Edit(props: { data: DocumentData; id: string }) {
     revalidate(props.id);
   }
   async function deleteCollection() {
-    const docRef: DocumentReference = doc(db, 'collections', props.id);
+    const docRef: DocumentReference = doc(
+      db,
+      `stores/${props.store_id}/collections`,
+      props.id
+    );
     await deleteDoc(docRef);
     push(`/dashboard/products/collections`);
   }
   async function collectionStatusUpdate(action: string) {
-    const docRef: DocumentReference = doc(db, 'collections', props.id);
+    const docRef: DocumentReference = doc(
+      db,
+      `stores/${props.store_id}/collections`,
+      props.id
+    );
     await updateDoc(docRef, {
       status: action,
     });

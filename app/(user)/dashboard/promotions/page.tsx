@@ -1,5 +1,5 @@
-import { HeroBanner } from '@/components/amaze-ui/HeroBanner';
-import NewPromotionForm from '@/components/amaze-ui/NewPromotionForm';
+import { HeroBanner } from '@/components/sb-ui/HeroBanner';
+import NewPromotionForm from '@/components/sb-ui/NewPromotionForm';
 import { cookies } from 'next/headers';
 import { Metadata, ResolvingMetadata } from 'next';
 import {
@@ -13,8 +13,8 @@ import {
 } from 'firebase/firestore';
 import { db } from '@/firebase';
 import { redirect } from 'next/navigation';
-import { NoPromotions } from '@/components/amaze-ui/NoPromotions';
-import { PromotionsTable } from '@/components/amaze-ui/PromotionsTable';
+import { NoPromotions } from '@/components/sb-ui/NoPromotions';
+import { PromotionsTable } from '@/components/sb-ui/PromotionsTable';
 import { Separator } from '@/components/ui/separator';
 
 async function getData(slug: { [key: string]: string } | undefined) {

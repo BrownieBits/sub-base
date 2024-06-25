@@ -2,8 +2,8 @@ import { client, previewClient } from '@/lib/contentful';
 import { notFound, redirect } from 'next/navigation';
 import type { Metadata, ResolvingMetadata } from 'next';
 import { draftMode } from 'next/headers';
-import { ContentfulVideo } from '@/components/amaze-ui/ContentfulVideo';
-import { ContentfulImageTiles } from '@/components/amaze-ui/ContentfulImageTiles';
+import { ContentfulVideo } from '@/components/sb-ui/ContentfulVideo';
+import { ContentfulImageTiles } from '@/components/sb-ui/ContentfulImageTiles';
 
 type Props = {
   params: { id: string; slug: string };

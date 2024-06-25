@@ -2,9 +2,9 @@ import { client, previewClient } from '@/lib/contentful';
 import { redirect } from 'next/navigation';
 import type { Metadata, ResolvingMetadata } from 'next';
 import { draftMode } from 'next/headers';
-import { ContentfulVideo } from '@/components/amaze-ui/ContentfulVideo';
-import { ContentfulImageTiles } from '@/components/amaze-ui/ContentfulImageTiles';
-import ContentfulImage from '@/components/amaze-ui/ConentfulImage';
+import { ContentfulVideo } from '@/components/sb-ui/ContentfulVideo';
+import { ContentfulImageTiles } from '@/components/sb-ui/ContentfulImageTiles';
+import ContentfulImage from '@/components/sb-ui/ConentfulImage';
 import Link from 'next/link';
 
 type Props = {

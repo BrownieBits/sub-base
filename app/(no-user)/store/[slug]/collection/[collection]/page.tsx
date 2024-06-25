@@ -13,8 +13,8 @@ import {
 } from 'firebase/firestore';
 import { Metadata, ResolvingMetadata } from 'next';
 import ShowAvatar from '../../ShowAvatar';
-import ProductCard from '@/components/amaze-ui/ProductCard';
-import { SubsciberButton } from '@/components/amaze-ui/SubscribeButton';
+import ProductCard from '@/components/sb-ui/ProductCard';
+import { SubsciberButton } from '@/components/sb-ui/SubscribeButton';
 import { Separator } from '@/components/ui/separator';
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
@@ -24,7 +24,7 @@ import { cookies } from 'next/headers';
 import { StorePasswordForm } from '../../password-protection';
 import { revalidatePath } from 'next/cache';
 import Image from 'next/image';
-import { ShowMoreText } from '@/components/amaze-ui/ShowMoreText';
+import { ShowMoreText } from '@/components/sb-ui/ShowMoreText';
 
 type Props = {
   params: { slug: string; collection: string };
@@ -50,12 +50,11 @@ async function getData(store: string, collectionId: string) {
     redirect(`/store/${store}`);
   }
 
-  const collectionsRef: CollectionReference = collection(db, 'collections');
-  const colQuery = query(
-    collectionsRef,
-    where('store_id', '==', store),
-    where('status', '==', 'Public')
+  const collectionsRef: CollectionReference = collection(
+    db,
+    `stores/${store}/collections`
   );
+  const colQuery = query(collectionsRef, where('status', '==', 'Public'));
   const collectionsData: QuerySnapshot<DocumentData, DocumentData> =
     await getDocs(colQuery);
 

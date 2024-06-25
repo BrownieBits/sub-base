@@ -1,4 +1,4 @@
-import { HeroBanner } from '@/components/amaze-ui/HeroBanner';
+import { HeroBanner } from '@/components/sb-ui/HeroBanner';
 import { Button } from '@/components/ui/button';
 import { Separator } from '@/components/ui/separator';
 import { db } from '@/firebase';

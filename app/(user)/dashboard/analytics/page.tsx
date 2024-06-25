@@ -14,7 +14,7 @@ import { DateRange } from 'react-day-picker';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCalendar } from '@fortawesome/free-solid-svg-icons';
 import { Separator } from '@/components/ui/separator';
-import { HeroBanner } from '@/components/amaze-ui/HeroBanner';
+import { HeroBanner } from '@/components/sb-ui/HeroBanner';
 
 export default function Analytics() {
   const [date, setDate] = React.useState<DateRange | undefined>({

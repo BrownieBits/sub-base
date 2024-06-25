@@ -1,4 +1,4 @@
-import { HeroBanner } from '@/components/amaze-ui/HeroBanner';
+import { HeroBanner } from '@/components/sb-ui/HeroBanner';
 import { Separator } from '@/components/ui/separator';
 
 export default function StoreDoesntExistPage() {

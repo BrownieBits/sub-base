@@ -3,14 +3,14 @@ import type { Metadata } from 'next';
 import { Inter as FontSans } from 'next/font/google';
 import { draftMode, headers } from 'next/headers';
 import { cn } from '@/lib/utils';
-import { ThemeProvider } from '@/components/amaze-ui/ThemeProvider';
+import { ThemeProvider } from '@/components/sb-ui/ThemeProvider';
 import { Toaster } from '@/components/ui/sonner';
 import '@fortawesome/fontawesome-svg-core/styles.css';
 import { config } from '@fortawesome/fontawesome-svg-core';
 import Script from 'next/script';
 import Link from 'next/link';
 import CookieConsent from './lib/consent';
-import AuthState from './components/amaze-ui/AuthState';
+import AuthState from './components/sb-ui/AuthState';
 config.autoAddCss = false;
 
 const fontSans = FontSans({

@@ -11,7 +11,7 @@ import {
   updateDoc,
   where,
 } from 'firebase/firestore';
-import AddProductsToCollectionForm from '@/components/amaze-ui/AddProductToCollectionForm';
+import AddProductsToCollectionForm from '@/components/sb-ui/AddProductToCollectionForm';
 import { db, storage } from '@/firebase';
 import { useCollection, useDocument } from 'react-firebase-hooks/firestore';
 import {

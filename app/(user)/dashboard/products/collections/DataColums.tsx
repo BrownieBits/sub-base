@@ -22,8 +22,17 @@ import {
   TooltipTrigger,
 } from '@/components/ui/tooltip';
 
-async function Archive(action: string, id: string, name: string) {
-  const docRef: DocumentReference = doc(db, 'collections', id);
+async function Archive(
+  action: string,
+  id: string,
+  name: string,
+  store_id: string
+) {
+  const docRef: DocumentReference = doc(
+    db,
+    `stores/${store_id}/collections`,
+    id
+  );
   await updateDoc(docRef, {
     status: action,
   });
@@ -281,6 +290,7 @@ export const columns: ColumnDef<Collection>[] = [
     cell: ({ row }) => {
       const id = row.getValue('id') as string;
       const name = row.getValue('name') as string;
+      const store_id = row.getValue('store_id') as string;
       return (
         <section className="flex gap-[15px] justify-end">
           <TooltipProvider>
@@ -307,7 +317,7 @@ export const columns: ColumnDef<Collection>[] = [
                   <Button
                     variant="link"
                     title="Make Private"
-                    onClick={() => Archive('Private', id, name)}
+                    onClick={() => Archive('Private', id, name, store_id)}
                     className="p-0 text-foreground"
                   >
                     <FontAwesomeIcon className="icon" icon={faEyeSlash} />
@@ -325,7 +335,7 @@ export const columns: ColumnDef<Collection>[] = [
                   <Button
                     variant="link"
                     title="Make Public"
-                    onClick={() => Archive('Public', id, name)}
+                    onClick={() => Archive('Public', id, name, store_id)}
                     className="p-0 text-foreground"
                   >
                     <FontAwesomeIcon className="icon" icon={faEye} />

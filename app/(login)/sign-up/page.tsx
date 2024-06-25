@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import { SignUpForm } from './sign-up-form';
-import { Logo } from '@/components/amaze-ui/Logo';
+import { Logo } from '@/components/sb-ui/Logo';
 
 export default function SignUp({
   searchParams,

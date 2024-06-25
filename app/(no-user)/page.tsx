@@ -1,7 +1,7 @@
 import Head from 'next/head';
 import { client } from '@/lib/contentful';
-import { ContentfulVideo } from '@/components/amaze-ui/ContentfulVideo';
-import { ContentfulImageTiles } from '@/components/amaze-ui/ContentfulImageTiles';
+import { ContentfulVideo } from '@/components/sb-ui/ContentfulVideo';
+import { ContentfulImageTiles } from '@/components/sb-ui/ContentfulImageTiles';
 
 export default async function Home() {
   const data = await client.getEntries({

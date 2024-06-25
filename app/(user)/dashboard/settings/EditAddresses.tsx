@@ -21,7 +21,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faCircle,
   faCircleDot,
-  faCirclePlus,
+  faSquarePlus,
   faTrash,
 } from '@fortawesome/free-solid-svg-icons';
 import { Button } from '@/components/ui/button';
@@ -190,9 +190,9 @@ export default function EditAddresses(props: {
               <div>
                 <FontAwesomeIcon
                   className="icon mr-2 h-4 w-4"
-                  icon={faCirclePlus}
+                  icon={faSquarePlus}
                 />
-                New Address
+                Add Address
               </div>
             </Button>
           </AlertDialogTrigger>

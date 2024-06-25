@@ -5,9 +5,9 @@ import { faBell } from '@fortawesome/free-regular-svg-icons';
 import { faSquarePlus, faBars } from '@fortawesome/free-solid-svg-icons';
 import { UserDropdown } from '../UserDropdown';
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
-import { DashboardSideNav } from '@/components/amaze-ui/DashboardSideNav';
+import { DashboardSideNav } from '@/components/sb-ui/DashboardSideNav';
 import { cookies } from 'next/headers';
-import { Logo } from '@/components/amaze-ui/Logo';
+import { Logo } from '@/components/sb-ui/Logo';
 
 export const DashboardNav = () => {
   const cookieStore = cookies();

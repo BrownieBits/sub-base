@@ -13,14 +13,14 @@ import {
 } from 'firebase/firestore';
 import { Metadata, ResolvingMetadata } from 'next';
 // import ShowAvatar from '../../ShowAvatar';
-import ProductCard from '@/components/amaze-ui/ProductCard';
-import { SubsciberButton } from '@/components/amaze-ui/SubscribeButton';
+import ProductCard from '@/components/sb-ui/ProductCard';
+import { SubsciberButton } from '@/components/sb-ui/SubscribeButton';
 import { Separator } from '@/components/ui/separator';
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
 import { redirect } from 'next/navigation';
 import ProductImages from './ProductImages';
-import { LikeButton } from '@/components/amaze-ui/LikeButton';
+import { LikeButton } from '@/components/sb-ui/LikeButton';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faShare } from '@fortawesome/free-solid-svg-icons';
 

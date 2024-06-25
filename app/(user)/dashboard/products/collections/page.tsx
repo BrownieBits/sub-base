@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { HeroBanner } from '@/components/amaze-ui/HeroBanner';
+import { HeroBanner } from '@/components/sb-ui/HeroBanner';
 import { Button } from '@/components/ui/button';
 import { Metadata, ResolvingMetadata } from 'next';
 import {
@@ -17,15 +17,18 @@ import { cookies } from 'next/headers';
 import { Separator } from '@/components/ui/separator';
 import NewCollectionForm from './NewCollectionForm';
 import { NoCollections } from './NoCollections';
-import { DataTable } from '@/components/amaze-ui/DataTable';
+import { DataTable } from '@/components/sb-ui/DataTable';
 import { columns } from './DataColums';
 
 async function getData(slug: { [key: string]: string } | undefined) {
   if (slug === undefined) {
     redirect(`/sign-in?redirect=/dashboard/products`);
   }
-  const collectionsRef: CollectionReference = collection(db, 'collections');
-  const q = query(collectionsRef, where('store_id', '==', slug.value));
+  const collectionsRef: CollectionReference = collection(
+    db,
+    `stores/${slug.value}/collections`
+  );
+  const q = query(collectionsRef);
   const collectionsData: QuerySnapshot<DocumentData, DocumentData> =
     await getDocs(q);
 
