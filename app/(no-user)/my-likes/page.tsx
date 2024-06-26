@@ -2,7 +2,7 @@ import { HeroBanner } from '@/components/sb-ui/HeroBanner';
 import { NoSubscriptions } from '@/components/sb-ui/NoSubscriptions';
 import ProductCard from '@/components/sb-ui/ProductCard';
 import { Separator } from '@/components/ui/separator';
-import { db } from '@/firebase';
+import { db } from '@/lib/firebase';
 import {
   DocumentData,
   QuerySnapshot,

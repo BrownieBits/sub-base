@@ -3,7 +3,7 @@
 import Link from 'next/link';
 import { Button } from '../../ui/button';
 import { usePathname } from 'next/navigation';
-import { auth } from '@/firebase';
+import { auth } from '@/lib/firebase';
 import { useAuthState } from 'react-firebase-hooks/auth';
 
 export const MenuItem = (props: any) => {

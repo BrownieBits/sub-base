@@ -17,7 +17,7 @@ import {
   useCreateUserWithEmailAndPassword,
   useUpdateProfile,
 } from 'react-firebase-hooks/auth';
-import { auth, db } from '@/firebase';
+import { auth, db } from '@/lib/firebase';
 import { redirect, useRouter } from 'next/navigation';
 import { useEffect } from 'react';
 import {

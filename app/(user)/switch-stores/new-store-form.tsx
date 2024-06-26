@@ -34,7 +34,7 @@ import {
   setDoc,
   updateDoc,
 } from 'firebase/firestore';
-import { db } from '@/firebase';
+import { db } from '@/lib/firebase';
 import { revalidate } from './actions';
 import { generate } from 'random-words';
 import { toast } from 'sonner';

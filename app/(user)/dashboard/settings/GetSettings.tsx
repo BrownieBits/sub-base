@@ -6,7 +6,7 @@ import {
   doc,
   onSnapshot,
 } from 'firebase/firestore';
-import { db } from '@/firebase';
+import { db } from '@/lib/firebase';
 import React from 'react';
 import EditSettings from './EditSettings';
 import { UserSettings } from './typedef';

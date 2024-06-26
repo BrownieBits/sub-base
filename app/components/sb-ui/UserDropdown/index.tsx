@@ -17,7 +17,7 @@ import { useTheme } from 'next-themes';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { useSignOut } from 'react-firebase-hooks/auth';
-import { auth } from '@/firebase';
+import { auth } from '@/lib/firebase';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { Button } from '@/components/ui/button';
 import { getCookie } from 'cookies-next';

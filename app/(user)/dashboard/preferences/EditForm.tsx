@@ -12,7 +12,7 @@ import {
   where,
 } from 'firebase/firestore';
 import AddProductsToCollectionForm from '@/components/sb-ui/AddProductToCollectionForm';
-import { db, storage } from '@/firebase';
+import { db, storage } from '@/lib/firebase';
 import { useCollection, useDocument } from 'react-firebase-hooks/firestore';
 import {
   DropdownMenu,

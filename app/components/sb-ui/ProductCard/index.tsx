@@ -1,6 +1,6 @@
 'use client';
 import { Skeleton } from '@/components/ui/skeleton';
-import { db } from '@/firebase';
+import { db } from '@/lib/firebase';
 import { doc } from 'firebase/firestore';
 import Image from 'next/image';
 import Link from 'next/link';

@@ -1,6 +1,6 @@
 'use client';
 
-import { db } from '@/firebase';
+import { db } from '@/lib/firebase';
 import { Button } from '@/components/ui/button';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {

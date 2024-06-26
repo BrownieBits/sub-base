@@ -7,7 +7,7 @@ import {
   query,
   where,
 } from 'firebase/firestore';
-import { db } from '@/firebase';
+import { db } from '@/lib/firebase';
 import { useCollection } from 'react-firebase-hooks/firestore';
 import { NoProducts } from '@/components/sb-ui/NoProducts';
 import ProductCard from '../ProductCard';

@@ -2,7 +2,7 @@ import { client, previewClient } from '@/lib/contentful';
 import { HeroBanner } from '@/components/sb-ui/HeroBanner';
 import { NoSubscriptions } from '@/components/sb-ui/NoSubscriptions';
 import { Separator } from '@/components/ui/separator';
-import { db } from '@/firebase';
+import { db } from '@/lib/firebase';
 import {
   DocumentData,
   QuerySnapshot,

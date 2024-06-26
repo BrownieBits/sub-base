@@ -1,7 +1,7 @@
 'use client';
 
 import { useAuthState } from 'react-firebase-hooks/auth';
-import { auth } from '@/firebase';
+import { auth } from '@/lib/firebase';
 import { useRouter, usePathname } from 'next/navigation';
 
 export function UserChecker() {

@@ -1,7 +1,7 @@
 'use client';
 
 import { Button } from '@/components/ui/button';
-import { db } from '@/firebase';
+import { db } from '@/lib/firebase';
 import { DocumentReference, doc, updateDoc } from 'firebase/firestore';
 
 export default function AcceptButton(props: {

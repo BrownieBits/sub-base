@@ -1,6 +1,6 @@
 'use client';
 
-import { auth, db } from '@/firebase';
+import { auth, db } from '@/lib/firebase';
 import { deleteCookie, getCookie, setCookie } from 'cookies-next';
 import { User, onAuthStateChanged } from 'firebase/auth';
 import {

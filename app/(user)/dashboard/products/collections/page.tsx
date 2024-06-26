@@ -11,7 +11,7 @@ import {
   query,
   where,
 } from 'firebase/firestore';
-import { db } from '@/firebase';
+import { db } from '@/lib/firebase';
 import { redirect } from 'next/navigation';
 import { cookies } from 'next/headers';
 import { Separator } from '@/components/ui/separator';

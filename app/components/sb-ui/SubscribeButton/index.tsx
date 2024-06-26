@@ -1,7 +1,7 @@
 'use client';
 
 import Link from 'next/link';
-import { auth } from '@/firebase';
+import { auth } from '@/lib/firebase';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { Button } from '@/components/ui/button';
 import {

@@ -13,7 +13,7 @@ import {
 import { faEyeSlash } from '@fortawesome/free-regular-svg-icons';
 import { Revalidate } from './actions';
 import { DocumentReference, doc, updateDoc } from 'firebase/firestore';
-import { db } from '@/firebase';
+import { db } from '@/lib/firebase';
 import { toast } from 'sonner';
 import {
   Tooltip,

@@ -33,7 +33,7 @@ import {
   query,
   where,
 } from 'firebase/firestore';
-import { auth, db } from '@/firebase';
+import { auth, db } from '@/lib/firebase';
 import { useFormStatus } from 'react-dom';
 import {
   Select,

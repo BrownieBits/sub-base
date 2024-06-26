@@ -11,7 +11,7 @@ import {
   query,
   where,
 } from 'firebase/firestore';
-import { db } from '@/firebase';
+import { db } from '@/lib/firebase';
 import { redirect } from 'next/navigation';
 import { NoPromotions } from '@/components/sb-ui/NoPromotions';
 import { PromotionsTable } from '@/components/sb-ui/PromotionsTable';

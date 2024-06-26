@@ -16,7 +16,7 @@ import {
   useAuthState,
   useSignInWithEmailAndPassword,
 } from 'react-firebase-hooks/auth';
-import { auth } from '@/firebase';
+import { auth } from '@/lib/firebase';
 import { redirect, useRouter, useSearchParams } from 'next/navigation';
 import { useEffect } from 'react';
 

@@ -5,7 +5,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUser } from '@fortawesome/free-solid-svg-icons';
 import { UserDropdown } from '../UserDropdown';
 import { Button } from '../../ui/button';
-import { auth } from '@/firebase';
+import { auth } from '@/lib/firebase';
 import { useAuthState } from 'react-firebase-hooks/auth';
 
 export const UserIcon = () => {

@@ -1,6 +1,6 @@
 'use server';
 
-import { db } from '@/firebase';
+import { db } from '@/lib/firebase'
 import { deleteDoc, doc, runTransaction, serverTimestamp, setDoc } from 'firebase/firestore';
 import { revalidatePath } from 'next/cache';
 

@@ -33,7 +33,7 @@ import {
   getDoc,
   setDoc,
 } from 'firebase/firestore';
-import { auth, db } from '@/firebase';
+import { auth, db } from '@/lib/firebase';
 import { useRouter } from 'next/navigation';
 import { useFormStatus } from 'react-dom';
 import { getCookie } from 'cookies-next';

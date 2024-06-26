@@ -1,5 +1,5 @@
 import { Button } from '@/components/ui/button';
-import { db } from '@/firebase';
+import { db } from '@/lib/firebase';
 import { faStore } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {

@@ -2,7 +2,7 @@
 
 import { redirect, useSearchParams } from 'next/navigation';
 import { useAuthState } from 'react-firebase-hooks/auth';
-import { auth } from '@/firebase';
+import { auth } from '@/lib/firebase';
 
 export default function Loading() {
   return (
