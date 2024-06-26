@@ -113,14 +113,14 @@ export default function NewCollectionForm() {
               className="icon mr-2 h-4 w-4"
               icon={faCirclePlus}
             />
-            New Collection
+            Add Collection
           </div>
         </Button>
       </AlertDialogTrigger>
 
       <AlertDialogContent>
         <AlertDialogHeader>
-          <AlertDialogTitle>New Collection</AlertDialogTitle>
+          <AlertDialogTitle>Add Collection</AlertDialogTitle>
           <AlertDialogDescription>
             <Form {...form}>
               <form
