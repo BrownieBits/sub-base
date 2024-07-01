@@ -1,30 +1,30 @@
+import ProductCard from '@/components/sb-ui/ProductCard';
+import { ShowMoreText } from '@/components/sb-ui/ShowMoreText';
+import { SubsciberButton } from '@/components/sb-ui/SubscribeButton';
+import { Button } from '@/components/ui/button';
+import { Separator } from '@/components/ui/separator';
 import { db } from '@/lib/firebase';
+import { cn } from '@/lib/utils';
 import {
-  DocumentReference,
-  doc,
-  DocumentData,
-  getDoc,
   CollectionReference,
+  DocumentData,
+  DocumentReference,
+  QuerySnapshot,
   collection,
+  doc,
+  getDoc,
+  getDocs,
   query,
   where,
-  getDocs,
-  QuerySnapshot,
 } from 'firebase/firestore';
-import { Metadata, ResolvingMetadata } from 'next';
-import ShowAvatar from '../../ShowAvatar';
-import ProductCard from '@/components/sb-ui/ProductCard';
-import { SubsciberButton } from '@/components/sb-ui/SubscribeButton';
-import { Separator } from '@/components/ui/separator';
-import { Button } from '@/components/ui/button';
+import { Metadata } from 'next';
+import { revalidatePath } from 'next/cache';
+import { cookies } from 'next/headers';
+import Image from 'next/image';
 import Link from 'next/link';
 import { redirect } from 'next/navigation';
-import { cn } from '@/lib/utils';
-import { cookies } from 'next/headers';
+import ShowAvatar from '../../ShowAvatar';
 import { StorePasswordForm } from '../../password-protection';
-import { revalidatePath } from 'next/cache';
-import Image from 'next/image';
-import { ShowMoreText } from '@/components/sb-ui/ShowMoreText';
 
 type Props = {
   params: { slug: string; collection: string };
@@ -163,7 +163,10 @@ export default async function StoreCollection({ params }: Props) {
         <section className="flex flex-col md:flex-row w-full justify-between items-start md:items-center px-[15px] py-[30px] gap-[15px]">
           <section className="flex gap-[30px]">
             <Link href={`/store/${params.slug}`} className="">
-              <ShowAvatar data={data.store.data()} />
+              <ShowAvatar
+                name={data.store.data().name}
+                url={data.store.data().avatar_url}
+              />
             </Link>
             <div className="">
               <h3>{data.store.data().name}</h3>
