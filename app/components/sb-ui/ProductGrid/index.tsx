@@ -1,5 +1,6 @@
 'use client';
 
+import { db } from '@/lib/firebase';
 import {
   DocumentData,
   QueryDocumentSnapshot,
@@ -7,9 +8,7 @@ import {
   query,
   where,
 } from 'firebase/firestore';
-import { db } from '@/lib/firebase';
 import { useCollection } from 'react-firebase-hooks/firestore';
-import { NoProducts } from '@/components/sb-ui/NoProducts';
 import ProductCard from '../ProductCard';
 
 export default function ProductGrid({
@@ -35,7 +34,7 @@ export default function ProductGrid({
               ))}
             </div>
           ) : (
-            <NoProducts />
+            <></>
           )}
         </div>
       )}
