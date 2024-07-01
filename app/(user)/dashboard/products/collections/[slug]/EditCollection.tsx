@@ -83,12 +83,17 @@ const formSchema = z.object({
 });
 
 export default function Edit(props: {
-  data: DocumentData;
+  name: string;
+  description: string;
+  tags: string;
+  type: 'Manual' | 'Smart';
+  products: string[];
+  status: string;
   id: string;
   store_id: string;
 }) {
   const blogsRef = collection(db, 'products');
-  const q = query(blogsRef, where('store_id', '==', props.id));
+  const q = query(blogsRef, where('store_id', '==', props.store_id));
   const [blogSnapShots, loading1] = useCollection(q);
   const { push } = useRouter();
   const [open, setOpen] = React.useState(false);
@@ -103,10 +108,10 @@ export default function Edit(props: {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      name: props.data.name || '',
-      type: props.data.type || 'Manual',
-      description: props.data.description || '',
-      tags: props.data.tags || '',
+      name: props.name || '',
+      type: props.type || 'Manual',
+      description: props.description || '',
+      tags: props.tags || '',
     },
   });
 
@@ -173,27 +178,27 @@ export default function Edit(props: {
         form.setValue('tags', '');
         setSelectedTags('');
       } else {
-        form.setValue('tags', props.data.tags);
-        setSelectedTags(props.data.tags);
+        form.setValue('tags', props.tags);
+        setSelectedTags(props.tags);
       }
       setSelectedType(event);
     }
   }
   async function updateSave() {
     if (
-      selectedName !== props.data.name ||
-      selectedDescription !== props.data.description ||
-      selectedTags !== props.data.tags ||
-      selectedProducts !== props.data.products ||
-      selectedType !== props.data.type
+      selectedName !== props.name ||
+      selectedDescription !== props.description ||
+      selectedTags !== props.tags ||
+      selectedProducts !== props.products ||
+      selectedType !== props.type
     ) {
       setDisabled(false);
     } else if (
-      selectedName === props.data.name &&
-      selectedDescription === props.data.description &&
-      selectedTags === props.data.tags &&
-      selectedProducts === props.data.products &&
-      selectedType === props.data.type
+      selectedName === props.name &&
+      selectedDescription === props.description &&
+      selectedTags === props.tags &&
+      selectedProducts === props.products &&
+      selectedType === props.type
     ) {
       setDisabled(true);
     }
@@ -204,24 +209,24 @@ export default function Edit(props: {
   }
 
   React.useEffect(() => {
-    form.setValue('name', props.data.name);
-    setSelectedName(props.data.name);
-  }, [props.data.name]);
+    form.setValue('name', props.name);
+    setSelectedName(props.name);
+  }, [props.name]);
   React.useEffect(() => {
-    form.setValue('description', props.data.description);
-    setSelectedDescription(props.data.description);
-  }, [props.data.description]);
+    form.setValue('description', props.description);
+    setSelectedDescription(props.description);
+  }, [props.description]);
   React.useEffect(() => {
-    form.setValue('tags', props.data.tags);
-    setSelectedTags(props.data.tags);
-  }, [props.data.tags]);
+    form.setValue('tags', props.tags);
+    setSelectedTags(props.tags);
+  }, [props.tags]);
   React.useEffect(() => {
-    form.setValue('type', props.data.type);
-    setSelectedType(props.data.type);
-  }, [props.data.type]);
+    form.setValue('type', props.type);
+    setSelectedType(props.type);
+  }, [props.type]);
   React.useEffect(() => {
-    setSelectedProducts(props.data.products);
-  }, [props.data.products]);
+    setSelectedProducts(props.products);
+  }, [props.products]);
   React.useEffect(() => {
     updateSave();
   }, [
@@ -251,13 +256,13 @@ export default function Edit(props: {
               </BreadcrumbItem>
               <BreadcrumbSeparator />
               <BreadcrumbItem>
-                <BreadcrumbPage>{props.data.name}</BreadcrumbPage>
+                <BreadcrumbPage>{props.name}</BreadcrumbPage>
               </BreadcrumbItem>
             </BreadcrumbList>
           </Breadcrumb>
         </section>
         <section className="flex w-full justify-between items-center px-[15px] pt-[10px] pb-[30px] gap-[15px]">
-          <h1>{props.data.name}</h1>
+          <h1>{props.name}</h1>
           <div className="flex gap-[15px] items-center">
             {disabled ? (
               <></>
@@ -270,9 +275,7 @@ export default function Edit(props: {
               </Button>
             )}
             <Button variant="outline" asChild>
-              <Link
-                href={`/store/${props.data.store_id}/collection/${props.id}`}
-              >
+              <Link href={`/store/${props.store_id}/collection/${props.id}`}>
                 View Collection
               </Link>
             </Button>
@@ -284,7 +287,7 @@ export default function Edit(props: {
               </DropdownMenuTrigger>
               <DropdownMenuContent>
                 <DropdownMenuItem>
-                  {props.data.status == 'Private' ? (
+                  {props.status == 'Private' ? (
                     <Button
                       variant="ghost"
                       onClick={() => {

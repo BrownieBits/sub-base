@@ -1,6 +1,6 @@
-import CreatorCard from '@/components/sb-ui/CreatorCard';
+import StoreCard from '@/components/sb-ui/StoreCard';
 import { HeroBanner } from '@/components/sb-ui/HeroBanner';
-import { NoSubscriptions } from '@/components/sb-ui/NoSubscriptions';
+import { NoSubscriptions } from './NoSubscriptions';
 import { Separator } from '@/components/ui/separator';
 import { db } from '@/lib/firebase';
 import {
@@ -50,9 +50,9 @@ export default async function Subscriptions() {
         {data.docs.length === 0 ? (
           <NoSubscriptions />
         ) : (
-          <section className="grid grid-cols-2 md:grid-cols-4 xl:grid-cols-6 gap-x-[30px] gap-y-[60px] p-[15px]">
+          <section className="grid grid-cols-2 md:grid-cols-4 xl:grid-cols-6 gap-x-[30px] gap-y-[60px] px-[15px] py-[30px]">
             {data.docs.map((doc) => {
-              return <CreatorCard id={doc.id} key={doc.id} />;
+              return <StoreCard id={doc.id} key={doc.id} />;
             })}
           </section>
         )}

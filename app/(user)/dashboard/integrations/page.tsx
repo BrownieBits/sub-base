@@ -1,8 +1,9 @@
 import { HeroBanner } from '@/components/sb-ui/HeroBanner';
 import { Button } from '@/components/ui/button';
-import Link from 'next/link';
-import { Metadata, ResolvingMetadata } from 'next';
 import { Separator } from '@/components/ui/separator';
+import { Metadata } from 'next';
+import { cookies } from 'next/headers';
+import Link from 'next/link';
 
 export async function generateMetadata(): Promise<Metadata> {
   return {
@@ -11,6 +12,8 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 export default function Integrations() {
+  const cookieStore = cookies();
+  const user_id = cookieStore.get('user_id');
   return (
     <section>
       <section className="w-full max-w-[3096px] mx-auto">
@@ -30,7 +33,15 @@ export default function Integrations() {
         <HeroBanner page_slug="creator-integrations" />
       </section>
       <Separator />
-      <section className="w-full max-w-[3096px] mx-auto"></section>
+      <section className="w-full max-w-[3096px] mx-auto">
+        <Button asChild>
+          <Link
+            href={`https://www.printful.com/oauth/authorize?client_id=${process.env.NEXT_PUBLIC_PRINTFUL_CLIENT_ID}&state=${user_id?.value!}&redirect_url=https://sub-base.vercel.app/printful`}
+          >
+            Link to Printful
+          </Link>
+        </Button>
+      </section>
     </section>
   );
 }

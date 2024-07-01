@@ -228,7 +228,7 @@ export default function EditForm(props: {
       password: selectedPassword,
     });
     props.revalidate();
-    toast('Store Updated', {
+    toast.success('Store Updated', {
       description: 'Your store info has been updated.',
     });
   }
@@ -253,27 +253,6 @@ export default function EditForm(props: {
       setSelectedPassword(event.target.value);
     } else if (event !== null && typeof event === 'boolean') {
       setSelectedProtection(event);
-    }
-  }
-  async function updateSave() {
-    if (
-      selectedName !== props.data.name ||
-      selectedDescription !== props.data.description ||
-      selectedAvatar !== props.data.avatar_url ||
-      selectedBanner !== props.data.banner_url ||
-      selectedProtection !== props.data.password_protected ||
-      selectedPassword !== props.data.password
-    ) {
-      setDisabled(false);
-    } else if (
-      selectedName === props.data.name &&
-      selectedDescription === props.data.description &&
-      selectedAvatar === props.data.avatar_url &&
-      selectedBanner === props.data.banner_url &&
-      selectedProtection === props.data.password_protected &&
-      selectedPassword === props.data.password
-    ) {
-      setDisabled(true);
     }
   }
   async function clearAvatar() {
@@ -309,6 +288,27 @@ export default function EditForm(props: {
   }, [props.data.password]);
 
   React.useEffect(() => {
+    const updateSave = async () => {
+      if (
+        selectedName !== props.data.name ||
+        selectedDescription !== props.data.description ||
+        selectedAvatar !== props.data.avatar_url ||
+        selectedBanner !== props.data.banner_url ||
+        selectedProtection !== props.data.password_protected ||
+        selectedPassword !== props.data.password
+      ) {
+        setDisabled(false);
+      } else if (
+        selectedName === props.data.name &&
+        selectedDescription === props.data.description &&
+        selectedAvatar === props.data.avatar_url &&
+        selectedBanner === props.data.banner_url &&
+        selectedProtection === props.data.password_protected &&
+        selectedPassword === props.data.password
+      ) {
+        setDisabled(true);
+      }
+    };
     updateSave();
   }, [
     selectedName,
@@ -352,7 +352,7 @@ export default function EditForm(props: {
         <Form {...form}>
           <form
             onSubmit={form.handleSubmit(onSubmit)}
-            className="flex flex-col px-[15px] pt-[15px] pb-[30px] w-full gap-[30px]"
+            className="flex flex-col px-[15px] py-[30px] w-full gap-[30px]"
           >
             <section className="flex flex-col md:flex-row gap-[30px]">
               <aside className="w-full md:w-[400px] lg:w-[600px]">

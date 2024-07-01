@@ -29,7 +29,7 @@ const ContentfulImage = (props: any) => {
       <picture className="w-full">
         <source media="(max-width: 1039px)" srcSet={mobile} />
         <source media="(min-width:1040)" srcSet={desktop} />
-        <img {...rest} />
+        <img {...rest} alt={props.alt} />
       </picture>
     );
   }

@@ -24,7 +24,7 @@ import {
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCirclePlus, faCalendar } from '@fortawesome/free-solid-svg-icons';
+import { faSquarePlus, faCalendar } from '@fortawesome/free-solid-svg-icons';
 import {
   CollectionReference,
   addDoc,
@@ -133,7 +133,7 @@ export default function NewPromotionForm({
           <div>
             <FontAwesomeIcon
               className="icon mr-2 h-4 w-4"
-              icon={faCirclePlus}
+              icon={faSquarePlus}
             />
             New Promotion
           </div>

@@ -42,7 +42,12 @@ export default async function EditCollection({ params }: Props) {
   const data: DocumentData = await getData(params.slug, default_store?.value!);
   return (
     <Edit
-      data={data.data()}
+      name={data.data().name}
+      description={data.data().description}
+      type={data.data().type}
+      tags={data.data().tags}
+      products={data.data().products}
+      status={data.data().status}
       id={params.slug}
       store_id={default_store?.value!}
     />

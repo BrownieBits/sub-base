@@ -1,5 +1,3 @@
-import { Timestamp } from "firebase/firestore";
-
 export type UserSettings = {
     name: string;
     email: string;

@@ -119,21 +119,6 @@ export default function EditSettings(props: {
       setSelectedDefaultCurrency(event);
     }
   }
-  async function updateSave() {
-    if (
-      selectedName !== props.userSettings.name ||
-      selectedPhone !== props.userSettings.phone ||
-      selectedDefaultCurrency !== props.userSettings.default_currency
-    ) {
-      setDisabled(false);
-    } else if (
-      selectedName === props.userSettings.name &&
-      selectedPhone === props.userSettings.phone &&
-      selectedDefaultCurrency === props.userSettings.default_currency
-    ) {
-      setDisabled(true);
-    }
-  }
 
   React.useEffect(() => {
     form.setValue('name', props.userSettings.name);
@@ -143,6 +128,21 @@ export default function EditSettings(props: {
   }, [props.userSettings]);
 
   React.useEffect(() => {
+    const updateSave = async () => {
+      if (
+        selectedName !== props.userSettings.name ||
+        selectedPhone !== props.userSettings.phone ||
+        selectedDefaultCurrency !== props.userSettings.default_currency
+      ) {
+        setDisabled(false);
+      } else if (
+        selectedName === props.userSettings.name &&
+        selectedPhone === props.userSettings.phone &&
+        selectedDefaultCurrency === props.userSettings.default_currency
+      ) {
+        setDisabled(true);
+      }
+    };
     updateSave();
   }, [selectedName, selectedPhone, selectedDefaultCurrency]);
 
@@ -171,7 +171,7 @@ export default function EditSettings(props: {
       </section>
       <Separator />
       <section className="w-full max-w-[2428px] mx-auto">
-        <section className="flex flex-col px-[15px] pt-[15px] pb-[30px] w-full gap-[30px]">
+        <section className="flex flex-col px-[15px] py-[30px] w-full gap-[30px]">
           <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)}>
               <section className="flex flex-col md:flex-row gap-[30px]">

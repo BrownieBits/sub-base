@@ -1,6 +1,5 @@
 import { client, previewClient } from '@/lib/contentful';
 import { HeroBanner } from '@/components/sb-ui/HeroBanner';
-import { NoSubscriptions } from '@/components/sb-ui/NoSubscriptions';
 import { Separator } from '@/components/ui/separator';
 import { db } from '@/lib/firebase';
 import {
@@ -16,6 +15,7 @@ import {
 import { Metadata } from 'next';
 import { draftMode } from 'next/headers';
 import ProductCard from '@/components/sb-ui/ProductCard';
+import { NoProducts } from './NoProducts';
 
 type Props = {
   params: { group: string };
@@ -112,9 +112,9 @@ export default async function MarketplacePage({ params }: Props) {
       <Separator />
       <section className="w-full max-w-[3096px] mx-auto">
         {data.products.length === 0 ? (
-          <NoSubscriptions />
+          <NoProducts />
         ) : (
-          <section className="grid grid-cols-1 md:grid-cols-3 xl:grid-cols-4 gap-x-[30px] gap-y-[60px] p-[15px]">
+          <section className="grid grid-cols-1 md:grid-cols-3 xl:grid-cols-4 gap-x-[30px] gap-y-[60px] px-[15px] py-[30px]">
             {data.products.map((doc: any) => {
               return (
                 <ProductCard id={doc.id} show_creator={true} key={doc.id} />

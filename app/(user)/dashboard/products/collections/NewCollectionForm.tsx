@@ -24,7 +24,7 @@ import {
 import { Input } from '@/components/ui/input';
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCirclePlus } from '@fortawesome/free-solid-svg-icons';
+import { faSquarePlus } from '@fortawesome/free-solid-svg-icons';
 import {
   DocumentData,
   DocumentReference,
@@ -33,7 +33,7 @@ import {
   getDoc,
   setDoc,
 } from 'firebase/firestore';
-import { auth, db } from '@/lib/firebase';
+import { db } from '@/lib/firebase';
 import { useRouter } from 'next/navigation';
 import { useFormStatus } from 'react-dom';
 import { getCookie } from 'cookies-next';
@@ -111,7 +111,7 @@ export default function NewCollectionForm() {
           <div>
             <FontAwesomeIcon
               className="icon mr-2 h-4 w-4"
-              icon={faCirclePlus}
+              icon={faSquarePlus}
             />
             Add Collection
           </div>

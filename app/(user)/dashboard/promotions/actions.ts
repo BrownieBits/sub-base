@@ -2,7 +2,12 @@
 
 import { db } from "@/lib/firebase";
 import { deleteDoc, doc, updateDoc } from "firebase/firestore";
-import { revalidatePath } from "next/cache";
+import { revalidatePath } from 'next/cache';
+
+export async function revalidate() {
+    'use server';
+    revalidatePath(`/dashboard/promotions`);
+}
 
 export async function ChangeStatus(action: string | boolean, id: string, item: 'status' | 'show') {
     'use server';

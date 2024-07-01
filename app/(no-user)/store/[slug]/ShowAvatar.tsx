@@ -17,7 +17,8 @@ const AvatarVariants = cva('text-foreground', {
 });
 
 export default function ShowAvatar(props: {
-  data: DocumentData;
+  name: string;
+  url: string;
   size?: 'sm' | undefined;
 }) {
   let css = 'bg-foreground text-background';
@@ -28,10 +29,8 @@ export default function ShowAvatar(props: {
   }
   return (
     <Avatar className={css}>
-      <AvatarImage src={props.data.avatar_url!} alt={props.data.name!} />
-      <AvatarFallback>
-        {props.data.name?.slice(0, 1).toUpperCase()}
-      </AvatarFallback>
+      <AvatarImage src={props.url} alt={props.name} />
+      <AvatarFallback>{props.name.slice(0, 1).toUpperCase()}</AvatarFallback>
     </Avatar>
   );
 }

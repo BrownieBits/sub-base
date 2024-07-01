@@ -1,5 +1,4 @@
 import { HeroBanner } from '@/components/sb-ui/HeroBanner';
-import { NoSubscriptions } from '@/components/sb-ui/NoSubscriptions';
 import ProductCard from '@/components/sb-ui/ProductCard';
 import { Separator } from '@/components/ui/separator';
 import { db } from '@/lib/firebase';
@@ -12,6 +11,7 @@ import {
 import { Metadata, ResolvingMetadata } from 'next';
 import { cookies } from 'next/headers';
 import { redirect } from 'next/navigation';
+import { NoLikes } from './NoLikes';
 
 type Props = {
   params: {};
@@ -48,7 +48,7 @@ export default async function LikedItems() {
       <Separator />
       <section className="w-full max-w-[3096px] mx-auto">
         {data.docs.length === 0 ? (
-          <NoSubscriptions />
+          <NoLikes />
         ) : (
           <section className="grid grid-cols-1 md:grid-cols-3 xl:grid-cols-4 gap-x-[30px] gap-y-[60px] p-[15px]">
             {data.docs.map((doc) => {

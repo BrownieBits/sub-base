@@ -7,7 +7,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { useDocument } from 'react-firebase-hooks/firestore';
 
-export default function CreatorCard({ id }: { id: string }) {
+export default function StoreCard({ id }: { id: string }) {
   const docRef = doc(db, 'stores', id);
   const [value, loading, error] = useDocument(docRef);
 

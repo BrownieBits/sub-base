@@ -1,5 +1,5 @@
 import { HeroBanner } from '@/components/sb-ui/HeroBanner';
-import NewPromotionForm from '@/components/sb-ui/NewPromotionForm';
+import NewPromotionForm from './NewPromotionForm';
 import { cookies } from 'next/headers';
 import { Metadata, ResolvingMetadata } from 'next';
 import {
@@ -13,9 +13,10 @@ import {
 } from 'firebase/firestore';
 import { db } from '@/lib/firebase';
 import { redirect } from 'next/navigation';
-import { NoPromotions } from '@/components/sb-ui/NoPromotions';
-import { PromotionsTable } from '@/components/sb-ui/PromotionsTable';
+import { NoPromotions } from './NoPromotions';
 import { Separator } from '@/components/ui/separator';
+import { DataTable } from '@/components/sb-ui/DataTable';
+import { columns } from './DataColumns';
 
 async function getData(slug: { [key: string]: string } | undefined) {
   if (slug === undefined) {
@@ -26,7 +27,23 @@ async function getData(slug: { [key: string]: string } | undefined) {
   const promotionsData: QuerySnapshot<DocumentData, DocumentData> =
     await getDocs(q);
 
-  return promotionsData;
+  const data = promotionsData.docs.map((item) => {
+    return {
+      id: item.id,
+      amount: item.data().amount,
+      title: item.data().title,
+      minimum_order_value: item.data().minimum_order_value,
+      number_of_uses: item.data().number_of_used,
+      times_used: item.data().times_used,
+      type: item.data().type,
+      user_id: item.data().user_id,
+      status: item.data().status,
+      store_id: item.data().store_id,
+      show_in_banner: item.data().show_in_banner,
+    };
+  });
+
+  return data;
 }
 
 export async function generateMetadata(): Promise<Metadata> {
@@ -50,8 +67,8 @@ export default async function Promotions() {
       </section>
       <Separator />
       <section className="w-full max-w-[3096px] mx-auto">
-        {data?.docs?.length! > 0 ? (
-          <PromotionsTable snapshot={data!} />
+        {data?.length! > 0 ? (
+          <DataTable columns={columns} data={data!} />
         ) : (
           <NoPromotions />
         )}

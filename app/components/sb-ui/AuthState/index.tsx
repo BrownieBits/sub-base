@@ -19,6 +19,7 @@ async function SetCookies(user: User) {
       setCookie('user_role', doc.data().role);
       setCookie('default_store', doc.data().default_store);
       setCookie('user_name', doc.data().name);
+      setCookie('user_email', doc.data().email);
     }
   });
 }

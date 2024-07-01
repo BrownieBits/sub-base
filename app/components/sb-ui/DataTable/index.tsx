@@ -21,7 +21,7 @@ import {
   TableRow,
 } from '@/components/ui/table';
 import React from 'react';
-import { Input } from '../../ui/input';
+import { Input } from '@/components/ui/input';
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
@@ -58,8 +58,8 @@ export function DataTable<TData, TValue>({
   });
 
   return (
-    <div className="rounded-md">
-      <div className="flex items-center pt-[10px] ml-[15px]">
+    <div>
+      <div className="flex items-center pt-[30px] pb-[15px] ml-[15px]">
         <Input
           placeholder="Filter"
           value={(table.getColumn('title')?.getFilterValue() as string) ?? ''}

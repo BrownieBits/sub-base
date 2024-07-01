@@ -4,8 +4,8 @@ import { db } from '@/lib/firebase';
 import { Button } from '@/components/ui/button';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
-  faCircleMinus,
-  faCirclePlus,
+  faSquareMinus,
+  faSquarePlus,
   faThumbsDown,
   faThumbsUp,
 } from '@fortawesome/free-solid-svg-icons';

@@ -24,7 +24,7 @@ import {
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCirclePlus, faCalendar } from '@fortawesome/free-solid-svg-icons';
+import { faSquarePlus, faCalendar } from '@fortawesome/free-solid-svg-icons';
 import {
   DocumentData,
   DocumentReference,
@@ -138,7 +138,7 @@ export default function NewStoreForm({ userID }: { userID: string }) {
           <div>
             <FontAwesomeIcon
               className="icon mr-2 h-4 w-4"
-              icon={faCirclePlus}
+              icon={faSquarePlus}
             />
             Create New Store
           </div>

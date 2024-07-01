@@ -141,15 +141,6 @@ export default function EditAddresses(props: {
       description: 'Your user info has been updated.',
     });
   }
-  async function getData() {
-    if (props.addresses.length > 0) {
-      const addressesRef: CollectionReference = collection(db, 'addresses');
-      const q = query(addressesRef, where('__name__', 'in', props.addresses));
-      const addressesData: QuerySnapshot<DocumentData, DocumentData> =
-        await getDocs(q);
-      setAddressData(addressesData.docs);
-    }
-  }
 
   async function makeDefault(newID: string) {
     const docRef: DocumentReference = doc(db, 'users', props.userID);
@@ -171,6 +162,15 @@ export default function EditAddresses(props: {
   }
 
   React.useEffect(() => {
+    const getData = async () => {
+      if (props.addresses.length > 0) {
+        const addressesRef: CollectionReference = collection(db, 'addresses');
+        const q = query(addressesRef, where('__name__', 'in', props.addresses));
+        const addressesData: QuerySnapshot<DocumentData, DocumentData> =
+          await getDocs(q);
+        setAddressData(addressesData.docs);
+      }
+    };
     getData();
   }, [props.addresses]);
 

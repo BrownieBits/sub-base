@@ -1,13 +1,14 @@
+import { DashboardSideNav } from '@/components/sb-ui/DashboardSideNav';
+import { Logo } from '@/components/sb-ui/Logo';
+import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
+import { faBell } from '@fortawesome/free-regular-svg-icons';
+import { faBars } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { cookies } from 'next/headers';
 import Link from 'next/link';
 import { Button } from '../../ui/button';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faBell } from '@fortawesome/free-regular-svg-icons';
-import { faSquarePlus, faBars } from '@fortawesome/free-solid-svg-icons';
+import { AddProductButton } from '../AddProductButton';
 import { UserDropdown } from '../UserDropdown';
-import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
-import { DashboardSideNav } from '@/components/sb-ui/DashboardSideNav';
-import { cookies } from 'next/headers';
-import { Logo } from '@/components/sb-ui/Logo';
 
 export const DashboardNav = () => {
   const cookieStore = cookies();
@@ -45,22 +46,11 @@ export const DashboardNav = () => {
           </Button>
         </li>
         <li>
-          <Button
-            asChild
+          <AddProductButton
+            copy="Create"
             variant="outline"
             className="bg-layer-one hover:bg-layer-two"
-          >
-            <Link
-              href={`/dashboard/${user_slug?.value}/products/baseProducts`}
-              aria-label="Start Creating"
-            >
-              <FontAwesomeIcon
-                icon={faSquarePlus}
-                className="mr-2 h-4 w-4 text-primary"
-              />
-              Create
-            </Link>
-          </Button>
+          />
         </li>
         <li>
           <UserDropdown />
