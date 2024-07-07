@@ -23,7 +23,7 @@ export default function Printful() {
       await connectToPrintful(code!);
       setStatus('Connected!');
     };
-    if (success === '1') {
+    if (success !== '1') {
       setStatus('Unsuccessful Connection. Try Again');
     } else if (state !== user_id) {
       setStatus('Wrong User State');
