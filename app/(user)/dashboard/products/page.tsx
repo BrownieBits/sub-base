@@ -22,7 +22,7 @@ import { NoProducts } from './NoProducts';
 
 async function getData(slug: { [key: string]: string } | undefined) {
   if (slug === undefined) {
-    redirect(`sign-in`);
+    redirect(`/sign-in`);
   }
   const productsRef: CollectionReference = collection(db, 'products');
   const q = query(productsRef, where('store_id', '==', slug.value));

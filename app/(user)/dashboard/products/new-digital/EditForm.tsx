@@ -15,24 +15,18 @@ import { Input } from '@/components/ui/input';
 import { Separator } from '@/components/ui/separator';
 import { Switch } from '@/components/ui/switch';
 import { Textarea } from '@/components/ui/textarea';
-import { db, storage } from '@/lib/firebase';
+import { db } from '@/lib/firebase';
 import { faSave, faTrash } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { zodResolver } from '@hookform/resolvers/zod';
-import {
-  DocumentData,
-  DocumentReference,
-  doc,
-  updateDoc,
-} from 'firebase/firestore';
-import { deleteObject, getDownloadURL, ref } from 'firebase/storage';
+import { DocumentReference, doc, updateDoc } from 'firebase/firestore';
 import Image from 'next/image';
-import Link from 'next/link';
 import React from 'react';
 import { useUploadFile } from 'react-firebase-hooks/storage';
 import { useForm } from 'react-hook-form';
 import { toast } from 'sonner';
 import * as z from 'zod';
+import { revalidate } from './actions';
 
 const MAX_IMAGE_SIZE = 5242880; // 5 MB
 const ALLOWED_IMAGE_TYPES = [
@@ -89,12 +83,7 @@ const formSchema = z.object({
     .optional(),
 });
 
-export default function EditForm(props: {
-  data: DocumentData;
-  storeID: string;
-  revalidate: () => void;
-  userID: string;
-}) {
+export default function EditForm(props: { storeID: string; userID: string }) {
   const [disabled, setDisabled] = React.useState<boolean>(true);
   const [selectedName, setSelectedName] = React.useState<string>('');
   const [selectedDescription, setSelectedDescription] =
@@ -109,11 +98,11 @@ export default function EditForm(props: {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      name: props.data.title || '',
+      name: '',
       avatar: undefined,
       banner: undefined,
-      password_protected: props.data.password_protected || false,
-      password: props.data.password || '',
+      password_protected: false,
+      password: '',
     },
   });
 
@@ -122,72 +111,8 @@ export default function EditForm(props: {
     let avatar = selectedAvatar;
     let banner = selectedBanner;
     let avatar_fileName = '';
-    let avatar_oldFileName = props.data.avatar_filename;
     let banner_fileName = '';
-    let banner_oldFileName = props.data.banner_filename;
-    if (avatar !== '' && props.data.avatar_url !== selectedAvatar) {
-      avatar_fileName = 'avatar_' + form.getValues('avatar')[0].name;
-      const storageRef = ref(
-        storage,
-        `${props.userID}/stores/${props.storeID}/${avatar_fileName}`
-      );
 
-      await uploadFile(storageRef, form.getValues('avatar')[0], {
-        contentType: form.getValues('avatar')[0].type,
-      });
-      avatar = await getDownloadURL(storageRef);
-    }
-
-    if (selectedAvatar === '' && props.data.avatar_url !== '') {
-      const del_avatar_storageRef = ref(
-        storage,
-        `${props.userID}/stores/${props.storeID.replace('.', '')}/${avatar_oldFileName}`
-      );
-      await deleteObject(del_avatar_storageRef);
-    } else if (selectedAvatar === props.data.avatar_url) {
-      avatar_fileName = avatar_oldFileName;
-    } else if (
-      selectedAvatar !== props.data.avatar_url &&
-      avatar_oldFileName !== ''
-    ) {
-      const del_avatar_storageRef = ref(
-        storage,
-        `${props.userID}/stores/${props.storeID.replace('.', '')}/${avatar_oldFileName}`
-      );
-      await deleteObject(del_avatar_storageRef);
-    }
-
-    if (banner !== '' && props.data.banner_url !== selectedBanner) {
-      banner_fileName = 'banner_' + form.getValues('banner')[0].name;
-      const storageRef = ref(
-        storage,
-        `${props.userID}/stores/${props.storeID}/${banner_fileName}`
-      );
-
-      await uploadFile(storageRef, form.getValues('banner')[0], {
-        contentType: form.getValues('banner')[0].type,
-      });
-      banner = await getDownloadURL(storageRef);
-    }
-
-    if (selectedBanner === '' && props.data.banner_url !== '') {
-      const del_banner_storageRef = ref(
-        storage,
-        `${props.userID}/stores/${props.storeID}/${banner_oldFileName}`
-      );
-      await deleteObject(del_banner_storageRef);
-    } else if (selectedBanner === props.data.banner_url) {
-      banner_fileName = banner_oldFileName;
-    } else if (
-      selectedBanner !== props.data.banner_url &&
-      banner_oldFileName !== ''
-    ) {
-      const del_banner_storageRef = ref(
-        storage,
-        `${props.userID}/stores/${props.storeID}/${banner_oldFileName}`
-      );
-      await deleteObject(del_banner_storageRef);
-    }
     setDisabled(true);
     await updateDoc(docRef, {
       name: selectedName,
@@ -199,7 +124,7 @@ export default function EditForm(props: {
       password_protected: selectedProtection,
       password: selectedPassword,
     });
-    props.revalidate();
+    revalidate();
     toast.success('Store Updated', {
       description: 'Your store info has been updated.',
     });
@@ -239,47 +164,8 @@ export default function EditForm(props: {
   }
 
   React.useEffect(() => {
-    form.setValue('name', props.data.name);
-    setSelectedName(props.data.name);
-  }, [props.data.name]);
-  React.useEffect(() => {
-    form.setValue('description', props.data.description);
-    setSelectedDescription(props.data.description);
-  }, [props.data.description]);
-  React.useEffect(() => {
-    setSelectedAvatar(props.data.avatar_url);
-  }, [props.data.avatar_url]);
-  React.useEffect(() => {
-    setSelectedBanner(props.data.banner_url);
-  }, [props.data.banner_url]);
-  React.useEffect(() => {
-    setSelectedProtection(props.data.password_protected);
-  }, [props.data.password_protected]);
-  React.useEffect(() => {
-    setSelectedPassword(props.data.password);
-  }, [props.data.password]);
-
-  React.useEffect(() => {
     const updateSave = async () => {
-      if (
-        selectedName !== props.data.name ||
-        selectedDescription !== props.data.description ||
-        selectedAvatar !== props.data.avatar_url ||
-        selectedBanner !== props.data.banner_url ||
-        selectedProtection !== props.data.password_protected ||
-        selectedPassword !== props.data.password
-      ) {
-        setDisabled(false);
-      } else if (
-        selectedName === props.data.name &&
-        selectedDescription === props.data.description &&
-        selectedAvatar === props.data.avatar_url &&
-        selectedBanner === props.data.banner_url &&
-        selectedProtection === props.data.password_protected &&
-        selectedPassword === props.data.password
-      ) {
-        setDisabled(true);
-      }
+      setDisabled(true);
     };
     updateSave();
   }, [
@@ -295,7 +181,7 @@ export default function EditForm(props: {
     <section>
       <section className="w-full max-w-[2428px] mx-auto">
         <section className="flex w-full justify-between items-center px-[15px] py-[30px] gap-[15px]">
-          <h1>Preferences</h1>
+          <h1>Add Product</h1>
           <div className="flex gap-[15px] items-center">
             {disabled ? (
               <></>
@@ -303,19 +189,10 @@ export default function EditForm(props: {
               <Button type="submit" onClick={onSubmit} asChild>
                 <div>
                   <FontAwesomeIcon className="icon mr-[5px]" icon={faSave} />
-                  Save
+                  Create
                 </div>
               </Button>
             )}
-            <Button variant="outline" asChild>
-              <Link href={`/store/${props.storeID}`}>View store</Link>
-            </Button>
-            <Button variant="outline" onClick={() => {}} asChild>
-              <div>
-                <FontAwesomeIcon className="icon mr-[5px]" icon={faTrash} />{' '}
-                Delete
-              </div>
-            </Button>
           </div>
         </section>
       </section>
@@ -329,11 +206,11 @@ export default function EditForm(props: {
             <section className="flex flex-col md:flex-row gap-[30px]">
               <aside className="w-full md:w-[400px] lg:w-[600px]">
                 <p className="pb-[15px]">
-                  <b>Name and meta description</b>
+                  <b>Title and meta description</b>
                 </p>
                 <p>
-                  The name and meta description help define how your store shows
-                  up on search engines.
+                  The title and meta description help define how your store
+                  shows up on search engines.
                 </p>
               </aside>
               <aside className="w-full flex flex1 flex-col gap-[30px] bg-layer-one p-[30px] rounded drop-shadow">
