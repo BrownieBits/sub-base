@@ -13,6 +13,7 @@ export async function connectToPrintful(code: string) {
             code: code
         }),
     })
-    console.log('TOKEN RESPONSE', tokenResponse)
+    const json = await tokenResponse;
+    console.log('TOKEN RESPONSE', json)
     return
 }
