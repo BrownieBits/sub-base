@@ -39,6 +39,9 @@ export default function Printful() {
         </section>
       </section>
       <Separator />
+      <p>
+        <b>{status}</b>
+      </p>
     </section>
   );
 }
