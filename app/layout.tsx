@@ -41,6 +41,15 @@ export async function generateMetadata(): Promise<Metadata> {
         'Enjoy the products you love, and share it all with friends, family, and the world on SubBase.',
       site: 'SubBase Creator Platform',
     },
+    keywords: 'e-commerce, shopping, creators, social, products',
+    referrer: 'origin',
+    themeColor: [
+      { media: '(prefers-color-scheme: dark)', color: '#222222' },
+      { media: '(prefers-color-scheme: light)', color: '#ffffff' },
+    ],
+    publisher: 'SubBase',
+    creator: 'SubBase',
+    robots: 'index, follow',
   };
 }
 
