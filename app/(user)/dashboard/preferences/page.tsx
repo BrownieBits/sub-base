@@ -1,9 +1,4 @@
-import { HeroBanner } from '@/components/sb-ui/HeroBanner';
-import { Button } from '@/components/ui/button';
-import { Separator } from '@/components/ui/separator';
 import { db } from '@/lib/firebase';
-import { faStore } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   DocumentData,
   DocumentReference,
@@ -11,11 +6,10 @@ import {
   getDoc,
 } from 'firebase/firestore';
 import { Metadata } from 'next';
+import { revalidatePath } from 'next/cache';
 import { cookies } from 'next/headers';
-import Link from 'next/link';
 import { redirect } from 'next/navigation';
 import EditForm from './EditForm';
-import { revalidatePath } from 'next/cache';
 
 async function getData(slug: { [key: string]: string } | undefined) {
   if (slug === undefined) {
@@ -34,7 +28,27 @@ export async function generateMetadata(): Promise<Metadata> {
   const default_store = cookieStore.get('default_store');
   const data: DocumentData = await getData(default_store);
   return {
-    title: `${data.data().name} - Preferences`,
+    title: `${data.data().name} - Preferences - SubBase Creator Platform`,
+    description:
+      'Enjoy the products you love, and share it all with friends, family, and the world on SubBase.',
+    openGraph: {
+      type: 'website',
+      url: `https://sub-base.vercel.app/dashboard/preferences/`,
+      title: `${data.data().name} - Preferences - SubBase Creator Platform`,
+      siteName: 'SubBase Creator Platform',
+      description:
+        'Enjoy the products you love, and share it all with friends, family, and the world on SubBase.',
+      images: [],
+    },
+    twitter: {
+      card: 'summary_large_image',
+      creator: 'SubBase',
+      images: [],
+      title: `${data.data().name} - Preferences - SubBase Creator Platform`,
+      description:
+        'Enjoy the products you love, and share it all with friends, family, and the world on SubBase.',
+      site: 'SubBase Creator Platform',
+    },
   };
 }
 

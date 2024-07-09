@@ -53,7 +53,27 @@ async function getData(slug: { [key: string]: string } | undefined) {
 
 export async function generateMetadata(): Promise<Metadata> {
   return {
-    title: 'Products',
+    title: `My Products - SubBase Creator Platform`,
+    description:
+      'Enjoy the products you love, and share it all with friends, family, and the world on SubBase.',
+    openGraph: {
+      type: 'website',
+      url: `https://sub-base.vercel.app/dashboard/products/`,
+      title: `My Products - SubBase Creator Platform`,
+      siteName: 'SubBase Creator Platform',
+      description:
+        'Enjoy the products you love, and share it all with friends, family, and the world on SubBase.',
+      images: [],
+    },
+    twitter: {
+      card: 'summary_large_image',
+      creator: 'SubBase',
+      images: [],
+      title: `My Products - SubBase Creator Platform`,
+      description:
+        'Enjoy the products you love, and share it all with friends, family, and the world on SubBase.',
+      site: 'SubBase Creator Platform',
+    },
   };
 }
 

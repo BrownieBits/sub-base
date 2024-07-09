@@ -1,7 +1,8 @@
-import Link from 'next/link';
+import { DataTable } from '@/components/sb-ui/DataTable';
 import { HeroBanner } from '@/components/sb-ui/HeroBanner';
 import { Button } from '@/components/ui/button';
-import { Metadata, ResolvingMetadata } from 'next';
+import { Separator } from '@/components/ui/separator';
+import { db } from '@/lib/firebase';
 import {
   CollectionReference,
   DocumentData,
@@ -9,16 +10,14 @@ import {
   collection,
   getDocs,
   query,
-  where,
 } from 'firebase/firestore';
-import { db } from '@/lib/firebase';
-import { redirect } from 'next/navigation';
+import { Metadata } from 'next';
 import { cookies } from 'next/headers';
-import { Separator } from '@/components/ui/separator';
+import Link from 'next/link';
+import { redirect } from 'next/navigation';
+import { columns } from './DataColums';
 import NewCollectionForm from './NewCollectionForm';
 import { NoCollections } from './NoCollections';
-import { DataTable } from '@/components/sb-ui/DataTable';
-import { columns } from './DataColums';
 
 async function getData(slug: { [key: string]: string } | undefined) {
   if (slug === undefined) {
@@ -50,7 +49,27 @@ async function getData(slug: { [key: string]: string } | undefined) {
 
 export async function generateMetadata(): Promise<Metadata> {
   return {
-    title: 'Collections',
+    title: `Collections - SubBase Creator Platform`,
+    description:
+      'Enjoy the products you love, and share it all with friends, family, and the world on SubBase.',
+    openGraph: {
+      type: 'website',
+      url: `https://sub-base.vercel.app/dashboard/products/collections/`,
+      title: `Collections - SubBase Creator Platform`,
+      siteName: 'SubBase Creator Platform',
+      description:
+        'Enjoy the products you love, and share it all with friends, family, and the world on SubBase.',
+      images: [],
+    },
+    twitter: {
+      card: 'summary_large_image',
+      creator: 'SubBase',
+      images: [],
+      title: `Collections - SubBase Creator Platform`,
+      description:
+        'Enjoy the products you love, and share it all with friends, family, and the world on SubBase.',
+      site: 'SubBase Creator Platform',
+    },
   };
 }
 

@@ -1,20 +1,46 @@
 'use client';
 
+import { HeroBanner } from '@/components/sb-ui/HeroBanner';
 import { Button } from '@/components/ui/button';
-import React from 'react';
-import { cn } from '@/lib/utils';
 import { Calendar } from '@/components/ui/calendar';
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
 } from '@/components/ui/popover';
-import { subDays, addDays, format } from 'date-fns';
-import { DateRange } from 'react-day-picker';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCalendar } from '@fortawesome/free-solid-svg-icons';
 import { Separator } from '@/components/ui/separator';
-import { HeroBanner } from '@/components/sb-ui/HeroBanner';
+import { cn } from '@/lib/utils';
+import { faCalendar } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { addDays, format, subDays } from 'date-fns';
+import React from 'react';
+import { DateRange } from 'react-day-picker';
+
+// export async function generateMetadata(): Promise<Metadata> {
+//   return {
+//     title: `Settings - SubBase Creator Platform`,
+//     description:
+//       'Enjoy the products you love, and share it all with friends, family, and the world on SubBase.',
+//     openGraph: {
+//       type: 'website',
+//       url: `https://sub-base.vercel.app/dashboard/settings/`,
+//       title: `Settings - SubBase Creator Platform`,
+//       siteName: 'SubBase Creator Platform',
+//       description:
+//         'Enjoy the products you love, and share it all with friends, family, and the world on SubBase.',
+//       images: [],
+//     },
+//     twitter: {
+//       card: 'summary_large_image',
+//       creator: 'SubBase',
+//       images: [],
+//       title: `Settings - SubBase Creator Platform`,
+//       description:
+//         'Enjoy the products you love, and share it all with friends, family, and the world on SubBase.',
+//       site: 'SubBase Creator Platform',
+//     },
+//   };
+// }
 
 export default function Analytics() {
   const [date, setDate] = React.useState<DateRange | undefined>({

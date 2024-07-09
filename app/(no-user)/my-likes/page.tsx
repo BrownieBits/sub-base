@@ -8,14 +8,10 @@ import {
   collection,
   getDocs,
 } from 'firebase/firestore';
-import { Metadata, ResolvingMetadata } from 'next';
+import { Metadata } from 'next';
 import { cookies } from 'next/headers';
 import { redirect } from 'next/navigation';
 import { NoLikes } from './NoLikes';
-
-type Props = {
-  params: {};
-};
 
 async function getData(id: { [key: string]: string } | undefined) {
   if (id === undefined) {
@@ -27,9 +23,29 @@ async function getData(id: { [key: string]: string } | undefined) {
   return data;
 }
 
-export async function generateMetadata({ params }: Props): Promise<Metadata> {
+export async function generateMetadata(): Promise<Metadata> {
   return {
-    title: 'My Likes',
+    title: `My Likes - SubBase Creator Platform`,
+    description:
+      'Enjoy the products you love, and share it all with friends, family, and the world on SubBase.',
+    openGraph: {
+      type: 'website',
+      url: `https://sub-base.vercel.app/my-likes/`,
+      title: `My Likes - SubBase Creator Platform`,
+      siteName: 'SubBase Creator Platform',
+      description:
+        'Enjoy the products you love, and share it all with friends, family, and the world on SubBase.',
+      images: [],
+    },
+    twitter: {
+      card: 'summary_large_image',
+      creator: 'SubBase',
+      images: [],
+      title: `My Likes - SubBase Creator Platform`,
+      description:
+        'Enjoy the products you love, and share it all with friends, family, and the world on SubBase.',
+      site: 'SubBase Creator Platform',
+    },
   };
 }
 

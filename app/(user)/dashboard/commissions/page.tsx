@@ -1,12 +1,32 @@
-import { Button } from '@/components/ui/button';
 import { HeroBanner } from '@/components/sb-ui/HeroBanner';
-import Link from 'next/link';
-import { Metadata, ResolvingMetadata } from 'next';
+import { Button } from '@/components/ui/button';
 import { Separator } from '@/components/ui/separator';
+import { Metadata } from 'next';
+import Link from 'next/link';
 
 export async function generateMetadata(): Promise<Metadata> {
   return {
-    title: 'Commissions',
+    title: `Commissions - SubBase Creator Platform`,
+    description:
+      'Enjoy the products you love, and share it all with friends, family, and the world on SubBase.',
+    openGraph: {
+      type: 'website',
+      url: `https://sub-base.vercel.app/dashboard/commissions/`,
+      title: `Commissions - SubBase Creator Platform`,
+      siteName: 'SubBase Creator Platform',
+      description:
+        'Enjoy the products you love, and share it all with friends, family, and the world on SubBase.',
+      images: [],
+    },
+    twitter: {
+      card: 'summary_large_image',
+      creator: 'SubBase',
+      images: [],
+      title: `Commissions - SubBase Creator Platform`,
+      description:
+        'Enjoy the products you love, and share it all with friends, family, and the world on SubBase.',
+      site: 'SubBase Creator Platform',
+    },
   };
 }
 

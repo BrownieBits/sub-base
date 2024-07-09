@@ -20,8 +20,8 @@ export default function Printful() {
   // https://www.printful.com/oauth/token
   React.useEffect(() => {
     const connect = async () => {
-      await connectToPrintful(code!);
-      setStatus('Connected!');
+      const resp = await connectToPrintful(code!, user_id!);
+      setStatus(resp);
     };
     if (success !== '1') {
       setStatus('Unsuccessful Connection. Try Again');

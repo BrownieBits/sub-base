@@ -1,27 +1,27 @@
+import ProductCard from '@/components/sb-ui/ProductCard';
+import { ShowMoreText } from '@/components/sb-ui/ShowMoreText';
+import { SubsciberButton } from '@/components/sb-ui/SubscribeButton';
+import { Button } from '@/components/ui/button';
+import { Separator } from '@/components/ui/separator';
 import { db } from '@/lib/firebase';
 import {
-  DocumentReference,
-  doc,
-  DocumentData,
-  getDoc,
   CollectionReference,
+  DocumentData,
+  DocumentReference,
+  QuerySnapshot,
   collection,
+  doc,
+  getDoc,
+  getDocs,
   query,
   where,
-  getDocs,
-  QuerySnapshot,
 } from 'firebase/firestore';
-import { Metadata, ResolvingMetadata } from 'next';
-import ShowAvatar from './ShowAvatar';
-import ProductCard from '@/components/sb-ui/ProductCard';
-import { SubsciberButton } from '@/components/sb-ui/SubscribeButton';
-import { Separator } from '@/components/ui/separator';
-import { Button } from '@/components/ui/button';
-import Link from 'next/link';
-import Image from 'next/image';
-import { ShowMoreText } from '@/components/sb-ui/ShowMoreText';
-import { cookies } from 'next/headers';
+import { Metadata } from 'next';
 import { revalidatePath } from 'next/cache';
+import { cookies } from 'next/headers';
+import Image from 'next/image';
+import Link from 'next/link';
+import ShowAvatar from './ShowAvatar';
 import { StorePasswordForm } from './password-protection';
 
 type Props = {
@@ -73,7 +73,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   }
   const description =
     data.store.data().description === ''
-      ? 'This is a stroe'
+      ? 'This is a store'
       : data.store.data().description;
   const openGraphImages: string[] = [];
 
@@ -81,23 +81,23 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     openGraphImages.push(data.store.data().banner_url);
   }
   return {
-    title: data.store.data().name,
+    title: `${data.store.data().name} Store - SubBase Creator Platform`,
     description: description,
     openGraph: {
       type: 'website',
-      url: '',
-      title: data.store.data().name,
-      siteName: '',
+      url: `https://sub-base.vercel.app/store/${params.slug}`,
+      title: `${data.store.data().name} Store - SubBase Creator Platform`,
+      siteName: 'SubBase Creator Platform',
       description: description,
       images: openGraphImages,
     },
     twitter: {
-      card: 'summary',
-      creator: '',
+      card: 'summary_large_image',
+      creator: data.store.data().name,
       images: openGraphImages,
-      title: data.store.data().name,
+      title: `${data.store.data().name} Store - SubBase Creator Platform`,
       description: description,
-      site: '',
+      site: 'SubBase Creator Platform',
     },
   };
 }

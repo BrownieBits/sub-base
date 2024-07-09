@@ -74,7 +74,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   }
   const description =
     data.store.data().description === ''
-      ? 'This is a stroe'
+      ? 'This is a store'
       : data.store.data().description;
   const openGraphImages: string[] = [];
 
@@ -82,23 +82,23 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     openGraphImages.push(data.store.data().banner_url);
   }
   return {
-    title: data.store.data().name,
+    title: `${data.store.data().name} Store - SubBase Creator Platform`,
     description: description,
     openGraph: {
       type: 'website',
-      url: '',
-      title: data.store.data().name,
-      siteName: '',
+      url: `https://sub-base.vercel.app/store/${params.slug}/${params.collection}`,
+      title: `${data.store.data().name} Store - SubBase Creator Platform`,
+      siteName: 'SubBase Creator Platform',
       description: description,
       images: openGraphImages,
     },
     twitter: {
-      card: 'summary',
-      creator: '',
+      card: 'summary_large_image',
+      creator: data.store.data().name,
       images: openGraphImages,
-      title: data.store.data().name,
+      title: `${data.store.data().name} Store - SubBase Creator Platform`,
       description: description,
-      site: '',
+      site: 'SubBase Creator Platform',
     },
   };
 }

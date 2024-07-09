@@ -1,6 +1,5 @@
-import StoreCard from '@/components/sb-ui/StoreCard';
 import { HeroBanner } from '@/components/sb-ui/HeroBanner';
-import { NoSubscriptions } from './NoSubscriptions';
+import StoreCard from '@/components/sb-ui/StoreCard';
 import { Separator } from '@/components/ui/separator';
 import { db } from '@/lib/firebase';
 import {
@@ -9,9 +8,10 @@ import {
   collection,
   getDocs,
 } from 'firebase/firestore';
-import { Metadata, ResolvingMetadata } from 'next';
+import { Metadata } from 'next';
 import { cookies } from 'next/headers';
 import { redirect } from 'next/navigation';
+import { NoSubscriptions } from './NoSubscriptions';
 
 type Props = {
   params: {};
@@ -27,9 +27,29 @@ async function getData(id: { [key: string]: string } | undefined) {
   return data;
 }
 
-export async function generateMetadata({ params }: Props): Promise<Metadata> {
+export async function generateMetadata(): Promise<Metadata> {
   return {
-    title: 'Subscriptions',
+    title: `Subscriptions - SubBase Creator Platform`,
+    description:
+      'Enjoy the products you love, and share it all with friends, family, and the world on SubBase.',
+    openGraph: {
+      type: 'website',
+      url: `https://sub-base.vercel.app/subscriptions/`,
+      title: `Subscriptions - SubBase Creator Platform`,
+      siteName: 'SubBase Creator Platform',
+      description:
+        'Enjoy the products you love, and share it all with friends, family, and the world on SubBase.',
+      images: [],
+    },
+    twitter: {
+      card: 'summary_large_image',
+      creator: 'SubBase',
+      images: [],
+      title: `Subscriptions - SubBase Creator Platform`,
+      description:
+        'Enjoy the products you love, and share it all with friends, family, and the world on SubBase.',
+      site: 'SubBase Creator Platform',
+    },
   };
 }
 

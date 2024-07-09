@@ -1,6 +1,33 @@
+import { Logo } from '@/components/sb-ui/Logo';
+import { Metadata } from 'next';
 import Link from 'next/link';
 import { SignUpForm } from './sign-up-form';
-import { Logo } from '@/components/sb-ui/Logo';
+
+export async function generateMetadata(): Promise<Metadata> {
+  return {
+    title: `Sign Up - SubBase Creator Platform`,
+    description:
+      'Enjoy the products you love, and share it all with friends, family, and the world on SubBase.',
+    openGraph: {
+      type: 'website',
+      url: `https://sub-base.vercel.app/sign-up/`,
+      title: `Sign Up - SubBase Creator Platform`,
+      siteName: 'SubBase Creator Platform',
+      description:
+        'Enjoy the products you love, and share it all with friends, family, and the world on SubBase.',
+      images: [],
+    },
+    twitter: {
+      card: 'summary_large_image',
+      creator: 'SubBase',
+      images: [],
+      title: `Sign Up - SubBase Creator Platform`,
+      description:
+        'Enjoy the products you love, and share it all with friends, family, and the world on SubBase.',
+      site: 'SubBase Creator Platform',
+    },
+  };
+}
 
 export default function SignUp({
   searchParams,

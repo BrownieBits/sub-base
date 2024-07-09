@@ -1,12 +1,30 @@
 import { HeroBanner } from '@/components/sb-ui/HeroBanner';
-import { Button } from '@/components/ui/button';
-import Link from 'next/link';
-import { Metadata, ResolvingMetadata } from 'next';
 import { Separator } from '@/components/ui/separator';
+import { Metadata } from 'next';
 
 export async function generateMetadata(): Promise<Metadata> {
   return {
-    title: 'Content Library',
+    title: `Content Library - SubBase Creator Platform`,
+    description:
+      'Enjoy the products you love, and share it all with friends, family, and the world on SubBase.',
+    openGraph: {
+      type: 'website',
+      url: `https://sub-base.vercel.app/dashboard/content-library/`,
+      title: `Content Library - SubBase Creator Platform`,
+      siteName: 'SubBase Creator Platform',
+      description:
+        'Enjoy the products you love, and share it all with friends, family, and the world on SubBase.',
+      images: [],
+    },
+    twitter: {
+      card: 'summary_large_image',
+      creator: 'SubBase',
+      images: [],
+      title: `Content Library - SubBase Creator Platform`,
+      description:
+        'Enjoy the products you love, and share it all with friends, family, and the world on SubBase.',
+      site: 'SubBase Creator Platform',
+    },
   };
 }
 

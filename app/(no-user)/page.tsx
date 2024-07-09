@@ -1,7 +1,32 @@
-import Head from 'next/head';
-import { client } from '@/lib/contentful';
 import { ContentfulVideo } from '@/components/sb-ui/ContentfulVideo';
-import { ContentfulImageTiles } from '@/components/sb-ui/ContentfulImageTiles';
+import { client } from '@/lib/contentful';
+import { Metadata } from 'next';
+
+export async function generateMetadata(): Promise<Metadata> {
+  return {
+    title: `SubBase Creator Platform`,
+    description:
+      'Enjoy the products you love, and share it all with friends, family, and the world on SubBase.',
+    openGraph: {
+      type: 'website',
+      url: `https://sub-base.vercel.app/`,
+      title: `SubBase Creator Platform`,
+      siteName: 'SubBase Creator Platform',
+      description:
+        'Enjoy the products you love, and share it all with friends, family, and the world on SubBase.',
+      images: [],
+    },
+    twitter: {
+      card: 'summary_large_image',
+      creator: 'SubBase',
+      images: [],
+      title: `SubBase Creator Platform`,
+      description:
+        'Enjoy the products you love, and share it all with friends, family, and the world on SubBase.',
+      site: 'SubBase Creator Platform',
+    },
+  };
+}
 
 export default async function Home() {
   const data = await client.getEntries({

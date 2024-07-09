@@ -1,33 +1,24 @@
 import { HeroBanner } from '@/components/sb-ui/HeroBanner';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import { Button } from '@/components/ui/button';
 import { Separator } from '@/components/ui/separator';
 import { db } from '@/lib/firebase';
-import { faStore } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   CollectionReference,
   DocumentData,
-  DocumentReference,
   QueryDocumentSnapshot,
   QuerySnapshot,
   collection,
-  doc,
-  getDoc,
   getDocs,
   or,
   query,
-  updateDoc,
   where,
 } from 'firebase/firestore';
 import { Metadata } from 'next';
 import { revalidatePath } from 'next/cache';
 import { cookies } from 'next/headers';
-import Link from 'next/link';
-import { redirect } from 'next/navigation';
-import SwitchButton from './switch-button';
 import AcceptButton from './accept-invite';
 import NewStoreForm from './new-store-form';
+import SwitchButton from './switch-button';
 
 type ReturnData = {
   my_stores: QueryDocumentSnapshot<DocumentData, DocumentData>[];
@@ -83,7 +74,27 @@ async function getData(user_id: { [key: string]: string } | undefined) {
 
 export async function generateMetadata(): Promise<Metadata> {
   return {
-    title: `Switch Stores - Dashboard`,
+    title: `Switch Stores - SubBase Creator Platform`,
+    description:
+      'Enjoy the products you love, and share it all with friends, family, and the world on SubBase.',
+    openGraph: {
+      type: 'website',
+      url: `https://sub-base.vercel.app/switch-stores/`,
+      title: `Switch Stores - SubBase Creator Platform`,
+      siteName: 'SubBase Creator Platform',
+      description:
+        'Enjoy the products you love, and share it all with friends, family, and the world on SubBase.',
+      images: [],
+    },
+    twitter: {
+      card: 'summary_large_image',
+      creator: 'SubBase',
+      images: [],
+      title: `Switch Stores - SubBase Creator Platform`,
+      description:
+        'Enjoy the products you love, and share it all with friends, family, and the world on SubBase.',
+      site: 'SubBase Creator Platform',
+    },
   };
 }
 
