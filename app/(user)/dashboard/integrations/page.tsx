@@ -56,7 +56,7 @@ export default function Integrations() {
       <section className="w-full max-w-[3096px] mx-auto">
         <Button asChild>
           <Link
-            href={`https://www.printful.com/oauth/authorize?client_id=${process.env.NEXT_PUBLIC_PRINTFUL_CLIENT_ID}&state=${user_id?.value!}&redirect_url=https://4383-97-118-192-39.ngrok-free.app/printful`}
+            href={`https://www.printful.com/oauth/authorize?client_id=${process.env.NEXT_PUBLIC_PRINTFUL_CLIENT_ID}&state=${user_id?.value!}&redirect_url=https://${process.env.NEXT_PUBLIC_BASE_URL}/printful`}
           >
             Link to Printful
           </Link>

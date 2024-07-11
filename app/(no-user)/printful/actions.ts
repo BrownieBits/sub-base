@@ -25,7 +25,7 @@ export async function connectToPrintful(code: string, user_id: string) {
             'Authorization': `Bearer ${tokenJson.access_token}`,
         },
         body: JSON.stringify({
-            url: `https://4383-97-118-192-39.ngrok-free.app/api/printful_webhook/${user_id}`,
+            url: `https://${process.env.NEXT_PUBLIC_BASE_URL}/api/printful_webhook/${user_id}`,
             types: [
                 "package_shipped",
                 "product_synced",
