@@ -18,7 +18,7 @@ async function getData(slug: { [key: string]: string } | undefined) {
   const docRef: DocumentReference = doc(db, 'stores', slug?.value);
   const data: DocumentData = await getDoc(docRef);
   if (!data.exists()) {
-    redirect(`/dashboard/products/collections`);
+    redirect(`/dashboard`);
   }
   return data;
 }

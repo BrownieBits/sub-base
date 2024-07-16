@@ -11,7 +11,6 @@ import { Button } from '@/components/ui/button';
 import {
   faCloudArrowDown,
   faImagePortrait,
-  faPrint,
   faSquarePlus,
   faXmark,
 } from '@fortawesome/free-solid-svg-icons';
@@ -49,16 +48,23 @@ export const AddProductButton = (props: {
         <AlertDialogHeader>
           <AlertDialogTitle className="w-full flex justify-between">
             <AlertDialogTitle>Choose product type to add</AlertDialogTitle>
-            <AlertDialogCancel asChild>
+            <AlertDialogCancel className="border-0" asChild>
               <FontAwesomeIcon className="icon h-4 w-4" icon={faXmark} />
             </AlertDialogCancel>
           </AlertDialogTitle>
           <AlertDialogDescription>
             <section className="w-full flex gap-[30px] pt-[30px]">
-              <Button variant="outline" className="flex-1 h-auto" asChild>
-                <Link href="/" className="flex flex-col items-center group">
+              <Button
+                variant="outline"
+                className="flex-1 h-auto py-[15px]"
+                asChild
+              >
+                <Link
+                  href="/dashboard/products/new-digital"
+                  className="flex flex-col items-center group"
+                >
                   <FontAwesomeIcon
-                    className="icon pb-[5px] text-6xl group-hover:text-primary"
+                    className="icon pb-[15px] text-6xl group-hover:text-primary"
                     icon={faCloudArrowDown}
                   />
                   <p className="text-xs group-hover:text-foreground">
@@ -66,21 +72,14 @@ export const AddProductButton = (props: {
                   </p>
                 </Link>
               </Button>
-              <Button variant="outline" className="flex-1 h-auto" asChild>
+              <Button
+                variant="outline"
+                className="flex-1 h-auto py-[15px]"
+                asChild
+              >
                 <Link href="/" className="flex flex-col items-center group">
                   <FontAwesomeIcon
-                    className="icon pb-[5px] text-6xl group-hover:text-primary"
-                    icon={faPrint}
-                  />
-                  <p className="text-xs group-hover:text-foreground">
-                    <b>POD Product</b>
-                  </p>
-                </Link>
-              </Button>
-              <Button variant="outline" className="flex-1 h-auto" asChild>
-                <Link href="/" className="flex flex-col items-center group">
-                  <FontAwesomeIcon
-                    className="icon pb-[5px] text-6xl group-hover:text-primary"
+                    className="icon pb-[15px] text-6xl group-hover:text-primary"
                     icon={faImagePortrait}
                   />
                   <p className="text-xs group-hover:text-foreground">

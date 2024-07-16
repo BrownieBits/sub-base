@@ -310,12 +310,6 @@ export default function EditForm(props: {
             <Button variant="outline" asChild>
               <Link href={`/store/${props.storeID}`}>View store</Link>
             </Button>
-            <Button variant="outline" onClick={() => {}} asChild>
-              <div>
-                <FontAwesomeIcon className="icon mr-[5px]" icon={faTrash} />{' '}
-                Delete
-              </div>
-            </Button>
           </div>
         </section>
       </section>
@@ -410,10 +404,12 @@ export default function EditForm(props: {
                                 variant="destructive"
                                 onClick={clearAvatar}
                               >
-                                <FontAwesomeIcon
-                                  className="icon"
-                                  icon={faTrash}
-                                />
+                                <p>
+                                  <FontAwesomeIcon
+                                    className="icon"
+                                    icon={faTrash}
+                                  />
+                                </p>
                               </Button>
                             </section>
                           ) : (
@@ -489,10 +485,12 @@ export default function EditForm(props: {
                                   variant="destructive"
                                   onClick={clearBanner}
                                 >
-                                  <FontAwesomeIcon
-                                    className="icon"
-                                    icon={faTrash}
-                                  />
+                                  <p>
+                                    <FontAwesomeIcon
+                                      className="icon"
+                                      icon={faTrash}
+                                    />
+                                  </p>
                                 </Button>
                               </section>
                             </section>

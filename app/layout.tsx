@@ -43,10 +43,6 @@ export async function generateMetadata(): Promise<Metadata> {
     },
     keywords: 'e-commerce, shopping, creators, social, products',
     referrer: 'origin',
-    themeColor: [
-      { media: '(prefers-color-scheme: dark)', color: '#222222' },
-      { media: '(prefers-color-scheme: light)', color: '#ffffff' },
-    ],
     publisher: 'SubBase',
     creator: 'SubBase',
     robots: 'index, follow',
