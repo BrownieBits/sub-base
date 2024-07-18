@@ -23,7 +23,7 @@ import { DateRange } from 'react-day-picker';
 //       'Enjoy the products you love, and share it all with friends, family, and the world on SubBase.',
 //     openGraph: {
 //       type: 'website',
-//       url: `https://sub-base.vercel.app/dashboard/settings/`,
+//       url: `https://${process.env.NEXT_PUBLIC_BASE_URL}/dashboard/settings/`,
 //       title: `Settings - SubBase Creator Platform`,
 //       siteName: 'SubBase Creator Platform',
 //       description:

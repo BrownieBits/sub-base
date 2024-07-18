@@ -8,7 +8,7 @@ export async function generateMetadata(): Promise<Metadata> {
     description: 'There was no store id given so our Sub lost its way.',
     openGraph: {
       type: 'website',
-      url: `https://sub-base.vercel.app/store/`,
+      url: `https://${process.env.NEXT_PUBLIC_BASE_URL}/store/`,
       title: `No Store Here - SubBase Creator Platform`,
       siteName: 'SubBase Creator Platform',
       description: 'There was no store id given so our Sub lost its way.',

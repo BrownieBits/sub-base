@@ -1,37 +1,61 @@
 'use client';
 
-import { ColumnDef } from '@tanstack/react-table';
 import { Button } from '@/components/ui/button';
-import Link from 'next/link';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { db } from '@/lib/firebase';
+import { faEyeSlash } from '@fortawesome/free-regular-svg-icons';
 import {
-  faEye,
-  faPenToSquare,
-  faGear,
-  faWrench,
   faArrowDown,
   faArrowUp,
+  faEye,
+  faPenToSquare,
   faTrash,
 } from '@fortawesome/free-solid-svg-icons';
-import { faEyeSlash } from '@fortawesome/free-regular-svg-icons';
-import { ChangeStatus } from './actions';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { ColumnDef } from '@tanstack/react-table';
+import { Timestamp, doc, updateDoc } from 'firebase/firestore';
 import Image from 'next/image';
+import Link from 'next/link';
+import { revalidate } from './actions';
 
 export type Product = {
   id: string;
-  base_price: number;
-  description: string;
-  likes: number;
+  colors: string[];
+  price: number;
+  compare_at: number;
+  currency: string;
+  inventory: number;
+  track_inventory: boolean;
+  is_featured: boolean;
+  like_count: number;
+  name: string;
+  created_at: Timestamp;
+  updated_at: Timestamp;
   revenue: number;
   tags: string[];
-  title: string;
-  type: string;
+  product_type: string;
   units_sold: number;
-  user_id: string;
-  views: string;
+  owner_id: string;
+  views: number;
   status: 'Private' | 'Public';
+  store_id: string;
   images: string[];
 };
+
+async function ChangeStatus(action: string, id: string) {
+  const docRef = doc(db, 'products', id);
+  if (action === 'Delete') {
+    await updateDoc(docRef, {
+      status: 'archived',
+      updated_at: Timestamp.fromDate(new Date()),
+    });
+  } else {
+    await updateDoc(docRef, {
+      status: action,
+      updated_at: Timestamp.fromDate(new Date()),
+    });
+  }
+  revalidate();
+}
 
 export const columns: ColumnDef<Product>[] = [
   {
@@ -45,6 +69,11 @@ export const columns: ColumnDef<Product>[] = [
     cell: ({ row }) => <div className="hidden"></div>,
   },
   {
+    accessorKey: 'currency',
+    header: () => <div className="hidden"></div>,
+    cell: ({ row }) => <div className="hidden"></div>,
+  },
+  {
     accessorKey: 'images',
     header: () => <div className="w-[60px]"></div>,
     cell: ({ row }) => {
@@ -52,7 +81,7 @@ export const columns: ColumnDef<Product>[] = [
 
       return (
         <Image
-          src={imgs[0].replace('800/800', '60/60')}
+          src={imgs[0]}
           width="60"
           height="60"
           alt="Product Image"
@@ -62,7 +91,7 @@ export const columns: ColumnDef<Product>[] = [
     },
   },
   {
-    accessorKey: 'title',
+    accessorKey: 'name',
     header: ({ column }) => {
       if (column.getIsSorted() === 'asc') {
         return (
@@ -103,7 +132,7 @@ export const columns: ColumnDef<Product>[] = [
     },
   },
   {
-    accessorKey: 'type',
+    accessorKey: 'product_type',
     header: ({ column }) => {
       if (column.getIsSorted() === 'asc') {
         return (
@@ -278,7 +307,7 @@ export const columns: ColumnDef<Product>[] = [
     },
   },
   {
-    accessorKey: 'likes',
+    accessorKey: 'like_count',
     header: ({ column }) => {
       if (column.getIsSorted() === 'asc') {
         return (
@@ -359,10 +388,11 @@ export const columns: ColumnDef<Product>[] = [
       );
     },
     cell: ({ row }) => {
+      const currency = row.getValue('currency') as string;
       const amount = parseFloat(row.getValue('revenue'));
       const formatted = new Intl.NumberFormat('en-US', {
         style: 'currency',
-        currency: 'USD',
+        currency: currency,
       }).format(amount);
 
       return <div>{formatted}</div>;
@@ -377,27 +407,8 @@ export const columns: ColumnDef<Product>[] = [
       return (
         <section className="flex gap-[15px] justify-end">
           <Button asChild variant="link" className="p-0 text-foreground">
-            <Link
-              href={`/dashboard/${row.getValue('store_id')}/products/baseProducts`}
-              aria-label="Create Product"
-            >
+            <Link href={`/dashboard/products/${id}`} aria-label="Edit Product">
               <FontAwesomeIcon className="icon" icon={faPenToSquare} />
-            </Link>
-          </Button>
-          <Button asChild variant="link" className="p-0 text-foreground">
-            <Link
-              href={`/dashboard/${row.getValue('store_id')}/products/baseProducts`}
-              aria-label="Create Product"
-            >
-              <FontAwesomeIcon className="icon" icon={faGear} />
-            </Link>
-          </Button>
-          <Button asChild variant="link" className="p-0 text-foreground">
-            <Link
-              href={`/dashboard/${row.getValue('store_id')}/products/baseProducts`}
-              aria-label="Create Product"
-            >
-              <FontAwesomeIcon className="icon" icon={faWrench} />
             </Link>
           </Button>
           {row.getValue('status') === 'Public' ? (

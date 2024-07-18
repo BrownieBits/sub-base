@@ -1,5 +1,13 @@
 'use client';
 
+import {
+  Breadcrumb,
+  BreadcrumbItem,
+  BreadcrumbLink,
+  BreadcrumbList,
+  BreadcrumbPage,
+  BreadcrumbSeparator,
+} from '@/components/ui/breadcrumb';
 import { Button } from '@/components/ui/button';
 import { Checkbox } from '@/components/ui/checkbox';
 import {
@@ -22,9 +30,12 @@ import {
 import { Separator } from '@/components/ui/separator';
 import { Textarea } from '@/components/ui/textarea';
 import { currency_list } from '@/lib/CurrencyList';
+import { db, storage } from '@/lib/firebase';
 import { ProductImage } from '@/lib/types';
 import { cn } from '@/lib/utils';
+import { faEyeSlash } from '@fortawesome/free-regular-svg-icons';
 import {
+  faEye,
   faFile,
   faRefresh,
   faSave,
@@ -32,19 +43,30 @@ import {
   faTrash,
 } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import {
-  DragDropContext,
-  Draggable,
-  DropResult,
-  Droppable,
-} from '@hello-pangea/dnd';
 import { zodResolver } from '@hookform/resolvers/zod';
-import Image from 'next/image';
+import {
+  CollectionReference,
+  DocumentReference,
+  Timestamp,
+  collection,
+  doc,
+  setDoc,
+  updateDoc,
+} from 'firebase/firestore';
+import {
+  StorageReference,
+  deleteObject,
+  getDownloadURL,
+  ref,
+} from 'firebase/storage';
+import { usePathname, useRouter } from 'next/navigation';
 import React from 'react';
 import { useUploadFile } from 'react-firebase-hooks/storage';
 import { useForm } from 'react-hook-form';
 import { toast } from 'sonner';
 import * as z from 'zod';
+import DraggableImages from './DraggableImages';
+import { goTo, revalidate } from './actions';
 
 const MAX_IMAGE_SIZE = 5242880; // 5 MB
 const ALLOWED_IMAGE_TYPES = [
@@ -83,7 +105,8 @@ const formSchema = z.object({
           ALLOWED_IMAGE_TYPES.includes(file.type)
         ),
       'Only these types are allowed .jpg, .jpeg, .png and .webp'
-    ),
+    )
+    .optional(),
   digital_file: z
     .custom<FileList>((val) => val instanceof FileList, 'Required')
     .refine((files) => files.length > 0, `Required`)
@@ -91,7 +114,8 @@ const formSchema = z.object({
     .refine(
       (files) => Array.from(files).every((file) => file.size <= MAX_IMAGE_SIZE),
       `Each file size should be less than 5 MB.`
-    ),
+    )
+    .optional(),
   prices: z
     .object({
       price: z.union([
@@ -110,7 +134,7 @@ const formSchema = z.object({
             .number({
               message: 'Compare at Price must be a number',
             })
-            .positive({
+            .gte(0, {
               message: 'Compare at Price must be positive',
             }),
           z.literal(''),
@@ -136,155 +160,404 @@ const formSchema = z.object({
   sku: z.string().optional(),
   is_featured: z.boolean().default(false),
 });
+type Props = {
+  storeID: string;
+  userID: string;
+  docID?: string;
+  name?: string;
+  description?: string;
+  product_images?: ProductImage[];
+  digital_file?: string;
+  digital_file_name?: string;
+  tags?: string[];
+  price?: number;
+  compare_at?: number;
+  currency?: string;
+  sku?: string;
+  is_featured?: boolean;
+  status?: string;
+};
 
-export default function EditForm(props: { storeID: string; userID: string }) {
+export default function DigitalEditForm(props: Props) {
+  const router = useRouter();
+  const pathname = usePathname();
   const [disabled, setDisabled] = React.useState<boolean>(true);
   const productImagesRef = React.useRef<HTMLInputElement>(null);
   const digitalFileRef = React.useRef<HTMLInputElement>(null);
-
-  const [name, setName] = React.useState<string>('');
-  const [description, setDescription] = React.useState<string>('');
   const [productImages, setProductImages] = React.useState<ProductImage[]>([]);
   const [productImageFiles, setProductImageFiles] = React.useState<File[]>([]);
+  const [productImageRemovals, setProductImageRemovals] = React.useState<
+    string[]
+  >([]);
   const [digitalFile, setDigitalFile] = React.useState<string>('');
-  const [price, setPrice] = React.useState<number>(0.0);
-  const [compareAt, setCompareAt] = React.useState<number | null>(null);
-  const [currecny, setCurrency] = React.useState<string>('USD');
+  const [digitalFileName, setDigitalFileName] = React.useState<string>('');
+  const [digitalFileRemoval, setDigitalFileRemoval] =
+    React.useState<string>('');
   const [tags, setTags] = React.useState<string[]>([]);
-  const [sku, setSku] = React.useState<string>('');
-  const [isFeatured, setIsFeatured] = React.useState<boolean>(false);
-
+  const [status, setStatus] = React.useState<string>('');
   const [uploadFile, uploading, snapshot, uploadError] = useUploadFile();
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      name: '',
+      name: props.name || '',
+      description: props.description || '',
       product_images: undefined,
       digital_file: undefined,
       prices: {
-        price: 0.0,
+        price: props.price || 0.0,
+        compare_at: props.compare_at || 0.0,
       },
-      currency: 'USD',
-      is_featured: false,
+      currency: props.currency || 'USD',
+      sku: props.sku || '',
+      is_featured: props.is_featured || false,
     },
   });
 
-  async function onSubmit() {
-    console.log('Upload Files', form.getValues('product_images'));
-    // const docRef: DocumentReference = doc(db, 'stores', props.storeID);
-    // let avatar = selectedAvatar;
-    // let banner = selectedBanner;
-    // let avatar_fileName = '';
-    // let banner_fileName = '';
+  async function uploadDigitalFile(docId: string) {
+    let df = digitalFile;
+    const uploadFiles = form.getValues('digital_file');
 
-    // setDisabled(true);
-    // await updateDoc(docRef, {
-    //   name: selectedName,
-    //   description: selectedDescription,
-    //   avatar_url: avatar,
-    //   avatar_filename: avatar_fileName,
-    //   banner_url: banner,
-    //   banner_filename: banner_fileName,
-    //   password_protected: selectedProtection,
-    //   password: selectedPassword,
-    // });
-    // revalidate();
-    toast.success('Store Updated', {
-      description: 'Your store info has been updated.',
-    });
-  }
-  async function updateForm(event: any) {
-    if (
-      event !== null &&
-      event.target !== undefined &&
-      event.target.name! === 'name'
-    ) {
-      setName(event.target.value);
-    } else if (
-      event !== null &&
-      event.target != undefined &&
-      event.target.name! === 'description'
-    ) {
-      setDescription(event.target.value);
+    if (df !== '' && props.digital_file !== df && uploadFiles !== undefined) {
+      const df_fileName = docId + uploadFiles[0].name;
+      const digitalFileStorageRef: StorageReference = ref(
+        storage,
+        `${props.userID}/stores/${props.storeID}/digital_files/${docId}/${df_fileName}`
+      );
+
+      await uploadFile(digitalFileStorageRef, uploadFiles[0], {
+        contentType: uploadFiles[0].type,
+      });
+      df = await getDownloadURL(digitalFileStorageRef);
     }
-    // else if (
-    //   event !== null &&
-    //   event.target !== undefined &&
-    //   event.target.name! === 'password'
-    // ) {
-    //   setSelectedPassword(event.target.value);
-    // } else if (event !== null && typeof event === 'boolean') {
-    //   setSelectedProtection(event);
-    // }
+
+    if (digitalFileRemoval !== '') {
+      let removalURL = digitalFile.replace(
+        'https://firebasestorage.googleapis.com/v0/b/creator-base-6c959.appspot.com/o/',
+        ''
+      );
+      removalURL = removalURL.replace(/\?alt.*/, '');
+      removalURL = removalURL.replaceAll('%2F', '/');
+      const del_df_storageRef = ref(storage, removalURL);
+      await deleteObject(del_df_storageRef);
+    }
+    return df;
+  }
+  async function uploadImages(docId: string) {
+    let pi = productImages.map((image) => image.image);
+
+    const uploadFiles = form.getValues('product_images');
+
+    if (uploadFiles !== undefined) {
+      const imageFileUrls: string[] = await Promise.all(
+        Array.from(uploadFiles).map(async (item): Promise<string> => {
+          const fileStorageRef = ref(
+            storage,
+            `${props.userID}/stores/${props.storeID}/product_images/${docId}/${item.name.replace(/[^a-zA-Z0-9.]/g, '')}`
+          );
+          await uploadFile(fileStorageRef, item, {
+            contentType: item.type,
+          });
+          return await getDownloadURL(fileStorageRef);
+        })
+      );
+      pi = [...pi, ...imageFileUrls];
+    }
+
+    if (productImageRemovals.length > 0) {
+      await Promise.all(
+        productImageRemovals.map(async (item): Promise<string> => {
+          let removalURL = item.replace(
+            'https://firebasestorage.googleapis.com/v0/b/creator-base-6c959.appspot.com/o/',
+            ''
+          );
+          removalURL = removalURL.replace(/\?alt.*/, '');
+          removalURL = removalURL.replaceAll('%2F', '/');
+          const del_df_storageRef = ref(storage, removalURL);
+          try {
+            await deleteObject(del_df_storageRef);
+          } catch (e) {
+            console.log(e);
+          }
+
+          return removalURL;
+        })
+      );
+      setProductImageRemovals([]);
+    }
+    pi = pi.filter((item) => item.includes('firebasestorage.googleapis.com'));
+
+    form.resetField('product_images');
+    return pi;
+  }
+
+  async function onSubmit() {
+    setDisabled(true);
+    try {
+      if (digitalFile === '') {
+        form.setError('digital_file', { message: 'This is required.' });
+        return;
+      }
+      form.clearErrors('digital_file');
+
+      const collectionReference: CollectionReference = collection(
+        db,
+        'products'
+      );
+      let docRef: DocumentReference = doc(collectionReference);
+      if (props.docID !== undefined) {
+        docRef = doc(collectionReference, props.docID);
+      }
+      const digitalFileUrl = await uploadDigitalFile(docRef.id);
+      const imageFileUrls: string[] = await uploadImages(docRef.id);
+
+      const price = parseFloat(form.getValues('prices.price') as string);
+      const compare_at = parseFloat(
+        form.getValues('prices.compare_at') as string
+      );
+      if (props.docID !== undefined) {
+        await updateDoc(docRef, {
+          name: form.getValues('name'),
+          images: imageFileUrls,
+          description: form.getValues('description') || '',
+          price: price.toFixed(2),
+          compare_at: compare_at.toFixed(2),
+          currency: form.getValues('currency'),
+          tags: tags,
+          digital_file: digitalFileUrl,
+          digital_file_name: digitalFileName,
+          is_featured: form.getValues('is_featured'),
+          updated_at: Timestamp.fromDate(new Date()),
+          sku: form.getValues('sku'),
+          status: status,
+        });
+      } else {
+        await setDoc(docRef, {
+          name: form.getValues('name'),
+          images: imageFileUrls,
+          vendor: 'digital',
+          vendor_id: '',
+          description: form.getValues('description') || '',
+          price: price.toFixed(2),
+          compare_at: compare_at.toFixed(2),
+          currency: form.getValues('currency'),
+          inventory: 1,
+          track_inventory: false,
+          weight: 0,
+          weight_type: 'lbs',
+          status: 'Public',
+          tags: tags,
+          admin_tags: [],
+          like_count: 0,
+          product_type: 'digital',
+          store_id: props.storeID,
+          owner_id: props.userID,
+          digital_file: digitalFileUrl,
+          digital_file_name: digitalFileName,
+          units_sold: 0,
+          is_featured: form.getValues('is_featured'),
+          created_at: Timestamp.fromDate(new Date()),
+          updated_at: Timestamp.fromDate(new Date()),
+          colors: [],
+          sku: form.getValues('sku'),
+          revenue: 0,
+          views: 0,
+        });
+      }
+
+      toast.success('Product Saved', {
+        description: 'Your product has been saved.',
+      });
+      if (props.name !== undefined) {
+        revalidate(props.docID!);
+        router.replace(pathname);
+      } else {
+        revalidate('new-digital');
+        goTo(`/dashboard/products/${docRef.id}`);
+      }
+    } catch (e) {
+      setDisabled(true);
+      toast.error('Error Saving', {
+        description:
+          'There was an error saving your product. Please try again.',
+      });
+    }
   }
   async function clearDigitalFile() {
+    if (digitalFile.includes('firebasestorage.googleapis.com')) {
+      setDigitalFileRemoval(digitalFile);
+    }
     setDigitalFile('');
+    setDigitalFileName('');
     const data = new DataTransfer();
     form.setValue('digital_file', data.files);
     digitalFileRef.current?.click();
   }
 
-  function onDragEnd(result: DropResult) {
-    const { destination, source, draggableId } = result;
-    if (!destination) {
-      return;
-    }
-    if (destination.index === source.index) {
-      return;
-    }
-    const element = productImages[source.index];
-    const fileElement = productImageFiles[source.index];
-    productImages.splice(source.index, 1);
-    productImages.splice(destination.index, 0, element);
-    productImageFiles.splice(source.index, 1);
-    productImageFiles.splice(destination.index, 0, fileElement);
-    setProductImages(productImages);
-    setProductImageFiles(productImageFiles);
+  function resetImages(
+    images: ProductImage[],
+    files: File[],
+    removals: string[]
+  ) {
+    setProductImages(images);
+    setProductImageFiles(files);
+    setProductImageRemovals(removals);
   }
 
-  const removeProductImage = (index: number) => {
-    productImages.splice(index, 1);
-    productImageFiles.splice(index, 1);
-    setProductImages(productImages);
-    setProductImageFiles(productImageFiles);
-  };
+  async function ChangeStatus(action: string) {
+    const docRef = doc(db, 'products', props.docID!);
+    if (action === 'Delete') {
+      await updateDoc(docRef, {
+        status: 'archived',
+        updated_at: Timestamp.fromDate(new Date()),
+      });
+      revalidate(props.docID!);
+      goTo('/dashboard/products');
+    } else {
+      await updateDoc(docRef, {
+        status: action,
+        updated_at: Timestamp.fromDate(new Date()),
+      });
+    }
+    revalidate(props.docID!);
+  }
 
+  function updateSave() {
+    if (
+      form.getValues('name') !== props.name ||
+      form.getValues('description') !== props.description ||
+      productImages !== props.product_images ||
+      digitalFile !== props.digital_file ||
+      tags !== props.tags ||
+      form.getValues('prices.price') !== props.price ||
+      form.getValues('prices.compare_at') !== props.compare_at ||
+      form.getValues('currency') !== props.currency ||
+      form.getValues('sku') !== props.sku ||
+      form.getValues('is_featured') !== props.is_featured
+    ) {
+      setDisabled(false);
+    } else if (
+      form.getValues('name') === props.name &&
+      form.getValues('description') === props.description &&
+      productImages === props.product_images &&
+      digitalFile === props.digital_file &&
+      tags === props.tags &&
+      form.getValues('prices.price') === props.price &&
+      form.getValues('prices.compare_at') === props.compare_at &&
+      form.getValues('currency') === props.currency &&
+      form.getValues('sku') === props.sku &&
+      form.getValues('is_featured') === props.is_featured
+    ) {
+      setDisabled(true);
+    }
+  }
   React.useEffect(() => {
-    const updateSave = async () => {
-      if (form.formState.isValid) {
-        setDisabled(false);
-      } else {
-        setDisabled(true);
-      }
-    };
+    if (props.digital_file) {
+      setDigitalFile(props.digital_file);
+    }
+  }, [props.digital_file_name]);
+  React.useEffect(() => {
+    if (props.digital_file_name) {
+      setDigitalFileName(props.digital_file_name);
+    }
+  }, [props.digital_file_name]);
+  React.useEffect(() => {
+    if (props.product_images) {
+      setProductImages(props.product_images);
+    }
+  }, [props.product_images]);
+  React.useEffect(() => {
+    if (props.tags) {
+      setTags(props.tags);
+    }
+  }, [props.tags]);
+  React.useEffect(() => {
+    if (props.status) {
+      setStatus(props.status);
+    }
+  }, [props.status]);
+  React.useEffect(() => {
     updateSave();
-  }, [
-    name,
-    description,
-    productImages,
-    digitalFile,
-    // selectedProtection,
-    // selectedPassword,
-  ]);
+  }, [productImages, digitalFile]);
 
   return (
     <section className="relative">
       <section className="w-full max-w-[2428px] mx-auto">
-        <section className="flex w-full justify-between items-center px-[15px] py-[30px] gap-[15px]">
-          <h1>Add Product</h1>
+        {props.name !== undefined && (
+          <section className="flex w-full justify-between items-center px-[15px] pt-[30px] gap-[15px]">
+            <Breadcrumb>
+              <BreadcrumbList>
+                <BreadcrumbItem>
+                  <BreadcrumbLink href="/dashboard/products">
+                    Products
+                  </BreadcrumbLink>
+                </BreadcrumbItem>
+                <BreadcrumbSeparator />
+                <BreadcrumbItem>
+                  <BreadcrumbPage>{props.name}</BreadcrumbPage>
+                </BreadcrumbItem>
+              </BreadcrumbList>
+            </Breadcrumb>
+          </section>
+        )}
+        <section
+          className={cn(
+            'flex w-full justify-between items-center px-[15px] gap-[15px]',
+            {
+              'pt-[10px] pb-[30px] ': props.name !== undefined,
+              'py-[30px]': props.name === undefined,
+            }
+          )}
+        >
+          {props.name !== undefined ? (
+            <h1>{props.name}</h1>
+          ) : (
+            <h1>Add Product</h1>
+          )}
           <div className="flex gap-[15px] items-center">
-            <Button
-              type="submit"
-              onClick={form.handleSubmit(onSubmit)}
-              disabled={disabled}
-              asChild
-            >
-              <div>
-                <FontAwesomeIcon className="icon mr-[5px]" icon={faSave} />
-                Create
-              </div>
-            </Button>
+            {props.status !== undefined && props.status === 'Public' && (
+              <Button
+                variant="outline"
+                title="Make Private"
+                onClick={() => ChangeStatus('Private')}
+                className="text-foreground"
+              >
+                <FontAwesomeIcon className="icon" icon={faEyeSlash} />
+              </Button>
+            )}
+            {props.status !== undefined && props.status === 'Private' && (
+              <Button
+                variant="outline"
+                title="Make Publix"
+                onClick={() => ChangeStatus('Public')}
+                className="text-foreground"
+              >
+                <FontAwesomeIcon className="icon" icon={faEye} />
+              </Button>
+            )}
+            {props.status !== undefined && props.status !== 'archived' && (
+              <Button
+                variant="outline"
+                title="Delete"
+                onClick={() => ChangeStatus('Delete')}
+                className="text-foreground"
+              >
+                <FontAwesomeIcon className="icon" icon={faTrash} />
+              </Button>
+            )}
+            {!disabled && (
+              <Button
+                type="submit"
+                onClick={form.handleSubmit(onSubmit)}
+                disabled={disabled}
+                asChild
+              >
+                <div>
+                  <FontAwesomeIcon className="icon mr-[5px]" icon={faSave} />
+                  Save
+                </div>
+              </Button>
+            )}
           </div>
         </section>
       </section>
@@ -314,7 +587,7 @@ export default function EditForm(props: { storeID: string; userID: string }) {
                       <FormLabel>Name</FormLabel>
                       <FormControl>
                         <Input
-                          onChangeCapture={updateForm}
+                          onChangeCapture={updateSave}
                           id="name"
                           {...field}
                         />
@@ -331,7 +604,7 @@ export default function EditForm(props: { storeID: string; userID: string }) {
                       <FormLabel>Meta Description</FormLabel>
                       <FormControl>
                         <Textarea
-                          onChangeCapture={updateForm}
+                          onChangeCapture={updateSave}
                           placeholder="Tell us a little bit about this product..."
                           className="resize-none"
                           {...field}
@@ -386,7 +659,7 @@ export default function EditForm(props: { storeID: string; userID: string }) {
                           <>
                             <Input
                               type="file"
-                              accept="image/*"
+                              accept={ALLOWED_IMAGE_TYPES.join(',')}
                               hidden={true}
                               className="hidden"
                               ref={productImagesRef}
@@ -425,6 +698,7 @@ export default function EditForm(props: { storeID: string; userID: string }) {
                                     ...productImageFiles,
                                     newFiles[newFiles.length - 1],
                                   ]);
+                                  updateSave();
                                 }
                                 onChange(newFiles);
                               }}
@@ -441,98 +715,13 @@ export default function EditForm(props: { storeID: string; userID: string }) {
                   }}
                 />
               </aside>
-              <aside className="w-full flex flex1 flex-col gap-[30px] bg-layer-one p-[30px] rounded drop-shadow">
-                <DragDropContext
-                  // onDragStart={}
-                  // onDragUpdate={}
-                  onDragEnd={onDragEnd}
-                >
-                  <Droppable
-                    droppableId="images"
-                    isDropDisabled={false}
-                    isCombineEnabled={false}
-                    ignoreContainerClipping={true}
-                    direction="horizontal"
-                  >
-                    {(droppableProvided) => (
-                      <>
-                        {productImages.length <= 0 && (
-                          <>
-                            <p>
-                              <b>No Images Yet</b>
-                            </p>
-                            <p className="text-sm">
-                              Add images to show off your product.
-                            </p>
-                          </>
-                        )}
-                        <section
-                          className="w-full grid grid-cols-6 gap-[30px] items-center"
-                          ref={droppableProvided.innerRef}
-                          {...droppableProvided.droppableProps}
-                        >
-                          {productImages.map((image, index) => (
-                            <Draggable
-                              key={image.id.toString()}
-                              draggableId={image.id.toString()}
-                              index={index}
-                            >
-                              {(draggableProvided, draggableSnapshot) => {
-                                return (
-                                  <section
-                                    className={cn(
-                                      'aspect-square cursor-pointer border rounded overflow-hidden relative group',
-                                      {
-                                        'bg-layer-two':
-                                          !draggableSnapshot.isDragging,
-                                        'bg-layer-three left-auto top-auto':
-                                          draggableSnapshot.isDragging,
-                                      }
-                                    )}
-                                    {...draggableProvided.draggableProps}
-                                    {...draggableProvided.dragHandleProps}
-                                    ref={draggableProvided.innerRef}
-                                  >
-                                    <Button
-                                      variant="destructive"
-                                      size="sm"
-                                      onClick={(e) => {
-                                        e.preventDefault;
-                                        removeProductImage(index);
-                                      }}
-                                      className="absolute top-0 right-0 hidden group-hover:block"
-                                    >
-                                      <p>
-                                        <FontAwesomeIcon
-                                          className="icon"
-                                          icon={faTrash}
-                                        />
-                                      </p>
-                                    </Button>
-
-                                    <section className="h-full flex items-center">
-                                      <Image
-                                        src={image.image}
-                                        alt={image.id.toString()}
-                                        width={300}
-                                        height={300}
-                                        style={{
-                                          width: '100%',
-                                          height: 'auto',
-                                        }}
-                                      />
-                                    </section>
-                                  </section>
-                                );
-                              }}
-                            </Draggable>
-                          ))}
-                          {droppableProvided.placeholder}
-                        </section>
-                      </>
-                    )}
-                  </Droppable>
-                </DragDropContext>
+              <aside className="w-full overflow-x-auto flex flex1 flex-col gap-[30px] bg-layer-one p-[30px] rounded drop-shadow">
+                <DraggableImages
+                  product_images={productImages}
+                  product_image_files={productImageFiles}
+                  product_images_removals={productImageRemovals}
+                  remove={resetImages}
+                />
               </aside>
             </section>
 
@@ -573,12 +762,11 @@ export default function EditForm(props: { storeID: string; userID: string }) {
                     const images = form.watch('digital_file');
 
                     return (
-                      <FormItem className="pt-[15px]">
+                      <FormItem>
                         <FormControl>
-                          <>
+                          {digitalFile === '' ? (
                             <Input
                               type="file"
-                              accept="image/*"
                               hidden={true}
                               className="hidden"
                               ref={digitalFileRef}
@@ -605,11 +793,15 @@ export default function EditForm(props: { storeID: string; userID: string }) {
                                 const newFiles = dataTransfer.files;
                                 if (newFiles.length > 0) {
                                   setDigitalFile(newFiles[0].name);
+                                  setDigitalFileName(newFiles[0].name);
+                                  updateSave();
                                 }
                                 onChange(newFiles);
                               }}
                             />
-                          </>
+                          ) : (
+                            <></>
+                          )}
                         </FormControl>
                         <FormMessage />
                       </FormItem>
@@ -628,13 +820,13 @@ export default function EditForm(props: { storeID: string; userID: string }) {
                     </p>
                   </section>
                 ) : (
-                  <section className="flex items-center">
+                  <section className="flex items-center gap-[30px]">
                     <section className="flex flex-col justify-center items-center">
                       <FontAwesomeIcon
-                        className="icon text-9xl mb-[15px]"
+                        className="icon text-8xl mb-[15px]"
                         icon={faFile}
                       />
-                      <p>{digitalFile}</p>
+                      <p>{digitalFileName}</p>
                     </section>
                     <Button
                       asChild
@@ -656,9 +848,12 @@ export default function EditForm(props: { storeID: string; userID: string }) {
             <section className="flex flex-col md:flex-row gap-[30px]">
               <aside className="w-full md:w-[400px] lg:w-[600px]">
                 <p className="pb-[15px]">
-                  <b>Restrict Store Access</b>
+                  <b>Options and Pricing</b>
                 </p>
-                <p>Limit who can access your online store.</p>
+                <p>
+                  These options will help define your product and make them
+                  searchable.
+                </p>
               </aside>
               <aside className="w-full flex flex1 flex-col gap-[30px] bg-layer-one p-[30px] rounded drop-shadow">
                 <section className="w-full flex flex-col md:flex-row gap-[30px]">
@@ -670,7 +865,7 @@ export default function EditForm(props: { storeID: string; userID: string }) {
                         <FormLabel>Price</FormLabel>
                         <FormControl>
                           <Input
-                            onChangeCapture={updateForm}
+                            onChangeCapture={updateSave}
                             id="price"
                             type="number"
                             {...field}
@@ -688,7 +883,7 @@ export default function EditForm(props: { storeID: string; userID: string }) {
                         <FormLabel>Compare At Price</FormLabel>
                         <FormControl>
                           <Input
-                            onChangeCapture={updateForm}
+                            onChangeCapture={updateSave}
                             id="compare_at"
                             type="number"
                             {...field}
@@ -705,7 +900,7 @@ export default function EditForm(props: { storeID: string; userID: string }) {
                       <FormItem className="w-full flex1">
                         <FormLabel>Currency</FormLabel>
                         <Select
-                          onValueChange={field.onChange}
+                          onValueChange={updateSave}
                           defaultValue={field.value}
                         >
                           <FormControl>
@@ -736,7 +931,7 @@ export default function EditForm(props: { storeID: string; userID: string }) {
                       <FormLabel>Tags</FormLabel>
                       <FormControl>
                         <Input
-                          onChangeCapture={updateForm}
+                          onChangeCapture={updateSave}
                           id="tags"
                           {...field}
                         />
@@ -753,7 +948,7 @@ export default function EditForm(props: { storeID: string; userID: string }) {
                       <FormLabel>SKU</FormLabel>
                       <FormControl>
                         <Input
-                          onChangeCapture={updateForm}
+                          onChangeCapture={updateSave}
                           id="tags"
                           {...field}
                         />
@@ -770,7 +965,7 @@ export default function EditForm(props: { storeID: string; userID: string }) {
                       <FormControl>
                         <Checkbox
                           checked={field.value}
-                          onCheckedChange={updateForm}
+                          onCheckedChange={field.onChange}
                         />
                       </FormControl>
                       <div className="space-y-1 leading-none">

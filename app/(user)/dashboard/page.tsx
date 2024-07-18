@@ -35,7 +35,7 @@ export async function generateMetadata(): Promise<Metadata> {
       'Enjoy the products you love, and share it all with friends, family, and the world on SubBase.',
     openGraph: {
       type: 'website',
-      url: `https://sub-base.vercel.app/dashboard/`,
+      url: `https://${process.env.NEXT_PUBLIC_BASE_URL}/dashboard/`,
       title: `${data.data().name} - Dashboard - SubBase Creator Platform`,
       siteName: 'SubBase Creator Platform',
       description:

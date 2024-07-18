@@ -25,22 +25,33 @@ async function getData(slug: { [key: string]: string } | undefined) {
     redirect(`/sign-in`);
   }
   const productsRef: CollectionReference = collection(db, 'products');
-  const q = query(productsRef, where('store_id', '==', slug.value));
+  const q = query(
+    productsRef,
+    where('store_id', '==', slug.value),
+    where('status', '!=', 'archived')
+  );
   const productData: QuerySnapshot<DocumentData, DocumentData> =
     await getDocs(q);
 
   const data = productData.docs.map((item) => {
     return {
       id: item.id,
-      base_price: item.data().base_price,
-      description: item.data().description,
-      likes: item.data().likes,
+      colors: item.data().colors,
+      price: item.data().price,
+      compare_at: item.data().compare_at,
+      currency: item.data().currency,
+      inventory: item.data().inventory,
+      track_inventory: item.data().track_inventory,
+      is_featured: item.data().is_featured,
+      like_count: item.data().like_count,
+      name: item.data().name,
+      created_at: item.data().created_at,
+      updated_at: item.data().updated_at,
       revenue: item.data().revenue,
       tags: item.data().tags,
-      title: item.data().title,
-      type: item.data().type,
+      product_type: item.data().product_type,
       units_sold: item.data().units_sold,
-      user_id: item.data().user_id,
+      owner_id: item.data().owner_id,
       views: item.data().views,
       status: item.data().status,
       store_id: item.data().store_id,
@@ -58,7 +69,7 @@ export async function generateMetadata(): Promise<Metadata> {
       'Enjoy the products you love, and share it all with friends, family, and the world on SubBase.',
     openGraph: {
       type: 'website',
-      url: `https://sub-base.vercel.app/dashboard/products/`,
+      url: `https://${process.env.NEXT_PUBLIC_BASE_URL}/dashboard/products/`,
       title: `My Products - SubBase Creator Platform`,
       siteName: 'SubBase Creator Platform',
       description:

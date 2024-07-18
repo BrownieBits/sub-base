@@ -21,8 +21,8 @@ export const DashboardNav = () => {
           <SheetTrigger className="flex xl:hidden">
             <Button
               variant="outline"
+              size="sm"
               className="bg-layer-one hover:bg-layer-two"
-              asChild
             >
               <FontAwesomeIcon icon={faBars} />
             </Button>
@@ -39,7 +39,7 @@ export const DashboardNav = () => {
       </div>
       <ul className="flex gap-[15px] md:gap-[30px] items-center">
         <li>
-          <Button asChild variant="link" className="px-0">
+          <Button asChild variant="link" size="sm" className="px-0">
             <Link href="/" aria-label="Spring by Amaze">
               <FontAwesomeIcon icon={faBell} />
             </Link>
@@ -49,6 +49,7 @@ export const DashboardNav = () => {
           <AddProductButton
             copy="Create"
             variant="outline"
+            size="sm"
             className="bg-layer-one hover:bg-layer-two"
           />
         </li>

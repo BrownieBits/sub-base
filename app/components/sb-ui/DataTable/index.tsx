@@ -12,6 +12,7 @@ import {
   useReactTable,
 } from '@tanstack/react-table';
 
+import { Input } from '@/components/ui/input';
 import {
   Table,
   TableBody,
@@ -21,7 +22,6 @@ import {
   TableRow,
 } from '@/components/ui/table';
 import React from 'react';
-import { Input } from '@/components/ui/input';
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
@@ -36,6 +36,7 @@ export function DataTable<TData, TValue>({
     React.useState<VisibilityState>({
       id: false,
       store_id: false,
+      currency: false,
     });
   const [sorting, setSorting] = React.useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(

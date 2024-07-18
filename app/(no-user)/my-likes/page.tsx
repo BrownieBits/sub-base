@@ -30,7 +30,7 @@ export async function generateMetadata(): Promise<Metadata> {
       'Enjoy the products you love, and share it all with friends, family, and the world on SubBase.',
     openGraph: {
       type: 'website',
-      url: `https://sub-base.vercel.app/my-likes/`,
+      url: `https://${process.env.NEXT_PUBLIC_BASE_URL}/my-likes/`,
       title: `My Likes - SubBase Creator Platform`,
       siteName: 'SubBase Creator Platform',
       description:

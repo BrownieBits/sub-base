@@ -86,7 +86,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     description: description,
     openGraph: {
       type: 'website',
-      url: `https://sub-base.vercel.app/store/${params.slug}/${params.collection}`,
+      url: `https://${process.env.NEXT_PUBLIC_BASE_URL}/store/${params.slug}/${params.collection}`,
       title: `${data.store.data().name} Store - SubBase Creator Platform`,
       siteName: 'SubBase Creator Platform',
       description: description,

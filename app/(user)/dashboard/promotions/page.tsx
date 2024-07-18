@@ -53,7 +53,7 @@ export async function generateMetadata(): Promise<Metadata> {
       'Enjoy the products you love, and share it all with friends, family, and the world on SubBase.',
     openGraph: {
       type: 'website',
-      url: `https://sub-base.vercel.app/dashboard/promotions/`,
+      url: `https://${process.env.NEXT_PUBLIC_BASE_URL}/dashboard/promotions/`,
       title: `Promotions - SubBase Creator Platform`,
       siteName: 'SubBase Creator Platform',
       description:
@@ -74,14 +74,15 @@ export async function generateMetadata(): Promise<Metadata> {
 
 export default async function Promotions() {
   const cookieStore = cookies();
-  const user_slug = cookieStore.get('user_slug');
-  const data = await getData(user_slug);
+  const user_id = cookieStore.get('user_id');
+  const default_store = cookieStore.get('default_store');
+  const data = await getData(default_store);
   return (
     <section>
       <section className="w-full max-w-[3096px] mx-auto">
         <section className="flex w-full justify-between items-center px-[15px] py-[30px] gap-[15px]">
           <h1>Promotions</h1>
-          <NewPromotionForm displayName={user_slug?.value!} />
+          <NewPromotionForm displayName={default_store?.value!} />
         </section>
         <HeroBanner page_slug="creator-promotions" />
       </section>

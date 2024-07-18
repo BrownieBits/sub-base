@@ -28,12 +28,18 @@ export const AddProductButton = (props: {
     | 'ghost'
     | null
     | undefined;
+  size?: 'default' | 'icon' | 'lg' | 'sm' | null | undefined;
   className?: string | '';
 }) => {
   return (
     <AlertDialog>
       <AlertDialogTrigger>
-        <Button asChild variant={props.variant} className={props.className}>
+        <Button
+          asChild
+          variant={props.variant}
+          size={props.size}
+          className={props.className}
+        >
           <div>
             <FontAwesomeIcon
               className="icon mr-2 h-4 w-4"
