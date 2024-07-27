@@ -1,27 +1,7 @@
 'use client';
 
-import { Avatar, AvatarFallback, AvatarImage } from '../../ui/avatar';
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuGroup,
-  DropdownMenuItem,
-  DropdownMenuPortal,
-  DropdownMenuSeparator,
-  DropdownMenuSub,
-  DropdownMenuSubContent,
-  DropdownMenuSubTrigger,
-  DropdownMenuTrigger,
-} from '../../ui/dropdown-menu';
-import { useTheme } from 'next-themes';
-import { useRouter } from 'next/navigation';
-import Link from 'next/link';
-import { useSignOut } from 'react-firebase-hooks/auth';
-import { auth } from '@/lib/firebase';
-import { useAuthState } from 'react-firebase-hooks/auth';
 import { Button } from '@/components/ui/button';
-import { getCookie } from 'cookies-next';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { auth } from '@/lib/firebase';
 import {
   faBrush,
   faCog,
@@ -35,6 +15,25 @@ import {
   faSignOut,
   faStore,
 } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { getCookie } from 'cookies-next';
+import { useTheme } from 'next-themes';
+import Link from 'next/link';
+import { useRouter } from 'next/navigation';
+import { useAuthState, useSignOut } from 'react-firebase-hooks/auth';
+import { Avatar, AvatarFallback, AvatarImage } from '../../ui/avatar';
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuGroup,
+  DropdownMenuItem,
+  DropdownMenuPortal,
+  DropdownMenuSeparator,
+  DropdownMenuSub,
+  DropdownMenuSubContent,
+  DropdownMenuSubTrigger,
+  DropdownMenuTrigger,
+} from '../../ui/dropdown-menu';
 
 export const UserDropdown = () => {
   const user_name = getCookie('user_name');
@@ -61,7 +60,7 @@ export const UserDropdown = () => {
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent className="w-[250px]">
-        <DropdownMenuGroup className="p-[15px] space-y-[5px]">
+        <DropdownMenuGroup className="p-4 space-y-[5px]">
           <DropdownMenuItem asChild className="p-[0] focus:bg-background">
             <p>
               <b>{user_name}</b>
@@ -79,17 +78,17 @@ export const UserDropdown = () => {
         </DropdownMenuGroup>
 
         <DropdownMenuSeparator />
-        <DropdownMenuGroup className="p-[15px] space-y-[5px]">
+        <DropdownMenuGroup className="p-4 space-y-[5px]">
           <DropdownMenuItem asChild className="p-[0] focus:bg-layer-one">
             <Link href={`/switch-stores`} className="w-full" aria-label="Store">
-              <FontAwesomeIcon className="icon mr-[15px]" icon={faRepeat} />
+              <FontAwesomeIcon className="icon mr-4" icon={faRepeat} />
               Swtich Stores
             </Link>
           </DropdownMenuItem>
           <DropdownMenuItem asChild className="p-[0] focus:bg-layer-one">
             <form action={onSubmit}>
               <button type="submit" className="w-full text-left">
-                <FontAwesomeIcon className="icon mr-[15px]" icon={faSignOut} />
+                <FontAwesomeIcon className="icon mr-4" icon={faSignOut} />
                 Sign Out
               </button>
             </form>
@@ -97,10 +96,10 @@ export const UserDropdown = () => {
         </DropdownMenuGroup>
 
         <DropdownMenuSeparator />
-        <DropdownMenuGroup className="p-[15px] space-y-[5px]">
+        <DropdownMenuGroup className="p-4 space-y-[5px]">
           <DropdownMenuItem asChild className="p-[0] focus:bg-layer-one">
             <Link href={`/dashboard`} className="w-full" aria-label="Store">
-              <FontAwesomeIcon className="icon mr-[15px]" icon={faColumns} />
+              <FontAwesomeIcon className="icon mr-4" icon={faColumns} />
               Dashboard
             </Link>
           </DropdownMenuItem>
@@ -110,7 +109,7 @@ export const UserDropdown = () => {
               className="w-full"
               aria-label="Store"
             >
-              <FontAwesomeIcon className="icon mr-[15px]" icon={faShirt} />
+              <FontAwesomeIcon className="icon mr-4" icon={faShirt} />
               My Products
             </Link>
           </DropdownMenuItem>
@@ -120,21 +119,21 @@ export const UserDropdown = () => {
               className="w-full"
               aria-label="Store"
             >
-              <FontAwesomeIcon className="icon mr-[15px]" icon={faStore} />
+              <FontAwesomeIcon className="icon mr-4" icon={faStore} />
               Preferences
             </Link>
           </DropdownMenuItem>
         </DropdownMenuGroup>
 
         <DropdownMenuSeparator />
-        <DropdownMenuGroup className="p-[15px] space-y-[5px]">
+        <DropdownMenuGroup className="p-4 space-y-[5px]">
           <DropdownMenuSub>
             <DropdownMenuSubTrigger className="p-[0] focus:bg-layer-one">
-              <FontAwesomeIcon className="icon mr-[15px]" icon={faBrush} />
+              <FontAwesomeIcon className="icon mr-4" icon={faBrush} />
               Appearance
             </DropdownMenuSubTrigger>
             <DropdownMenuPortal>
-              <DropdownMenuSubContent className="p-[15px] space-y-[5px]">
+              <DropdownMenuSubContent className="p-4 space-y-[5px]">
                 <DropdownMenuItem
                   className="p-[0] focus:bg-layer-one"
                   onClick={() => setTheme('light')}
@@ -158,11 +157,11 @@ export const UserDropdown = () => {
           </DropdownMenuSub>
           <DropdownMenuSub>
             <DropdownMenuSubTrigger className="p-[0] focus:bg-layer-one">
-              <FontAwesomeIcon className="icon mr-[15px]" icon={faLanguage} />
+              <FontAwesomeIcon className="icon mr-4" icon={faLanguage} />
               Language
             </DropdownMenuSubTrigger>
             <DropdownMenuPortal>
-              <DropdownMenuSubContent className="p-[15px] space-y-[5px]">
+              <DropdownMenuSubContent className="p-4 space-y-[5px]">
                 <DropdownMenuItem
                   className="p-[0] focus:bg-layer-one"
                   onClick={() => setTheme('light')}
@@ -186,11 +185,11 @@ export const UserDropdown = () => {
           </DropdownMenuSub>
           <DropdownMenuSub>
             <DropdownMenuSubTrigger className="p-[0] focus:bg-layer-one">
-              <FontAwesomeIcon className="icon mr-[15px]" icon={faGlobe} />
+              <FontAwesomeIcon className="icon mr-4" icon={faGlobe} />
               Location
             </DropdownMenuSubTrigger>
             <DropdownMenuPortal>
-              <DropdownMenuSubContent className="p-[15px] space-y-[5px]">
+              <DropdownMenuSubContent className="p-4 space-y-[5px]">
                 <DropdownMenuItem
                   className="p-[0] focus:bg-layer-one"
                   onClick={() => setTheme('light')}
@@ -215,30 +214,30 @@ export const UserDropdown = () => {
         </DropdownMenuGroup>
 
         <DropdownMenuSeparator />
-        <DropdownMenuGroup className="p-[15px] space-y-[5px]">
+        <DropdownMenuGroup className="p-4 space-y-[5px]">
           <DropdownMenuItem asChild className="p-[0] focus:bg-layer-one">
             <Link
               href={`/dashboard/settings`}
               className="w-full"
               aria-label="Store"
             >
-              <FontAwesomeIcon className="icon mr-[15px]" icon={faCog} />
+              <FontAwesomeIcon className="icon mr-4" icon={faCog} />
               Settings
             </Link>
           </DropdownMenuItem>
         </DropdownMenuGroup>
 
         <DropdownMenuSeparator />
-        <DropdownMenuGroup className="p-[15px] space-y-[5px]">
+        <DropdownMenuGroup className="p-4 space-y-[5px]">
           <DropdownMenuItem asChild className="p-[0] focus:bg-layer-one">
             <Link href={`/help`} className="w-full" aria-label="Store">
-              <FontAwesomeIcon className="icon mr-[15px]" icon={faQuestion} />
+              <FontAwesomeIcon className="icon mr-4" icon={faQuestion} />
               Help
             </Link>
           </DropdownMenuItem>
           <DropdownMenuItem asChild className="p-[0] focus:bg-layer-one">
             <Link href={`/send-feedback`} className="w-full" aria-label="Store">
-              <FontAwesomeIcon className="icon mr-[15px]" icon={faComment} />
+              <FontAwesomeIcon className="icon mr-4" icon={faComment} />
               Send Feedback
             </Link>
           </DropdownMenuItem>

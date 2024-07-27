@@ -13,9 +13,9 @@
     --popover: 0 0% 100%;
     --popover-foreground: 0 0% 13%;
 
-    --primary: 210 77% 57%;
-    --primary-dark: 210 77% 47%;
-    --primary-light: 210 77% 67%;
+    --primary: 217 90% 33%;
+    --primary-dark: 217 90% 23%;
+    --primary-light: 217 90% 43%;
     --primary-foreground: 0 0% 100%;
 
     --secondary: 54 93% 54%;
@@ -85,16 +85,16 @@
 }
 
 h1 {
-  @apply text-4xl font-bold;
-}
-h2 {
   @apply text-3xl font-bold;
 }
-h3 {
+h2 {
   @apply text-2xl font-bold;
 }
-h4 {
+h3 {
   @apply text-xl font-bold;
+}
+h4 {
+  @apply text-lg font-bold;
 }
 img {
   width: 100%;

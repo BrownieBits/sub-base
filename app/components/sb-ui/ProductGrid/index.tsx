@@ -28,7 +28,7 @@ export default function ProductGrid({
       ) : (
         <div>
           {blogSnapShots?.docs?.length! > 0 ? (
-            <div className="grid grid-cols-1 md:grid-cols-3 xl:grid-cols-4  gap-[15px] p-[15px]">
+            <div className="grid grid-cols-1 md:grid-cols-3 xl:grid-cols-4  gap-4 p-4">
               {blogSnapShots?.docs?.map((doc) => (
                 <ProductCard id={doc.id} show_creator={true} key={doc.id} />
               ))}

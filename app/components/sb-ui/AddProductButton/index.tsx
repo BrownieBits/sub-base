@@ -59,40 +59,47 @@ export const AddProductButton = (props: {
             </AlertDialogCancel>
           </AlertDialogTitle>
           <AlertDialogDescription>
-            <section className="w-full flex gap-[30px] pt-[30px]">
-              <Button
-                variant="outline"
-                className="flex-1 h-auto py-[15px]"
-                asChild
-              >
-                <Link
-                  href="/dashboard/products/new-digital"
-                  className="flex flex-col items-center group"
+            <section className="w-full flex gap-8 pt-8">
+              <AlertDialogTrigger asChild>
+                <Button
+                  variant="outline"
+                  className="flex-1 h-auto py-4"
+                  asChild
                 >
-                  <FontAwesomeIcon
-                    className="icon pb-[15px] text-6xl group-hover:text-primary"
-                    icon={faCloudArrowDown}
-                  />
-                  <p className="text-xs group-hover:text-foreground">
-                    <b>Digital Product</b>
-                  </p>
-                </Link>
-              </Button>
-              <Button
-                variant="outline"
-                className="flex-1 h-auto py-[15px]"
-                asChild
-              >
-                <Link href="/" className="flex flex-col items-center group">
-                  <FontAwesomeIcon
-                    className="icon pb-[15px] text-6xl group-hover:text-primary"
-                    icon={faImagePortrait}
-                  />
-                  <p className="text-xs group-hover:text-foreground">
-                    <b>My Own Product</b>
-                  </p>
-                </Link>
-              </Button>
+                  <Link
+                    href="/dashboard/products/new-digital"
+                    className="flex flex-col items-center group"
+                  >
+                    <FontAwesomeIcon
+                      className="icon pb-4 text-6xl group-hover:text-primary"
+                      icon={faCloudArrowDown}
+                    />
+                    <p className="text-xs group-hover:text-foreground">
+                      <b>Digital Product</b>
+                    </p>
+                  </Link>
+                </Button>
+              </AlertDialogTrigger>
+              <AlertDialogTrigger asChild>
+                <Button
+                  variant="outline"
+                  className="flex-1 h-auto py-4"
+                  asChild
+                >
+                  <Link
+                    href="/dashboard/products/new-self-made"
+                    className="flex flex-col items-center group"
+                  >
+                    <FontAwesomeIcon
+                      className="icon pb-4 text-6xl group-hover:text-primary"
+                      icon={faImagePortrait}
+                    />
+                    <p className="text-xs group-hover:text-foreground">
+                      <b>My Own Product</b>
+                    </p>
+                  </Link>
+                </Button>
+              </AlertDialogTrigger>
             </section>
           </AlertDialogDescription>
         </AlertDialogHeader>

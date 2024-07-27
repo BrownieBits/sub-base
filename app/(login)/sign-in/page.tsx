@@ -37,7 +37,7 @@ export default function SignIn({
   return (
     <section className="w-full flex flex-col justify-between">
       <section className="w-full flex justify-between items-center">
-        <section className="w-[32px] md:w-[150px]">
+        <section className="w- md:w-[150px]">
           <Logo url="/" />
         </section>
         <section className="">
@@ -50,7 +50,7 @@ export default function SignIn({
         </section>
       </section>
       <section className="w-full flex flex-col justify-center items-center">
-        <h1 className="mb-[30px]">Sign In</h1>
+        <h1 className="mb-8">Sign In</h1>
         <SignInForm />
       </section>
       <section className="w-full h-[53px] md:h-[61px]"></section>

@@ -1,9 +1,9 @@
-import Link from 'next/link';
-import { client, previewClient } from '@/lib/contentful';
-import { draftMode } from 'next/headers';
-import { MenuItems } from './MenuItems';
-import { Button } from '../../ui/button';
 import { ScrollArea } from '@/components/ui/scroll-area';
+import { client } from '@/lib/contentful';
+import { draftMode } from 'next/headers';
+import Link from 'next/link';
+import { Button } from '../../ui/button';
+import { MenuItems } from './MenuItems';
 
 export const DashboardSideNav = async ({ menu }: { menu: string }) => {
   const { isEnabled } = draftMode();
@@ -19,7 +19,7 @@ export const DashboardSideNav = async ({ menu }: { menu: string }) => {
       {items.map((item: any, i: number) => {
         return <MenuItems id={item.sys.id} key={`menu-item-${i}`} />;
       })}
-      <section className={`flex flex-wrap items-center gap-x-[5px] p-[15px]`}>
+      <section className={`flex flex-wrap items-center gap-x-[5px] p-4`}>
         <Button
           asChild
           variant="link"

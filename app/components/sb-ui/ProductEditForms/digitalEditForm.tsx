@@ -181,7 +181,7 @@ type Props = {
 export default function DigitalEditForm(props: Props) {
   const router = useRouter();
   const pathname = usePathname();
-  const [disabled, setDisabled] = React.useState<boolean>(true);
+  const [disabled, setDisabled] = React.useState<boolean>(false);
   const productImagesRef = React.useRef<HTMLInputElement>(null);
   const digitalFileRef = React.useRef<HTMLInputElement>(null);
   const [productImages, setProductImages] = React.useState<ProductImage[]>([]);
@@ -209,6 +209,7 @@ export default function DigitalEditForm(props: Props) {
         compare_at: props.compare_at || 0.0,
       },
       currency: props.currency || 'USD',
+      tags: props.tags?.join(',') || '',
       sku: props.sku || '',
       is_featured: props.is_featured || false,
     },
@@ -320,10 +321,10 @@ export default function DigitalEditForm(props: Props) {
           name: form.getValues('name'),
           images: imageFileUrls,
           description: form.getValues('description') || '',
-          price: price.toFixed(2),
-          compare_at: compare_at.toFixed(2),
+          price: price.toFixed(2) as unknown as number,
+          compare_at: compare_at.toFixed(2) as unknown as number,
           currency: form.getValues('currency'),
-          tags: tags,
+          tags: form.getValues('tags')?.replace(/ /g, '').split(',') || [],
           digital_file: digitalFileUrl,
           digital_file_name: digitalFileName,
           is_featured: form.getValues('is_featured'),
@@ -338,18 +339,19 @@ export default function DigitalEditForm(props: Props) {
           vendor: 'digital',
           vendor_id: '',
           description: form.getValues('description') || '',
-          price: price.toFixed(2),
-          compare_at: compare_at.toFixed(2),
+          price: price.toFixed(2) as unknown as number,
+          compare_at: compare_at.toFixed(2) as unknown as number,
           currency: form.getValues('currency'),
           inventory: 1,
           track_inventory: false,
-          weight: 0,
-          weight_type: 'lbs',
+          weight: null,
+          dimensions: null,
+          ship_from_address: null,
           status: 'Public',
-          tags: tags,
+          tags: form.getValues('tags')?.replace(/ /g, '').split(',') || [],
           admin_tags: [],
           like_count: 0,
-          product_type: 'digital',
+          product_type: 'Digital',
           store_id: props.storeID,
           owner_id: props.userID,
           digital_file: digitalFileUrl,
@@ -422,35 +424,6 @@ export default function DigitalEditForm(props: Props) {
     revalidate(props.docID!);
   }
 
-  function updateSave() {
-    if (
-      form.getValues('name') !== props.name ||
-      form.getValues('description') !== props.description ||
-      productImages !== props.product_images ||
-      digitalFile !== props.digital_file ||
-      tags !== props.tags ||
-      form.getValues('prices.price') !== props.price ||
-      form.getValues('prices.compare_at') !== props.compare_at ||
-      form.getValues('currency') !== props.currency ||
-      form.getValues('sku') !== props.sku ||
-      form.getValues('is_featured') !== props.is_featured
-    ) {
-      setDisabled(false);
-    } else if (
-      form.getValues('name') === props.name &&
-      form.getValues('description') === props.description &&
-      productImages === props.product_images &&
-      digitalFile === props.digital_file &&
-      tags === props.tags &&
-      form.getValues('prices.price') === props.price &&
-      form.getValues('prices.compare_at') === props.compare_at &&
-      form.getValues('currency') === props.currency &&
-      form.getValues('sku') === props.sku &&
-      form.getValues('is_featured') === props.is_featured
-    ) {
-      setDisabled(true);
-    }
-  }
   React.useEffect(() => {
     if (props.digital_file) {
       setDigitalFile(props.digital_file);
@@ -476,15 +449,12 @@ export default function DigitalEditForm(props: Props) {
       setStatus(props.status);
     }
   }, [props.status]);
-  React.useEffect(() => {
-    updateSave();
-  }, [productImages, digitalFile]);
 
   return (
     <section className="relative">
       <section className="w-full max-w-[2428px] mx-auto">
         {props.name !== undefined && (
-          <section className="flex w-full justify-between items-center px-[15px] pt-[30px] gap-[15px]">
+          <section className="flex w-full justify-between items-center px-4 pt-8 gap-4">
             <Breadcrumb>
               <BreadcrumbList>
                 <BreadcrumbItem>
@@ -501,20 +471,17 @@ export default function DigitalEditForm(props: Props) {
           </section>
         )}
         <section
-          className={cn(
-            'flex w-full justify-between items-center px-[15px] gap-[15px]',
-            {
-              'pt-[10px] pb-[30px] ': props.name !== undefined,
-              'py-[30px]': props.name === undefined,
-            }
-          )}
+          className={cn('flex w-full justify-between items-center px-4 gap-4', {
+            'pt-[10px] pb-8 ': props.name !== undefined,
+            'py-8': props.name === undefined,
+          })}
         >
           {props.name !== undefined ? (
             <h1>{props.name}</h1>
           ) : (
             <h1>Add Product</h1>
           )}
-          <div className="flex gap-[15px] items-center">
+          <div className="flex gap-4 items-center">
             {props.status !== undefined && props.status === 'Public' && (
               <Button
                 variant="outline"
@@ -566,11 +533,11 @@ export default function DigitalEditForm(props: Props) {
         <Form {...form}>
           <form
             onSubmit={form.handleSubmit(onSubmit)}
-            className="flex flex-col px-[15px] py-[30px] w-full gap-[30px]"
+            className="flex flex-col px-4 py-8 w-full gap-8"
           >
-            <section className="flex flex-col md:flex-row gap-[30px]">
+            <section className="flex flex-col md:flex-row gap-8">
               <aside className="w-full md:w-[400px] lg:w-[600px]">
-                <p className="pb-[15px]">
+                <p className="pb-4">
                   <b>Title and meta description</b>
                 </p>
                 <p>
@@ -578,7 +545,7 @@ export default function DigitalEditForm(props: Props) {
                   shows up on search engines.
                 </p>
               </aside>
-              <aside className="w-full flex flex1 flex-col gap-[30px] bg-layer-one p-[30px] rounded drop-shadow">
+              <aside className="w-full flex flex1 flex-col gap-8 bg-layer-one p-8 rounded drop-shadow">
                 <FormField
                   control={form.control}
                   name="name"
@@ -587,7 +554,7 @@ export default function DigitalEditForm(props: Props) {
                       <FormLabel>Name</FormLabel>
                       <FormControl>
                         <Input
-                          onChangeCapture={updateSave}
+                          onChangeCapture={field.onChange}
                           id="name"
                           {...field}
                         />
@@ -604,7 +571,7 @@ export default function DigitalEditForm(props: Props) {
                       <FormLabel>Meta Description</FormLabel>
                       <FormControl>
                         <Textarea
-                          onChangeCapture={updateSave}
+                          onChangeCapture={field.onChange}
                           placeholder="Tell us a little bit about this product..."
                           className="resize-none"
                           {...field}
@@ -617,12 +584,12 @@ export default function DigitalEditForm(props: Props) {
               </aside>
             </section>
 
-            <section className="flex flex-col md:flex-row gap-[30px]">
+            <section className="flex flex-col md:flex-row gap-8">
               <aside className="w-full md:w-[400px] lg:w-[600px]">
-                <p className="pb-[15px]">
+                <p className="pb-4">
                   <b>Images</b>
                 </p>
-                <p className="pb-[15px]">
+                <p className="pb-4">
                   These will be the images used to show off your product.
                 </p>
                 {productImages.length <= 6 ? (
@@ -654,7 +621,7 @@ export default function DigitalEditForm(props: Props) {
                     const images = form.watch('product_images');
 
                     return (
-                      <FormItem className="pt-[15px]">
+                      <FormItem className="pt-4">
                         <FormControl>
                           <>
                             <Input
@@ -698,7 +665,6 @@ export default function DigitalEditForm(props: Props) {
                                     ...productImageFiles,
                                     newFiles[newFiles.length - 1],
                                   ]);
-                                  updateSave();
                                 }
                                 onChange(newFiles);
                               }}
@@ -715,7 +681,7 @@ export default function DigitalEditForm(props: Props) {
                   }}
                 />
               </aside>
-              <aside className="w-full overflow-x-auto flex flex1 flex-col gap-[30px] bg-layer-one p-[30px] rounded drop-shadow">
+              <aside className="w-full overflow-x-auto flex flex1 flex-col gap-8 bg-layer-one p-8 rounded drop-shadow">
                 <DraggableImages
                   product_images={productImages}
                   product_image_files={productImageFiles}
@@ -725,12 +691,12 @@ export default function DigitalEditForm(props: Props) {
               </aside>
             </section>
 
-            <section className="flex flex-col md:flex-row gap-[30px]">
+            <section className="flex flex-col md:flex-row gap-8">
               <aside className="w-full md:w-[400px] lg:w-[600px]">
-                <p className="pb-[15px]">
+                <p className="pb-4">
                   <b>Digital File</b>
                 </p>
-                <p className="pb-[15px]">
+                <p className="pb-4">
                   This will be the file sent to the customer once purchased.
                 </p>
                 {digitalFile === '' ? (
@@ -794,7 +760,6 @@ export default function DigitalEditForm(props: Props) {
                                 if (newFiles.length > 0) {
                                   setDigitalFile(newFiles[0].name);
                                   setDigitalFileName(newFiles[0].name);
-                                  updateSave();
                                 }
                                 onChange(newFiles);
                               }}
@@ -809,7 +774,7 @@ export default function DigitalEditForm(props: Props) {
                   }}
                 />
               </aside>
-              <aside className="w-full flex flex1 flex-col gap-[30px] bg-layer-one p-[30px] rounded drop-shadow">
+              <aside className="w-full flex flex1 flex-col gap-8 bg-layer-one p-8 rounded drop-shadow">
                 {digitalFile === '' ? (
                   <section className="flex flex-col">
                     <p>
@@ -820,10 +785,10 @@ export default function DigitalEditForm(props: Props) {
                     </p>
                   </section>
                 ) : (
-                  <section className="flex items-center gap-[30px]">
+                  <section className="flex items-center gap-8">
                     <section className="flex flex-col justify-center items-center">
                       <FontAwesomeIcon
-                        className="icon text-8xl mb-[15px]"
+                        className="icon text-8xl mb-4"
                         icon={faFile}
                       />
                       <p>{digitalFileName}</p>
@@ -845,9 +810,9 @@ export default function DigitalEditForm(props: Props) {
               </aside>
             </section>
 
-            <section className="flex flex-col md:flex-row gap-[30px]">
+            <section className="flex flex-col md:flex-row gap-8">
               <aside className="w-full md:w-[400px] lg:w-[600px]">
-                <p className="pb-[15px]">
+                <p className="pb-4">
                   <b>Options and Pricing</b>
                 </p>
                 <p>
@@ -855,8 +820,8 @@ export default function DigitalEditForm(props: Props) {
                   searchable.
                 </p>
               </aside>
-              <aside className="w-full flex flex1 flex-col gap-[30px] bg-layer-one p-[30px] rounded drop-shadow">
-                <section className="w-full flex flex-col md:flex-row gap-[30px]">
+              <aside className="w-full flex flex1 flex-col gap-8 bg-layer-one p-8 rounded drop-shadow">
+                <section className="w-full flex flex-col md:flex-row gap-8">
                   <FormField
                     control={form.control}
                     name="prices.price"
@@ -865,7 +830,7 @@ export default function DigitalEditForm(props: Props) {
                         <FormLabel>Price</FormLabel>
                         <FormControl>
                           <Input
-                            onChangeCapture={updateSave}
+                            onChangeCapture={field.onChange}
                             id="price"
                             type="number"
                             {...field}
@@ -883,7 +848,7 @@ export default function DigitalEditForm(props: Props) {
                         <FormLabel>Compare At Price</FormLabel>
                         <FormControl>
                           <Input
-                            onChangeCapture={updateSave}
+                            onChangeCapture={field.onChange}
                             id="compare_at"
                             type="number"
                             {...field}
@@ -900,7 +865,7 @@ export default function DigitalEditForm(props: Props) {
                       <FormItem className="w-full flex1">
                         <FormLabel>Currency</FormLabel>
                         <Select
-                          onValueChange={updateSave}
+                          onValueChange={field.onChange}
                           defaultValue={field.value}
                         >
                           <FormControl>
@@ -931,11 +896,14 @@ export default function DigitalEditForm(props: Props) {
                       <FormLabel>Tags</FormLabel>
                       <FormControl>
                         <Input
-                          onChangeCapture={updateSave}
+                          onChangeCapture={field.onChange}
                           id="tags"
                           {...field}
                         />
                       </FormControl>
+                      <FormDescription>
+                        Use commas to seperate different tags.
+                      </FormDescription>
                       <FormMessage />
                     </FormItem>
                   )}
@@ -948,7 +916,7 @@ export default function DigitalEditForm(props: Props) {
                       <FormLabel>SKU</FormLabel>
                       <FormControl>
                         <Input
-                          onChangeCapture={updateSave}
+                          onChangeCapture={field.onChange}
                           id="tags"
                           {...field}
                         />

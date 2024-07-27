@@ -18,7 +18,7 @@ export const ShowMoreText = (props: {
       ) : (
         <Button
           variant="link"
-          className="text-muted-foreground p-[0] px-[15px] h-auto"
+          className="text-muted-foreground p-[0] px-4 h-auto"
           onClick={() => setShowMore(!showMore)}
           asChild
         >

@@ -50,7 +50,7 @@ export default function SignUp({
         </section>
       </section>
       <section className="w-full flex flex-col justify-center items-center">
-        <h1 className="mb-[30px]">Sign Up</h1>
+        <h1 className="mb-8">Sign Up</h1>
         <SignUpForm />
       </section>
       <section className="w-full h-[53px] md:h-[61px]"></section>

@@ -1,28 +1,26 @@
 import { db } from '@/lib/firebase';
 import {
-  DocumentReference,
-  doc,
-  DocumentData,
-  getDoc,
   CollectionReference,
+  DocumentData,
+  DocumentReference,
+  QuerySnapshot,
   collection,
+  doc,
+  getDoc,
+  getDocs,
   query,
   where,
-  getDocs,
-  QuerySnapshot,
 } from 'firebase/firestore';
-import { Metadata, ResolvingMetadata } from 'next';
+import { Metadata } from 'next';
 // import ShowAvatar from '../../ShowAvatar';
-import ProductCard from '@/components/sb-ui/ProductCard';
+import { LikeButton } from '@/components/sb-ui/LikeButton';
 import { SubsciberButton } from '@/components/sb-ui/SubscribeButton';
-import { Separator } from '@/components/ui/separator';
 import { Button } from '@/components/ui/button';
+import { faShare } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Link from 'next/link';
 import { redirect } from 'next/navigation';
 import ProductImages from './ProductImages';
-import { LikeButton } from '@/components/sb-ui/LikeButton';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faShare } from '@fortawesome/free-solid-svg-icons';
 
 type Props = {
   params: { store: string; product: string };
@@ -78,23 +76,20 @@ export default async function CreatorStoreProduct({ params }: Props) {
   if (data === 'No Store') {
     return (
       <section>
-        <section className="flex w-full justify-between items-center px-[15px] py-[30px] gap-[15px]">
+        <section className="flex w-full justify-between items-center px-4 py-8 gap-4">
           <h1>No Such Store</h1>
         </section>
       </section>
     );
   }
   return (
-    <section className="flex flex-col gap-[30px] p-[15px] max-w-[2428px] mx-auto">
-      <section
-        key="productInfo"
-        className="flex flex-col md:flex-row gap-[30px]"
-      >
+    <section className="flex flex-col gap-8 p-4 max-w-[2428px] mx-auto">
+      <section key="productInfo" className="flex flex-col md:flex-row gap-8">
         <div className="flex flex-col md:hidden">
           <div className="flex justify-between">
             <Link
               href={`/creator/${params.store}`}
-              className="flex gap-[15px] items-center mb-[15px]"
+              className="flex gap-4 items-center mb-4"
             >
               {/* <ShowAvatar data={data.store.data()} size="sm" /> */}
               <p className="font-bold text-sm">
@@ -123,7 +118,7 @@ export default async function CreatorStoreProduct({ params }: Props) {
             <div className="flex justify-between">
               <Link
                 href={`/creator/${params.store}`}
-                className="flex gap-[15px] items-center mb-[30px]"
+                className="flex gap-4 items-center mb-8"
               >
                 {/* <ShowAvatar data={data.store.data()} size="sm" /> */}
                 <p className="font-bold text-md">
@@ -147,9 +142,9 @@ export default async function CreatorStoreProduct({ params }: Props) {
           </div>
           {data.product.data().colors &&
           data.product.data().colors.length > 1 ? (
-            <div className="pt-0 md:pt-[30px]">
+            <div className="pt-0 md:pt-8">
               <p>Color:</p>
-              <div className="flex flex-wrap gap-[15px] pt-[5px]">
+              <div className="flex flex-wrap gap-4 pt-[5px]">
                 {data.product
                   .data()
                   .colors.map((color: { hex: string; name: string }) => {
@@ -172,9 +167,9 @@ export default async function CreatorStoreProduct({ params }: Props) {
           ) : (
             <></>
           )}
-          <div className="pt-[30px]">
+          <div className="pt-8">
             <p>Size:</p>
-            <div className="flex flex-wrap w-full gap-[15px] pt-[5px]">
+            <div className="flex flex-wrap w-full gap-4 pt-[5px]">
               <div className="border rounded-full cursor-pointer w-[40px] h-[40px] p-[2px]">
                 <div className="flex justify-center items-center rounded-full w-full h-full">
                   <p className="font-bold text-sm">XS</p>
@@ -222,8 +217,8 @@ export default async function CreatorStoreProduct({ params }: Props) {
               </div>
             </div>
           </div>
-          <Button className="mt-[30px]">Add To Cart</Button>
-          <div className="flex gap-[15px] justify-start pt-[15px]">
+          <Button className="mt-8">Add To Cart</Button>
+          <div className="flex gap-4 justify-start pt-4">
             {/* <SubsciberButton store={params.store} /> */}
             <LikeButton product={params.product} store={params.store} />
             <Button variant="outline" asChild>
@@ -238,8 +233,8 @@ export default async function CreatorStoreProduct({ params }: Props) {
       <section key="productDescription"></section>
       <section key="productLike"></section>
       <section key="creatorOther"></section>
-      {/* <section className="flex w-full justify-between items-center px-[15px] py-[30px] gap-[15px]">
-        <Link href={`/creator/${params.store}`} className="flex gap-[30px]">
+      {/* <section className="flex w-full justify-between items-center px-4 py-8 gap-4">
+        <Link href={`/creator/${params.store}`} className="flex gap-8">
           <ShowAvatar data={data.store.data()} />
           <div className="">
             <h1>{data.store.data().display_name}</h1>
@@ -253,7 +248,7 @@ export default async function CreatorStoreProduct({ params }: Props) {
       {data.collections.docs.length === 0 ? (
         <></>
       ) : (
-        <section className="flex w-full gap-[30px] justify-start px-[15px] pb-[10px]">
+        <section className="flex w-full gap-8 justify-start px-4 pb-[10px]">
           {data.collections?.docs?.map((doc) => (
             <Button
               asChild
@@ -274,9 +269,9 @@ export default async function CreatorStoreProduct({ params }: Props) {
       <Separator /> */}
 
       {/* {data.collection.data().products.length === 0 ? (
-        <span className="p-[15px]">Nothing here yet...</span>
+        <span className="p-4">Nothing here yet...</span>
       ) : (
-        <div className="grid grid-cols-1 md:grid-cols-3 xl:grid-cols-4  gap-x-[30px] gap-y-[60px] p-[15px]">
+        <div className="grid grid-cols-1 md:grid-cols-3 xl:grid-cols-4  gap-x-8 gap-y-[60px] p-4">
           {data.collection
             .data()
             .products?.map((item: string) => (

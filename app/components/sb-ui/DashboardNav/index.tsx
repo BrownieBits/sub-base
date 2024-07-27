@@ -15,8 +15,8 @@ export const DashboardNav = () => {
   const user_slug = cookieStore.get('user_slug');
 
   return (
-    <nav className="flex items-center justify-between sticky px-[15px] h-[56px] top-0 z-10 overflow-auto border-r-[1px] bg-layer-one border-b-[1px] border-b-border">
-      <div className="flex gap-[15px]">
+    <nav className="flex items-center justify-between sticky px-4 h-[56px] top-0 z-10 overflow-auto border-r-[1px] bg-layer-one border-b-[1px] border-b-border">
+      <div className="flex gap-4">
         <Sheet>
           <SheetTrigger className="flex xl:hidden">
             <Button
@@ -37,7 +37,7 @@ export const DashboardNav = () => {
           <Logo url="/dashboard" />
         </section>
       </div>
-      <ul className="flex gap-[15px] md:gap-[30px] items-center">
+      <ul className="flex gap-4 md:gap-8 items-center">
         <li>
           <Button asChild variant="link" size="sm" className="px-0">
             <Link href="/" aria-label="Spring by Amaze">

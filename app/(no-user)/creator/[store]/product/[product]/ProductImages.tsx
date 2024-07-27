@@ -1,8 +1,7 @@
 'use client';
 
-import React from 'react';
 import Image from 'next/image';
-import { Button } from '@/components/ui/button';
+import React from 'react';
 
 export default function ProductImages(props: { images: string[] }) {
   const [mainImage, setMainImage] = React.useState('');
@@ -19,7 +18,7 @@ export default function ProductImages(props: { images: string[] }) {
     return <></>;
   }
   return (
-    <div className="flex flex-col gap-[15px] w-full">
+    <div className="flex flex-col gap-4 w-full">
       <Image
         src={mainImage}
         alt="ProductImage"
@@ -28,7 +27,7 @@ export default function ProductImages(props: { images: string[] }) {
         className="flex w-full rounded-lg overflow-hidden"
       />
       {props.images.length > 0 ? (
-        <div className="flex justify-center items-center gap-[15px]">
+        <div className="flex justify-center items-center gap-4">
           {props.images.map((image) => {
             return (
               <Image

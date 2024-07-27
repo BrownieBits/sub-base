@@ -1,17 +1,16 @@
-import Link from 'next/link';
-import { UserIcon } from './user-icon';
-import { CartIcon } from './cart-icon';
-import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faBars } from '@fortawesome/free-solid-svg-icons';
-import { Button } from '@/components/ui/button';
 import { DashboardSideNav } from '@/components/sb-ui/DashboardSideNav';
 import { Logo } from '@/components/sb-ui/Logo';
+import { Button } from '@/components/ui/button';
+import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
+import { faBars } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { CartIcon } from './cart-icon';
+import { UserIcon } from './user-icon';
 
 export const MarketingNav = () => {
   return (
-    <nav className="flex items-center justify-between sticky px-[15px] h-[56px] top-0 z-10 overflow-auto border-r-[1px] bg-layer-one border-b-[1px] border-b-border">
-      <div className="flex gap-[15px]">
+    <nav className="flex items-center justify-between sticky px-4 h-[56px] top-0 z-10 overflow-auto border-r-[1px] bg-layer-one border-b-[1px] border-b-border">
+      <div className="flex gap-4">
         <Sheet>
           <SheetTrigger className="flex xl:hidden">
             <Button
@@ -32,7 +31,7 @@ export const MarketingNav = () => {
           <Logo url="/dashboard" />
         </section>
       </div>
-      <ul className="flex gap-[15px] items-center">
+      <ul className="flex gap-4 items-center">
         <li>
           <CartIcon />
         </li>

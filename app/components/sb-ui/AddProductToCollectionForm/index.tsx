@@ -1,6 +1,7 @@
 'use client';
 
-import { DocumentData, QuerySnapshot } from 'firebase/firestore';
+import { AlertDialogCancel } from '@/components/ui/alert-dialog';
+import { Button } from '@/components/ui/button';
 import {
   Form,
   FormControl,
@@ -9,14 +10,13 @@ import {
   FormMessage,
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
-import { Button } from '@/components/ui/button';
-import { AlertDialogCancel } from '@/components/ui/alert-dialog';
-import * as z from 'zod';
-import { useForm } from 'react-hook-form';
-import { zodResolver } from '@hookform/resolvers/zod';
-import React from 'react';
-import Image from 'next/image';
 import { ScrollArea } from '@/components/ui/scroll-area';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { DocumentData, QuerySnapshot } from 'firebase/firestore';
+import Image from 'next/image';
+import React from 'react';
+import { useForm } from 'react-hook-form';
+import * as z from 'zod';
 
 const formSchema = z.object({
   search: z.string(),
@@ -99,7 +99,7 @@ export default function AddProductsToCollectionForm(props: {
                 }
                 return (
                   <section
-                    className="flex items-center gap-[15px] my-[15px]"
+                    className="flex items-center gap-4 my-4"
                     key={doc.id}
                   >
                     <input
@@ -137,12 +137,12 @@ export default function AddProductsToCollectionForm(props: {
         </ScrollArea>
       )}
 
-      <section className="flex justify-between items-center gap-[15px]">
+      <section className="flex justify-between items-center gap-4">
         <span>
           {selectedProducts?.length} Product
           {selectedProducts?.length === 1 ? '' : 's'} Selected
         </span>
-        <section className="flex gap-[15px]">
+        <section className="flex gap-4">
           <AlertDialogCancel>Cancel</AlertDialogCancel>
           <Button onClick={() => props.closeModal(selectedProducts)}>
             Save

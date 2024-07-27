@@ -1,37 +1,6 @@
 'use client';
 
-import Link from 'next/link';
-import {
-  DocumentData,
-  DocumentReference,
-  collection,
-  deleteDoc,
-  doc,
-  query,
-  updateDoc,
-  where,
-} from 'firebase/firestore';
 import AddProductsToCollectionForm from '@/components/sb-ui/AddProductToCollectionForm';
-import { db } from '@/lib/firebase';
-import { useCollection } from 'react-firebase-hooks/firestore';
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from '@/components/ui/dropdown-menu';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import {
-  faChevronLeft,
-  faEllipsis,
-  faTrash,
-  faSave,
-  faPencil,
-  faEye,
-} from '@fortawesome/free-solid-svg-icons';
-import { faEyeSlash } from '@fortawesome/free-regular-svg-icons';
-import { Button } from '@/components/ui/button';
-import { Separator } from '@/components/ui/separator';
 import {
   AlertDialog,
   AlertDialogContent,
@@ -41,6 +10,21 @@ import {
   AlertDialogTrigger,
 } from '@/components/ui/alert-dialog';
 import {
+  Breadcrumb,
+  BreadcrumbItem,
+  BreadcrumbLink,
+  BreadcrumbList,
+  BreadcrumbPage,
+  BreadcrumbSeparator,
+} from '@/components/ui/breadcrumb';
+import { Button } from '@/components/ui/button';
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from '@/components/ui/dropdown-menu';
+import {
   Form,
   FormControl,
   FormField,
@@ -49,24 +33,38 @@ import {
   FormMessage,
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
-import React from 'react';
-import * as z from 'zod';
-import { useForm } from 'react-hook-form';
-import { zodResolver } from '@hookform/resolvers/zod';
-import Image from 'next/image';
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
-import { redirect, useRouter } from 'next/navigation';
-import {
-  Breadcrumb,
-  BreadcrumbItem,
-  BreadcrumbLink,
-  BreadcrumbList,
-  BreadcrumbPage,
-  BreadcrumbSeparator,
-} from '@/components/ui/breadcrumb';
-import { revalidate } from './actions';
+import { Separator } from '@/components/ui/separator';
 import { Textarea } from '@/components/ui/textarea';
+import { db } from '@/lib/firebase';
+import { faEyeSlash } from '@fortawesome/free-regular-svg-icons';
+import {
+  faEllipsis,
+  faEye,
+  faPencil,
+  faSave,
+  faTrash,
+} from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { zodResolver } from '@hookform/resolvers/zod';
+import {
+  DocumentReference,
+  collection,
+  deleteDoc,
+  doc,
+  query,
+  updateDoc,
+  where,
+} from 'firebase/firestore';
+import Image from 'next/image';
+import Link from 'next/link';
+import { useRouter } from 'next/navigation';
+import React from 'react';
+import { useCollection } from 'react-firebase-hooks/firestore';
+import { useForm } from 'react-hook-form';
 import { toast } from 'sonner';
+import * as z from 'zod';
+import { revalidate } from './actions';
 
 const formSchema = z.object({
   name: z
@@ -240,7 +238,7 @@ export default function Edit(props: {
   return (
     <section>
       <section className="w-full max-w-[2428px] mx-auto">
-        <section className="flex w-full justify-between items-center px-[15px] pt-[30px] gap-[15px]">
+        <section className="flex w-full justify-between items-center px-4 pt-8 gap-4">
           <Breadcrumb>
             <BreadcrumbList>
               <BreadcrumbItem>
@@ -261,9 +259,9 @@ export default function Edit(props: {
             </BreadcrumbList>
           </Breadcrumb>
         </section>
-        <section className="flex w-full justify-between items-center px-[15px] pt-[10px] pb-[30px] gap-[15px]">
+        <section className="flex w-full justify-between items-center px-4 pt-[10px] pb-8 gap-4">
           <h1>{props.name}</h1>
-          <div className="flex gap-[15px] items-center">
+          <div className="flex gap-4 items-center">
             {disabled ? (
               <></>
             ) : (
@@ -343,12 +341,12 @@ export default function Edit(props: {
       </section>
       <Separator />
       <section className="w-full max-w-[2428px] mx-auto">
-        <section className="flex flex-col px-[15px] pt-[15px] pb-[30px] w-full gap-[30px]">
+        <section className="flex flex-col px-4 pt-4 pb-8 w-full gap-8">
           <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)}>
-              <section className="flex flex-col md:flex-row gap-[30px]">
+              <section className="flex flex-col md:flex-row gap-8">
                 <aside className="w-full md:w-[400px] lg:w-[600px]">
-                  <p className="pb-[15px]">
+                  <p className="pb-4">
                     <b>Title and meta description</b>
                   </p>
                   <p>
@@ -356,7 +354,7 @@ export default function Edit(props: {
                     collection shows up on search engines.
                   </p>
                 </aside>
-                <aside className="w-full flex flex1 flex-col gap-[30px] bg-layer-one p-[30px] rounded drop-shadow">
+                <aside className="w-full flex flex1 flex-col gap-8 bg-layer-one p-8 rounded drop-shadow">
                   <FormField
                     control={form.control}
                     name="name"
@@ -431,9 +429,9 @@ export default function Edit(props: {
               {selectedType === 'Manual' ? (
                 <></>
               ) : (
-                <section className="flex flex-col md:flex-row gap-[30px] pt-[30px]">
+                <section className="flex flex-col md:flex-row gap-8 pt-8">
                   <aside className="w-full md:w-[400px] lg:w-[600px]">
-                    <p className="pb-[15px]">
+                    <p className="pb-4">
                       <b>Smart Collection Tags</b>
                     </p>
                     <p>
@@ -441,7 +439,7 @@ export default function Edit(props: {
                       of products for you.
                     </p>
                   </aside>
-                  <aside className="w-full flex flex1 flex-col gap-[30px] bg-layer-one p-[30px] rounded drop-shadow">
+                  <aside className="w-full flex flex1 flex-col gap-8 bg-layer-one p-8 rounded drop-shadow">
                     <FormField
                       control={form.control}
                       name="tags"
@@ -464,12 +462,12 @@ export default function Edit(props: {
               )}
             </form>
           </Form>
-          <section className="flex flex-col md:flex-row gap-[30px]">
+          <section className="flex flex-col md:flex-row gap-8">
             <aside className="w-full md:w-[400px] lg:w-[600px]">
-              <p className="pb-[15px]">
+              <p className="pb-4">
                 <b>Products</b>
               </p>
-              <p className="pb-[15px]">
+              <p className="pb-4">
                 This will be the products in the collection
               </p>
               <AlertDialog open={open} onOpenChange={setOpen}>
@@ -485,7 +483,7 @@ export default function Edit(props: {
                 <AlertDialogContent>
                   <AlertDialogHeader>
                     <AlertDialogTitle>Select Products</AlertDialogTitle>
-                    <Separator className="mb-[15px]" />
+                    <Separator className="mb-4" />
                     <AlertDialogDescription>
                       <AddProductsToCollectionForm
                         closeModal={closeModal}
@@ -498,11 +496,11 @@ export default function Edit(props: {
                 </AlertDialogContent>
               </AlertDialog>
             </aside>
-            <aside className="w-full flex flex1 flex-col gap-[30px] bg-layer-one p-[30px] rounded drop-shadow">
+            <aside className="w-full flex flex1 flex-col gap-8 bg-layer-one p-8 rounded drop-shadow">
               {loading1 ? (
                 <div>Loading</div>
               ) : (
-                <section className="flex flex-col gap-[15px]">
+                <section className="flex flex-col gap-4">
                   {blogSnapShots?.docs?.length! > 0 ? (
                     <>
                       {blogSnapShots?.docs.map((doc) => {
@@ -511,7 +509,7 @@ export default function Edit(props: {
                         }
                         return (
                           <section
-                            className="flex items-center gap-[15px]"
+                            className="flex items-center gap-4"
                             key={doc.id}
                           >
                             <div className="w-[50px]">

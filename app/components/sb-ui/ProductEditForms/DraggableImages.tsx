@@ -97,7 +97,7 @@ export default function DraggableImages(props: Props) {
               </>
             )}
             <section
-              className="w-full min-w-[900px] grid grid-cols-6 gap-[30px] items-center"
+              className="w-full min-w-[900px] grid grid-cols-6 gap-8 items-center"
               ref={droppableProvided.innerRef}
               {...droppableProvided.droppableProps}
             >

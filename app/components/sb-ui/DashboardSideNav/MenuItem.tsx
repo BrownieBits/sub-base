@@ -1,10 +1,10 @@
 'use client';
 
-import Link from 'next/link';
-import { Button } from '../../ui/button';
-import { usePathname } from 'next/navigation';
 import { auth } from '@/lib/firebase';
+import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 import { useAuthState } from 'react-firebase-hooks/auth';
+import { Button } from '../../ui/button';
 
 export const MenuItem = (props: any) => {
   const [user, loading, userError] = useAuthState(auth);
@@ -21,7 +21,7 @@ export const MenuItem = (props: any) => {
           variant="link"
           aria-label="Sign In to Access"
           title="Sign In to Access"
-          className="px-[15px] py-0 w-full justify-start text-muted-foreground"
+          className="px-4 py-0 w-full justify-start text-muted-foreground"
         >
           <Link
             href="/sign-in"
@@ -45,7 +45,7 @@ export const MenuItem = (props: any) => {
         variant="link"
         aria-label={props.item.fields.title}
         title={props.item.fields.title}
-        className="px-[15px] py-0 w-full justify-start text-foreground"
+        className="px-4 py-0 w-full justify-start text-foreground"
       >
         <Link
           href={props.item.fields.url}
@@ -62,7 +62,7 @@ export const MenuItem = (props: any) => {
       <Button
         asChild
         variant="link"
-        className="px-[15px] py-0 w-full justify-start text-foreground"
+        className="px-4 py-0 w-full justify-start text-foreground"
       >
         <Link
           href={props.item.fields.url}

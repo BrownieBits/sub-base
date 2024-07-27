@@ -3,7 +3,6 @@ import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Skeleton } from '@/components/ui/skeleton';
 import { db } from '@/lib/firebase';
 import { doc } from 'firebase/firestore';
-import Image from 'next/image';
 import Link from 'next/link';
 import { useDocument } from 'react-firebase-hooks/firestore';
 
@@ -16,7 +15,7 @@ export default function StoreCard({ id }: { id: string }) {
       <div className="flex flex-col items-start space-x-4">
         <Skeleton className="aspect-square w-full rounded-full" />
         <div className="space-y-2">
-          <Skeleton className="h-4 w-[250px] mt-[15px]" />
+          <Skeleton className="h-4 w-[250px] mt-4" />
           <Skeleton className="h-4 w-[200px]" />
         </div>
       </div>

@@ -1,6 +1,40 @@
 'use client';
 
 import {
+  AlertDialog,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from '@/components/ui/alert-dialog';
+import { Button } from '@/components/ui/button';
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from '@/components/ui/form';
+import { Input } from '@/components/ui/input';
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from '@/components/ui/tooltip';
+import { db } from '@/lib/firebase';
+import {
+  faCircle,
+  faCircleDot,
+  faSquarePlus,
+  faTrash,
+} from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { zodResolver } from '@hookform/resolvers/zod';
+import {
   CollectionReference,
   DocumentData,
   DocumentReference,
@@ -16,46 +50,12 @@ import {
   updateDoc,
   where,
 } from 'firebase/firestore';
-import { db } from '@/lib/firebase';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import {
-  faCircle,
-  faCircleDot,
-  faSquarePlus,
-  faTrash,
-} from '@fortawesome/free-solid-svg-icons';
-import { Button } from '@/components/ui/button';
-import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from '@/components/ui/form';
-import { Input } from '@/components/ui/input';
 import React from 'react';
-import * as z from 'zod';
-import { useForm } from 'react-hook-form';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { toast } from 'sonner';
-import {
-  AlertDialog,
-  AlertDialogCancel,
-  AlertDialogContent,
-  AlertDialogDescription,
-  AlertDialogHeader,
-  AlertDialogTitle,
-  AlertDialogTrigger,
-} from '@/components/ui/alert-dialog';
 import { useFormStatus } from 'react-dom';
+import { useForm } from 'react-hook-form';
+import { toast } from 'sonner';
+import * as z from 'zod';
 import { revalidate } from './actions';
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger,
-} from '@/components/ui/tooltip';
 
 const formSchema = z.object({
   name: z
@@ -175,12 +175,12 @@ export default function EditAddresses(props: {
   }, [props.addresses]);
 
   return (
-    <section className="flex flex-col md:flex-row gap-[30px]">
+    <section className="flex flex-col md:flex-row gap-8">
       <aside className="w-full md:w-[400px] lg:w-[600px]">
-        <p className="pb-[15px]">
+        <p className="pb-4">
           <b>Addresses</b>
         </p>
-        <p className="pb-[15px]">
+        <p className="pb-4">
           These are addresses we can use for quicker checkouts or for
           subscription based services.
         </p>
@@ -302,7 +302,7 @@ export default function EditAddresses(props: {
                     ) : (
                       <></>
                     )}
-                    <section className="flex gap-[15px] w-full justify-end">
+                    <section className="flex gap-4 w-full justify-end">
                       <AlertDialogCancel>Cancel</AlertDialogCancel>
                       <Button disabled={pending} type="submit">
                         Submit
@@ -315,14 +315,14 @@ export default function EditAddresses(props: {
           </AlertDialogContent>
         </AlertDialog>
       </aside>
-      <aside className="w-full flex flex1 flex-col gap-[30px] bg-layer-one p-[30px] rounded drop-shadow">
+      <aside className="w-full flex flex1 flex-col gap-8 bg-layer-one p-8 rounded drop-shadow">
         {props.addresses.length === 0 ? (
           <p>You currently have no stored addresses.</p>
         ) : (
           <>
             {addressData.map((doc) => (
               <section
-                className="flex flex-col md:flex-row items-center bg-layer-two rounded-lg border p-3 shadow-sm gap-[30px]"
+                className="flex flex-col md:flex-row items-center bg-layer-two rounded-lg border p-3 shadow-sm gap-8"
                 key={doc.id}
               >
                 {doc.id === props.default_address ? (

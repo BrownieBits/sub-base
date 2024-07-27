@@ -112,7 +112,7 @@ export default async function SwitchStores() {
   return (
     <>
       <section className="w-full max-w-[3096px] mx-auto">
-        <section className="flex w-full justify-between items-center px-[15px] py-[30px] gap-[15px]">
+        <section className="flex w-full justify-between items-center px-4 py-8 gap-4">
           <h1>Stores</h1>
           <NewStoreForm userID={user_id?.value!} />
         </section>
@@ -120,15 +120,15 @@ export default async function SwitchStores() {
       </section>
       <Separator />
       <section className="w-full max-w-[3096px] mx-auto">
-        <section className="flex flex-col px-[15px] pt-[15px] pb-[30px] w-full gap-[30px]">
-          <section className="flex flex-col md:flex-row gap-[30px]">
+        <section className="flex flex-col px-4 pt-4 pb-8 w-full gap-8">
+          <section className="flex flex-col md:flex-row gap-8">
             <aside className="w-full md:w-[400px] lg:w-[600px]">
-              <p className="pb-[15px]">
+              <p className="pb-4">
                 <b>My Stores</b>
               </p>
               <p>These are stores you have started and own.</p>
             </aside>
-            <aside className="w-full flex flex1 flex-col gap-[30px] bg-layer-one p-[30px] rounded drop-shadow">
+            <aside className="w-full flex flex1 flex-col gap-8 bg-layer-one p-8 rounded drop-shadow">
               {data.my_stores.length === 0 ? (
                 <p>No Stores</p>
               ) : (
@@ -136,7 +136,7 @@ export default async function SwitchStores() {
                   {data.my_stores.map((doc: any) => {
                     return (
                       <section
-                        className="flex flex-col md:flex-row items-center bg-layer-two rounded-lg border p-3 shadow-sm gap-[30px]"
+                        className="flex flex-col md:flex-row items-center bg-layer-two rounded-lg border p-3 shadow-sm gap-8"
                         key={doc.id}
                       >
                         <Avatar className="bg-secondary text-foreground h-[72px] w-[72px]">
@@ -173,9 +173,9 @@ export default async function SwitchStores() {
             </aside>
           </section>
 
-          <section className="flex flex-col md:flex-row gap-[30px]">
+          <section className="flex flex-col md:flex-row gap-8">
             <aside className="w-full md:w-[400px] lg:w-[600px]">
-              <p className="pb-[15px]">
+              <p className="pb-4">
                 <b>Team Stores</b>
               </p>
               <p>
@@ -183,7 +183,7 @@ export default async function SwitchStores() {
                 manage.
               </p>
             </aside>
-            <aside className="w-full flex flex1 flex-col gap-[30px] bg-layer-one p-[30px] rounded drop-shadow">
+            <aside className="w-full flex flex1 flex-col gap-8 bg-layer-one p-8 rounded drop-shadow">
               {data.team_stores.length === 0 ? (
                 <p>No Stores</p>
               ) : (
@@ -191,7 +191,7 @@ export default async function SwitchStores() {
                   {data.team_stores.map((doc: any) => {
                     return (
                       <section
-                        className="flex flex-col md:flex-row items-center bg-layer-two rounded-lg border p-3 shadow-sm gap-[30px]"
+                        className="flex flex-col md:flex-row items-center bg-layer-two rounded-lg border p-3 shadow-sm gap-8"
                         key={doc.id}
                       >
                         <Avatar className="bg-secondary text-foreground h-[72px] w-[72px]">
@@ -228,9 +228,9 @@ export default async function SwitchStores() {
             </aside>
           </section>
 
-          <section className="flex flex-col md:flex-row gap-[30px]">
+          <section className="flex flex-col md:flex-row gap-8">
             <aside className="w-full md:w-[400px] lg:w-[600px]">
-              <p className="pb-[15px]">
+              <p className="pb-4">
                 <b>Invites</b>
               </p>
               <p>
@@ -238,7 +238,7 @@ export default async function SwitchStores() {
                 accepted.
               </p>
             </aside>
-            <aside className="w-full flex flex1 flex-col gap-[30px] bg-layer-one p-[30px] rounded drop-shadow">
+            <aside className="w-full flex flex1 flex-col gap-8 bg-layer-one p-8 rounded drop-shadow">
               {data.invited_stores.length === 0 ? (
                 <p>No Stores</p>
               ) : (
@@ -246,7 +246,7 @@ export default async function SwitchStores() {
                   {data.invited_stores.map((doc: any) => {
                     return (
                       <section
-                        className="flex flex-col md:flex-row items-center bg-layer-two rounded-lg border p-3 shadow-sm gap-[30px]"
+                        className="flex flex-col md:flex-row items-center bg-layer-two rounded-lg border p-3 shadow-sm gap-8"
                         key={doc.id}
                       >
                         <Avatar className="bg-secondary text-foreground h-[72px] w-[72px]">

@@ -1,8 +1,8 @@
 'use server';
-import { client, previewClient } from '@/lib/contentful';
-import ContentfulImage from '../ConentfulImage';
-import Link from 'next/link';
+import { client } from '@/lib/contentful';
 import { draftMode } from 'next/headers';
+import Link from 'next/link';
+import ContentfulImage from '../ConentfulImage';
 
 export const HeroBanner = async (props: { page_slug: string }) => {
   const { isEnabled } = draftMode();
@@ -17,7 +17,7 @@ export const HeroBanner = async (props: { page_slug: string }) => {
       {data.items.length === 0 ? (
         <></>
       ) : (
-        <div className="flex justify-center w-full pb-[30px] px-[15px]">
+        <div className="flex justify-center w-full pb-8 px-4">
           <Link
             href={data.items[0].fields.url}
             className="w-full rounded-lg overflow-hidden"

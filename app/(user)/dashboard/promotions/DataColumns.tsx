@@ -1,15 +1,15 @@
 'use client';
 
-import { ColumnDef } from '@tanstack/react-table';
 import { Button } from '@/components/ui/button';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { Switch } from '@/components/ui/switch';
 import {
-  faTrash,
   faArrowDown,
   faArrowUp,
+  faTrash,
 } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { ColumnDef } from '@tanstack/react-table';
 import { ChangeStatus } from './actions';
-import { Switch } from '@/components/ui/switch';
 
 export type Promotion = {
   id: string;
@@ -286,7 +286,7 @@ export const columns: ColumnDef<Promotion>[] = [
       const id = row.getValue('id') as string;
       const store_id = row.getValue('store_id') as string;
       return (
-        <section className="flex gap-[15px] justify-end items-center">
+        <section className="flex gap-4 justify-end items-center">
           <Button
             variant="link"
             title="Make Active"

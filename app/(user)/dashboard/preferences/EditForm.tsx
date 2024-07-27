@@ -294,9 +294,9 @@ export default function EditForm(props: {
   return (
     <section>
       <section className="w-full max-w-[2428px] mx-auto">
-        <section className="flex w-full justify-between items-center px-[15px] py-[30px] gap-[15px]">
+        <section className="flex w-full justify-between items-center px-4 py-8 gap-4">
           <h1>Preferences</h1>
-          <div className="flex gap-[15px] items-center">
+          <div className="flex gap-4 items-center">
             {disabled ? (
               <></>
             ) : (
@@ -318,11 +318,11 @@ export default function EditForm(props: {
         <Form {...form}>
           <form
             onSubmit={form.handleSubmit(onSubmit)}
-            className="flex flex-col px-[15px] py-[30px] w-full gap-[30px]"
+            className="flex flex-col px-4 py-8 w-full gap-8"
           >
-            <section className="flex flex-col md:flex-row gap-[30px]">
+            <section className="flex flex-col md:flex-row gap-8">
               <aside className="w-full md:w-[400px] lg:w-[600px]">
-                <p className="pb-[15px]">
+                <p className="pb-4">
                   <b>Name and meta description</b>
                 </p>
                 <p>
@@ -330,7 +330,7 @@ export default function EditForm(props: {
                   up on search engines.
                 </p>
               </aside>
-              <aside className="w-full flex flex1 flex-col gap-[30px] bg-layer-one p-[30px] rounded drop-shadow">
+              <aside className="w-full flex flex1 flex-col gap-8 bg-layer-one p-8 rounded drop-shadow">
                 <FormField
                   control={form.control}
                   name="name"
@@ -369,9 +369,9 @@ export default function EditForm(props: {
               </aside>
             </section>
 
-            <section className="flex flex-col md:flex-row gap-[30px]">
+            <section className="flex flex-col md:flex-row gap-8">
               <aside className="w-full md:w-[400px] lg:w-[600px]">
-                <p className="pb-[15px]">
+                <p className="pb-4">
                   <b>Avatar and Store Banner</b>
                 </p>
                 <p>
@@ -379,7 +379,7 @@ export default function EditForm(props: {
                   brand and personality.
                 </p>
               </aside>
-              <aside className="w-full flex flex1 flex-col gap-[30px] bg-layer-one p-[30px] rounded drop-shadow">
+              <aside className="w-full flex flex1 flex-col gap-8 bg-layer-one p-8 rounded drop-shadow">
                 <FormField
                   control={form.control}
                   name="avatar"
@@ -392,7 +392,7 @@ export default function EditForm(props: {
                         <FormLabel>Avatar</FormLabel>
                         <FormControl>
                           {selectedAvatar ? (
-                            <section className="flex items-center gap-[30px]">
+                            <section className="flex items-center gap-8">
                               <Avatar className="h-[150px] w-[150px]">
                                 <AvatarImage
                                   src={selectedAvatar}
@@ -469,7 +469,7 @@ export default function EditForm(props: {
                         <FormLabel>Store Banner</FormLabel>
                         <FormControl>
                           {selectedBanner ? (
-                            <section className="w-full flex items-center gap-[30px]">
+                            <section className="w-full flex items-center gap-8">
                               <section className="flex flex1">
                                 <Image
                                   src={selectedBanner}
@@ -541,19 +541,19 @@ export default function EditForm(props: {
               </aside>
             </section>
 
-            <section className="flex flex-col md:flex-row gap-[30px]">
+            <section className="flex flex-col md:flex-row gap-8">
               <aside className="w-full md:w-[400px] lg:w-[600px]">
-                <p className="pb-[15px]">
+                <p className="pb-4">
                   <b>Restrict Store Access</b>
                 </p>
                 <p>Limit who can access your online store.</p>
               </aside>
-              <aside className="w-full flex flex1 flex-col gap-[30px] bg-layer-one p-[30px] rounded drop-shadow">
+              <aside className="w-full flex flex1 flex-col gap-8 bg-layer-one p-8 rounded drop-shadow">
                 <FormField
                   control={form.control}
                   name="password_protected"
                   render={({ field }) => (
-                    <FormItem className="flex flex-row items-center justify-between rounded-lg border p-3 shadow-sm gap-[30px]">
+                    <FormItem className="flex flex-row items-center justify-between rounded-lg border p-3 shadow-sm gap-8">
                       <div className="space-y-0.5">
                         <FormLabel>Password protection</FormLabel>
                         <FormDescription>

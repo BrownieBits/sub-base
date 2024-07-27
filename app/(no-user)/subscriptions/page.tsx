@@ -60,7 +60,7 @@ export default async function Subscriptions() {
   return (
     <section>
       <section className="w-full max-w-[3096px] mx-auto">
-        <section className="flex w-full justify-between items-center px-[15px] py-[30px] gap-[15px]">
+        <section className="flex w-full justify-between items-center px-4 py-8 gap-4">
           <h1>My Subscriptions</h1>
         </section>
         <HeroBanner page_slug="creator-liked-items" />
@@ -70,7 +70,7 @@ export default async function Subscriptions() {
         {data.docs.length === 0 ? (
           <NoSubscriptions />
         ) : (
-          <section className="grid grid-cols-2 md:grid-cols-4 xl:grid-cols-6 gap-x-[30px] gap-y-[60px] px-[15px] py-[30px]">
+          <section className="grid grid-cols-2 md:grid-cols-4 xl:grid-cols-6 gap-x-8 gap-y-[60px] px-4 py-8">
             {data.docs.map((doc) => {
               return <StoreCard id={doc.id} key={doc.id} />;
             })}

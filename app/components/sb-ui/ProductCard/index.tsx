@@ -20,7 +20,7 @@ export default function ProductCard({
     return (
       <div className="flex flex-col">
         <Skeleton className="aspect-square w-full rounded-lg" />
-        <div className="flex justify-between pt-[15px] pb-[5px]">
+        <div className="flex justify-between pt-4 pb-[5px]">
           <Skeleton className="h-[24px] w-[250px]" />
           <Skeleton className="h-[24px] w-[75px]" />
         </div>
@@ -36,58 +36,65 @@ export default function ProductCard({
 
   return (
     <div className="flex flex-col w-full">
-      <Link href={`/creator/${value?.data()?.store_id}/product/${value?.id}`}>
+      <Link
+        href={`/product/${value?.id}`}
+        className="aspect-square flex justify-center items-center bg-layer-one border rounded overflow-hidden group"
+      >
         {value?.data()?.images.length > 1 ? (
-          <div className="group">
+          <>
             <Image
               src={value?.data()?.images[0]}
               width="300"
               height="300"
               alt={value?.data()?.title}
-              className="flex group-hover:hidden rounded-lg overflow-hidden w-full"
+              className="flex group-hover:hidden w-full"
             />
             <Image
               src={value?.data()?.images[1]}
               width="300"
               height="300"
               alt={value?.data()?.title}
-              className="hidden group-hover:flex rounded-lg overflow-hidden w-full"
+              className="hidden group-hover:flex w-full"
             />
-          </div>
+          </>
         ) : (
           <Image
             src={value?.data()?.images[0]}
             width="300"
             height="300"
             alt={value?.data()?.title}
-            className="flex rounded-lg overflow-hidden w-full"
+            className="flex w-full"
           />
         )}
       </Link>
       <Link
-        href={`/creator/${value?.data()?.store_id}/product/${value?.id}`}
-        className="flex justify-between pt-[15px] pb-[5px]"
+        href={`/product/${value?.id}`}
+        className="flex justify-between pt-4 pb-[5px]"
       >
-        <p className="text-md">{value?.data()?.title}</p>
-        <span className="font-bold">
-          {new Intl.NumberFormat('en-US', {
-            style: 'currency',
-            currency: 'USD',
-          }).format(value?.data()?.base_price)}
-        </span>
+        <p>
+          <b>{value?.data()?.name}</b>
+        </p>
+        <p>
+          <b>
+            {new Intl.NumberFormat('en-US', {
+              style: 'currency',
+              currency: value?.data()?.currency,
+            }).format(value?.data()?.price)}
+          </b>
+        </p>
       </Link>
       <Link
         href={`/creator/${value?.data()?.store_id}/product/${value?.id}`}
         className="text-sm text-muted-foreground mb-[5px]"
       >
-        {value?.data()?.type}
+        {value?.data()?.product_type}
       </Link>
       {show_creator ? (
         <Link
-          href={`/creator/${value?.data()?.store_id}`}
+          href={`/store/${value?.data()?.store_id}`}
           className="text-sm text-muted-foreground"
         >
-          {value?.data()?.store_name}
+          {value?.data()?.store_id}
         </Link>
       ) : (
         <></>

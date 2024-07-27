@@ -1,19 +1,6 @@
 'use client';
 
-import {
-  CollectionReference,
-  DocumentReference,
-  collection,
-  doc,
-  query,
-  updateDoc,
-  where,
-} from 'firebase/firestore';
-import { db } from '@/lib/firebase';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faSave } from '@fortawesome/free-solid-svg-icons';
 import { Button } from '@/components/ui/button';
-import { Separator } from '@/components/ui/separator';
 import {
   Form,
   FormControl,
@@ -23,11 +10,6 @@ import {
   FormMessage,
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
-import React from 'react';
-import * as z from 'zod';
-import { useForm } from 'react-hook-form';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { toast } from 'sonner';
 import {
   Select,
   SelectContent,
@@ -35,11 +17,21 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
+import { Separator } from '@/components/ui/separator';
 import { currency_list } from '@/lib/CurrencyList';
-import { UserSettings } from './typedef';
+import { db } from '@/lib/firebase';
+import { faSave } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { DocumentReference, doc, updateDoc } from 'firebase/firestore';
 import { isValidPhoneNumber, parsePhoneNumber } from 'libphonenumber-js';
+import React from 'react';
+import { useForm } from 'react-hook-form';
+import { toast } from 'sonner';
+import * as z from 'zod';
 import EditAddresses from './EditAddresses';
 import { revalidate } from './actions';
+import { UserSettings } from './typedef';
 
 const formSchema = z.object({
   name: z
@@ -149,9 +141,9 @@ export default function EditSettings(props: {
   return (
     <section>
       <section className="w-full max-w-[2428px] mx-auto">
-        <section className="flex w-full justify-between items-center px-[15px] py-[30px] gap-[15px]">
+        <section className="flex w-full justify-between items-center px-4 py-8 gap-4">
           <h1>Settings</h1>
-          <div className="flex gap-[15px] items-center">
+          <div className="flex gap-4 items-center">
             {disabled ? (
               <></>
             ) : (
@@ -171,12 +163,12 @@ export default function EditSettings(props: {
       </section>
       <Separator />
       <section className="w-full max-w-[2428px] mx-auto">
-        <section className="flex flex-col px-[15px] py-[30px] w-full gap-[30px]">
+        <section className="flex flex-col px-4 py-8 w-full gap-8">
           <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)}>
-              <section className="flex flex-col md:flex-row gap-[30px]">
+              <section className="flex flex-col md:flex-row gap-8">
                 <aside className="w-full md:w-[400px] lg:w-[600px]">
-                  <p className="pb-[15px]">
+                  <p className="pb-4">
                     <b>Profile</b>
                   </p>
                   <p>
@@ -184,7 +176,7 @@ export default function EditSettings(props: {
                     more that we will use in various locations on the site.
                   </p>
                 </aside>
-                <aside className="w-full flex flex1 flex-col gap-[30px] bg-layer-one p-[30px] rounded drop-shadow">
+                <aside className="w-full flex flex1 flex-col gap-8 bg-layer-one p-8 rounded drop-shadow">
                   <FormField
                     control={form.control}
                     name="name"
@@ -282,9 +274,9 @@ export default function EditSettings(props: {
             userID={props.userID}
           />
 
-          <section className="flex flex-col md:flex-row gap-[30px]">
+          <section className="flex flex-col md:flex-row gap-8">
             <aside className="w-full md:w-[400px] lg:w-[600px]">
-              <p className="pb-[15px]">
+              <p className="pb-4">
                 <b>Saved Credit Cards</b>
               </p>
               <p>
@@ -292,7 +284,7 @@ export default function EditSettings(props: {
                 subscription based services.
               </p>
             </aside>
-            <aside className="w-full flex flex1 flex-col gap-[30px] bg-layer-one p-[30px] rounded drop-shadow">
+            <aside className="w-full flex flex1 flex-col gap-8 bg-layer-one p-8 rounded drop-shadow">
               <p>TODO: Fill in once connected to stripe</p>
             </aside>
           </section>

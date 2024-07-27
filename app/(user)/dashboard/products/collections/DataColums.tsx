@@ -1,26 +1,26 @@
 'use client';
 
-import { ColumnDef } from '@tanstack/react-table';
 import { Button } from '@/components/ui/button';
-import Link from 'next/link';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import {
-  faEye,
-  faPenToSquare,
-  faArrowDown,
-  faArrowUp,
-} from '@fortawesome/free-solid-svg-icons';
-import { faEyeSlash } from '@fortawesome/free-regular-svg-icons';
-import { Revalidate } from './actions';
-import { DocumentReference, doc, updateDoc } from 'firebase/firestore';
-import { db } from '@/lib/firebase';
-import { toast } from 'sonner';
 import {
   Tooltip,
   TooltipContent,
   TooltipProvider,
   TooltipTrigger,
 } from '@/components/ui/tooltip';
+import { db } from '@/lib/firebase';
+import { faEyeSlash } from '@fortawesome/free-regular-svg-icons';
+import {
+  faArrowDown,
+  faArrowUp,
+  faEye,
+  faPenToSquare,
+} from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { ColumnDef } from '@tanstack/react-table';
+import { DocumentReference, doc, updateDoc } from 'firebase/firestore';
+import Link from 'next/link';
+import { toast } from 'sonner';
+import { Revalidate } from './actions';
 
 async function Archive(
   action: string,
@@ -292,7 +292,7 @@ export const columns: ColumnDef<Collection>[] = [
       const name = row.getValue('name') as string;
       const store_id = row.getValue('store_id') as string;
       return (
-        <section className="flex gap-[15px] justify-end">
+        <section className="flex gap-4 justify-end">
           <TooltipProvider>
             <Tooltip>
               <TooltipTrigger>

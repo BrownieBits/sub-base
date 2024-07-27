@@ -80,7 +80,7 @@ export default async function Promotions() {
   return (
     <section>
       <section className="w-full max-w-[3096px] mx-auto">
-        <section className="flex w-full justify-between items-center px-[15px] py-[30px] gap-[15px]">
+        <section className="flex w-full justify-between items-center px-4 py-8 gap-4">
           <h1>Promotions</h1>
           <NewPromotionForm displayName={default_store?.value!} />
         </section>

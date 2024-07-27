@@ -1,8 +1,5 @@
 'use client';
 
-import * as z from 'zod';
-import { useForm } from 'react-hook-form';
-import { zodResolver } from '@hookform/resolvers/zod';
 import {
   AlertDialog,
   AlertDialogCancel,
@@ -12,7 +9,6 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from '@/components/ui/alert-dialog';
-import React from 'react';
 import { Button } from '@/components/ui/button';
 import {
   Form,
@@ -23,8 +19,10 @@ import {
   FormMessage,
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
+import { db } from '@/lib/firebase';
+import { faSquarePlus } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faSquarePlus, faCalendar } from '@fortawesome/free-solid-svg-icons';
+import { zodResolver } from '@hookform/resolvers/zod';
 import {
   DocumentData,
   DocumentReference,
@@ -34,11 +32,13 @@ import {
   setDoc,
   updateDoc,
 } from 'firebase/firestore';
-import { db } from '@/lib/firebase';
-import { revalidate } from './actions';
-import { generate } from 'random-words';
-import { toast } from 'sonner';
 import { useRouter } from 'next/navigation';
+import { generate } from 'random-words';
+import React from 'react';
+import { useForm } from 'react-hook-form';
+import { toast } from 'sonner';
+import * as z from 'zod';
+import { revalidate } from './actions';
 
 const formSchema = z.object({
   storeSlug: z
@@ -184,7 +184,7 @@ export default function NewStoreForm({ userID }: { userID: string }) {
                     </FormItem>
                   )}
                 />
-                <section className="w-full flex justify-end gap-[15px]">
+                <section className="w-full flex justify-end gap-4">
                   <AlertDialogCancel>Cancel</AlertDialogCancel>
                   <Button type="submit">Submit</Button>
                 </section>

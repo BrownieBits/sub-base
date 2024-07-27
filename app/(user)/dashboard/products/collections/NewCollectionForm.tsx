@@ -1,7 +1,4 @@
 'use client';
-import * as z from 'zod';
-import { useForm } from 'react-hook-form';
-import { zodResolver } from '@hookform/resolvers/zod';
 import {
   AlertDialog,
   AlertDialogCancel,
@@ -11,7 +8,6 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from '@/components/ui/alert-dialog';
-import React from 'react';
 import { Button } from '@/components/ui/button';
 import {
   Form,
@@ -23,8 +19,11 @@ import {
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { db } from '@/lib/firebase';
 import { faSquarePlus } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { getCookie } from 'cookies-next';
 import {
   DocumentData,
   DocumentReference,
@@ -33,11 +32,12 @@ import {
   getDoc,
   setDoc,
 } from 'firebase/firestore';
-import { db } from '@/lib/firebase';
 import { useRouter } from 'next/navigation';
+import React from 'react';
 import { useFormStatus } from 'react-dom';
-import { getCookie } from 'cookies-next';
+import { useForm } from 'react-hook-form';
 import { toast } from 'sonner';
+import * as z from 'zod';
 
 const formSchema = z.object({
   name: z
@@ -173,7 +173,7 @@ export default function NewCollectionForm() {
                   )}
                 />
                 {error ? <p className="text-destructive">{error}</p> : <></>}
-                <section className="flex gap-[15px] w-full justify-end">
+                <section className="flex gap-4 w-full justify-end">
                   <AlertDialogCancel>Cancel</AlertDialogCancel>
                   <Button disabled={pending} type="submit">
                     Submit

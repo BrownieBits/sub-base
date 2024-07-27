@@ -116,7 +116,7 @@ export default async function StoreCollection({ params }: Props) {
   if (data === 'No Store') {
     return (
       <section>
-        <section className="flex w-full justify-between items-center px-[15px] py-[30px] gap-[15px]">
+        <section className="flex w-full justify-between items-center px-4 py-8 gap-4">
           <h1>No Such Store</h1>
         </section>
       </section>
@@ -129,9 +129,9 @@ export default async function StoreCollection({ params }: Props) {
   ) {
     return (
       <section>
-        <section className="flex flex-col w-full h-[calc(100vh-56px)] justify-center align-center items-center px-[15px] py-[30px] gap-[15px]">
-          <section className="flex flex-col bg-layer-one rounded border p-[30px]">
-            <p className="pb-[15px]">
+        <section className="flex flex-col w-full h-[calc(100vh-56px)] justify-center align-center items-center px-4 py-8 gap-4">
+          <section className="flex flex-col bg-layer-one rounded border p-8">
+            <p className="pb-4">
               <b>{data.store.data().name} is password protected</b>
             </p>
             <StorePasswordForm
@@ -160,8 +160,8 @@ export default async function StoreCollection({ params }: Props) {
             ></Image>
           </section>
         )}
-        <section className="flex flex-col md:flex-row w-full justify-between items-start md:items-center px-[15px] py-[30px] gap-[15px]">
-          <section className="flex gap-[30px]">
+        <section className="flex flex-col md:flex-row w-full justify-between items-start md:items-center px-4 py-8 gap-4">
+          <section className="flex gap-8">
             <Link href={`/store/${params.slug}`} className="">
               <ShowAvatar
                 name={data.store.data().name}
@@ -183,7 +183,7 @@ export default async function StoreCollection({ params }: Props) {
         {data.collections.docs.length === 0 ? (
           <></>
         ) : (
-          <section className="flex w-full gap-[30px] justify-start px-[15px]">
+          <section className="flex w-full gap-8 justify-start px-4">
             <Button
               asChild
               variant="link"
@@ -220,9 +220,9 @@ export default async function StoreCollection({ params }: Props) {
       <Separator />
       <section className="w-full max-w-[3096px] mx-auto">
         {data.collection.data().products.length === 0 ? (
-          <span className="p-[15px]">Nothing here yet...</span>
+          <span className="p-4">Nothing here yet...</span>
         ) : (
-          <div className="grid grid-cols-1 md:grid-cols-3 xl:grid-cols-4  gap-x-[30px] gap-y-[60px] p-[15px]">
+          <div className="grid grid-cols-1 md:grid-cols-3 xl:grid-cols-4  gap-x-8 gap-y-[60px] p-4">
             {data.collection
               .data()
               .products?.map((item: string) => (

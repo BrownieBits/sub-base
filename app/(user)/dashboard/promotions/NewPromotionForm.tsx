@@ -1,8 +1,5 @@
 'use client';
 
-import * as z from 'zod';
-import { useForm } from 'react-hook-form';
-import { zodResolver } from '@hookform/resolvers/zod';
 import {
   AlertDialog,
   AlertDialogCancel,
@@ -12,8 +9,8 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from '@/components/ui/alert-dialog';
-import React from 'react';
 import { Button } from '@/components/ui/button';
+import { Calendar } from '@/components/ui/calendar';
 import {
   Form,
   FormControl,
@@ -23,8 +20,24 @@ import {
   FormMessage,
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from '@/components/ui/popover';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
+import { auth, db } from '@/lib/firebase';
+import { cn } from '@/lib/utils';
+import { faCalendar, faSquarePlus } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faSquarePlus, faCalendar } from '@fortawesome/free-solid-svg-icons';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { format } from 'date-fns';
 import {
   CollectionReference,
   addDoc,
@@ -33,23 +46,10 @@ import {
   query,
   where,
 } from 'firebase/firestore';
-import { auth, db } from '@/lib/firebase';
+import React from 'react';
 import { useFormStatus } from 'react-dom';
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '@/components/ui/select';
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from '@/components/ui/popover';
-import { cn } from '@/lib/utils';
-import { Calendar } from '@/components/ui/calendar';
-import { format } from 'date-fns';
+import { useForm } from 'react-hook-form';
+import * as z from 'zod';
 import { revalidate } from './actions';
 
 const formSchema = z.object({
@@ -268,7 +268,7 @@ export default function NewPromotionForm({
                   )}
                 />
                 {error ? <p className="text-destructive">{error}</p> : <></>}
-                <section className="flex gap-[15px] w-full justify-end">
+                <section className="flex gap-4 w-full justify-end">
                   <AlertDialogCancel>Cancel</AlertDialogCancel>
                   <Button disabled={pending} type="submit">
                     Submit

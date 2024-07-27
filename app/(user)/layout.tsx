@@ -18,7 +18,7 @@ export default function UserLayout({
         >
           <DashboardSideNav menu="Dashboard Menu" />
         </nav>
-        <main className="h-[calc(100vh-56px)] overflow-x-hidden pb-[250px] relative">
+        <main className="h-[calc(100vh-56px)] overflow-x-hidden pb-12 relative">
           {children}
         </main>
       </section>

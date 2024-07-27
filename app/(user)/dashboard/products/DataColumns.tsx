@@ -405,7 +405,7 @@ export const columns: ColumnDef<Product>[] = [
       const id = row.getValue('id') as string;
       const store_id = row.getValue('store_id') as string;
       return (
-        <section className="flex gap-[15px] justify-end">
+        <section className="flex gap-4 justify-end">
           <Button asChild variant="link" className="p-0 text-foreground">
             <Link href={`/dashboard/products/${id}`} aria-label="Edit Product">
               <FontAwesomeIcon className="icon" icon={faPenToSquare} />
