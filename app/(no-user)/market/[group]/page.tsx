@@ -1,5 +1,4 @@
 import { HeroBanner } from '@/components/sb-ui/HeroBanner';
-import ProductCard from '@/components/sb-ui/ProductCard';
 import { Separator } from '@/components/ui/separator';
 import { client } from '@/lib/contentful';
 import { db } from '@/lib/firebase';
@@ -115,11 +114,11 @@ export default async function MarketplacePage({ params }: Props) {
           <NoProducts />
         ) : (
           <section className="grid grid-cols-1 md:grid-cols-3 xl:grid-cols-4 gap-x-8 gap-y-[60px] px-4 py-8">
-            {data.products.map((doc: any) => {
+            {/* {data.products.map((doc: any) => {
               return (
                 <ProductCard id={doc.id} show_creator={true} key={doc.id} />
               );
-            })}
+            })} */}
           </section>
         )}
       </section>
