@@ -48,7 +48,7 @@ export default function ProductDetailPage(props: Props) {
                 </p>
               </section>
             </Link>
-            <SubsciberButton store={props.store_id} />
+            <SubsciberButton store={props.store_id} full_width={false} />
           </section>
         </section>
         <ProductImages images={props.images} />
@@ -71,7 +71,7 @@ export default function ProductDetailPage(props: Props) {
                 </p>
               </section>
             </Link>
-            <SubsciberButton store={props.store_id} />
+            <SubsciberButton store={props.store_id} full_width={false} />
           </section>
           <section className="flex justify-between">
             <section className="flex flex-col items-start gap-1">
