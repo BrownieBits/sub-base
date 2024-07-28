@@ -1,5 +1,4 @@
 import { HeroBanner } from '@/components/sb-ui/HeroBanner';
-import ProductCard from '@/components/sb-ui/ProductCard';
 import { Separator } from '@/components/ui/separator';
 import { db } from '@/lib/firebase';
 import {
@@ -11,7 +10,6 @@ import {
 import { Metadata } from 'next';
 import { cookies } from 'next/headers';
 import { redirect } from 'next/navigation';
-import { NoLikes } from './NoLikes';
 
 async function getData(id: { [key: string]: string } | undefined) {
   if (id === undefined) {
@@ -63,7 +61,7 @@ export default async function LikedItems() {
       </section>
       <Separator />
       <section className="w-full max-w-[3096px] mx-auto">
-        {data.docs.length === 0 ? (
+        {/* {data.docs.length === 0 ? (
           <NoLikes />
         ) : (
           <section className="grid grid-cols-1 md:grid-cols-3 xl:grid-cols-4 gap-x-8 gap-y-[60px] p-4">
@@ -73,7 +71,7 @@ export default async function LikedItems() {
               );
             })}
           </section>
-        )}
+        )}*/}
       </section>
     </section>
   );
