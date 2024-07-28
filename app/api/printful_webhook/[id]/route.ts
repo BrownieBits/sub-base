@@ -15,11 +15,9 @@ export async function POST(request: NextRequest, context: { params: Params }) {
                 'Authorization': `Bearer 7mFSBeY8lylaUlibKaR2wMDvlWocLuLzTFhEho0I`,
             },
         })
-        console.log(syncResponse)
+        console.log('SYNC RESP', syncResponse)
         const syncJson = await syncResponse.json();
-        // console.log(syncJson.result.sync_variants[0])
-        // console.log(syncJson.result.sync_variants[1])
-        console.log(syncJson)
+        console.log('SYNC JSON', syncJson)
     }
 
     return new Response('Success!', {

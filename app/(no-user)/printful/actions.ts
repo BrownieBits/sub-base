@@ -17,7 +17,7 @@ export async function connectToPrintful(code: string, user_id: string) {
     if (tokenResponse.status !== 200) {
         return tokenJson.error.message;
     }
-    console.log(tokenJson)
+    console.log('TokenJson', tokenJson)
     const webhookeResponse = await fetch('https://api.printful.com/webhooks', {
         method: 'POST',
         headers: {

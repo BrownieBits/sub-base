@@ -21,7 +21,7 @@ import { doc } from 'firebase/firestore';
 import { useTheme } from 'next-themes';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import { useAuthState, useSignOut } from 'react-firebase-hooks/auth';
+import { useSignOut } from 'react-firebase-hooks/auth';
 import { useDocument } from 'react-firebase-hooks/firestore';
 import { Avatar, AvatarFallback, AvatarImage } from '../../ui/avatar';
 import {
@@ -39,22 +39,24 @@ import {
 
 export const UserDropdown = () => {
   const user_name = getCookie('user_name');
-  const default_store = getCookie('default_store');
-  const [user, userLoading, userError] = useAuthState(auth);
+  const default_store = getCookie('default_store') || 'f';
   const docRef = doc(db, 'stores', default_store!);
   const [value, loadingDoc, docError] = useDocument(docRef);
   const [signOut, loading, error] = useSignOut(auth);
   const { push } = useRouter();
   const { setTheme } = useTheme();
   async function onSubmit() {
+    push('/sign-in');
     await signOut();
-    push('/');
   }
 
-  if (loading || loadingDoc) {
+  if (loading || default_store === undefined) {
     return <></>;
   }
 
+  if (loadingDoc) {
+    return <></>;
+  }
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
