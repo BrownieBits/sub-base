@@ -54,9 +54,9 @@ export default function ProductImages(props: { images: string[] }) {
                   <Image
                     src={image}
                     alt="Product Image"
-                    width="100"
-                    height="100"
-                    className="cursor-pointer"
+                    width="1000"
+                    height="1000"
+                    className="cursor-pointer w-full"
                     onClick={() => setMainImage(image)}
                   />
                 </section>

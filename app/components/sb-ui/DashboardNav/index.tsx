@@ -4,16 +4,12 @@ import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
 import { faBell } from '@fortawesome/free-regular-svg-icons';
 import { faBars } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { cookies } from 'next/headers';
 import Link from 'next/link';
 import { Button } from '../../ui/button';
 import { AddProductButton } from '../AddProductButton';
 import { UserDropdown } from '../UserDropdown';
 
 export const DashboardNav = () => {
-  const cookieStore = cookies();
-  const user_slug = cookieStore.get('user_slug');
-
   return (
     <nav className="flex items-center justify-between sticky px-4 h-[56px] top-0 z-10 overflow-auto border-r-[1px] bg-layer-one border-b-[1px] border-b-border">
       <div className="flex gap-4">
