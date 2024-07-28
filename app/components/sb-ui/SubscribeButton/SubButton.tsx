@@ -13,9 +13,11 @@ import { UpdateSubStatus } from './actions';
 export const SubButton = ({
   store,
   user_id,
+  full_width,
 }: {
   store: string;
   user_id: string;
+  full_width: boolean;
 }) => {
   const user = getCookie('user_id');
   const docRef = doc(db, 'users', user!, 'subscribes', store);
@@ -23,38 +25,28 @@ export const SubButton = ({
   const [thinking, setThinking] = useState(false);
   if (loading || thinking) {
     return (
-      <Button variant="ghost">
+      <Button variant="ghost" className={full_width ? 'w-full' : ''}>
         <FontAwesomeIcon className="icon mr-2 h-4 w-4" icon={faSpinner} spin />{' '}
         Loading
       </Button>
     );
   }
-
-  if (!loading && !value?.exists()) {
-    return (
-      <Button
-        asChild
-        onClick={async () => {
-          setThinking(true);
-          await UpdateSubStatus('Subscribe', store, user_id);
-          setThinking(false);
-        }}
-      >
-        Subscribe
-      </Button>
-    );
+  let changeValue: 'Subscribe' | 'Unsubscribe' = 'Subscribe';
+  if (value?.exists()) {
+    changeValue = 'Unsubscribe';
   }
-
+  console.log(value?.exists(), changeValue, name);
   return (
     <Button
-      variant="outline"
+      variant={!value?.exists() ? 'default' : 'outline'}
+      className={full_width ? 'w-full' : ''}
       onClick={async () => {
         setThinking(true);
-        await UpdateSubStatus('Unsubscribe', store, user_id);
+        await UpdateSubStatus(changeValue, store, user_id);
         setThinking(false);
       }}
     >
-      Unsubscribe
+      {changeValue}
     </Button>
   );
 };

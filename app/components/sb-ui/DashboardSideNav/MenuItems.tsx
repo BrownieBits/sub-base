@@ -10,7 +10,9 @@ export const MenuItems = async (props: any) => {
       key={props.id}
     >
       {items.map((item: any, i: number) => {
-        return <MenuItem item={item} key={item.sys.id} />;
+        return (
+          <MenuItem item={item} inSheet={props.inSheet} key={item.sys.id} />
+        );
       })}
     </ul>
   );

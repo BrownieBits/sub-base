@@ -1,6 +1,8 @@
 'use client';
 
+import { SheetClose } from '@/components/ui/sheet';
 import { auth } from '@/lib/firebase';
+import { cn } from '@/lib/utils';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useAuthState } from 'react-firebase-hooks/auth';
@@ -9,11 +11,43 @@ import { Button } from '../../ui/button';
 export const MenuItem = (props: any) => {
   const [user, loading, userError] = useAuthState(auth);
   const pathname = usePathname();
-
+  let isCurrent = false;
+  console.log(props.inSheet);
+  if (
+    (pathname! === '/dashboard' && props.item.fields.slug === 'dashboard') ||
+    (props.item.fields.slug !== 'dashboard' &&
+      pathname?.includes(props.item.fields.slug))
+  ) {
+    isCurrent = true;
+  }
   if (loading) {
     return <></>;
   }
   if (props.item.fields.needsLogin && !user) {
+    if (props.inSheet) {
+      return (
+        <li>
+          <SheetClose asChild>
+            <Button
+              asChild
+              variant="link"
+              aria-label="Sign In to Access"
+              title="Sign In to Access"
+              className="px-4 py-0 w-full justify-start text-muted-foreground rounded-none"
+            >
+              <Link
+                href="/sign-in"
+                aria-label="Sign In to Access"
+                className="bg-layer-one hover:bg-layer-two hover:no-underline"
+              >
+                <i className={`mr-2 h-4 w-4 ${props.item.fields.iconName}`}></i>
+                {props.item.fields.title}
+              </Link>
+            </Button>
+          </SheetClose>
+        </li>
+      );
+    }
     return (
       <li>
         <Button
@@ -21,7 +55,7 @@ export const MenuItem = (props: any) => {
           variant="link"
           aria-label="Sign In to Access"
           title="Sign In to Access"
-          className="px-4 py-0 w-full justify-start text-muted-foreground"
+          className="px-4 py-0 w-full justify-start text-muted-foreground rounded-none"
         >
           <Link
             href="/sign-in"
@@ -35,39 +69,45 @@ export const MenuItem = (props: any) => {
       </li>
     );
   }
-  return (pathname! === '/dashboard' &&
-    props.item.fields.slug === 'dashboard') ||
-    (props.item.fields.slug !== 'dashboard' &&
-      pathname?.includes(props.item.fields.slug)) ? (
+  if (props.inSheet) {
+    return (
+      <li>
+        <Button
+          asChild
+          variant="link"
+          className="px-4 py-0 w-full justify-start text-foreground rounded-none"
+        >
+          <SheetClose asChild>
+            <Link
+              href={props.item.fields.url}
+              aria-label={props.item.fields.title}
+              className={cn('w-full hover:no-underline', {
+                'bg-layer-two hover:bg-layer-three': isCurrent,
+                'bg-layer-one hover:bg-layer-two': !isCurrent,
+              })}
+            >
+              <i className={`mr-2 h-4 w-4 ${props.item.fields.iconName}`}></i>
+              {props.item.fields.title}
+            </Link>
+          </SheetClose>
+        </Button>
+      </li>
+    );
+  }
+  return (
     <li>
       <Button
         asChild
         variant="link"
-        aria-label={props.item.fields.title}
-        title={props.item.fields.title}
-        className="px-4 py-0 w-full justify-start text-foreground"
+        className="px-4 py-0 w-full justify-start text-foreground rounded-none"
       >
         <Link
           href={props.item.fields.url}
           aria-label={props.item.fields.title}
-          className="bg-layer-two hover:bg-layer-three hover:no-underline font-bold"
-        >
-          <i className={`mr-2 h-4 w-4 ${props.item.fields.iconName}`}></i>
-          {props.item.fields.title}
-        </Link>
-      </Button>
-    </li>
-  ) : (
-    <li>
-      <Button
-        asChild
-        variant="link"
-        className="px-4 py-0 w-full justify-start text-foreground"
-      >
-        <Link
-          href={props.item.fields.url}
-          aria-label="Spring by Amaze"
-          className="bg-layer-one hover:bg-layer-two hover:no-underline"
+          className={cn('hover:no-underline', {
+            'bg-layer-two hover:bg-layer-three': isCurrent,
+            'bg-layer-one hover:bg-layer-two': !isCurrent,
+          })}
         >
           <i className={`mr-2 h-4 w-4 ${props.item.fields.iconName}`}></i>
           {props.item.fields.title}

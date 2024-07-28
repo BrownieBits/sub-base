@@ -15,7 +15,7 @@ export default function NoUserLayout({
         <nav
           className={`flex border-r-[1px] border-r-border bg-layer-one h-[calc(100vh-56px)] min-h-[calc(100vh-56px)]`}
         >
-          <DashboardSideNav menu="Marketing Menu" />
+          <DashboardSideNav menu="Marketing Menu" inSheet={false} />
         </nav>
         <main className="h-[calc(100vh-56px)] overflow-x-hidden">
           {children}

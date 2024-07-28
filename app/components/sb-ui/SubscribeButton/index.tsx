@@ -1,9 +1,5 @@
 'use client';
 
-import Link from 'next/link';
-import { auth } from '@/lib/firebase';
-import { useAuthState } from 'react-firebase-hooks/auth';
-import { Button } from '@/components/ui/button';
 import {
   AlertDialog,
   AlertDialogAction,
@@ -15,11 +11,19 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from '@/components/ui/alert-dialog';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faHeartCirclePlus } from '@fortawesome/free-solid-svg-icons';
+import { Button } from '@/components/ui/button';
+import { auth } from '@/lib/firebase';
+import Link from 'next/link';
+import { useAuthState } from 'react-firebase-hooks/auth';
 import { SubButton } from './SubButton';
 
-export const SubsciberButton = ({ store }: { store: string }) => {
+export const SubsciberButton = ({
+  store,
+  full_width,
+}: {
+  store: string;
+  full_width: boolean;
+}) => {
   const [user, userLoading, userError] = useAuthState(auth);
 
   if (userLoading) {
@@ -30,14 +34,8 @@ export const SubsciberButton = ({ store }: { store: string }) => {
     return (
       <AlertDialog>
         <AlertDialogTrigger>
-          <Button asChild>
-            <div>
-              <FontAwesomeIcon
-                className="icon mr-2 h-4 w-4"
-                icon={faHeartCirclePlus}
-              />
-              Subscribe
-            </div>
+          <Button asChild className={full_width ? 'w-full' : ''}>
+            Subscribe
           </Button>
         </AlertDialogTrigger>
 
@@ -61,5 +59,7 @@ export const SubsciberButton = ({ store }: { store: string }) => {
     );
   }
 
-  return <SubButton store={store} user_id={user?.uid!} />;
+  return (
+    <SubButton store={store} user_id={user?.uid!} full_width={full_width} />
+  );
 };

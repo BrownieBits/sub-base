@@ -25,7 +25,7 @@ export const DashboardNav = () => {
           </SheetTrigger>
           <SheetContent side="left" className="p-0">
             <nav className={`flex bg-layer-one h-[100vh]`}>
-              <DashboardSideNav menu="Dashboard Menu" />
+              <DashboardSideNav menu="Dashboard Menu" inSheet={true} />
             </nav>
           </SheetContent>
         </Sheet>

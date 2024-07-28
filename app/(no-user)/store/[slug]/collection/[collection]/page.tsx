@@ -191,24 +191,41 @@ export default async function StoreCollection({ params }: Props) {
             ></Image>
           </section>
         )}
-        <section className="flex flex-col md:flex-row w-full justify-between items-start md:items-center px-4 py-8 gap-4">
-          <section className="flex gap-8">
+        <section className="flex flex-col md:flex-row w-full justify-between items-start md:items-center px-4 py-4 gap-4">
+          <section className="flex items-center gap-4">
             <Link href={`/store/${params.slug}`} className="">
               <ShowAvatar
                 name={data.store.data().name}
                 url={data.store.data().avatar_url}
+                size="lg"
               />
             </Link>
-            <div className="">
-              <h3>{data.store.data().name}</h3>
-              <p>{data.store.data().subscription_count} subscribers</p>
-              <ShowMoreText
-                text={data.store.data().description}
-                howManyToShow={50}
-              />
+            <div className="flex flex-col gap-1">
+              <h1 className="text-xl">{data.store.data().name}</h1>
+              <p className="text-sm text-muted-foreground">
+                {data.store.data().subscription_count} subscriber
+                {data.store.data().subscription_count > 1
+                  ? 's'
+                  : ''} &bull; {data.products.docs.length} product
+                {data.products.docs.length > 1 ? 's' : ''}
+              </p>
+              <section className="hidden md:flex">
+                <ShowMoreText
+                  text={data.store.data().description}
+                  howManyToShow={50}
+                />
+              </section>
             </div>
           </section>
-          <SubsciberButton store={params.slug} />
+          <section className="flex md:hidden">
+            <ShowMoreText
+              text={data.store.data().description}
+              howManyToShow={50}
+            />
+          </section>
+          <section className="flex w-full md:w-auto">
+            <SubsciberButton store={params.slug} full_width={true} />
+          </section>
         </section>
 
         {data.collections.docs.length === 0 ? (

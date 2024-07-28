@@ -9,7 +9,7 @@ export const ShowMoreText = (props: {
 }) => {
   const [showMore, setShowMore] = useState(false);
   return (
-    <p className="pt-[5px] text-sm">
+    <p className="pt-[5px] text-sm text-muted-foreground">
       {showMore || props.text.length < props.howManyToShow
         ? props.text
         : `${props.text.substring(0, props.howManyToShow)}...`}
