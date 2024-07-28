@@ -18,7 +18,9 @@ export const MarketingNav = () => {
               className="bg-layer-one hover:bg-layer-two"
               asChild
             >
-              <FontAwesomeIcon icon={faBars} />
+              <p>
+                <FontAwesomeIcon icon={faBars} />
+              </p>
             </Button>
           </SheetTrigger>
           <SheetContent side="left" className="p-0">

@@ -1,9 +1,11 @@
 import ProductCard from '@/components/sb-ui/ProductCard';
+import { ShowAvatar } from '@/components/sb-ui/ShowAvatar';
 import { ShowMoreText } from '@/components/sb-ui/ShowMoreText';
 import { SubsciberButton } from '@/components/sb-ui/SubscribeButton';
 import { Button } from '@/components/ui/button';
 import { Separator } from '@/components/ui/separator';
 import { db } from '@/lib/firebase';
+import { GridProduct } from '@/lib/types';
 import {
   CollectionReference,
   DocumentData,
@@ -21,7 +23,6 @@ import { revalidatePath } from 'next/cache';
 import { cookies } from 'next/headers';
 import Image from 'next/image';
 import Link from 'next/link';
-import ShowAvatar from './ShowAvatar';
 import { StorePasswordForm } from './password-protection';
 
 type Props = {
@@ -143,6 +144,20 @@ export default async function Store({ params }: Props) {
       </section>
     );
   }
+  const products: GridProduct[] = data.products.docs.map((product) => {
+    return {
+      name: product.data().name,
+      images: product.data().images,
+      product_type: product.data().product_type,
+      price: product.data().price,
+      compare_at: product.data().compare_at,
+      currency: product.data().currency,
+      like_count: product.data().like_count,
+      store_id: product.data().store_id,
+      created_at: product.data().created_at,
+      id: product.id,
+    };
+  });
   return (
     <section>
       <section className="w-full max-w-[3096px] mx-auto">
@@ -215,16 +230,19 @@ export default async function Store({ params }: Props) {
       </section>
       <Separator />
       <section className="w-full max-w-[3096px] mx-auto">
-        {data.products.docs.length === 0 ? (
-          <section className="px-4 py-8">
-            <span>Collection: No Data</span>
+        {products?.length! > 0 ? (
+          <section className="grid grid-cols-1 md:grid-cols-3 xl:grid-cols-6 gap-8 p-4">
+            {products?.map((doc) => (
+              <ProductCard
+                product={doc}
+                show_creator={false}
+                key={doc.id}
+                avatar={data.store.data().avatar_url}
+              />
+            ))}
           </section>
         ) : (
-          <div className="grid grid-cols-1 md:grid-cols-3 xl:grid-cols-4  gap-x-8 gap-y-[60px] p-4">
-            {data.products?.docs?.map((doc) => (
-              <ProductCard id={doc.id} show_creator={false} key={doc.id} />
-            ))}
-          </div>
+          <p>This store has no products at this time.</p>
         )}
       </section>
     </section>

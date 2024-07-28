@@ -1,104 +1,149 @@
 'use client';
-import { Skeleton } from '@/components/ui/skeleton';
-import { db } from '@/lib/firebase';
-import { doc } from 'firebase/firestore';
+import { ShowAvatar } from '@/components/sb-ui/ShowAvatar';
+import { GridProduct } from '@/lib/types';
+import { Timestamp } from 'firebase/firestore';
 import Image from 'next/image';
 import Link from 'next/link';
-import { useDocument } from 'react-firebase-hooks/firestore';
 
 export default function ProductCard({
-  id,
+  product,
+  avatar,
   show_creator,
 }: {
-  id: string;
+  product: GridProduct;
+  avatar?: string;
   show_creator: boolean;
 }) {
-  const docRef = doc(db, 'products', id);
-  const [value, loading, error] = useDocument(docRef);
-
-  if (loading) {
-    return (
-      <div className="flex flex-col">
-        <Skeleton className="aspect-square w-full rounded-lg" />
-        <div className="flex justify-between pt-4 pb-[5px]">
-          <Skeleton className="h-[24px] w-[250px]" />
-          <Skeleton className="h-[24px] w-[75px]" />
-        </div>
-        <Skeleton className="h-[20px] w-[200px] mb-[5px]" />
-        <Skeleton className="h-[20px] w-[225px]" />
-      </div>
-    );
+  const today = Timestamp.fromDate(new Date());
+  function timeDifference() {
+    const difference = today.seconds - product.created_at.seconds;
+    const yearDifference = Math.floor(difference / 60 / 60 / 24 / 365);
+    const monthDifference = Math.floor(difference / 60 / 60 / 24 / 30);
+    const daysDifference = Math.floor(difference / 60 / 60 / 24);
+    const hoursDifference = Math.floor(difference / 60 / 60);
+    const minutesDifference = Math.floor(difference / 60);
+    if (yearDifference > 0) {
+      return `${yearDifference} Year${yearDifference > 1 ? 's' : ''}`;
+    }
+    if (monthDifference > 0) {
+      return `${monthDifference} Month${monthDifference > 1 ? 's' : ''}`;
+    }
+    if (daysDifference > 0) {
+      return `${daysDifference} Day${daysDifference > 1 ? 's' : ''}`;
+    }
+    if (hoursDifference > 0) {
+      return `${hoursDifference} Hour${hoursDifference > 1 ? 's' : ''}`;
+    }
+    return `${minutesDifference} Month${minutesDifference > 1 ? 's' : ''}`;
   }
-
-  if (value?.data()?.status === 'Private') {
-    return;
-  }
-
   return (
-    <div className="flex flex-col w-full">
+    <section className="flex flex-col w-full">
       <Link
-        href={`/product/${value?.id}`}
+        href={`/product/${product.id}`}
         className="aspect-square flex justify-center items-center bg-layer-one border rounded overflow-hidden group"
       >
-        {value?.data()?.images.length > 1 ? (
+        {product.images.length > 1 ? (
           <>
             <Image
-              src={value?.data()?.images[0]}
+              src={product.images[0]}
               width="300"
               height="300"
-              alt={value?.data()?.title}
+              alt={product.name}
               className="flex group-hover:hidden w-full"
             />
             <Image
-              src={value?.data()?.images[1]}
+              src={product.images[1]}
               width="300"
               height="300"
-              alt={value?.data()?.title}
+              alt={product.name}
               className="hidden group-hover:flex w-full"
             />
           </>
         ) : (
           <Image
-            src={value?.data()?.images[0]}
+            src={product.images[0]}
             width="300"
             height="300"
-            alt={value?.data()?.title}
+            alt={product.name}
             className="flex w-full"
           />
         )}
       </Link>
-      <Link
-        href={`/product/${value?.id}`}
-        className="flex justify-between pt-4 pb-[5px]"
-      >
-        <p>
-          <b>{value?.data()?.name}</b>
-        </p>
-        <p>
-          <b>
-            {new Intl.NumberFormat('en-US', {
-              style: 'currency',
-              currency: value?.data()?.currency,
-            }).format(value?.data()?.price)}
-          </b>
-        </p>
-      </Link>
-      <Link
-        href={`/creator/${value?.data()?.store_id}/product/${value?.id}`}
-        className="text-sm text-muted-foreground mb-[5px]"
-      >
-        {value?.data()?.product_type}
-      </Link>
-      {show_creator ? (
-        <Link
-          href={`/store/${value?.data()?.store_id}`}
-          className="text-sm text-muted-foreground"
-        >
-          {value?.data()?.store_id}
-        </Link>
-      ) : (
-        <></>
-      )}
-    </div>
+      <section className="w-full flex pt-4 gap-4">
+        {show_creator ? (
+          <Link
+            href={`/store/${product.store_id}`}
+            className="text-sm text-muted-foreground"
+          >
+            <ShowAvatar url={avatar!} name={product.store_id} size="sm" />
+          </Link>
+        ) : (
+          <></>
+        )}
+        <aside className="flex-1 flex justify-between">
+          <section className="flex flex-col gap-1">
+            <Link
+              href={`/product/${product.id}`}
+              className="flex flex-col gap-1"
+            >
+              <p>
+                <b>{product.name}</b>
+              </p>
+              <p className="text-sm text-muted-foreground">
+                {product.product_type}
+              </p>
+            </Link>
+            {show_creator ? (
+              <Link
+                href={`/store/${product.store_id}`}
+                className="text-sm text-muted-foreground"
+              >
+                {product.store_id}
+              </Link>
+            ) : (
+              <></>
+            )}
+            <p className="text-sm text-muted-foreground">
+              {product.like_count} Likes - {timeDifference()}
+            </p>
+          </section>
+          <section>
+            <Link
+              href={`/product/${product.id}`}
+              className="w-full flex flex-col items-end gap-1"
+            >
+              {product.compare_at > 0 &&
+              product.price !== product.compare_at ? (
+                <>
+                  <p className="text-destructive line-through">
+                    {new Intl.NumberFormat('en-US', {
+                      style: 'currency',
+                      currency: product.currency,
+                    }).format(product.price)}
+                  </p>
+                  <p>
+                    <b>
+                      {new Intl.NumberFormat('en-US', {
+                        style: 'currency',
+                        currency: product.currency,
+                      }).format(product.compare_at)}
+                    </b>
+                  </p>
+                </>
+              ) : (
+                <p>
+                  <b>
+                    {new Intl.NumberFormat('en-US', {
+                      style: 'currency',
+                      currency: product.currency,
+                    }).format(product.price)}
+                  </b>
+                </p>
+              )}
+            </Link>
+          </section>
+        </aside>
+      </section>
+    </section>
   );
 }

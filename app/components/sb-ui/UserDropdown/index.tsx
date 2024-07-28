@@ -1,7 +1,7 @@
 'use client';
 
 import { Button } from '@/components/ui/button';
-import { auth } from '@/lib/firebase';
+import { auth, db } from '@/lib/firebase';
 import {
   faBrush,
   faCog,
@@ -17,10 +17,12 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { getCookie } from 'cookies-next';
+import { doc } from 'firebase/firestore';
 import { useTheme } from 'next-themes';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useAuthState, useSignOut } from 'react-firebase-hooks/auth';
+import { useDocument } from 'react-firebase-hooks/firestore';
 import { Avatar, AvatarFallback, AvatarImage } from '../../ui/avatar';
 import {
   DropdownMenu,
@@ -39,6 +41,8 @@ export const UserDropdown = () => {
   const user_name = getCookie('user_name');
   const default_store = getCookie('default_store');
   const [user, userLoading, userError] = useAuthState(auth);
+  const docRef = doc(db, 'stores', default_store!);
+  const [value, loadingDoc, docError] = useDocument(docRef);
   const [signOut, loading, error] = useSignOut(auth);
   const { push } = useRouter();
   const { setTheme } = useTheme();
@@ -47,14 +51,21 @@ export const UserDropdown = () => {
     push('/');
   }
 
+  if (loading || loadingDoc) {
+    return <></>;
+  }
+
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
         <Button variant="ghost" className="p-0 bg-layer-one hover:bg-layer-one">
           <Avatar className="bg-secondary text-foreground h-[29px] w-[29px]">
-            <AvatarImage src={user?.photoURL!} alt={user?.displayName!} />
+            <AvatarImage
+              src={value?.data()?.avatar_url}
+              alt={value?.data()?.name}
+            />
             <AvatarFallback>
-              <b>{user_name?.slice(0, 1).toUpperCase()}</b>
+              <b>{value?.data()?.name.slice(0, 1).toUpperCase()}</b>
             </AvatarFallback>
           </Avatar>
         </Button>

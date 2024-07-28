@@ -1,8 +1,6 @@
 'use client';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import { cva, type VariantProps } from 'class-variance-authority';
-import { DocumentData } from 'firebase/firestore';
-import React from 'react';
+import { cva } from 'class-variance-authority';
 
 const AvatarVariants = cva('text-foreground', {
   variants: {
@@ -16,14 +14,16 @@ const AvatarVariants = cva('text-foreground', {
   },
 });
 
-export default function ShowAvatar(props: {
+export const ShowAvatar = (props: {
   name: string;
   url: string;
-  size?: 'sm' | undefined;
-}) {
+  size?: 'sm' | 'md' | undefined;
+}) => {
   let css = 'bg-foreground text-background';
   if (props.size === undefined) {
     css += ' h-[45px] w-[45px] md:h-[75px] md:w-[75px]';
+  } else if (props.size === 'md') {
+    css += ' h-[32px] w-[32px] md:h-[50px] md:w-[50px]';
   } else {
     css += ' h-[32px] w-[32px]';
   }
@@ -33,4 +33,4 @@ export default function ShowAvatar(props: {
       <AvatarFallback>{props.name.slice(0, 1).toUpperCase()}</AvatarFallback>
     </Avatar>
   );
-}
+};

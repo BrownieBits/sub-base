@@ -1,18 +1,14 @@
 'use client';
 
-import { db } from '@/lib/firebase';
 import { Button } from '@/components/ui/button';
+import { db } from '@/lib/firebase';
+import { faSpinner } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import {
-  faHeartCircleMinus,
-  faHeartCirclePlus,
-  faSpinner,
-} from '@fortawesome/free-solid-svg-icons';
+import { getCookie } from 'cookies-next';
 import { doc } from 'firebase/firestore';
+import { useState } from 'react';
 import { useDocument } from 'react-firebase-hooks/firestore';
 import { UpdateSubStatus } from './actions';
-import { getCookie } from 'cookies-next';
-import { useState } from 'react';
 
 export const SubButton = ({
   store,
@@ -44,13 +40,7 @@ export const SubButton = ({
           setThinking(false);
         }}
       >
-        <div>
-          <FontAwesomeIcon
-            className="icon mr-2 h-4 w-4"
-            icon={faHeartCirclePlus}
-          />
-          Subscibe
-        </div>
+        Subscribe
       </Button>
     );
   }
@@ -58,20 +48,13 @@ export const SubButton = ({
   return (
     <Button
       variant="outline"
-      asChild
       onClick={async () => {
         setThinking(true);
         await UpdateSubStatus('Unsubscribe', store, user_id);
         setThinking(false);
       }}
     >
-      <div>
-        <FontAwesomeIcon
-          className="icon mr-2 h-4 w-4"
-          icon={faHeartCircleMinus}
-        />
-        Unubscibe
-      </div>
+      Unsubscribe
     </Button>
   );
 };

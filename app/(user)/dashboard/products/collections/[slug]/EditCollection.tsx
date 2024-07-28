@@ -512,18 +512,18 @@ export default function Edit(props: {
                             className="flex items-center gap-4"
                             key={doc.id}
                           >
-                            <div className="w-[50px]">
+                            <div className="w-[50px] aspect-square border bg-layer-one overflow-hidden flex justify-center items-center">
                               <Image
-                                alt={doc.data().title}
-                                src={doc
-                                  .data()
-                                  .images[0].replace('800/800', '50/50')}
+                                alt={doc.data().name}
+                                src={doc.data().images[0]}
                                 width="50"
                                 height="50"
                               />
                             </div>
-                            <span className="flex-1">{doc.data().title}</span>
-                            <span className="flex-1">{doc.data().type}</span>
+                            <span className="flex-1">{doc.data().name}</span>
+                            <span className="flex-1">
+                              {doc.data().product_type}
+                            </span>
                             {doc.data().status === 'Public' ? (
                               <span className="bg-green-100 text-green-800 text-xs font-medium mr-2 px-2.5 py-0.5 rounded dark:bg-green-900 dark:text-green-300">
                                 {doc.data().status}

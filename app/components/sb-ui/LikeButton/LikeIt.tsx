@@ -1,29 +1,66 @@
 'use client';
 
-import { db } from '@/lib/firebase';
 import { Button } from '@/components/ui/button';
+import { db } from '@/lib/firebase';
+import { faThumbsUp as faThumbsUpRegular } from '@fortawesome/free-regular-svg-icons';
+import { faThumbsUp } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
-  faSquareMinus,
-  faSquarePlus,
-  faThumbsDown,
-  faThumbsUp,
-} from '@fortawesome/free-solid-svg-icons';
-import { doc } from 'firebase/firestore';
+  deleteDoc,
+  doc,
+  runTransaction,
+  serverTimestamp,
+  setDoc,
+} from 'firebase/firestore';
 import { useDocument } from 'react-firebase-hooks/firestore';
-import { UpdateSubStatus } from './actions';
+import { revalidate } from './actions';
 
 export const LikeIt = ({
   product,
-  store,
+  like_count,
   user_id,
 }: {
   product: string;
-  store: string;
+  like_count: number;
   user_id: string;
 }) => {
   const docRef = doc(db, 'users', user_id, 'likes', product);
   const [value, loading, error] = useDocument(docRef);
+
+  async function UpdateSubStatus(
+    action: 'Like' | 'Unlike',
+    product: string,
+    user_id: string
+  ) {
+    const docRef = doc(db, 'products', product);
+    const likeRef = doc(db, 'users', user_id, 'likes', product);
+    if (action === 'Like') {
+      await runTransaction(db, async (transaction) => {
+        const productDoc = await transaction.get(docRef);
+        if (!productDoc.exists()) {
+          return;
+        }
+        const newSubs = productDoc.data().like_count + 1;
+        transaction.update(docRef, { like_count: newSubs });
+      });
+      await setDoc(likeRef, {
+        date: serverTimestamp(),
+        liked: true,
+      });
+    } else {
+      await runTransaction(db, async (transaction) => {
+        const productDoc = await transaction.get(docRef);
+        if (!productDoc.exists()) {
+          return;
+        }
+        const newSubs = productDoc.data().like_count - 1;
+        transaction.update(docRef, { like_count: newSubs });
+      });
+      await deleteDoc(likeRef);
+    }
+    revalidate(product);
+    return 'Success';
+  }
 
   if (loading) {
     return <Button variant="ghost">Loading</Button>;
@@ -32,14 +69,16 @@ export const LikeIt = ({
   if (!loading && !value?.exists()) {
     return (
       <Button
-        asChild
-        variant="secondary"
-        onClick={() => UpdateSubStatus('Like', product, store, user_id)}
+        variant="outline"
+        onClick={() => UpdateSubStatus('Like', product, user_id)}
       >
-        <div>
-          <FontAwesomeIcon className="icon mr-2 h-4 w-4" icon={faThumbsUp} />
-          Like
-        </div>
+        <section>
+          <FontAwesomeIcon
+            className="icon pr-2 mr-2 h-4 w-4 border-r"
+            icon={faThumbsUpRegular}
+          />
+          {like_count} Like{like_count > 1 ? 's' : ''}
+        </section>
       </Button>
     );
   }
@@ -47,13 +86,15 @@ export const LikeIt = ({
   return (
     <Button
       variant="outline"
-      asChild
-      onClick={() => UpdateSubStatus('Unlike', product, store, user_id)}
+      onClick={() => UpdateSubStatus('Unlike', product, user_id)}
     >
-      <div>
-        <FontAwesomeIcon className="icon mr-2 h-4 w-4" icon={faThumbsDown} />
-        UnLike
-      </div>
+      <section>
+        <FontAwesomeIcon
+          className="icon pr-2 mr-2 h-4 w-4 border-r"
+          icon={faThumbsUp}
+        />
+        {like_count} Like{like_count > 1 ? 's' : ''}
+      </section>
     </Button>
   );
 };

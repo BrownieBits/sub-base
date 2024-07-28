@@ -1,9 +1,5 @@
 'use client';
 
-import Link from 'next/link';
-import { auth } from '@/lib/firebase';
-import { useAuthState } from 'react-firebase-hooks/auth';
-import { Button } from '@/components/ui/button';
 import {
   AlertDialog,
   AlertDialogAction,
@@ -15,16 +11,20 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from '@/components/ui/alert-dialog';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { Button } from '@/components/ui/button';
+import { auth } from '@/lib/firebase';
 import { faThumbsUp } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import Link from 'next/link';
+import { useAuthState } from 'react-firebase-hooks/auth';
 import { LikeIt } from './LikeIt';
 
 export const LikeButton = ({
   product,
-  store,
+  like_count,
 }: {
   product: string;
-  store: string;
+  like_count: number;
 }) => {
   const [user, userLoading, userError] = useAuthState(auth);
 
@@ -57,7 +57,7 @@ export const LikeButton = ({
           <AlertDialogFooter>
             <AlertDialogCancel>Cancel</AlertDialogCancel>
             <AlertDialogAction asChild>
-              <Link href={`sign-in?redirect=/creator/${store}`}>Sign In</Link>
+              <Link href={`sign-in?redirect=/product/${product}`}>Sign In</Link>
             </AlertDialogAction>
           </AlertDialogFooter>
         </AlertDialogContent>
@@ -65,5 +65,7 @@ export const LikeButton = ({
     );
   }
 
-  return <LikeIt product={product} store={store} user_id={user?.uid!} />;
+  return (
+    <LikeIt product={product} like_count={like_count} user_id={user?.uid!} />
+  );
 };

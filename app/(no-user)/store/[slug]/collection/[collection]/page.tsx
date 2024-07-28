@@ -1,9 +1,11 @@
 import ProductCard from '@/components/sb-ui/ProductCard';
+import { ShowAvatar } from '@/components/sb-ui/ShowAvatar';
 import { ShowMoreText } from '@/components/sb-ui/ShowMoreText';
 import { SubsciberButton } from '@/components/sb-ui/SubscribeButton';
 import { Button } from '@/components/ui/button';
 import { Separator } from '@/components/ui/separator';
 import { db } from '@/lib/firebase';
+import { GridProduct } from '@/lib/types';
 import { cn } from '@/lib/utils';
 import {
   CollectionReference,
@@ -23,7 +25,6 @@ import { cookies } from 'next/headers';
 import Image from 'next/image';
 import Link from 'next/link';
 import { redirect } from 'next/navigation';
-import ShowAvatar from '../../ShowAvatar';
 import { StorePasswordForm } from '../../password-protection';
 
 type Props = {
@@ -32,6 +33,7 @@ type Props = {
 type Data = {
   store: DocumentData;
   collection: DocumentData;
+  products: QuerySnapshot<DocumentData, DocumentData>;
   collections: QuerySnapshot<DocumentData, DocumentData>;
 };
 
@@ -43,12 +45,26 @@ async function getData(store: string, collectionId: string) {
     return 'No Store';
   }
 
-  const collectionRef: DocumentReference = doc(db, 'collections', collectionId);
+  const collectionRef: DocumentReference = doc(
+    db,
+    `stores/${store}/collections`,
+    collectionId
+  );
   const collectionData: DocumentData = await getDoc(collectionRef);
 
-  if (!collectionData.exists) {
+  if (!collectionData.exists()) {
     redirect(`/store/${store}`);
   }
+
+  const productsRef: CollectionReference = collection(db, 'products');
+  const q = query(
+    productsRef,
+    where('store_id', '==', store),
+    where('__name__', 'in', collectionData.data().products),
+    where('status', '==', 'Public')
+  );
+  const productData: QuerySnapshot<DocumentData, DocumentData> =
+    await getDocs(q);
 
   const collectionsRef: CollectionReference = collection(
     db,
@@ -61,6 +77,7 @@ async function getData(store: string, collectionId: string) {
   return {
     store: storeData,
     collection: collectionData,
+    products: productData,
     collections: collectionsData,
   };
 }
@@ -144,6 +161,20 @@ export default async function StoreCollection({ params }: Props) {
       </section>
     );
   }
+  const products: GridProduct[] = data.products.docs.map((product) => {
+    return {
+      name: product.data().name,
+      images: product.data().images,
+      product_type: product.data().product_type,
+      price: product.data().price,
+      compare_at: product.data().compare_at,
+      currency: product.data().currency,
+      like_count: product.data().like_count,
+      store_id: product.data().store_id,
+      created_at: product.data().created_at,
+      id: product.id,
+    };
+  });
   return (
     <section>
       <section className="w-full max-w-[3096px] mx-auto">
@@ -219,16 +250,19 @@ export default async function StoreCollection({ params }: Props) {
       </section>
       <Separator />
       <section className="w-full max-w-[3096px] mx-auto">
-        {data.collection.data().products.length === 0 ? (
-          <span className="p-4">Nothing here yet...</span>
+        {products?.length! > 0 ? (
+          <section className="grid grid-cols-1 md:grid-cols-3 xl:grid-cols-6 gap-8 p-4">
+            {products?.map((doc) => (
+              <ProductCard
+                product={doc}
+                show_creator={false}
+                key={doc.id}
+                avatar={data.store.data().avatar_url}
+              />
+            ))}
+          </section>
         ) : (
-          <div className="grid grid-cols-1 md:grid-cols-3 xl:grid-cols-4  gap-x-8 gap-y-[60px] p-4">
-            {data.collection
-              .data()
-              .products?.map((item: string) => (
-                <ProductCard id={item} show_creator={false} key={item} />
-              ))}
-          </div>
+          <p>This store has no products at this time.</p>
         )}
       </section>
     </section>
