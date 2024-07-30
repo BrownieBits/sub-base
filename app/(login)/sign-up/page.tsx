@@ -1,5 +1,6 @@
 import { Logo } from '@/components/sb-ui/Logo';
 import { Metadata } from 'next';
+import { headers } from 'next/headers';
 import Link from 'next/link';
 import { SignUpForm } from './sign-up-form';
 
@@ -34,6 +35,8 @@ export default function SignUp({
 }: {
   searchParams: { [key: string]: string | string[] | undefined };
 }) {
+  const geo = headers().get('x-geo') as string;
+  console.log('Geo', geo);
   return (
     <section className="w-full flex flex-col justify-between">
       <section className="w-full flex justify-between items-center">

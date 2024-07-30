@@ -35,7 +35,6 @@ export const SubButton = ({
   if (value?.exists()) {
     changeValue = 'Unsubscribe';
   }
-  console.log(value?.exists(), changeValue, name);
   return (
     <Button
       variant={!value?.exists() ? 'default' : 'outline'}

@@ -7,7 +7,6 @@ import { faShare } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Link from 'next/link';
 import ProductImages from './ProductImages';
-// import ShowAvatar from '../../ShowAvatar';
 
 type Props = {
   store_id: string;

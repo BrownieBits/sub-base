@@ -1,8 +1,5 @@
 'use client';
 
-import { zodResolver } from '@hookform/resolvers/zod';
-import { useForm } from 'react-hook-form';
-import * as z from 'zod';
 import { Button } from '@/components/ui/button';
 import {
   Form,
@@ -12,14 +9,8 @@ import {
   FormMessage,
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
-import {
-  useAuthState,
-  useCreateUserWithEmailAndPassword,
-  useUpdateProfile,
-} from 'react-firebase-hooks/auth';
 import { auth, db } from '@/lib/firebase';
-import { redirect, useRouter } from 'next/navigation';
-import { useEffect } from 'react';
+import { zodResolver } from '@hookform/resolvers/zod';
 import {
   DocumentData,
   DocumentReference,
@@ -28,7 +19,16 @@ import {
   getDoc,
   setDoc,
 } from 'firebase/firestore';
-import { generate, count } from 'random-words';
+import { redirect, useRouter } from 'next/navigation';
+import { generate } from 'random-words';
+import { useEffect } from 'react';
+import {
+  useAuthState,
+  useCreateUserWithEmailAndPassword,
+  useUpdateProfile,
+} from 'react-firebase-hooks/auth';
+import { useForm } from 'react-hook-form';
+import * as z from 'zod';
 
 const formSchema = z.object({
   fullName: z
@@ -145,6 +145,8 @@ export function SignUpForm() {
       password_protected: true,
       password: words.join('-'),
       subscription_count: 0,
+      view_count: 0,
+      country: 'United States',
       owner_id: newUser?.user.uid!,
       created_at: Timestamp.fromDate(new Date()),
     });

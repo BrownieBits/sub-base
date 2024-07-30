@@ -12,7 +12,6 @@ export const MenuItem = (props: any) => {
   const [user, loading, userError] = useAuthState(auth);
   const pathname = usePathname();
   let isCurrent = false;
-  console.log(props.inSheet);
   if (
     (pathname! === '/dashboard' && props.item.fields.slug === 'dashboard') ||
     (props.item.fields.slug !== 'dashboard' &&

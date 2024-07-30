@@ -185,17 +185,31 @@ export default async function Store({ params }: Props) {
             </Link>
             <div className="flex flex-col gap-1">
               <h1 className="text-xl">{data.store.data().name}</h1>
-              <p className="text-sm text-muted-foreground">
-                {data.store.data().subscription_count} subscriber
-                {data.store.data().subscription_count > 1
-                  ? 's'
-                  : ''} &bull; {data.products.docs.length} product
-                {data.products.docs.length > 1 ? 's' : ''}
-              </p>
+              <section className="w-full md:w-auto flex flex-wrap gap-1">
+                <p className="w-auto text-sm text-muted-foreground">
+                  @{params.slug}
+                </p>
+                <span className="text-sm text-muted-foreground">&bull;</span>
+                <p className="w-auto text-sm text-muted-foreground">
+                  {data.store.data().subscription_count} subscriber
+                  {data.store.data().subscription_count > 1 ? 's' : ''}
+                </p>
+                <span className="text-sm text-muted-foreground">&bull;</span>
+                <p className="w-auto block text-sm text-muted-foreground">
+                  {data.products.docs.length} product
+                  {data.products.docs.length > 1 ? 's' : ''}
+                </p>
+              </section>
               <section className="hidden md:flex">
                 <ShowMoreText
                   text={data.store.data().description}
                   howManyToShow={50}
+                  store_name={params.slug}
+                  location={data.store.data().country}
+                  created_at={data.store.data().created_at}
+                  view_count={data.store.data().view_count}
+                  product_count={data.products.docs.length}
+                  subscription_count={data.store.data().subscription_count}
                 />
               </section>
             </div>
@@ -204,6 +218,12 @@ export default async function Store({ params }: Props) {
             <ShowMoreText
               text={data.store.data().description}
               howManyToShow={50}
+              store_name={params.slug}
+              location={data.store.data().country}
+              created_at={data.store.data().created_at}
+              view_count={data.store.data().view_count}
+              product_count={data.products.docs.length}
+              subscription_count={data.store.data().subscription_count}
             />
           </section>
           <section className="flex w-full md:w-auto">
