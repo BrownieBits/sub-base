@@ -51,10 +51,10 @@ export const ShowDetails = (props: {
     return (
       <section className="w-full p-4 border rounded bg-layer-one mt-8">
         <h4>Product Details</h4>
-        <p className="pt-[5px] text-sm text-muted-foreground">
+        <p className="pt-[5px] text-sm text-muted-foreground whitespace-pre-wrap">
           {props.text.length < props.howManyToShow
-            ? props.text
-            : `${props.text.substring(0, props.howManyToShow)}...`}
+            ? props.text.replaceAll('\\n', '\n')
+            : `${props.text.replaceAll('\\n', '\n').substring(0, props.howManyToShow)}...`}
           <Dialog open={open} onOpenChange={setOpen}>
             <DialogTrigger asChild>
               <Button
@@ -71,7 +71,9 @@ export const ShowDetails = (props: {
                   <h3>Product Details</h3>
                 </DialogTitle>
                 <DialogDescription className="flex flex-col">
-                  <span className="text-foreground pb-4">{props.text}</span>
+                  <span className="text-foreground pb-4 whitespace-pre-wrap">
+                    {props.text.replaceAll('\\n', '\n')}
+                  </span>
 
                   <span className="w-full flex justify-start gap-0 text-foreground pb-4">
                     <FontAwesomeIcon
@@ -139,10 +141,10 @@ export const ShowDetails = (props: {
   return (
     <section className="w-full p-4 border rounded bg-layer-one mt-8">
       <h4>Product Details</h4>
-      <p className="pt-[5px] text-sm text-muted-foreground">
+      <p className="pt-[5px] text-sm text-muted-foreground whitespace-pre-wrap">
         {props.text.length < props.howManyToShow
-          ? props.text
-          : `${props.text.substring(0, props.howManyToShow)}...`}
+          ? props.text.replaceAll('\\n', '\n')
+          : `${props.text.replaceAll('\\n', '\n').substring(0, props.howManyToShow)}...`}
 
         <Drawer open={open} onOpenChange={setOpen}>
           <DrawerTrigger>
@@ -165,7 +167,9 @@ export const ShowDetails = (props: {
                 </DrawerClose>
               </DrawerTitle>
               <DrawerDescription className="w-full flex flex-col items-start text-left">
-                <span className="text-foreground pb-4">{props.text}</span>
+                <span className="text-foreground pb-4 whitespace-pre-wrap">
+                  {props.text.replaceAll('\\n', '\n')}
+                </span>
                 <span className="w-full flex justify-start gap-0 text-foreground pb-4">
                   <FontAwesomeIcon
                     className="icon mr-2 h-4 w-4"

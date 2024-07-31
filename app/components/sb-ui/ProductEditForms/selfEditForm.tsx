@@ -59,6 +59,7 @@ import { useForm } from 'react-hook-form';
 import { toast } from 'sonner';
 import * as z from 'zod';
 import AddOptionDrawer from './AddOptionDrawer';
+import { AiDescriptionWriter } from './AiDescriptionWriter';
 import DraggableImages from './DraggableImages';
 import { ShipFromSelect } from './ShipFrom';
 import { goTo, revalidate } from './actions';
@@ -987,6 +988,10 @@ export default function SelfEditForm(props: Props) {
                           {...field}
                         />
                       </FormControl>
+                      <FormDescription>
+                        Having trouble writing a description? Use Ai to help...{' '}
+                        <AiDescriptionWriter />
+                      </FormDescription>
                       <FormMessage />
                     </FormItem>
                   )}

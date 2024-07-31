@@ -53,10 +53,10 @@ export const ShowMoreText = (props: {
 
   if (isDesktop) {
     return (
-      <p className="pt-[5px] text-sm text-muted-foreground">
+      <p className="pt-[5px] text-sm text-muted-foreground whitespace-pre-wrap">
         {props.text.length < props.howManyToShow
-          ? props.text
-          : `${props.text.substring(0, props.howManyToShow)}...`}
+          ? props.text.replaceAll('\\n', '\n')
+          : `${props.text.replaceAll('\\n', '\n').substring(0, props.howManyToShow)}...`}
         <Dialog open={open} onOpenChange={setOpen}>
           <DialogTrigger asChild>
             <Button
@@ -73,7 +73,9 @@ export const ShowMoreText = (props: {
                 <h3>About</h3>
               </DialogTitle>
               <DialogDescription className="flex flex-col">
-                <span className="text-foreground pb-4">{props.text}</span>
+                <span className="text-foreground pb-4 whitespace-pre-wrap">
+                  {props.text.replaceAll('\\n', '\n')}
+                </span>
                 <span className="text-xl font-bold text-foreground pb-2">
                   Store Details
                 </span>
@@ -157,7 +159,7 @@ export const ShowMoreText = (props: {
   }
 
   return (
-    <p className="pt-[5px] text-sm text-muted-foreground">
+    <p className="pt-[5px] text-sm text-muted-foreground whitespace-pre-wrap">
       {props.text.length < props.howManyToShow
         ? props.text
         : `${props.text.substring(0, props.howManyToShow)}...`}
@@ -183,7 +185,9 @@ export const ShowMoreText = (props: {
               </DrawerClose>
             </DrawerTitle>
             <DrawerDescription className="w-full flex flex-col items-start text-left">
-              <span className="text-foreground pb-4">{props.text}</span>
+              <span className="text-foreground pb-4 whitespace-pre-wrap">
+                {props.text.replaceAll('\\n', '\n')}
+              </span>
               <span className="text-xl font-bold text-foreground pb-2">
                 Store Details
               </span>
