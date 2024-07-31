@@ -114,8 +114,7 @@ export default function ProductCard({
               href={`/product/${product.id}`}
               className="w-full flex flex-col items-end gap-1"
             >
-              {product.compare_at > 0 &&
-              product.price !== product.compare_at ? (
+              {product.compare_at > 0 && product.price != product.compare_at ? (
                 <>
                   <p className="text-destructive line-through">
                     {new Intl.NumberFormat('en-US', {

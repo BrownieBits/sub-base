@@ -59,6 +59,7 @@ export default async function RootLayout({
     draftMode().disable();
   }
   const pathname = headers().get('x-pathname') as string;
+
   return (
     <html lang="en">
       <body

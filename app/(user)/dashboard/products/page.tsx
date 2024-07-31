@@ -52,7 +52,7 @@ async function getData(slug: { [key: string]: string } | undefined) {
       product_type: item.data().product_type,
       units_sold: item.data().units_sold,
       owner_id: item.data().owner_id,
-      views: item.data().views,
+      view_count: item.data().view_count,
       status: item.data().status,
       store_id: item.data().store_id,
       images: item.data().images,

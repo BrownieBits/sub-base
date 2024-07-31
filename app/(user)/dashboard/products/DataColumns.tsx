@@ -35,7 +35,7 @@ export type Product = {
   product_type: string;
   units_sold: number;
   owner_id: string;
-  views: number;
+  view_count: number;
   status: 'Private' | 'Public';
   store_id: string;
   images: string[];
@@ -80,13 +80,15 @@ export const columns: ColumnDef<Product>[] = [
       const imgs: string[] = row.getValue('images');
 
       return (
-        <Image
-          src={imgs[0]}
-          width="60"
-          height="60"
-          alt="Product Image"
-          className="rounded-lg overflow-hidden w-[60px]"
-        />
+        <section className="bg-layer-one border rounded flex jusitfy-center items-center aspect-square overflow-hidden w-[60px]">
+          <Image
+            src={imgs[0]}
+            width="60"
+            height="60"
+            alt="Product Image"
+            className="w-full"
+          />
+        </section>
       );
     },
   },
@@ -266,7 +268,7 @@ export const columns: ColumnDef<Product>[] = [
     },
   },
   {
-    accessorKey: 'views',
+    accessorKey: 'view_count',
     header: ({ column }) => {
       if (column.getIsSorted() === 'asc') {
         return (
