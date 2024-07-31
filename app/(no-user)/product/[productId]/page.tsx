@@ -1,4 +1,5 @@
-import { db } from '@/lib/firebase';
+import { analytics, db } from '@/lib/firebase';
+import { logEvent } from 'firebase/analytics';
 import {
   CollectionReference,
   DocumentData,
@@ -12,6 +13,7 @@ import {
   query,
   where,
 } from 'firebase/firestore';
+import { Metadata } from 'next';
 import ProductDetailPage from './ProductDetailPage';
 import { options, variants } from './typedef';
 // import ShowAvatar from '../../ShowAvatar';
@@ -28,6 +30,9 @@ type Data = {
 };
 
 async function getData(productId: string) {
+  logEvent(analytics, 'product_viewed', {
+    product_id: productId,
+  });
   const productRef: DocumentReference = doc(db, 'products', productId);
   const productData: DocumentData = await getDoc(productRef);
 
@@ -76,6 +81,44 @@ async function getData(productId: string) {
   }
   return {
     error: 'No Product',
+  };
+}
+
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const data: Data = await getData(params.productId);
+  if (data.error === 'No Product') {
+    return {
+      title: 'No Store',
+    };
+  }
+  const description =
+    data.product?.data().description === ''
+      ? `This is a ${data.product?.data().product_type} product.`
+      : data.product?.data().description;
+  const openGraphImages: string[] = [];
+
+  if (data.product?.data().images.lenght > 0) {
+    openGraphImages.push(data.product?.data().images[0]);
+  }
+  return {
+    title: `${data.product?.data().name} - ${data.store?.data().name} - SubBase Creator Platform`,
+    description: description,
+    openGraph: {
+      type: 'website',
+      url: `https://${process.env.NEXT_PUBLIC_BASE_URL}/product/${params.productId}`,
+      title: `${data.product?.data().name} - ${data.store?.data().name} - SubBase Creator Platform`,
+      siteName: 'SubBase Creator Platform',
+      description: description,
+      images: openGraphImages,
+    },
+    twitter: {
+      card: 'summary_large_image',
+      creator: data.store?.data().name,
+      images: openGraphImages,
+      title: `${data.product?.data().name} - ${data.store?.data().name} - SubBase Creator Platform`,
+      description: description,
+      site: 'SubBase Creator Platform',
+    },
   };
 }
 
