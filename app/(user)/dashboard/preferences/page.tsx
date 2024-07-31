@@ -6,7 +6,6 @@ import {
   getDoc,
 } from 'firebase/firestore';
 import { Metadata } from 'next';
-import { revalidatePath } from 'next/cache';
 import { cookies } from 'next/headers';
 import { redirect } from 'next/navigation';
 import EditForm from './EditForm';
@@ -58,16 +57,10 @@ export default async function Preferences() {
   const default_store = cookieStore.get('default_store');
   const data: DocumentData = await getData(default_store);
 
-  async function revalidate() {
-    'use server';
-    revalidatePath(`/dashboard/preferences`);
-  }
-
   return (
     <EditForm
       data={data.data()}
       storeID={default_store?.value!}
-      revalidate={revalidate}
       userID={user_id!.value}
     />
   );

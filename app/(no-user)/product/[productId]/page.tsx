@@ -1,11 +1,19 @@
 import { db } from '@/lib/firebase';
 import {
+  CollectionReference,
   DocumentData,
   DocumentReference,
+  QuerySnapshot,
+  collection,
   doc,
   getDoc,
+  getDocs,
+  orderBy,
+  query,
+  where,
 } from 'firebase/firestore';
 import ProductDetailPage from './ProductDetailPage';
+import { options, variants } from './typedef';
 // import ShowAvatar from '../../ShowAvatar';
 
 type Props = {
@@ -14,6 +22,8 @@ type Props = {
 type Data = {
   store?: DocumentData;
   product?: DocumentData;
+  options?: QuerySnapshot<DocumentData, DocumentData>;
+  variants?: QuerySnapshot<DocumentData, DocumentData>;
   error?: string;
 };
 
@@ -29,9 +39,39 @@ async function getData(productId: string) {
     );
     const storeData: DocumentData = await getDoc(storeRef);
 
+    const optionsRef: CollectionReference = collection(
+      db,
+      'products',
+      productId,
+      'options'
+    );
+    const optionsQuery = query(
+      optionsRef,
+      where('index', '!=', null),
+      orderBy('index')
+    );
+    const optionsData: QuerySnapshot<DocumentData, DocumentData> =
+      await getDocs(optionsQuery);
+
+    const variantsRef: CollectionReference = collection(
+      db,
+      'products',
+      productId,
+      'variants'
+    );
+    const variantsQuery = query(
+      variantsRef,
+      where('index', '!=', null),
+      orderBy('index')
+    );
+    const variantsData: QuerySnapshot<DocumentData, DocumentData> =
+      await getDocs(variantsQuery);
+
     return {
       store: storeData,
       product: productData,
+      options: optionsData,
+      variants: variantsData,
     };
   }
   return {
@@ -41,7 +81,8 @@ async function getData(productId: string) {
 
 export default async function ProductPage({ params }: Props) {
   const data: Data = await getData(params.productId);
-
+  let options: options[] = [];
+  let variants: variants[] = [];
   if (data.error === 'No Product') {
     return (
       <section>
@@ -51,6 +92,26 @@ export default async function ProductPage({ params }: Props) {
       </section>
     );
   }
+
+  if (data.options !== undefined) {
+    options = data.options?.docs.map((option) => {
+      return {
+        name: option.data().name,
+        options: option.data().options,
+      };
+    });
+  }
+  if (data.variants !== undefined) {
+    variants = data.variants?.docs.map((variant) => {
+      return {
+        compare_at: variant.data().compare_at as number,
+        inventory: variant.data().inventory as number,
+        name: variant.data().name as string,
+        price: variant.data().price as number,
+      };
+    });
+  }
+
   return (
     <ProductDetailPage
       store_id={data.store?.id}
@@ -66,6 +127,11 @@ export default async function ProductPage({ params }: Props) {
       product_id={data.product?.id}
       product_description={data.product?.data().description}
       like_count={data.product?.data().like_count}
+      created_at={data.product?.data().created_at}
+      options={options}
+      variants={variants}
+      view_count={data.product?.data().view_count}
+      track_inventory={data.product?.data().track_inventory}
     />
   );
 }

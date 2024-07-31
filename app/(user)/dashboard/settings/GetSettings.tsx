@@ -1,16 +1,16 @@
 'use client';
 
+import { db } from '@/lib/firebase';
 import {
   DocumentReference,
   Unsubscribe,
   doc,
   onSnapshot,
 } from 'firebase/firestore';
-import { db } from '@/lib/firebase';
 import React from 'react';
 import EditSettings from './EditSettings';
-import { UserSettings } from './typedef';
 import { revalidate } from './actions';
+import { UserSettings } from './typedef';
 
 export default function GetSettings(props: { userID: string }) {
   const [userSettings, setUserSettings] = React.useState<UserSettings | null>(

@@ -38,8 +38,8 @@ export default function DraggableImage(props: Props) {
       <Button
         variant="destructive"
         size="sm"
-        onClick={(e) => {
-          props.removeProductImage(e, props.index);
+        onClick={(event) => {
+          props.removeProductImage(event, props.index);
         }}
         className="absolute top-0 right-0 hidden group-hover:block"
       >

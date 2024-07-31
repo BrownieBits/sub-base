@@ -1,4 +1,5 @@
 import { Logo } from '@/components/sb-ui/Logo';
+import { country_list } from '@/lib/CountryList';
 import { Metadata } from 'next';
 import { headers } from 'next/headers';
 import Link from 'next/link';
@@ -35,8 +36,8 @@ export default function SignUp({
 }: {
   searchParams: { [key: string]: string | string[] | undefined };
 }) {
-  const geo = headers().get('x-geo') as string;
-  console.log('Geo', geo);
+  const geo = (headers().get('x-geo') as string) || 'US';
+  const country = country_list.filter((country) => country.name === geo);
   return (
     <section className="w-full flex flex-col justify-between">
       <section className="w-full flex justify-between items-center">
@@ -54,7 +55,7 @@ export default function SignUp({
       </section>
       <section className="w-full flex flex-col justify-center items-center">
         <h1 className="mb-8">Sign Up</h1>
-        <SignUpForm />
+        <SignUpForm country={country[0].value} />
       </section>
       <section className="w-full h-[53px] md:h-[61px]"></section>
     </section>

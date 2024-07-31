@@ -208,8 +208,8 @@ export const columns: ColumnDef<Promotion>[] = [
           aria-label={`Status ${row.getValue('status')}`}
           title={`Status ${row.getValue('status')}`}
           checked={on}
-          onCheckedChange={(e) => {
-            if (e) {
+          onCheckedChange={(event) => {
+            if (event) {
               ChangeStatus('Active', id, 'status');
             } else {
               ChangeStatus('Inactive', id, 'status');
@@ -268,8 +268,8 @@ export const columns: ColumnDef<Promotion>[] = [
           aria-label={`Status ${row.getValue('status')}`}
           title={`Status ${row.getValue('status')}`}
           checked={row.getValue('show_in_banner')}
-          onCheckedChange={(e) => {
-            if (e) {
+          onCheckedChange={(event) => {
+            if (event) {
               ChangeStatus(true, id, 'show');
             } else {
               ChangeStatus(false, id, 'show');

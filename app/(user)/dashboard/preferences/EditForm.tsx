@@ -12,9 +12,17 @@ import {
   FormMessage,
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
 import { Separator } from '@/components/ui/separator';
 import { Switch } from '@/components/ui/switch';
 import { Textarea } from '@/components/ui/textarea';
+import { country_list } from '@/lib/CountryList';
 import { db, storage } from '@/lib/firebase';
 import { faSave, faTrash } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -22,6 +30,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import {
   DocumentData,
   DocumentReference,
+  Timestamp,
   doc,
   updateDoc,
 } from 'firebase/firestore';
@@ -33,6 +42,7 @@ import { useUploadFile } from 'react-firebase-hooks/storage';
 import { useForm } from 'react-hook-form';
 import { toast } from 'sonner';
 import * as z from 'zod';
+import { revalidate } from './action';
 
 const MAX_IMAGE_SIZE = 5242880; // 5 MB
 const ALLOWED_IMAGE_TYPES = [
@@ -49,6 +59,7 @@ const formSchema = z.object({
       message: 'Store name must be no more than 32 characters long',
     }),
   description: z.string(),
+  country: z.string(),
   avatar: z
     .custom<FileList>((val) => val instanceof FileList, 'Required')
     .refine((files) => files.length > 0, `Required`)
@@ -92,24 +103,21 @@ const formSchema = z.object({
 export default function EditForm(props: {
   data: DocumentData;
   storeID: string;
-  revalidate: () => void;
   userID: string;
 }) {
-  const [disabled, setDisabled] = React.useState<boolean>(true);
-  const [selectedName, setSelectedName] = React.useState<string>('');
-  const [selectedDescription, setSelectedDescription] =
-    React.useState<string>('');
+  const [disabled, setDisabled] = React.useState<boolean>(false);
   const [selectedAvatar, setSelectedAvatar] = React.useState<string>('');
   const [selectedBanner, setSelectedBanner] = React.useState<string>('');
-  const [selectedProtection, setSelectedProtection] =
-    React.useState<boolean>(false);
-  const [selectedPassword, setSelectedPassword] = React.useState<string>('');
+  const [avatarRemoval, setAvatarRemoval] = React.useState<string>('');
+  const [bannerRemoval, setBannerRemoval] = React.useState<string>('');
   const [uploadFile, uploading, snapshot, uploadError] = useUploadFile();
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      name: props.data.title || '',
+      name: props.data.name || '',
+      description: props.data.description || '',
+      country: props.data.country,
       avatar: undefined,
       banner: undefined,
       password_protected: props.data.password_protected || false,
@@ -117,15 +125,15 @@ export default function EditForm(props: {
     },
   });
 
-  async function onSubmit() {
-    const docRef: DocumentReference = doc(db, 'stores', props.storeID);
+  async function uploadImages() {
     let avatar = selectedAvatar;
     let banner = selectedBanner;
     let avatar_fileName = '';
-    let avatar_oldFileName = props.data.avatar_filename;
     let banner_fileName = '';
-    let banner_oldFileName = props.data.banner_filename;
-    if (avatar !== '' && props.data.avatar_url !== selectedAvatar) {
+    if (
+      avatar !== '' &&
+      !selectedAvatar.includes('firebasestorage.googleapis.com')
+    ) {
       avatar_fileName = 'avatar_' + form.getValues('avatar')[0].name;
       const storageRef = ref(
         storage,
@@ -138,26 +146,21 @@ export default function EditForm(props: {
       avatar = await getDownloadURL(storageRef);
     }
 
-    if (selectedAvatar === '' && props.data.avatar_url !== '') {
-      const del_avatar_storageRef = ref(
-        storage,
-        `${props.userID}/stores/${props.storeID.replace('.', '')}/${avatar_oldFileName}`
+    if (avatarRemoval !== '') {
+      let removalURL = avatarRemoval.replace(
+        'https://firebasestorage.googleapis.com/v0/b/creator-base-6c959.appspot.com/o',
+        ''
       );
-      await deleteObject(del_avatar_storageRef);
-    } else if (selectedAvatar === props.data.avatar_url) {
-      avatar_fileName = avatar_oldFileName;
-    } else if (
-      selectedAvatar !== props.data.avatar_url &&
-      avatar_oldFileName !== ''
-    ) {
-      const del_avatar_storageRef = ref(
-        storage,
-        `${props.userID}/stores/${props.storeID.replace('.', '')}/${avatar_oldFileName}`
-      );
+      removalURL = removalURL.replace(/\?alt.*/, '');
+      removalURL = removalURL.replaceAll('%2F', '/');
+      const del_avatar_storageRef = ref(storage, removalURL);
       await deleteObject(del_avatar_storageRef);
     }
 
-    if (banner !== '' && props.data.banner_url !== selectedBanner) {
+    if (
+      banner !== '' &&
+      !selectedBanner.includes('firebasestorage.googleapis.com')
+    ) {
       banner_fileName = 'banner_' + form.getValues('banner')[0].name;
       const storageRef = ref(
         storage,
@@ -170,126 +173,95 @@ export default function EditForm(props: {
       banner = await getDownloadURL(storageRef);
     }
 
-    if (selectedBanner === '' && props.data.banner_url !== '') {
-      const del_banner_storageRef = ref(
-        storage,
-        `${props.userID}/stores/${props.storeID}/${banner_oldFileName}`
+    if (bannerRemoval !== '') {
+      let removalURL = bannerRemoval.replace(
+        'https://firebasestorage.googleapis.com/v0/b/creator-base-6c959.appspot.com/o',
+        ''
       );
-      await deleteObject(del_banner_storageRef);
-    } else if (selectedBanner === props.data.banner_url) {
-      banner_fileName = banner_oldFileName;
-    } else if (
-      selectedBanner !== props.data.banner_url &&
-      banner_oldFileName !== ''
-    ) {
-      const del_banner_storageRef = ref(
-        storage,
-        `${props.userID}/stores/${props.storeID}/${banner_oldFileName}`
-      );
+      removalURL = removalURL.replace(/\?alt.*/, '');
+      removalURL = removalURL.replaceAll('%2F', '/');
+      const del_banner_storageRef = ref(storage, removalURL);
       await deleteObject(del_banner_storageRef);
     }
-    setDisabled(true);
-    await updateDoc(docRef, {
-      name: selectedName,
-      description: selectedDescription,
-      avatar_url: avatar,
-      avatar_filename: avatar_fileName,
-      banner_url: banner,
-      banner_filename: banner_fileName,
-      password_protected: selectedProtection,
-      password: selectedPassword,
-    });
-    props.revalidate();
-    toast.success('Store Updated', {
-      description: 'Your store info has been updated.',
-    });
+
+    avatar_fileName = avatar
+      .replace(
+        `https://firebasestorage.googleapis.com/v0/b/creator-base-6c959.appspot.com/o/${props.userID}%2Fstores%2F${props.storeID}%2F`,
+        ''
+      )
+      .replace(/\?alt.*/, '');
+    banner_fileName = banner
+      .replace(
+        `https://firebasestorage.googleapis.com/v0/b/creator-base-6c959.appspot.com/o/${props.userID}%2Fstores%2F${props.storeID}%2F`,
+        ''
+      )
+      .replace(/\?alt.*/, '');
+
+    setAvatarRemoval('');
+    setBannerRemoval('');
+    return {
+      avatar: avatar,
+      avatar_fileName: avatar_fileName,
+      banner: banner,
+      banner_fileName: banner_fileName,
+    };
   }
-  async function updateForm(event: any) {
-    if (
-      event !== null &&
-      event.target !== undefined &&
-      event.target.name! === 'name'
-    ) {
-      setSelectedName(event.target.value);
-    } else if (
-      event !== null &&
-      event.target != undefined &&
-      event.target.name! === 'description'
-    ) {
-      setSelectedDescription(event.target.value);
-    } else if (
-      event !== null &&
-      event.target !== undefined &&
-      event.target.name! === 'password'
-    ) {
-      setSelectedPassword(event.target.value);
-    } else if (event !== null && typeof event === 'boolean') {
-      setSelectedProtection(event);
+
+  async function onSubmit() {
+    const docRef: DocumentReference = doc(db, 'stores', props.storeID);
+    try {
+      setDisabled(true);
+      const { avatar, avatar_fileName, banner, banner_fileName } =
+        await uploadImages();
+      setDisabled(false);
+      await updateDoc(docRef, {
+        name: form.getValues('name'),
+        description: form.getValues('description'),
+        avatar_url: avatar,
+        avatar_filename: avatar_fileName,
+        banner_url: banner,
+        banner_filename: banner_fileName,
+        password_protected: form.getValues('password_protected'),
+        password: form.getValues('password'),
+        country: form.getValues('country'),
+        updated_at: Timestamp.fromDate(new Date()),
+      });
+      revalidate();
+      toast.success('Store Updated', {
+        description: 'Your store info has been updated.',
+      });
+    } catch (error) {
+      setDisabled(false);
+      console.error(error);
+      toast.error('Update Error', {
+        description:
+          'There was an issue updating your store. Please try again.',
+      });
     }
   }
   async function clearAvatar() {
+    if (selectedAvatar.includes('firebasestorage.googleapis.com')) {
+      setAvatarRemoval(selectedAvatar);
+    }
     setSelectedAvatar('');
     const data = new DataTransfer();
     form.setValue('avatar', data.files);
   }
   async function clearBanner() {
+    if (selectedBanner.includes('firebasestorage.googleapis.com')) {
+      setBannerRemoval(selectedBanner);
+    }
     setSelectedBanner('');
     const data = new DataTransfer();
     form.setValue('banner', data.files);
   }
 
   React.useEffect(() => {
-    form.setValue('name', props.data.name);
-    setSelectedName(props.data.name);
-  }, [props.data.name]);
-  React.useEffect(() => {
-    form.setValue('description', props.data.description);
-    setSelectedDescription(props.data.description);
-  }, [props.data.description]);
-  React.useEffect(() => {
     setSelectedAvatar(props.data.avatar_url);
   }, [props.data.avatar_url]);
   React.useEffect(() => {
     setSelectedBanner(props.data.banner_url);
   }, [props.data.banner_url]);
-  React.useEffect(() => {
-    setSelectedProtection(props.data.password_protected);
-  }, [props.data.password_protected]);
-  React.useEffect(() => {
-    setSelectedPassword(props.data.password);
-  }, [props.data.password]);
-
-  React.useEffect(() => {
-    const updateSave = async () => {
-      if (
-        selectedName !== props.data.name ||
-        selectedDescription !== props.data.description ||
-        selectedAvatar !== props.data.avatar_url ||
-        selectedBanner !== props.data.banner_url ||
-        selectedProtection !== props.data.password_protected ||
-        selectedPassword !== props.data.password
-      ) {
-        setDisabled(false);
-      } else if (
-        selectedName === props.data.name &&
-        selectedDescription === props.data.description &&
-        selectedAvatar === props.data.avatar_url &&
-        selectedBanner === props.data.banner_url &&
-        selectedProtection === props.data.password_protected &&
-        selectedPassword === props.data.password
-      ) {
-        setDisabled(true);
-      }
-    };
-    updateSave();
-  }, [
-    selectedName,
-    selectedDescription,
-    selectedAvatar,
-    selectedBanner,
-    selectedProtection,
-    selectedPassword,
-  ]);
 
   return (
     <section>
@@ -339,7 +311,7 @@ export default function EditForm(props: {
                       <FormLabel>Name</FormLabel>
                       <FormControl>
                         <Input
-                          onChangeCapture={updateForm}
+                          onChangeCapture={field.onChange}
                           id="name"
                           {...field}
                         />
@@ -356,12 +328,44 @@ export default function EditForm(props: {
                       <FormLabel>Meta Description</FormLabel>
                       <FormControl>
                         <Textarea
-                          onChangeCapture={updateForm}
+                          onChangeCapture={field.onChange}
                           placeholder="Tell us a little bit about this store..."
                           className="resize-none"
                           {...field}
                         />
                       </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                <FormField
+                  control={form.control}
+                  name="country"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Store Country</FormLabel>
+                      <Select
+                        onValueChange={field.onChange}
+                        defaultValue={field.value}
+                      >
+                        <FormControl>
+                          <SelectTrigger>
+                            <SelectValue placeholder="Select a default currency" />
+                          </SelectTrigger>
+                        </FormControl>
+                        <SelectContent>
+                          {country_list.map((item: any, i: number) => {
+                            return (
+                              <SelectItem
+                                value={item.value}
+                                key={`country-${i}`}
+                              >
+                                {item.name}
+                              </SelectItem>
+                            );
+                          })}
+                        </SelectContent>
+                      </Select>
                       <FormMessage />
                     </FormItem>
                   )}
@@ -396,7 +400,7 @@ export default function EditForm(props: {
                               <Avatar className="h-[150px] w-[150px]">
                                 <AvatarImage
                                   src={selectedAvatar}
-                                  alt={selectedName}
+                                  alt="Avatar"
                                 />
                               </Avatar>
                               <Button
@@ -473,7 +477,7 @@ export default function EditForm(props: {
                               <section className="flex flex1">
                                 <Image
                                   src={selectedBanner}
-                                  alt={selectedName}
+                                  alt="Store Banner"
                                   width={3096}
                                   height={526}
                                   style={{ width: '100%', height: 'auto' }}
@@ -562,8 +566,8 @@ export default function EditForm(props: {
                       </div>
                       <FormControl>
                         <Switch
-                          checked={selectedProtection}
-                          onCheckedChange={updateForm}
+                          checked={field.value}
+                          onCheckedChange={field.onChange}
                         />
                       </FormControl>
                     </FormItem>
@@ -577,7 +581,7 @@ export default function EditForm(props: {
                       <FormLabel>Password</FormLabel>
                       <FormControl>
                         <Input
-                          onChangeCapture={updateForm}
+                          onChangeCapture={field.onChange}
                           id="password"
                           {...field}
                         />

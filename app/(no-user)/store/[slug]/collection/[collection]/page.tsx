@@ -22,7 +22,6 @@ import {
 import { Metadata } from 'next';
 import { revalidatePath } from 'next/cache';
 import { cookies } from 'next/headers';
-import Image from 'next/image';
 import Link from 'next/link';
 import { redirect } from 'next/navigation';
 import { StorePasswordForm } from '../../password-protection';
@@ -181,15 +180,14 @@ export default async function StoreCollection({ params }: Props) {
         {data.store.data().banner_url === '' ? (
           <></>
         ) : (
-          <section className="flex justify-end rounded-b aspect-[6/1] md:aspect-[128/15] overflow-hidden">
-            <Image
-              src={data.store.data().banner_url}
-              alt={data.store.data().name}
-              width={3096}
-              height={526}
-              style={{ width: '100%', height: 'auto' }}
-            ></Image>
-          </section>
+          <section
+            className="flex justify-start items-center rounded aspect-[6/1] md:aspect-[128/15] overflow-hidden"
+            style={{
+              background: `url(${data.store.data().banner_url})`,
+              backgroundSize: 'cover',
+              backgroundPosition: 'center',
+            }}
+          ></section>
         )}
         <section className="flex flex-col md:flex-row w-full justify-between items-start md:items-center px-4 py-4 gap-4">
           <section className="flex items-center gap-4">

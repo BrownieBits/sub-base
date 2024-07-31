@@ -1,15 +1,26 @@
 import { HeroBanner } from '@/components/sb-ui/HeroBanner';
+import ProductCard from '@/components/sb-ui/ProductCard';
 import { Separator } from '@/components/ui/separator';
 import { db } from '@/lib/firebase';
+import { GridProduct } from '@/lib/types';
 import {
   DocumentData,
   QuerySnapshot,
+  Timestamp,
   collection,
   getDocs,
+  query,
+  where,
 } from 'firebase/firestore';
 import { Metadata } from 'next';
 import { cookies } from 'next/headers';
 import { redirect } from 'next/navigation';
+import { NoLikes } from './NoLikes';
+
+type Data = {
+  products?: QuerySnapshot<DocumentData, DocumentData>;
+  error?: string;
+};
 
 async function getData(id: { [key: string]: string } | undefined) {
   if (id === undefined) {
@@ -18,7 +29,26 @@ async function getData(id: { [key: string]: string } | undefined) {
   const userSubsRef = collection(db, 'users', id.value, 'likes');
   const data: QuerySnapshot<DocumentData, DocumentData> =
     await getDocs(userSubsRef);
-  return data;
+
+  if (data.docs.length === 0) {
+    return {
+      error: 'No Likes',
+    };
+  }
+  const ids = data.docs.map((doc) => doc.id);
+  const productsRef = collection(db, 'products');
+  const productsQuery = query(
+    productsRef,
+    where('__name__', 'in', ids),
+    where('status', '==', 'Public')
+  );
+
+  const productData: QuerySnapshot<DocumentData, DocumentData> =
+    await getDocs(productsQuery);
+
+  return {
+    products: productData,
+  };
 }
 
 export async function generateMetadata(): Promise<Metadata> {
@@ -50,7 +80,28 @@ export async function generateMetadata(): Promise<Metadata> {
 export default async function LikedItems() {
   const cookieStore = cookies();
   const user_id = cookieStore.get('user_id');
-  const data = await getData(user_id);
+  const data: Data = await getData(user_id);
+  if (data.error === 'No Likes') {
+    return <NoLikes />;
+  }
+  let products: GridProduct[] = [];
+  if (data.products) {
+    products = data.products?.docs.map((product): GridProduct => {
+      return {
+        name: product.data().name as string,
+        images: product.data().images as string[],
+        product_type: product.data().product_type as string,
+        price: product.data().price as number,
+        compare_at: product.data().compare_at as number,
+        currency: product.data().currency as string,
+        like_count: product.data().like_count as number,
+        store_id: product.data().store_id as string,
+        created_at: product.data().created_at as Timestamp,
+        id: product.id as string,
+      };
+    });
+  }
+
   return (
     <section>
       <section className="w-full max-w-[3096px] mx-auto">
@@ -61,17 +112,11 @@ export default async function LikedItems() {
       </section>
       <Separator />
       <section className="w-full max-w-[3096px] mx-auto">
-        {/* {data.docs.length === 0 ? (
-          <NoLikes />
-        ) : (
-          <section className="grid grid-cols-1 md:grid-cols-3 xl:grid-cols-4 gap-x-8 gap-y-[60px] p-4">
-            {data.docs.map((doc) => {
-              return (
-                <ProductCard id={doc.id} show_creator={true} key={doc.id} />
-              );
-            })}
-          </section>
-        )}*/}
+        <section className="grid grid-cols-1 md:grid-cols-3 xl:grid-cols-6 gap-8 p-4">
+          {products?.map((doc) => (
+            <ProductCard product={doc} show_creator={false} key={doc.id} />
+          ))}
+        </section>
       </section>
     </section>
   );

@@ -104,7 +104,9 @@ export default function ProductCard({
               <></>
             )}
             <p className="text-sm text-muted-foreground">
-              {product.like_count} Likes - {timeDifference()}
+              {product.like_count} Likes{' '}
+              <span className="text-sm text-muted-foreground">&bull;</span>{' '}
+              {timeDifference()}
             </p>
           </section>
           <section>

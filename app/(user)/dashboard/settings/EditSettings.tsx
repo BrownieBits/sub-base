@@ -60,15 +60,7 @@ export default function EditSettings(props: {
   userID: string;
   userSettings: UserSettings;
 }) {
-  const [disabled, setDisabled] = React.useState<boolean>(true);
-  const [selectedName, setSelectedName] = React.useState<string>(
-    props.userSettings.name
-  );
-  const [selectedPhone, setSelectedPhone] = React.useState<string>(
-    props.userSettings.phone
-  );
-  const [selectedDefaultCurrency, setSelectedDefaultCurrency] =
-    React.useState<string>(props.userSettings.default_currency);
+  const [disabled, setDisabled] = React.useState<boolean>(false);
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -82,61 +74,27 @@ export default function EditSettings(props: {
 
   async function onSubmit() {
     const docRef: DocumentReference = doc(db, 'users', props.userID);
-
-    setDisabled(true);
-    await updateDoc(docRef, {
-      name: selectedName,
-      phone: selectedPhone,
-      default_currency: selectedDefaultCurrency,
-    });
-    revalidate();
-    toast('User Updated', {
-      description: 'Your user info has been updated.',
-    });
-  }
-  async function updateForm(event: any) {
-    if (
-      event !== null &&
-      event.target !== undefined &&
-      event.target.name! === 'name'
-    ) {
-      setSelectedName(event.target.value);
-    } else if (
-      event !== null &&
-      event.target != undefined &&
-      event.target.name! === 'phone'
-    ) {
-      setSelectedPhone(event.target.value);
-    } else if (event !== null && typeof event === 'string') {
-      setSelectedDefaultCurrency(event);
+    try {
+      setDisabled(true);
+      await updateDoc(docRef, {
+        name: form.getValues('name'),
+        phone: form.getValues('phone'),
+        default_currency: form.getValues('default_currency'),
+      });
+      setDisabled(false);
+      revalidate();
+      toast.success('User Updated', {
+        description: 'Your user info has been updated.',
+      });
+    } catch (error) {
+      console.error(error);
+      setDisabled(false);
+      toast.error('Update Error', {
+        description:
+          'Something went wrong while updating your user info. Please try again',
+      });
     }
   }
-
-  React.useEffect(() => {
-    form.setValue('name', props.userSettings.name);
-    form.setValue('email', props.userSettings.email);
-    form.setValue('phone', props.userSettings.phone);
-    form.setValue('default_currency', props.userSettings.default_currency);
-  }, [props.userSettings]);
-
-  React.useEffect(() => {
-    const updateSave = async () => {
-      if (
-        selectedName !== props.userSettings.name ||
-        selectedPhone !== props.userSettings.phone ||
-        selectedDefaultCurrency !== props.userSettings.default_currency
-      ) {
-        setDisabled(false);
-      } else if (
-        selectedName === props.userSettings.name &&
-        selectedPhone === props.userSettings.phone &&
-        selectedDefaultCurrency === props.userSettings.default_currency
-      ) {
-        setDisabled(true);
-      }
-    };
-    updateSave();
-  }, [selectedName, selectedPhone, selectedDefaultCurrency]);
 
   return (
     <section>
@@ -185,7 +143,7 @@ export default function EditSettings(props: {
                         <FormLabel>Full Name</FormLabel>
                         <FormControl>
                           <Input
-                            onChangeCapture={updateForm}
+                            onChangeCapture={field.onChange}
                             id="name"
                             {...field}
                           />
@@ -202,7 +160,7 @@ export default function EditSettings(props: {
                         <FormLabel>Email</FormLabel>
                         <FormControl>
                           <Input
-                            onChangeCapture={updateForm}
+                            onChangeCapture={field.onChange}
                             id="email"
                             type="email"
                             disabled
@@ -221,7 +179,7 @@ export default function EditSettings(props: {
                         <FormLabel>Phone</FormLabel>
                         <FormControl>
                           <Input
-                            onChangeCapture={updateForm}
+                            onChangeCapture={field.onChange}
                             id="phone"
                             type="phone"
                             {...field}
@@ -238,7 +196,7 @@ export default function EditSettings(props: {
                       <FormItem>
                         <FormLabel>Default Currency</FormLabel>
                         <Select
-                          onValueChange={updateForm}
+                          onValueChange={field.onChange}
                           defaultValue={field.value}
                         >
                           <FormControl>

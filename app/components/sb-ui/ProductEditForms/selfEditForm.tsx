@@ -364,8 +364,8 @@ export default function SelfEditForm(props: Props) {
           const del_df_storageRef = ref(storage, removalURL);
           try {
             await deleteObject(del_df_storageRef);
-          } catch (e) {
-            console.log(e);
+          } catch (error) {
+            console.error(error);
           }
 
           return removalURL;
@@ -683,7 +683,7 @@ export default function SelfEditForm(props: Props) {
           colors: [],
           sku: form.getValues('sku'),
           revenue: 0,
-          views: 0,
+          view_count: 0,
         });
         uploadVariants.map(
           (
@@ -743,9 +743,9 @@ export default function SelfEditForm(props: Props) {
         revalidate('new-digital');
         goTo(`/dashboard/products/${docRef.id}`);
       }
-    } catch (e) {
+    } catch (error) {
       setDisabled(false);
-      console.log(e);
+      console.error(error);
       toast.error('Error Saving', {
         description:
           'There was an error saving your product. Please try again.',
@@ -1273,8 +1273,8 @@ export default function SelfEditForm(props: Props) {
                             size="icon"
                             type="button"
                             className="text-xl"
-                            onClick={(e) => {
-                              e.preventDefault();
+                            onClick={(event) => {
+                              event.preventDefault();
                               removeOption(index);
                             }}
                             asChild

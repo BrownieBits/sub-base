@@ -277,8 +277,8 @@ export default function DigitalEditForm(props: Props) {
           const del_df_storageRef = ref(storage, removalURL);
           try {
             await deleteObject(del_df_storageRef);
-          } catch (e) {
-            console.log(e);
+          } catch (error) {
+            console.error(error);
           }
 
           return removalURL;
@@ -363,7 +363,7 @@ export default function DigitalEditForm(props: Props) {
           colors: [],
           sku: form.getValues('sku'),
           revenue: 0,
-          views: 0,
+          view_count: 0,
         });
       }
 
@@ -377,8 +377,9 @@ export default function DigitalEditForm(props: Props) {
         revalidate('new-digital');
         goTo(`/dashboard/products/${docRef.id}`);
       }
-    } catch (e) {
+    } catch (error) {
       setDisabled(true);
+      console.error(error);
       toast.error('Error Saving', {
         description:
           'There was an error saving your product. Please try again.',

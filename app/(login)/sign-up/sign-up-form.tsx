@@ -84,7 +84,7 @@ const formSchema = z.object({
     }),
 });
 
-export function SignUpForm() {
+export function SignUpForm({ country }: { country: string }) {
   const router = useRouter();
   const [updateProfile, updating, updateProfileError] = useUpdateProfile(auth);
   const [loggedInUser, userLoading, userError] = useAuthState(auth);
@@ -146,7 +146,7 @@ export function SignUpForm() {
       password: words.join('-'),
       subscription_count: 0,
       view_count: 0,
-      country: 'United States',
+      country: country,
       owner_id: newUser?.user.uid!,
       created_at: Timestamp.fromDate(new Date()),
     });
