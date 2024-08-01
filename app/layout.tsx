@@ -11,6 +11,7 @@ import Script from 'next/script';
 import AuthState from './components/sb-ui/AuthState';
 import './globals.css';
 import CookieConsent from './lib/consent';
+import { analytics } from './lib/firebase';
 config.autoAddCss = false;
 
 const fontSans = FontSans({
@@ -54,6 +55,7 @@ export default async function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
+  analytics;
   async function clearDraft() {
     'use server';
     draftMode().disable();

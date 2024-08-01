@@ -1,3 +1,4 @@
+import PageViewAnalytics from '@/components/sb-ui/AnalyticsPageView';
 import { UserChecker } from '@/components/sb-ui/UserChecker';
 import { DashboardNav } from '../components/sb-ui/DashboardNav';
 import { DashboardSideNav } from '../components/sb-ui/DashboardSideNav';
@@ -23,6 +24,7 @@ export default function UserLayout({
         </main>
       </section>
       <UserChecker />
+      <PageViewAnalytics options={{}} />
     </section>
   );
 }

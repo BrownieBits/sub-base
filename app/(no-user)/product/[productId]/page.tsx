@@ -1,5 +1,4 @@
-import { analytics, db } from '@/lib/firebase';
-import { logEvent } from 'firebase/analytics';
+import { db } from '@/lib/firebase';
 import {
   CollectionReference,
   DocumentData,
@@ -30,11 +29,6 @@ type Data = {
 };
 
 async function getData(productId: string) {
-  if (analytics !== null) {
-    logEvent(analytics, 'product_viewed_server', {
-      product_id: productId,
-    });
-  }
   const productRef: DocumentReference = doc(db, 'products', productId);
   const productData: DocumentData = await getDoc(productRef);
 
@@ -103,7 +97,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     openGraphImages.push(data.product?.data().images[0]);
   }
   return {
-    title: `${data.product?.data().name} - ${data.store?.data().name} - SubBase Creator Platform`,
+    title: `${data.product?.data().name} - ${data.store?.data().name} - Product - SubBase Creator Platform`,
     description: description,
     openGraph: {
       type: 'website',
