@@ -22,7 +22,7 @@ import { cn } from '@/lib/utils';
 import { faFlag, faShare } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { logEvent } from 'firebase/analytics';
+import { isSupported, logEvent } from 'firebase/analytics';
 import { Timestamp } from 'firebase/firestore';
 import Link from 'next/link';
 import React from 'react';
@@ -82,10 +82,6 @@ export default function ProductDetailPage(props: Props) {
     resolver: zodResolver(formSchema),
   });
 
-  logEvent(analytics, 'product_viewed_cs', {
-    product_id: props.product_id,
-  });
-
   async function verifyOptions() {}
 
   async function onSubmit() {
@@ -119,6 +115,15 @@ export default function ProductDetailPage(props: Props) {
   }
 
   React.useEffect(() => {
+    const sendAnalytics = async () => {
+      const isSup = await isSupported();
+      if (isSup) {
+        logEvent(analytics, 'product_viewed', {
+          product_id: props.product_id,
+        });
+      }
+    };
+    sendAnalytics();
     if (props.price) {
       setPrice(props.price);
     }
@@ -137,6 +142,7 @@ export default function ProductDetailPage(props: Props) {
     newOptionList = props.options.map((option) => '');
     setSelectedOptions(newOptionList);
   }, []);
+
   return (
     <section className="flex flex-col gap-8 p-4 max-w-[1754px] mx-auto">
       <section key="productInfo" className="flex flex-col md:flex-row gap-8">
