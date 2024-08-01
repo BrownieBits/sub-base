@@ -4,10 +4,9 @@ import { ShowMoreText } from '@/components/sb-ui/ShowMoreText';
 import { SubsciberButton } from '@/components/sb-ui/SubscribeButton';
 import { Button } from '@/components/ui/button';
 import { Separator } from '@/components/ui/separator';
-import { analytics, db } from '@/lib/firebase';
+import { db } from '@/lib/firebase';
 import { GridProduct } from '@/lib/types';
 import { cn } from '@/lib/utils';
-import { logEvent } from 'firebase/analytics';
 import {
   CollectionReference,
   DocumentData,
@@ -38,10 +37,6 @@ type Data = {
 };
 
 async function getData(store: string, collectionId: string) {
-  logEvent(analytics, 'store_viewed', {
-    product_id: store,
-    collection_id: collectionId,
-  });
   const storeRef: DocumentReference = doc(db, 'stores', store);
   const storeData: DocumentData = await getDoc(storeRef);
 

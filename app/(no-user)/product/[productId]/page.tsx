@@ -1,5 +1,4 @@
-import { analytics, db } from '@/lib/firebase';
-import { logEvent } from 'firebase/analytics';
+import { db } from '@/lib/firebase';
 import {
   CollectionReference,
   DocumentData,
@@ -30,9 +29,6 @@ type Data = {
 };
 
 async function getData(productId: string) {
-  logEvent(analytics, 'product_viewed', {
-    product_id: productId,
-  });
   const productRef: DocumentReference = doc(db, 'products', productId);
   const productData: DocumentData = await getDoc(productRef);
 

@@ -17,10 +17,12 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
+import { analytics } from '@/lib/firebase';
 import { cn } from '@/lib/utils';
 import { faFlag, faShare } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { logEvent } from 'firebase/analytics';
 import { Timestamp } from 'firebase/firestore';
 import Link from 'next/link';
 import React from 'react';
@@ -78,6 +80,10 @@ export default function ProductDetailPage(props: Props) {
   const [compareAt, setCompareAt] = React.useState<number>(0.0);
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
+  });
+
+  logEvent(analytics, 'product_viewed_cs', {
+    product_id: props.product_id,
   });
 
   async function verifyOptions() {}
