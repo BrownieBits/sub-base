@@ -22,7 +22,7 @@ import { cn } from '@/lib/utils';
 import { faFlag, faShare } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { isSupported, logEvent } from 'firebase/analytics';
+import { logEvent } from 'firebase/analytics';
 import { Timestamp } from 'firebase/firestore';
 import Link from 'next/link';
 import React from 'react';
@@ -82,13 +82,11 @@ export default function ProductDetailPage(props: Props) {
     resolver: zodResolver(formSchema),
   });
 
-  isSupported().then((yes) => {
-    if (yes) {
-      logEvent(analytics, 'product_viewed', {
-        product_id: props.product_id,
-      });
-    }
-  });
+  if (typeof window !== 'undefined') {
+    logEvent(analytics, 'product_viewed', {
+      product_id: props.product_id,
+    });
+  }
 
   async function verifyOptions() {}
 
