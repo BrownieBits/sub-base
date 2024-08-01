@@ -82,12 +82,6 @@ export default function ProductDetailPage(props: Props) {
     resolver: zodResolver(formSchema),
   });
 
-  if (typeof window !== 'undefined') {
-    logEvent(analytics, 'product_viewed', {
-      product_id: props.product_id,
-    });
-  }
-
   async function verifyOptions() {}
 
   async function onSubmit() {
@@ -121,6 +115,9 @@ export default function ProductDetailPage(props: Props) {
   }
 
   React.useEffect(() => {
+    logEvent(analytics, 'product_viewed', {
+      product_id: props.product_id,
+    });
     if (props.price) {
       setPrice(props.price);
     }
