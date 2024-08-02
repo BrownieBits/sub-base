@@ -15,7 +15,6 @@ import {
 import { Metadata } from 'next';
 import ProductDetailPage from './ProductDetailPage';
 import { options, variants } from './typedef';
-// import ShowAvatar from '../../ShowAvatar';
 
 type Props = {
   params: { productId: string };

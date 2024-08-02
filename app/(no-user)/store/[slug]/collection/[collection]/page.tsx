@@ -192,11 +192,7 @@ export default async function StoreCollection({ params }: Props) {
         <section className="flex flex-col md:flex-row w-full justify-between items-start md:items-center px-4 py-4 gap-4">
           <section className="flex items-center gap-4">
             <Link href={`/store/${params.slug}`} className="">
-              <ShowAvatar
-                name={data.store.data().name}
-                url={data.store.data().avatar_url}
-                size="lg"
-              />
+              <ShowAvatar store_id={data.store.id} size="lg" />
             </Link>
             <div className="flex flex-col gap-1">
               <h1 className="text-xl">{data.store.data().name}</h1>

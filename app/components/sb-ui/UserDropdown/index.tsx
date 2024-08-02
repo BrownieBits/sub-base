@@ -66,7 +66,7 @@ export const UserDropdown = () => {
               src={value?.data()?.avatar_url}
               alt={value?.data()?.name}
             />
-            <AvatarFallback>
+            <AvatarFallback className="bg-primary text-foreground border-primary">
               <b>{value?.data()?.name.slice(0, 1).toUpperCase()}</b>
             </AvatarFallback>
           </Avatar>

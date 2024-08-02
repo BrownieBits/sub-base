@@ -30,7 +30,7 @@ export const MarketingNav = () => {
           </SheetContent>
         </Sheet>
         <section className="w-[22px] md:w-[120px]">
-          <Logo url="/dashboard" />
+          <Logo url="/" />
         </section>
       </div>
       <ul className="flex gap-4 items-center">

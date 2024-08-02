@@ -144,7 +144,7 @@ export default async function SwitchStores() {
                             src={doc.data().avatar_url}
                             alt={doc.data().name}
                           />
-                          <AvatarFallback>
+                          <AvatarFallback className="bg-foreground text-background border-background">
                             <b>{doc.data().name?.slice(0, 1).toUpperCase()}</b>
                           </AvatarFallback>
                         </Avatar>
@@ -199,7 +199,7 @@ export default async function SwitchStores() {
                             src={doc.data().avatar_url}
                             alt={doc.data().name}
                           />
-                          <AvatarFallback>
+                          <AvatarFallback className="bg-foreground text-background border-background">
                             <b>{doc.data().name?.slice(0, 1).toUpperCase()}</b>
                           </AvatarFallback>
                         </Avatar>
@@ -254,7 +254,7 @@ export default async function SwitchStores() {
                             src={doc.data().avatar_url}
                             alt={doc.data().name}
                           />
-                          <AvatarFallback>
+                          <AvatarFallback className="bg-foreground text-background border-background">
                             <b>{doc.data().name?.slice(0, 1).toUpperCase()}</b>
                           </AvatarFallback>
                         </Avatar>

@@ -1,8 +1,9 @@
 'use client';
 
-import { auth, db } from '@/lib/firebase';
+import { analytics, auth, db } from '@/lib/firebase';
 import { deleteCookie, getCookie, setCookie } from 'cookies-next';
-import { User, onAuthStateChanged } from 'firebase/auth';
+import { setUserId } from 'firebase/analytics';
+import { User } from 'firebase/auth';
 import {
   DocumentData,
   DocumentReference,
@@ -33,8 +34,14 @@ export default function AuthState() {
         if (getCookie('localConsent')) {
           SetCookies(user);
         }
+        if (analytics) {
+          setUserId(analytics, user.uid);
+        }
         setUser(user);
       } else {
+        if (analytics) {
+          setUserId(analytics, '');
+        }
         deleteCookie('user_id');
         deleteCookie('default_store');
         deleteCookie('user_role');

@@ -1,10 +1,13 @@
 import { HeroBanner } from '@/components/sb-ui/HeroBanner';
+import ProductCard from '@/components/sb-ui/ProductCard';
 import { Separator } from '@/components/ui/separator';
 import { client } from '@/lib/contentful';
 import { db } from '@/lib/firebase';
+import { GridProduct } from '@/lib/types';
 import {
   DocumentData,
   QuerySnapshot,
+  Timestamp,
   collection,
   getDocs,
   or,
@@ -19,6 +22,11 @@ import { NoProducts } from './NoProducts';
 type Props = {
   params: { group: string };
 };
+type Data = {
+  error?: string;
+  title?: string;
+  products?: QuerySnapshot<DocumentData, DocumentData>;
+};
 
 async function getData(group: string) {
   const { isEnabled } = draftMode();
@@ -29,13 +37,15 @@ async function getData(group: string) {
     'fields.slug': `${group}`,
   });
   if (data.items.length === 0) {
-    return 'No Page';
+    return {
+      error: 'No Page',
+    };
   } else {
     const productsColRef = collection(db, 'products');
     if (data.items[0].fields.type === 'Trending') {
       const q = query(
         productsColRef,
-        where('revenue', '>', data.items[0].fields.trendingOver),
+        where('revenue', '>=', data.items[0].fields.trendingOver),
         orderBy('revenue')
       );
       const productsData: QuerySnapshot<DocumentData, DocumentData> =
@@ -43,15 +53,18 @@ async function getData(group: string) {
 
       return {
         title: data.items[0].fields.title,
-        products: productsData.docs,
+        products: productsData,
       };
     } else if (data.items[0].fields.type === 'Manual') {
       const products = data.items[0].fields.productList.map((item: string) => {
-        return { id: item };
+        return item;
       });
+      const q = query(productsColRef, where('__name__', 'in', products));
+      const productsData: QuerySnapshot<DocumentData, DocumentData> =
+        await getDocs(q);
       return {
         title: data.items[0].fields.title,
-        products: products,
+        products: productsData,
       };
     } else if (data.items[0].fields.type === 'Tags') {
       const q = query(
@@ -65,12 +78,11 @@ async function getData(group: string) {
         await getDocs(q);
       return {
         title: data.items[0].fields.title,
-        products: productsData.docs,
+        products: productsData,
       };
     }
     return {
       title: data.items[0].fields.title,
-      products: [],
     };
   }
 }
@@ -94,10 +106,28 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 }
 
 export default async function MarketplacePage({ params }: Props) {
-  const data = await getData(params.group);
+  const data: Data = await getData(params.group);
 
-  if (data === 'No Page') {
+  if (data.error === 'No Page') {
     return <>No Marketplace Page</>;
+  }
+
+  let products: GridProduct[] = [];
+  if (data.products) {
+    products = data.products?.docs.map((product): GridProduct => {
+      return {
+        name: product.data().name as string,
+        images: product.data().images as string[],
+        product_type: product.data().product_type as string,
+        price: product.data().price as number,
+        compare_at: product.data().compare_at as number,
+        currency: product.data().currency as string,
+        like_count: product.data().like_count as number,
+        store_id: product.data().store_id as string,
+        created_at: product.data().created_at as Timestamp,
+        id: product.id as string,
+      };
+    });
   }
 
   return (
@@ -110,15 +140,13 @@ export default async function MarketplacePage({ params }: Props) {
       </section>
       <Separator />
       <section className="w-full max-w-[3096px] mx-auto">
-        {data.products.length === 0 ? (
+        {products.length === 0 ? (
           <NoProducts />
         ) : (
-          <section className="grid grid-cols-1 md:grid-cols-3 xl:grid-cols-4 gap-x-8 gap-y-[60px] px-4 py-8">
-            {/* {data.products.map((doc: any) => {
-              return (
-                <ProductCard id={doc.id} show_creator={true} key={doc.id} />
-              );
-            })} */}
+          <section className="grid grid-cols-1 md:grid-cols-3 xl:grid-cols-6 gap-8 p-4">
+            {products?.map((doc) => (
+              <ProductCard product={doc} show_creator={true} key={doc.id} />
+            ))}
           </section>
         )}
       </section>

@@ -38,7 +38,7 @@ export default function StoreCard({ id }: { id: string }) {
               src={value?.data()?.avatar_url!}
               alt={value?.data()?.name}
             />
-            <AvatarFallback>
+            <AvatarFallback className="bg-foreground text-background border-background">
               {value?.data()?.name.slice(0, 1).toUpperCase()}
             </AvatarFallback>
           </Avatar>

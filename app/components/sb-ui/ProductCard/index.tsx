@@ -75,7 +75,7 @@ export default function ProductCard({
             href={`/store/${product.store_id}`}
             className="text-sm text-muted-foreground"
           >
-            <ShowAvatar url={avatar!} name={product.store_id} size="sm" />
+            <ShowAvatar store_id={product.store_id} size="sm" />
           </Link>
         ) : (
           <></>
