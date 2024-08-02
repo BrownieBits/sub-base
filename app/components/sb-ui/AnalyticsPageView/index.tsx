@@ -12,7 +12,7 @@ type Props = {
 export default function PageViewAnalytics(props: Props) {
   React.useEffect(() => {
     if (analytics !== null) {
-      logEvent(analytics, 'page_viewed', props.options);
+      logEvent(analytics, 'page_view', props.options);
     }
   }, []);
 
