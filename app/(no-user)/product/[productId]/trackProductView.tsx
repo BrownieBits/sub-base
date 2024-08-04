@@ -36,6 +36,7 @@ export default function TrackProductViews(props: {
       where('product_id', '==', props.product_id)
     );
     const querySnapshot = await getDocs(q);
+    console.log('SNAPSHOT EMPTY?', querySnapshot.empty, props.ip);
     if (querySnapshot.empty) {
       const analyticsRef: DocumentReference = doc(db, 'analytics');
       const productRef: DocumentReference = doc(
@@ -69,7 +70,7 @@ export default function TrackProductViews(props: {
       logEvent(analytics, 'product_viewed', {
         product_id: props.product_id,
       });
-      logEvent(analytics, 'page_viewed', {
+      logEvent(analytics, 'page_view', {
         title: `${props.product_name} - ${props.store_name} - SubBase Creator Platform`,
       });
     }
