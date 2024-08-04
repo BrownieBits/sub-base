@@ -13,7 +13,9 @@ import {
   where,
 } from 'firebase/firestore';
 import { Metadata } from 'next';
+import { headers } from 'next/headers';
 import ProductDetailPage from './ProductDetailPage';
+import TrackProductViews from './trackProductView';
 import { options, variants } from './typedef';
 
 type Props = {
@@ -119,6 +121,11 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 export default async function ProductPage({ params }: Props) {
   const data: Data = await getData(params.productId);
+  const country = (headers().get('x-geo-country') as string) || 'US';
+  const city = (headers().get('x-geo-city') as string) || 'Los Angeles';
+  const region = (headers().get('x-geo-region') as string) || 'CA';
+  const ip = (headers().get('x-ip') as string) || '0.0.0.0';
+
   let options: options[] = [];
   let variants: variants[] = [];
   if (data.error === 'No Product') {
@@ -151,25 +158,36 @@ export default async function ProductPage({ params }: Props) {
   }
 
   return (
-    <ProductDetailPage
-      store_id={data.store?.id}
-      avatar={data.store?.data().avatar_url}
-      store_name={data.store?.data().name}
-      subscription_count={data.store?.data().subscription_count}
-      images={data.product?.data().images}
-      product_name={data.product?.data().name}
-      product_type={data.product?.data().product_type}
-      price={data.product?.data().price}
-      compare_at={data.product?.data().compare_at}
-      currency={data.product?.data().currency}
-      product_id={data.product?.id}
-      product_description={data.product?.data().description}
-      like_count={data.product?.data().like_count}
-      created_at={data.product?.data().created_at}
-      options={options}
-      variants={variants}
-      view_count={data.product?.data().view_count}
-      track_inventory={data.product?.data().track_inventory}
-    />
+    <>
+      <ProductDetailPage
+        store_id={data.store?.id}
+        avatar={data.store?.data().avatar_url}
+        store_name={data.store?.data().name}
+        subscription_count={data.store?.data().subscription_count}
+        images={data.product?.data().images}
+        product_name={data.product?.data().name}
+        product_type={data.product?.data().product_type}
+        price={data.product?.data().price}
+        compare_at={data.product?.data().compare_at}
+        currency={data.product?.data().currency}
+        product_id={data.product?.id}
+        product_description={data.product?.data().description}
+        like_count={data.product?.data().like_count}
+        created_at={data.product?.data().created_at}
+        options={options}
+        variants={variants}
+        view_count={data.product?.data().view_count}
+        track_inventory={data.product?.data().track_inventory}
+      />
+      <TrackProductViews
+        country={country}
+        city={city}
+        region={region}
+        ip={ip}
+        product_id={params.productId}
+        product_name={data.store?.data().name}
+        store_name={data.store?.data().name}
+      />
+    </>
   );
 }

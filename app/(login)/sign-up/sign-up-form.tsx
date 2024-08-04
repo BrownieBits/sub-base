@@ -17,7 +17,7 @@ import {
   Timestamp,
   doc,
   getDoc,
-  setDoc,
+  writeBatch,
 } from 'firebase/firestore';
 import { redirect, useRouter } from 'next/navigation';
 import { generate } from 'random-words';
@@ -84,7 +84,17 @@ const formSchema = z.object({
     }),
 });
 
-export function SignUpForm({ country }: { country: string }) {
+export function SignUpForm({
+  country,
+  city,
+  region,
+  ip,
+}: {
+  country: string;
+  city: string;
+  region: string;
+  ip: string;
+}) {
   const router = useRouter();
   const [updateProfile, updating, updateProfileError] = useUpdateProfile(auth);
   const [loggedInUser, userLoading, userError] = useAuthState(auth);
@@ -123,7 +133,9 @@ export function SignUpForm({ country }: { country: string }) {
       'stores',
       values.displayName.toLowerCase()
     );
-    await setDoc(storeRef, {
+    const analyticsRef: DocumentReference = doc(db, 'analytics');
+    const batch = writeBatch(db);
+    batch.set(storeRef, {
       name: values.displayName.toLowerCase(),
       description: '',
       avatar_filename: '',
@@ -150,7 +162,7 @@ export function SignUpForm({ country }: { country: string }) {
       owner_id: newUser?.user.uid!,
       created_at: Timestamp.fromDate(new Date()),
     });
-    await setDoc(docRef, {
+    batch.set(docRef, {
       name: values.fullName,
       email: values.email,
       stores: [values.displayName.toLowerCase()],
@@ -164,6 +176,16 @@ export function SignUpForm({ country }: { country: string }) {
       phone: '',
       created_at: Timestamp.fromDate(new Date()),
     });
+    batch.set(analyticsRef, {
+      type: 'user sign-up',
+      user_id: newUser?.user.uid!,
+      country: country,
+      city: city,
+      region: region,
+      ip: ip,
+      created_at: Timestamp.fromDate(new Date()),
+    });
+    await batch.commit();
     router.push('/dashboard');
   }
 

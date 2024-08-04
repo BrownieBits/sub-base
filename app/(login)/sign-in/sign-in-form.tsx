@@ -1,8 +1,5 @@
 'use client';
 
-import { zodResolver } from '@hookform/resolvers/zod';
-import { useForm } from 'react-hook-form';
-import * as z from 'zod';
 import { Button } from '@/components/ui/button';
 import {
   Form,
@@ -12,13 +9,17 @@ import {
   FormMessage,
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
+import { auth, db } from '@/lib/firebase';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { DocumentReference, Timestamp, doc, setDoc } from 'firebase/firestore';
+import { redirect, useRouter, useSearchParams } from 'next/navigation';
+import { useEffect } from 'react';
 import {
   useAuthState,
   useSignInWithEmailAndPassword,
 } from 'react-firebase-hooks/auth';
-import { auth } from '@/lib/firebase';
-import { redirect, useRouter, useSearchParams } from 'next/navigation';
-import { useEffect } from 'react';
+import { useForm } from 'react-hook-form';
+import * as z from 'zod';
 
 const formSchema = z.object({
   email: z.string().email({ message: 'Invalid email address' }),
@@ -35,7 +36,17 @@ const formSchema = z.object({
     ),
 });
 
-export function SignInForm() {
+export function SignInForm({
+  country,
+  city,
+  region,
+  ip,
+}: {
+  country: string;
+  city: string;
+  region: string;
+  ip: string;
+}) {
   const router = useRouter();
   const searchParams = useSearchParams();
   const [loggedInUser, userLoading, userError] = useAuthState(auth);
@@ -50,8 +61,21 @@ export function SignInForm() {
   });
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
-    await signInWithEmailAndPassword(values.email, values.password);
+    const user = await signInWithEmailAndPassword(
+      values.email,
+      values.password
+    );
     const redirectParam = searchParams.get('redirect');
+    const analyticsRef: DocumentReference = doc(db, 'analytics');
+    await setDoc(analyticsRef, {
+      type: 'user sign-in',
+      user_id: user?.user.uid,
+      country: country,
+      city: city,
+      region: region,
+      ip: ip,
+      created_at: Timestamp.fromDate(new Date()),
+    });
     if (redirectParam !== null) {
       router.push(redirectParam);
       return;

@@ -21,10 +21,11 @@ import {
 } from 'firebase/firestore';
 import { Metadata } from 'next';
 import { revalidatePath } from 'next/cache';
-import { cookies } from 'next/headers';
+import { cookies, headers } from 'next/headers';
 import Link from 'next/link';
 import { redirect } from 'next/navigation';
 import { StorePasswordForm } from '../../password-protection';
+import TrackStoreViews from '../../trackStoreViews';
 
 type Props = {
   params: { slug: string; collection: string };
@@ -123,6 +124,10 @@ export default async function StoreCollection({ params }: Props) {
   const cookieStore = cookies();
   const store_pw = cookieStore.get(`${params.slug}-pw`);
   const data: Data | 'No Store' = await getData(params.slug, params.collection);
+  const country = (headers().get('x-geo-country') as string) || 'US';
+  const city = (headers().get('x-geo-city') as string) || 'Los Angeles';
+  const region = (headers().get('x-geo-region') as string) || 'CA';
+  const ip = (headers().get('x-ip') as string) || '0.0.0.0';
 
   async function revalidate() {
     'use server';
@@ -296,6 +301,14 @@ export default async function StoreCollection({ params }: Props) {
           <p>This store has no products at this time.</p>
         )}
       </section>
+      <TrackStoreViews
+        country={country}
+        city={city}
+        region={region}
+        ip={ip}
+        store_id={params.slug}
+        store_name={data.store.data().name}
+      />
     </section>
   );
 }
