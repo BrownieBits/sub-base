@@ -14,11 +14,14 @@ import React from 'react';
 
 async function SetCookies(user: User) {
   const userDataRef: DocumentReference = doc(db, 'users', user.uid);
-  setCookie('user_id', user.uid);
+  const today = new Date();
+  const expires = new Date(today.setMonth(today.getMonth() + 3));
+  setCookie('user_id', user.uid, {
+    secure: true,
+    expires: expires,
+  });
   const data: DocumentData = await onSnapshot(userDataRef, (doc) => {
     if (doc.exists()) {
-      const today = new Date();
-      const expires = new Date(today.setMonth(today.getMonth() + 3));
       setCookie('user_role', doc.data().role, {
         secure: true,
         expires: expires,
