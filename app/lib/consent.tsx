@@ -12,8 +12,13 @@ const CookieConsent = () => {
   }, []);
 
   const acceptCookie = () => {
+    const today = new Date();
+    const expires = new Date(today.setMonth(today.getMonth() + 3));
     setShowConsent(true);
-    setCookie('localConsent', 'true', {});
+    setCookie('localConsent', 'true', {
+      secure: true,
+      expires: expires,
+    });
   };
 
   if (showConsent) {

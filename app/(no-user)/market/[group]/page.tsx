@@ -100,8 +100,26 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       title: 'Marketplace',
     };
   }
+  const description = `Discover a vast selection of ${params.group} products at SubBase. Find everything from ${data.products?.docs[0].data().name} to ${data.products?.docs[1].data().name} and more. Compare prices, read reviews, and enjoy safe and secure shopping. Explore our diverse range of ${params.group} products today!`;
   return {
-    title: data.items[0].fields.title,
+    title: `${data.items[0].fields.title} Marketplace - SubBase Creator Platform`,
+    description: description,
+    openGraph: {
+      type: 'website',
+      url: `https://${process.env.NEXT_PUBLIC_BASE_URL}/market/${params.group}`,
+      title: `${data.store.data().name} Store - SubBase Creator Platform`,
+      siteName: 'SubBase Creator Platform',
+      description: description,
+      images: [],
+    },
+    twitter: {
+      card: 'summary_large_image',
+      creator: data.store.data().name,
+      images: [],
+      title: `${data.store.data().name} Store - SubBase Creator Platform`,
+      description: description,
+      site: 'SubBase Creator Platform',
+    },
   };
 }
 

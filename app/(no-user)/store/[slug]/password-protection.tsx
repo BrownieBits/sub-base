@@ -1,8 +1,5 @@
 'use client';
 
-import { zodResolver } from '@hookform/resolvers/zod';
-import { useForm } from 'react-hook-form';
-import * as z from 'zod';
 import { Button } from '@/components/ui/button';
 import {
   Form,
@@ -12,7 +9,10 @@ import {
   FormMessage,
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
+import { zodResolver } from '@hookform/resolvers/zod';
 import { setCookie } from 'cookies-next';
+import { useForm } from 'react-hook-form';
+import * as z from 'zod';
 
 const formSchema = z.object({
   passwords: z
@@ -47,7 +47,9 @@ export function StorePasswordForm(props: {
   });
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
-    setCookie(props.cookieSlug, props.pw);
+    const today = new Date();
+    const expires = new Date(today.setMonth(today.getMonth() + 3));
+    setCookie(props.cookieSlug, props.pw, { secure: true, expires: expires });
     props.revalidate();
   }
 

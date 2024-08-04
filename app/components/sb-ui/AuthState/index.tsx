@@ -17,10 +17,24 @@ async function SetCookies(user: User) {
   setCookie('user_id', user.uid);
   const data: DocumentData = await onSnapshot(userDataRef, (doc) => {
     if (doc.exists()) {
-      setCookie('user_role', doc.data().role);
-      setCookie('default_store', doc.data().default_store);
-      setCookie('user_name', doc.data().name);
-      setCookie('user_email', doc.data().email);
+      const today = new Date();
+      const expires = new Date(today.setMonth(today.getMonth() + 3));
+      setCookie('user_role', doc.data().role, {
+        secure: true,
+        expires: expires,
+      });
+      setCookie('default_store', doc.data().default_store, {
+        secure: true,
+        expires: expires,
+      });
+      setCookie('user_name', doc.data().name, {
+        secure: true,
+        expires: expires,
+      });
+      setCookie('user_email', doc.data().email, {
+        secure: true,
+        expires: expires,
+      });
     }
   });
 }
