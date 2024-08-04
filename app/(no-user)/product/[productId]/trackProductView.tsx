@@ -7,12 +7,12 @@ import {
   CollectionReference,
   DocumentReference,
   Timestamp,
+  addDoc,
   collection,
   doc,
   getDocs,
   query,
   runTransaction,
-  setDoc,
   where,
 } from 'firebase/firestore';
 import React from 'react';
@@ -36,15 +36,14 @@ export default function TrackProductViews(props: {
       where('product_id', '==', props.product_id)
     );
     const querySnapshot = await getDocs(q);
-    console.log('SNAPSHOT EMPTY?', querySnapshot.empty, props.ip);
     if (querySnapshot.empty) {
-      const analyticsRef: DocumentReference = doc(db, 'analytics');
+      const analyticsRef: CollectionReference = collection(db, 'analytics');
       const productRef: DocumentReference = doc(
         db,
         'products',
         props.product_id
       );
-      await setDoc(analyticsRef, {
+      await addDoc(analyticsRef, {
         type: 'product_view',
         product_id: props.product_id,
         user_id: user_id,

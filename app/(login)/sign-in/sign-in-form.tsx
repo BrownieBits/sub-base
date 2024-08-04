@@ -11,7 +11,14 @@ import {
 import { Input } from '@/components/ui/input';
 import { auth, db } from '@/lib/firebase';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { DocumentReference, Timestamp, doc, setDoc } from 'firebase/firestore';
+import {
+  CollectionReference,
+  DocumentReference,
+  Timestamp,
+  collection,
+  doc,
+  setDoc,
+} from 'firebase/firestore';
 import { redirect, useRouter, useSearchParams } from 'next/navigation';
 import { useEffect } from 'react';
 import {
@@ -66,8 +73,10 @@ export function SignInForm({
       values.password
     );
     const redirectParam = searchParams.get('redirect');
-    const analyticsRef: DocumentReference = doc(db, 'analytics');
-    await setDoc(analyticsRef, {
+    const analyticsRef: CollectionReference = collection(db, 'analytics');
+    const analyticsDoc: DocumentReference = doc(analyticsRef);
+
+    await setDoc(analyticsDoc, {
       type: 'user sign-in',
       user_id: user?.user.uid,
       country: country,

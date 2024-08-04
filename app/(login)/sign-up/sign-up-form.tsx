@@ -12,9 +12,11 @@ import { Input } from '@/components/ui/input';
 import { auth, db } from '@/lib/firebase';
 import { zodResolver } from '@hookform/resolvers/zod';
 import {
+  CollectionReference,
   DocumentData,
   DocumentReference,
   Timestamp,
+  collection,
   doc,
   getDoc,
   writeBatch,
@@ -133,7 +135,8 @@ export function SignUpForm({
       'stores',
       values.displayName.toLowerCase()
     );
-    const analyticsRef: DocumentReference = doc(db, 'analytics');
+    const analyticsRef: CollectionReference = collection(db, 'analytics');
+    const analyticsDoc: DocumentReference = doc(analyticsRef);
     const batch = writeBatch(db);
     batch.set(storeRef, {
       name: values.displayName.toLowerCase(),
@@ -176,7 +179,7 @@ export function SignUpForm({
       phone: '',
       created_at: Timestamp.fromDate(new Date()),
     });
-    batch.set(analyticsRef, {
+    batch.set(analyticsDoc, {
       type: 'user sign-up',
       user_id: newUser?.user.uid!,
       country: country,
