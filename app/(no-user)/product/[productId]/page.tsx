@@ -187,6 +187,7 @@ export default async function ProductPage({ params }: Props) {
         product_id={params.productId}
         product_name={data.store?.data().name}
         store_name={data.store?.data().name}
+        store_id={data.store?.id}
       />
     </>
   );

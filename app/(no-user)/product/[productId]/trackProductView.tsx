@@ -21,6 +21,7 @@ export default function TrackProductViews(props: {
   product_id: string;
   product_name: string;
   store_name: string;
+  store_id: string;
   country: string;
   city: string;
   region: string;
@@ -46,6 +47,7 @@ export default function TrackProductViews(props: {
       await addDoc(analyticsRef, {
         type: 'product_view',
         product_id: props.product_id,
+        store_id: props.store_id,
         user_id: user_id,
         country: props.country,
         city: props.city,
