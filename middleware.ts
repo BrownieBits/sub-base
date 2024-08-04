@@ -5,7 +5,7 @@ export function middleware(request: NextRequest) {
     requestHeaders.set("x-pathname", request.nextUrl.pathname);
     requestHeaders.set("x-geo", request.geo?.country!);
     requestHeaders.set("x-ip", request.ip!);
-    console.log(requestHeaders)
+    console.log('HEADERS******', request)
     return NextResponse.next({
         request: {
             headers: requestHeaders,
