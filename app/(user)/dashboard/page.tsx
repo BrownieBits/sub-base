@@ -87,24 +87,21 @@ export default async function Dashboard() {
           </p>
         </section>
       )}
-
-      <section>
-        <section className="w-full max-w-[3096px] mx-auto">
-          <section className="flex w-full justify-between items-center px-4 py-8 gap-4">
-            <h1>Dashboard</h1>
-          </section>
-          <HeroBanner page_slug="creator-dashboard" />
+      <section className="w-full max-w-[3096px] mx-auto">
+        <section className="flex w-full justify-between items-center px-4 py-8 gap-4">
+          <h1>Dashboard</h1>
         </section>
-        <Separator />
-        <section className="w-full max-w-[3096px] mx-auto flex flex-col md:flex-row gap-8 py-8">
-          <section className="flex-1 bg-layer-one border rounded">
-            <LatestProduct user_id={user_id?.value!} />
-          </section>
-          <section className="flex-1">
-            <StoreAnalytics />
-          </section>
-          <section className="flex-1 h-20 border rounded"></section>
+        <HeroBanner page_slug="creator-dashboard" />
+      </section>
+      <Separator />
+      <section className="w-full max-w-[3096px] mx-auto flex flex-col md:flex-row gap-8 py-8 px-4">
+        <section className="flex-1 bg-layer-one border rounded">
+          <LatestProduct user_id={user_id?.value!} />
         </section>
+        <section className="flex-1">
+          <StoreAnalytics />
+        </section>
+        <section className="flex-1 h-20 border rounded"></section>
       </section>
     </>
   );
