@@ -95,7 +95,7 @@ export default async function Dashboard() {
           <HeroBanner page_slug="creator-dashboard" />
         </section>
         <Separator />
-        <section className="w-full max-w-[3096px] mx-auto flex gap-8 py-8">
+        <section className="w-full max-w-[3096px] mx-auto flex flex-col md:flex-row gap-8 py-8">
           <section className="flex-1 bg-layer-one border rounded">
             <LatestProduct />
           </section>
