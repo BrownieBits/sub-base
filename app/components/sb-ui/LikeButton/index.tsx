@@ -20,11 +20,21 @@ import { useAuthState } from 'react-firebase-hooks/auth';
 import { LikeIt } from './LikeIt';
 
 export const LikeButton = ({
-  product,
+  product_id,
   like_count,
+  store_id,
+  country,
+  city,
+  region,
+  ip,
 }: {
-  product: string;
+  product_id: string;
   like_count: number;
+  store_id: string;
+  country: string;
+  city: string;
+  region: string;
+  ip: string;
 }) => {
   const [user, userLoading, userError] = useAuthState(auth);
 
@@ -57,7 +67,9 @@ export const LikeButton = ({
           <AlertDialogFooter>
             <AlertDialogCancel>Cancel</AlertDialogCancel>
             <AlertDialogAction asChild>
-              <Link href={`sign-in?redirect=/product/${product}`}>Sign In</Link>
+              <Link href={`sign-in?redirect=/product/${product_id}`}>
+                Sign In
+              </Link>
             </AlertDialogAction>
           </AlertDialogFooter>
         </AlertDialogContent>
@@ -66,6 +78,15 @@ export const LikeButton = ({
   }
 
   return (
-    <LikeIt product={product} like_count={like_count} user_id={user?.uid!} />
+    <LikeIt
+      product_id={product_id}
+      like_count={like_count}
+      user_id={user?.uid!}
+      store_id={store_id}
+      country={country}
+      city={city}
+      region={region}
+      ip={ip}
+    />
   );
 };

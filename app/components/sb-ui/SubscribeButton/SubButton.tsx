@@ -4,26 +4,112 @@ import { Button } from '@/components/ui/button';
 import { db } from '@/lib/firebase';
 import { faSpinner } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { getCookie } from 'cookies-next';
-import { doc } from 'firebase/firestore';
-import { useState } from 'react';
-import { useDocument } from 'react-firebase-hooks/firestore';
-import { UpdateSubStatus } from './actions';
+import {
+  CollectionReference,
+  Timestamp,
+  Unsubscribe,
+  addDoc,
+  collection,
+  deleteDoc,
+  doc,
+  onSnapshot,
+  runTransaction,
+  setDoc,
+} from 'firebase/firestore';
+import React, { useState } from 'react';
+import { revalidate } from './actions';
 
 export const SubButton = ({
-  store,
+  store_id,
   user_id,
   full_width,
+  country,
+  city,
+  region,
+  ip,
 }: {
-  store: string;
+  store_id: string;
   user_id: string;
   full_width: boolean;
+  country: string;
+  city: string;
+  region: string;
+  ip: string;
 }) => {
-  const user = getCookie('user_id');
-  const docRef = doc(db, 'users', user!, 'subscribes', store);
-  const [value, loading, error] = useDocument(docRef);
+  const [isSubbed, setIsSubbed] = React.useState<boolean | null>(null);
   const [thinking, setThinking] = useState(false);
-  if (loading || thinking) {
+
+  async function UpdateSubStatus(action: 'Subscribe' | 'Unsubscribe') {
+    setThinking(true);
+    const analyticsColRef: CollectionReference = collection(
+      db,
+      `stores/${store_id}/analytics`
+    );
+    const docRef = doc(db, 'stores', store_id);
+    const subRef = doc(db, 'users', user_id, 'subscribes', store_id);
+    if (action === 'Subscribe') {
+      await runTransaction(db, async (transaction) => {
+        const storeDoc = await transaction.get(docRef);
+        if (!storeDoc.exists()) {
+          return;
+        }
+        const newSubs = storeDoc.data().subscription_count + 1;
+        transaction.update(docRef, { subscription_count: newSubs });
+      });
+      await setDoc(subRef, {
+        date: Timestamp.fromDate(new Date()),
+      });
+      await addDoc(analyticsColRef, {
+        city: city,
+        country: country,
+        created_at: Timestamp.fromDate(new Date()),
+        ip: ip,
+        region: region,
+        store_id: store_id,
+        type: 'subscribe',
+        user_id: user_id,
+      });
+    } else {
+      await runTransaction(db, async (transaction) => {
+        const storeDoc = await transaction.get(docRef);
+        if (!storeDoc.exists()) {
+          return;
+        }
+        const newSubs = storeDoc.data().subscription_count - 1;
+        transaction.update(docRef, { subscription_count: newSubs });
+      });
+      await addDoc(analyticsColRef, {
+        city: city,
+        country: country,
+        created_at: Timestamp.fromDate(new Date()),
+        ip: ip,
+        region: region,
+        store_id: store_id,
+        type: 'unsubscribe',
+        user_id: user_id,
+      });
+      await deleteDoc(subRef);
+    }
+    revalidate(`/store/${store_id}`);
+    setThinking(false);
+  }
+
+  React.useEffect(() => {
+    const getIsSubbed: Unsubscribe = async () => {
+      const docRef = doc(db, 'users', user_id, 'subscribes', store_id);
+      const unsubscribe = await onSnapshot(docRef, (snapshot) => {
+        if (!snapshot.exists()) {
+          setIsSubbed(false);
+        } else {
+          setIsSubbed(true);
+        }
+      });
+      return unsubscribe;
+    };
+    getIsSubbed();
+  }, []);
+
+  if (isSubbed === null || thinking) {
     return (
       <Button variant="ghost" className={full_width ? 'w-full' : ''}>
         <FontAwesomeIcon className="icon mr-2 h-4 w-4" icon={faSpinner} spin />{' '}
@@ -32,17 +118,15 @@ export const SubButton = ({
     );
   }
   let changeValue: 'Subscribe' | 'Unsubscribe' = 'Subscribe';
-  if (value?.exists()) {
+  if (isSubbed) {
     changeValue = 'Unsubscribe';
   }
   return (
     <Button
-      variant={!value?.exists() ? 'default' : 'outline'}
+      variant={!isSubbed ? 'default' : 'outline'}
       className={full_width ? 'w-full' : ''}
       onClick={async () => {
-        setThinking(true);
-        await UpdateSubStatus(changeValue, store, user_id);
-        setThinking(false);
+        await UpdateSubStatus(changeValue);
       }}
     >
       {changeValue}

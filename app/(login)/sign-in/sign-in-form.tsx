@@ -73,11 +73,10 @@ export function SignInForm({
       values.password
     );
     const redirectParam = searchParams.get('redirect');
-    const analyticsRef: CollectionReference = collection(db, 'analytics');
-    const analyticsDoc: DocumentReference = doc(analyticsRef);
-
-    await setDoc(analyticsDoc, {
-      type: 'user sign-in',
+    const eventsRef: CollectionReference = collection(db, `events`);
+    const eventsDoc: DocumentReference = doc(eventsRef);
+    await setDoc(eventsDoc, {
+      type: 'sign-in',
       user_id: user?.user.uid,
       country: country,
       city: city,

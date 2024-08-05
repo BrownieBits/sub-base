@@ -227,7 +227,14 @@ export default async function Store({ params }: Props) {
             />
           </section>
           <section className="flex w-full md:w-auto">
-            <SubsciberButton store={params.slug} full_width={true} />
+            <SubsciberButton
+              store_id={params.slug}
+              full_width={true}
+              country={country}
+              city={city}
+              region={region}
+              ip={ip}
+            />
           </section>
         </section>
 

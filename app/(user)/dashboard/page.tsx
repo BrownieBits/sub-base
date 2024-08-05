@@ -1,4 +1,6 @@
+import { HeroBanner } from '@/components/sb-ui/HeroBanner';
 import { Button } from '@/components/ui/button';
+import { Separator } from '@/components/ui/separator';
 import { db } from '@/lib/firebase';
 import { faStore } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -12,6 +14,8 @@ import { Metadata } from 'next';
 import { cookies } from 'next/headers';
 import Link from 'next/link';
 import { redirect } from 'next/navigation';
+import { LatestProduct } from './LatestProduct';
+import { StoreAnalytics } from './StoreAnalytics';
 
 async function getData(slug: { [key: string]: string } | undefined) {
   if (slug === undefined) {
@@ -82,6 +86,25 @@ export default async function Dashboard() {
           </p>
         </section>
       )}
+
+      <section>
+        <section className="w-full max-w-[3096px] mx-auto">
+          <section className="flex w-full justify-between items-center px-4 py-8 gap-4">
+            <h1>Dashboard</h1>
+          </section>
+          <HeroBanner page_slug="creator-dashboard" />
+        </section>
+        <Separator />
+        <section className="w-full max-w-[3096px] mx-auto flex gap-8 py-8">
+          <section className="flex-1 bg-layer-one border rounded">
+            <LatestProduct />
+          </section>
+          <section className="flex-1">
+            <StoreAnalytics />
+          </section>
+          <section className="flex-1 h-20 border rounded"></section>
+        </section>
+      </section>
     </>
   );
 }

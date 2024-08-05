@@ -3,49 +3,73 @@
 import { Button } from '@/components/ui/button';
 import { db } from '@/lib/firebase';
 import { faThumbsUp as faThumbsUpRegular } from '@fortawesome/free-regular-svg-icons';
-import { faThumbsUp } from '@fortawesome/free-solid-svg-icons';
+import { faSpinner, faThumbsUp } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
+  CollectionReference,
+  Timestamp,
+  Unsubscribe,
+  addDoc,
+  collection,
   deleteDoc,
   doc,
+  onSnapshot,
   runTransaction,
-  serverTimestamp,
   setDoc,
 } from 'firebase/firestore';
-import { useDocument } from 'react-firebase-hooks/firestore';
+import React from 'react';
 import { revalidate } from './actions';
 
 export const LikeIt = ({
-  product,
+  product_id,
   like_count,
   user_id,
+  store_id,
+  country,
+  city,
+  region,
+  ip,
 }: {
-  product: string;
+  product_id: string;
   like_count: number;
   user_id: string;
+  store_id: string;
+  country: string;
+  city: string;
+  region: string;
+  ip: string;
 }) => {
-  const docRef = doc(db, 'users', user_id, 'likes', product);
-  const [value, loading, error] = useDocument(docRef);
+  const [isLiked, setIsLiked] = React.useState<boolean | null>(null);
 
-  async function UpdateSubStatus(
-    action: 'Like' | 'Unlike',
-    product: string,
-    user_id: string
-  ) {
-    const docRef = doc(db, 'products', product);
-    const likeRef = doc(db, 'users', user_id, 'likes', product);
+  async function UpdateSubStatus(action: 'Like' | 'Unlike') {
+    const analyticsColRef: CollectionReference = collection(
+      db,
+      `stores/${store_id}/analytics`
+    );
+    const docRef = doc(db, 'products', product_id);
+    const likeRef = doc(db, 'users', user_id, 'likes', product_id);
     if (action === 'Like') {
       await runTransaction(db, async (transaction) => {
         const productDoc = await transaction.get(docRef);
         if (!productDoc.exists()) {
           return;
         }
-        const newSubs = productDoc.data().like_count + 1;
-        transaction.update(docRef, { like_count: newSubs });
+        const newLikes = productDoc.data().like_count + 1;
+        transaction.update(docRef, { like_count: newLikes });
       });
       await setDoc(likeRef, {
-        date: serverTimestamp(),
-        liked: true,
+        date: Timestamp.fromDate(new Date()),
+      });
+      await addDoc(analyticsColRef, {
+        city: city,
+        country: country,
+        created_at: Timestamp.fromDate(new Date()),
+        ip: ip,
+        product_id: product_id,
+        region: region,
+        store_id: store_id,
+        type: 'like',
+        user_id: user_id,
       });
     } else {
       await runTransaction(db, async (transaction) => {
@@ -53,25 +77,53 @@ export const LikeIt = ({
         if (!productDoc.exists()) {
           return;
         }
-        const newSubs = productDoc.data().like_count - 1;
-        transaction.update(docRef, { like_count: newSubs });
+        const newLikes = productDoc.data().like_count - 1;
+        transaction.update(docRef, { like_count: newLikes });
+      });
+      await addDoc(analyticsColRef, {
+        city: city,
+        country: country,
+        created_at: Timestamp.fromDate(new Date()),
+        ip: ip,
+        product_id: product_id,
+        region: region,
+        store_id: store_id,
+        type: 'unlike',
+        user_id: user_id,
       });
       await deleteDoc(likeRef);
     }
-    revalidate(product);
+    revalidate(product_id);
     return 'Success';
   }
 
-  if (loading) {
-    return <Button variant="ghost">Loading</Button>;
+  React.useEffect(() => {
+    const getIsLiked: Unsubscribe = async () => {
+      const docRef = doc(db, 'users', user_id, 'likes', product_id);
+      const unsubscribe = await onSnapshot(docRef, (snapshot) => {
+        if (!snapshot.exists()) {
+          setIsLiked(false);
+        } else {
+          setIsLiked(true);
+        }
+      });
+      return unsubscribe;
+    };
+    getIsLiked();
+  }, []);
+
+  if (isLiked === null) {
+    return (
+      <Button variant="ghost">
+        <FontAwesomeIcon className="icon mr-2 h-4 w-4" icon={faSpinner} spin />{' '}
+        Loading
+      </Button>
+    );
   }
 
-  if (!loading && !value?.exists()) {
+  if (!isLiked) {
     return (
-      <Button
-        variant="outline"
-        onClick={() => UpdateSubStatus('Like', product, user_id)}
-      >
+      <Button variant="outline" onClick={() => UpdateSubStatus('Like')}>
         <section>
           <FontAwesomeIcon
             className="icon pr-2 mr-2 h-4 w-4 border-r"
@@ -84,10 +136,7 @@ export const LikeIt = ({
   }
 
   return (
-    <Button
-      variant="outline"
-      onClick={() => UpdateSubStatus('Unlike', product, user_id)}
-    >
+    <Button variant="outline" onClick={() => UpdateSubStatus('Unlike')}>
       <section>
         <FontAwesomeIcon
           className="icon pr-2 mr-2 h-4 w-4 border-r"

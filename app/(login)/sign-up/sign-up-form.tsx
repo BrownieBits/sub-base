@@ -135,8 +135,8 @@ export function SignUpForm({
       'stores',
       values.displayName.toLowerCase()
     );
-    const analyticsRef: CollectionReference = collection(db, 'analytics');
-    const analyticsDoc: DocumentReference = doc(analyticsRef);
+    const eventsRef: CollectionReference = collection(db, 'events');
+    const eventsDoc: DocumentReference = doc(eventsRef);
     const batch = writeBatch(db);
     batch.set(storeRef, {
       name: values.displayName.toLowerCase(),
@@ -179,8 +179,8 @@ export function SignUpForm({
       phone: '',
       created_at: Timestamp.fromDate(new Date()),
     });
-    batch.set(analyticsDoc, {
-      type: 'user sign-up',
+    batch.set(eventsDoc, {
+      type: 'sign-up',
       user_id: newUser?.user.uid!,
       country: country,
       city: city,

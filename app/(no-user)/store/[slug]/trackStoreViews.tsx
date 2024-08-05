@@ -26,19 +26,25 @@ export default function TrackStoreViews(props: {
   ip: string;
 }) {
   const user_id = getCookie('user_id');
+  const default_store = getCookie('default_store');
 
   async function getAndSetAnalytics() {
-    const analyticsColRef: CollectionReference = collection(db, 'analytics');
+    const analyticsColRef: CollectionReference = collection(
+      db,
+      `stores/${default_store}/analytics`
+    );
+    const now = new Date();
+    const threeHoursAgo = new Date(now.getHours() - 3);
     const q = query(
       analyticsColRef,
       where('ip', '==', props.ip),
-      where('store_id', '==', props.store_id)
+      where('store_id', '==', props.store_id),
+      where('created_at', '<', Timestamp.fromDate(threeHoursAgo))
     );
     const querySnapshot = await getDocs(q);
     if (querySnapshot.empty) {
-      const analyticsRef: CollectionReference = collection(db, 'analytics');
       const storeRef: DocumentReference = doc(db, 'stores', props.store_id);
-      await addDoc(analyticsRef, {
+      await addDoc(analyticsColRef, {
         type: 'store_view',
         store_id: props.store_id,
         user_id: user_id,

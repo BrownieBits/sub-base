@@ -71,6 +71,10 @@ type Props = {
   created_at: Timestamp;
   view_count: number;
   track_inventory: boolean;
+  country: string;
+  city: string;
+  region: string;
+  ip: string;
 };
 
 export default function ProductDetailPage(props: Props) {
@@ -295,8 +299,13 @@ export default function ProductDetailPage(props: Props) {
 
           <div className="flex gap-2 justify-between pt-8">
             <LikeButton
-              product={props.product_id}
+              product_id={props.product_id}
               like_count={props.like_count}
+              store_id={props.store_id}
+              country={props.country}
+              city={props.city}
+              region={props.region}
+              ip={props.ip}
             />
             <Button variant="outline" asChild>
               <div>

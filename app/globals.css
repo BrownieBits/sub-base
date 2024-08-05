@@ -29,14 +29,14 @@
     --accent: 220 14.3% 95.9%;
     --accent-foreground: 220.9 39.3% 11%;
 
-    --destructive: 353 81% 36%;
-    --destructive-foreground: 353 81% 74%;
+    --destructive: 0 63% 31%;
+    --destructive-foreground: 0 93% 82%;
 
     --warning: 61 83% 44%;
     --warning-forground: 61 83% 14%;
 
-    --success: 140 89% 32%;
-    --success-foreground: 140 89% 62%;
+    --success: 144 61% 20%;
+    --success-foreground: 142 77% 73%;
 
     --border: 0 0% 80%;
     --input: 0 0% 80%;

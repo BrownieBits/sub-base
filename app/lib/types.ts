@@ -22,4 +22,7 @@ export type GridProduct = {
     store_id: string;
     created_at: Timestamp;
     id: string;
+    revenue?: number;
+    view_count?: number;
+
 }

@@ -34,7 +34,10 @@ export default function ProductCard({
     if (hoursDifference > 0) {
       return `${hoursDifference} Hour${hoursDifference > 1 ? 's' : ''}`;
     }
-    return `${minutesDifference} Month${minutesDifference > 1 ? 's' : ''}`;
+    if (minutesDifference > 10) {
+      return `${minutesDifference} Minutes`;
+    }
+    return `Just Now`;
   }
   return (
     <section className="flex flex-col w-full">
