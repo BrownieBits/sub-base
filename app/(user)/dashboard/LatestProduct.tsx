@@ -20,7 +20,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import React from 'react';
 
-export const LatestProduct = (props: {}) => {
+export const LatestProduct = (props: { user_id: string }) => {
   const [latestProduct, setLatestProduct] = React.useState<
     GridProduct | '' | null
   >(null);
@@ -30,6 +30,7 @@ export const LatestProduct = (props: {}) => {
       const q = query(
         productsRef,
         where('created_at', '!=', null),
+        where('owner_id', '==', props.user_id),
         orderBy('created_at', 'desc'),
         limit(1)
       );

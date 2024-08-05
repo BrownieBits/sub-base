@@ -60,6 +60,7 @@ export async function generateMetadata(): Promise<Metadata> {
 
 export default async function Dashboard() {
   const cookieStore = cookies();
+  const user_id = cookieStore.get('user_id');
   const default_store = cookieStore.get('default_store');
   const data: DocumentData = await getData(default_store);
 
@@ -97,7 +98,7 @@ export default async function Dashboard() {
         <Separator />
         <section className="w-full max-w-[3096px] mx-auto flex flex-col md:flex-row gap-8 py-8">
           <section className="flex-1 bg-layer-one border rounded">
-            <LatestProduct />
+            <LatestProduct user_id={user_id?.value!} />
           </section>
           <section className="flex-1">
             <StoreAnalytics />
