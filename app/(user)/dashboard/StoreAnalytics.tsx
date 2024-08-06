@@ -42,7 +42,13 @@ export const StoreAnalytics = (props: {}) => {
       const q = query(analyticsRef, where('created_at', '>', thirtyDaysAgo));
       const unsubscribe = await onSnapshot(q, (snapshot) => {
         if (snapshot.empty) {
-          setAnalytics(null);
+          const newAnalytics: Analytics = {
+            subscription_count: 0,
+            view_count: 0,
+            like_count: 0,
+            products: [],
+          };
+          setAnalytics(newAnalytics);
         } else {
           const newAnalytics: Analytics = {
             subscription_count: 0,
