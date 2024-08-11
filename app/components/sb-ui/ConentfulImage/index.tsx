@@ -5,18 +5,7 @@ const nextImageLoader = ({ src, width, quality }: any) => {
   return `${src}?${width}&q=${quality || 75}`;
 };
 
-type Props = {
-  src: string;
-  mobSrc?: string;
-  alt: string;
-  width: number;
-  height: number;
-  mobWidth?: number;
-  mobHeight?: number;
-  className?: string;
-};
-
-const ContentfulImage = (props: Props) => {
+const ContentfulImage = (props: any) => {
   // if (props.mobSrc !== undefined) {
   //   const common = { alt: props.alt, width: 800, height: 400 };
   //   const {
@@ -43,7 +32,7 @@ const ContentfulImage = (props: Props) => {
   //     </picture>
   //   );
   // }
-  return <Image {...props} />;
+  return <Image alt={props.alt} {...props} />;
 };
 
 export default ContentfulImage;
