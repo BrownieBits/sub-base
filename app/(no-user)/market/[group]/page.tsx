@@ -145,14 +145,14 @@ export default async function MarketplacePage({ params }: Props) {
 
   return (
     <section>
-      <section className="w-full max-w-[3096px] mx-auto">
-        <section className="flex w-full justify-between items-center px-4 py-8 gap-4">
+      <section className="w-full max-w-[2428px] mx-auto">
+        <section className="flex w-full justify-between items-center px-4 py-4 gap-4">
           <h1>{data.title}</h1>
         </section>
         <HeroBanner page_slug="creator-liked-items" />
       </section>
       <Separator />
-      <section className="w-full max-w-[3096px] mx-auto">
+      <section className="w-full max-w-[2428px] mx-auto">
         {products.length === 0 ? (
           <NoProducts />
         ) : (

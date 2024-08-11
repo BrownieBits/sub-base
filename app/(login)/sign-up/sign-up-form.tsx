@@ -47,8 +47,8 @@ const formSchema = z.object({
   displayName: z
     .string()
     .min(6, { message: 'Display Name must be 6 or more characters long' })
-    .max(18, {
-      message: 'Display Name must be no more than 18 characters long',
+    .max(32, {
+      message: 'Display Name must be no more than 32 characters long',
     })
     .refine(
       (value) => /^[a-zA-Z0-9_.-]+$/.test(value ?? ''),
@@ -68,9 +68,6 @@ const formSchema = z.object({
       password: z
         .string()
         .min(8, { message: 'Password must be 8 or more characters long' })
-        .max(32, {
-          message: 'Password must be no more than 32 characters long',
-        })
         .regex(new RegExp('.*[A-Z].*'), 'One uppercase character')
         .regex(new RegExp('.*[a-z].*'), 'One lowercase character')
         .regex(new RegExp('.*\\d.*'), 'One number')

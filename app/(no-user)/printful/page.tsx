@@ -33,8 +33,8 @@ export default function Printful() {
   }, []);
   return (
     <section>
-      <section className="w-full max-w-[3096px] mx-auto">
-        <section className="flex w-full justify-between items-center px-4 py-8 gap-4">
+      <section className="w-full max-w-[2428px] mx-auto">
+        <section className="flex w-full justify-between items-center px-4 py-4 gap-4">
           <h1>Printful</h1>
         </section>
       </section>

@@ -265,8 +265,8 @@ export default function EditForm(props: {
 
   return (
     <section>
-      <section className="w-full max-w-[2428px] mx-auto">
-        <section className="flex w-full justify-between items-center px-4 py-8 gap-4">
+      <section className="w-full max-w-[1754px] mx-auto">
+        <section className="flex w-full justify-between items-center px-4 py-4 gap-4">
           <h1>Preferences</h1>
           <div className="flex gap-4 items-center">
             {disabled ? (
@@ -286,7 +286,7 @@ export default function EditForm(props: {
         </section>
       </section>
       <Separator />
-      <section className="w-full max-w-[2428px] mx-auto">
+      <section className="w-full max-w-[1754px] mx-auto">
         <Form {...form}>
           <form
             onSubmit={form.handleSubmit(onSubmit)}

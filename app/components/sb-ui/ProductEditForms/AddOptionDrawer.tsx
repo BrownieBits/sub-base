@@ -105,7 +105,7 @@ export default function AddOptionDrawer(props: Props) {
         )}
       </DrawerTrigger>
       <DrawerContent>
-        <DrawerHeader className="flex flex-col justify-start items-start w-full max-w-[2428px] mx-auto">
+        <DrawerHeader className="flex flex-col justify-start items-start w-full max-w-[1754px] mx-auto">
           <DrawerTitle>Add Option</DrawerTitle>
           <DrawerDescription className="w-full">
             <Form {...addForm}>
@@ -154,7 +154,7 @@ export default function AddOptionDrawer(props: Props) {
             </Form>
           </DrawerDescription>
         </DrawerHeader>
-        <DrawerFooter className="w-full max-w-[2428px] mx-auto">
+        <DrawerFooter className="w-full max-w-[1754px] mx-auto">
           <section className="w-full flex justify-end gap-8">
             <DrawerClose>
               <Button variant="outline">Cancel</Button>

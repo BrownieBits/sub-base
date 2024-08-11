@@ -33,7 +33,6 @@ const formSchema = z.object({
   password: z
     .string()
     .min(8, { message: 'Password must be 8 or more characters long' })
-    .max(18, { message: 'Password must be no more than 18 characters long' })
     .regex(new RegExp('.*[A-Z].*'), 'One uppercase character')
     .regex(new RegExp('.*[a-z].*'), 'One lowercase character')
     .regex(new RegExp('.*\\d.*'), 'One number')

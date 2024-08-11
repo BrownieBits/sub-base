@@ -237,8 +237,8 @@ export default function Edit(props: {
 
   return (
     <section>
-      <section className="w-full max-w-[2428px] mx-auto">
-        <section className="flex w-full justify-between items-center px-4 pt-8 gap-4">
+      <section className="w-full max-w-[1754px] mx-auto">
+        <section className="flex w-full justify-between items-center px-4 pt-4 gap-4">
           <Breadcrumb>
             <BreadcrumbList>
               <BreadcrumbItem>
@@ -259,7 +259,7 @@ export default function Edit(props: {
             </BreadcrumbList>
           </Breadcrumb>
         </section>
-        <section className="flex w-full justify-between items-center px-4 pt-[10px] pb-8 gap-4">
+        <section className="flex w-full justify-between items-center px-4 pt-[10px] pb-4 gap-4">
           <h1>{props.name}</h1>
           <div className="flex gap-4 items-center">
             {disabled ? (
@@ -340,7 +340,7 @@ export default function Edit(props: {
         </section>
       </section>
       <Separator />
-      <section className="w-full max-w-[2428px] mx-auto">
+      <section className="w-full max-w-[1754px] mx-auto">
         <section className="flex flex-col px-4 pt-4 pb-8 w-full gap-8">
           <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)}>

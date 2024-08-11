@@ -36,8 +36,8 @@ export default function Integrations() {
   const user_id = cookieStore.get('user_id');
   return (
     <section>
-      <section className="w-full max-w-[3096px] mx-auto">
-        <section className="flex w-full justify-between items-center px-4 py-8 gap-4">
+      <section className="w-full max-w-[2428px] mx-auto">
+        <section className="flex w-full justify-between items-center px-4 py-4 gap-4">
           <h1>Integrations</h1>
           {/* <Button asChild variant="outline">
           <Link
@@ -53,7 +53,7 @@ export default function Integrations() {
         <HeroBanner page_slug="creator-integrations" />
       </section>
       <Separator />
-      <section className="w-full max-w-[3096px] mx-auto">
+      <section className="w-full max-w-[2428px] mx-auto">
         <Button asChild>
           <Link
             href={`https://www.printful.com/oauth/authorize?client_id=${process.env.NEXT_PUBLIC_PRINTFUL_CLIENT_ID}&state=${user_id?.value!}&redirect_url=https://${process.env.NEXT_PUBLIC_BASE_URL}/printful`}

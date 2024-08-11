@@ -31,8 +31,8 @@ export async function generateMetadata(): Promise<Metadata> {
 export default function Orders() {
   return (
     <section>
-      <section className="w-full max-w-[3096px] mx-auto">
-        <section className="flex w-full justify-between items-center px-4 py-8 gap-4">
+      <section className="w-full max-w-[2428px] mx-auto">
+        <section className="flex w-full justify-between items-center px-4 py-4 gap-4">
           <h1>Orders</h1>
           {/* <Button asChild variant="outline">
           <Link
@@ -48,7 +48,7 @@ export default function Orders() {
         <HeroBanner page_slug="creator-orders" />
       </section>
       <Separator />
-      <section className="w-full max-w-[3096px] mx-auto"></section>
+      <section className="w-full max-w-[2428px] mx-auto"></section>
     </section>
   );
 }

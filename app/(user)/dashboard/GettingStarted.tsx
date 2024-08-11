@@ -20,7 +20,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import React from 'react';
 
-export const LatestProduct = (props: {}) => {
+export const GettingStartedGuide = (props: {}) => {
   const [latestProduct, setLatestProduct] = React.useState<
     GridProduct | '' | null
   >(null);

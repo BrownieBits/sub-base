@@ -31,8 +31,8 @@ export async function generateMetadata(): Promise<Metadata> {
 export default function Press() {
   return (
     <section>
-      <section className="w-full max-w-[3096px] mx-auto">
-        <section className="flex w-full justify-between items-center px-4 py-8 gap-4">
+      <section className="w-full max-w-[2428px] mx-auto">
+        <section className="flex w-full justify-between items-center px-4 py-4 gap-4">
           <h1>Press</h1>
         </section>
         <HeroBanner page_slug="creator-press" />

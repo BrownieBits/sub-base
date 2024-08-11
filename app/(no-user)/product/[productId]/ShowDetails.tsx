@@ -157,7 +157,7 @@ export const ShowDetails = (props: {
             </Button>
           </DrawerTrigger>
           <DrawerContent>
-            <DrawerHeader className="w-full max-w-[3096px] mx-auto">
+            <DrawerHeader className="w-full max-w-[2428px] mx-auto">
               <DrawerTitle className="flex justify-between">
                 <h3>Product Details</h3>
                 <DrawerClose>

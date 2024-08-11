@@ -94,8 +94,8 @@ export default async function Products() {
   const data = await getData(default_store);
   return (
     <section>
-      <section className="w-full max-w-[3096px] mx-auto">
-        <section className="flex w-full justify-between items-center px-4 py-8 gap-4">
+      <section className="w-full max-w-[2428px] mx-auto">
+        <section className="flex w-full justify-between items-center px-4 py-4 gap-4">
           <h1>Products</h1>
           <AddProductButton copy="Add Product" variant="outline" />
         </section>
@@ -125,7 +125,7 @@ export default async function Products() {
         </section>
       </section>
       <Separator />
-      <section className="w-full max-w-[3096px] mx-auto">
+      <section className="w-full max-w-[2428px] mx-auto">
         {data.length! > 0 ? (
           <DataTable columns={columns} data={data!} />
         ) : (

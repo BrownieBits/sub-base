@@ -75,12 +75,12 @@ export const columns: ColumnDef<Product>[] = [
   },
   {
     accessorKey: 'images',
-    header: () => <div className="w-[60px]"></div>,
+    header: () => <div className="w-[60px] max-w-[60px]"></div>,
     cell: ({ row }) => {
       const imgs: string[] = row.getValue('images');
 
       return (
-        <section className="bg-layer-one border rounded flex jusitfy-center items-center aspect-square overflow-hidden w-[60px]">
+        <section className="bg-layer-one border rounded flex jusitfy-center items-center aspect-square overflow-hidden w-[60px] max-w-[60px]">
           <Image
             src={imgs[0]}
             width="60"
@@ -100,7 +100,7 @@ export const columns: ColumnDef<Product>[] = [
           <Button
             variant="ghost"
             onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
-            className="p-0 bg-none hover:bg-none"
+            className="p-0 bg-inherit hover:bg-inherit text-foreground"
           >
             Product
             <FontAwesomeIcon className="icon ml-[5px]" icon={faArrowDown} />
@@ -111,7 +111,7 @@ export const columns: ColumnDef<Product>[] = [
           <Button
             variant="ghost"
             onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
-            className="p-0 bg-none hover:bg-none"
+            className="p-0 bg-inherit hover:bg-inherit text-foreground"
           >
             Product
             <FontAwesomeIcon className="icon ml-[5px]" icon={faArrowUp} />
@@ -126,7 +126,7 @@ export const columns: ColumnDef<Product>[] = [
         >
           Product
           <FontAwesomeIcon
-            className="icon text-muted hover:text-foreground ml-[5px]"
+            className="icon text-muted-foreground hover:text-foreground ml-[5px]"
             icon={faArrowDown}
           />
         </Button>
@@ -141,7 +141,7 @@ export const columns: ColumnDef<Product>[] = [
           <Button
             variant="ghost"
             onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
-            className="p-0 bg-none hover:bg-none"
+            className="p-0 bg-inherit hover:bg-inherit text-foreground"
           >
             Type
             <FontAwesomeIcon className="icon ml-[5px]" icon={faArrowDown} />
@@ -152,7 +152,7 @@ export const columns: ColumnDef<Product>[] = [
           <Button
             variant="ghost"
             onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
-            className="p-0 bg-none hover:bg-none"
+            className="p-0 bg-inherit hover:bg-inherit text-foreground"
           >
             Type
             <FontAwesomeIcon className="icon ml-[5px]" icon={faArrowUp} />
@@ -167,7 +167,7 @@ export const columns: ColumnDef<Product>[] = [
         >
           Type
           <FontAwesomeIcon
-            className="icon text-muted hover:text-foreground ml-[5px]"
+            className="icon text-muted-foregroun hover:text-foreground ml-[5px]"
             icon={faArrowDown}
           />
         </Button>
@@ -182,7 +182,7 @@ export const columns: ColumnDef<Product>[] = [
           <Button
             variant="ghost"
             onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
-            className="p-0 bg-none hover:bg-none"
+            className="p-0 bg-inherit hover:bg-inherit text-foreground"
           >
             Status
             <FontAwesomeIcon className="icon ml-[5px]" icon={faArrowDown} />
@@ -193,7 +193,7 @@ export const columns: ColumnDef<Product>[] = [
           <Button
             variant="ghost"
             onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
-            className="p-0 bg-none hover:bg-none"
+            className="p-0 bg-inherit hover:bg-inherit text-foreground"
           >
             Status
             <FontAwesomeIcon className="icon ml-[5px]" icon={faArrowUp} />
@@ -208,7 +208,7 @@ export const columns: ColumnDef<Product>[] = [
         >
           Status
           <FontAwesomeIcon
-            className="icon text-muted hover:text-foreground ml-[5px]"
+            className="icon text-muted-foregroun hover:text-foreground ml-[5px]"
             icon={faArrowDown}
           />
         </Button>
@@ -234,7 +234,7 @@ export const columns: ColumnDef<Product>[] = [
           <Button
             variant="ghost"
             onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
-            className="p-0 bg-none hover:bg-none"
+            className="p-0 bg-inherit hover:bg-inherit text-foreground"
           >
             Units Sold
             <FontAwesomeIcon className="icon ml-[5px]" icon={faArrowDown} />
@@ -245,7 +245,7 @@ export const columns: ColumnDef<Product>[] = [
           <Button
             variant="ghost"
             onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
-            className="p-0 bg-none hover:bg-none"
+            className="p-0 bg-inherit hover:bg-inherit text-foreground"
           >
             Units Sold
             <FontAwesomeIcon className="icon ml-[5px]" icon={faArrowUp} />
@@ -260,7 +260,7 @@ export const columns: ColumnDef<Product>[] = [
         >
           Units Sold
           <FontAwesomeIcon
-            className="icon text-muted hover:text-foreground ml-[5px]"
+            className="icon text-muted-foregroun hover:text-foreground ml-[5px]"
             icon={faArrowDown}
           />
         </Button>
@@ -275,7 +275,7 @@ export const columns: ColumnDef<Product>[] = [
           <Button
             variant="ghost"
             onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
-            className="p-0 bg-none hover:bg-none"
+            className="p-0 bg-inherit hover:bg-inherit text-foreground"
           >
             Views
             <FontAwesomeIcon className="icon ml-[5px]" icon={faArrowDown} />
@@ -286,7 +286,7 @@ export const columns: ColumnDef<Product>[] = [
           <Button
             variant="ghost"
             onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
-            className="p-0 bg-none hover:bg-none"
+            className="p-0 bg-inherit hover:bg-inherit text-foreground"
           >
             Views
             <FontAwesomeIcon className="icon ml-[5px]" icon={faArrowUp} />
@@ -301,7 +301,7 @@ export const columns: ColumnDef<Product>[] = [
         >
           Views
           <FontAwesomeIcon
-            className="icon text-muted hover:text-foreground ml-[5px]"
+            className="icon text-muted-foregroun hover:text-foreground ml-[5px]"
             icon={faArrowDown}
           />
         </Button>
@@ -316,7 +316,7 @@ export const columns: ColumnDef<Product>[] = [
           <Button
             variant="ghost"
             onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
-            className="p-0 bg-none hover:bg-none"
+            className="p-0 bg-inherit hover:bg-inherit text-foreground"
           >
             Likes
             <FontAwesomeIcon className="icon ml-[5px]" icon={faArrowDown} />
@@ -327,7 +327,7 @@ export const columns: ColumnDef<Product>[] = [
           <Button
             variant="ghost"
             onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
-            className="p-0 bg-none hover:bg-none"
+            className="p-0 bg-inherit hover:bg-inherit text-foreground"
           >
             Likes
             <FontAwesomeIcon className="icon ml-[5px]" icon={faArrowUp} />
@@ -342,7 +342,7 @@ export const columns: ColumnDef<Product>[] = [
         >
           Likes
           <FontAwesomeIcon
-            className="icon text-muted hover:text-foreground ml-[5px]"
+            className="icon text-muted-foregroun hover:text-foreground ml-[5px]"
             icon={faArrowDown}
           />
         </Button>
@@ -357,7 +357,7 @@ export const columns: ColumnDef<Product>[] = [
           <Button
             variant="ghost"
             onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
-            className="p-0 bg-none hover:bg-none"
+            className="p-0 bg-inherit hover:bg-inherit text-foreground"
           >
             Revenue
             <FontAwesomeIcon className="icon ml-[5px]" icon={faArrowDown} />
@@ -368,7 +368,7 @@ export const columns: ColumnDef<Product>[] = [
           <Button
             variant="ghost"
             onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
-            className="p-0 bg-none hover:bg-none"
+            className="p-0 bg-inherit hover:bg-inherit text-foreground"
           >
             Revenue
             <FontAwesomeIcon className="icon ml-[5px]" icon={faArrowUp} />
@@ -383,7 +383,7 @@ export const columns: ColumnDef<Product>[] = [
         >
           Revenue
           <FontAwesomeIcon
-            className="icon text-muted hover:text-foreground ml-[5px]"
+            className="icon text-muted-foregroun hover:text-foreground ml-[5px]"
             icon={faArrowDown}
           />
         </Button>

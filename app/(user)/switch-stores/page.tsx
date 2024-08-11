@@ -111,15 +111,15 @@ export default async function SwitchStores() {
 
   return (
     <>
-      <section className="w-full max-w-[3096px] mx-auto">
-        <section className="flex w-full justify-between items-center px-4 py-8 gap-4">
+      <section className="w-full max-w-[1754px] mx-auto">
+        <section className="flex w-full justify-between items-center px-4 py-4 gap-4">
           <h1>Stores</h1>
           <NewStoreForm userID={user_id?.value!} />
         </section>
         <HeroBanner page_slug="creator-switch-store" />
       </section>
       <Separator />
-      <section className="w-full max-w-[3096px] mx-auto">
+      <section className="w-full max-w-[1754px] mx-auto">
         <section className="flex flex-col px-4 pt-4 pb-8 w-full gap-8">
           <section className="flex flex-col md:flex-row gap-8">
             <aside className="w-full md:w-[400px] lg:w-[600px]">

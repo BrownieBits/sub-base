@@ -31,8 +31,8 @@ export async function generateMetadata(): Promise<Metadata> {
 export default function ContentLibrary() {
   return (
     <section>
-      <section className="w-full max-w-[3096px] mx-auto">
-        <section className="flex w-full justify-between items-center px-4 py-8 gap-4">
+      <section className="w-full max-w-[2428px] mx-auto">
+        <section className="flex w-full justify-between items-center px-4 py-4 gap-4">
           <h1>Content Library</h1>
           {/* <Button asChild variant="outline">
           <Link
@@ -48,7 +48,7 @@ export default function ContentLibrary() {
         <HeroBanner page_slug="creator-content-library" />
       </section>
       <Separator />
-      <section className="w-full max-w-[3096px] mx-auto"></section>
+      <section className="w-full max-w-[2428px] mx-auto"></section>
     </section>
   );
 }

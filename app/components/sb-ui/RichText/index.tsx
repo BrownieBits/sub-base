@@ -1,7 +1,7 @@
-import { BLOCKS, INLINES, MARKS } from '@contentful/rich-text-types';
-import { documentToReactComponents } from '@contentful/rich-text-react-renderer';
-import Link from 'next/link';
 import ContentfulImage from '@/components/sb-ui/ConentfulImage';
+import { documentToReactComponents } from '@contentful/rich-text-react-renderer';
+import { BLOCKS, INLINES, MARKS } from '@contentful/rich-text-types';
+import Link from 'next/link';
 
 const options = {
   renderMark: {
@@ -70,18 +70,50 @@ const options = {
     [BLOCKS.EMBEDDED_ASSET]: (node: any) => {
       return (
         <ContentfulImage
-          src={node.data.target.fields.file.url}
+          src={`https:${node.data.target.fields.file.url}`}
           height={node.data.target.fields.file.details.image.height}
           width={node.data.target.fields.file.details.image.width}
           alt={node.data.target.fields.title}
-          className="h-20 w-20"
+          // className="h-20 w-20"
         />
       );
     },
   },
 };
 
-const RichText = ({ content }: any) => {
+const RichText = ({
+  content,
+  summary,
+  maxChar,
+}: {
+  content: any;
+  summary?: boolean;
+  maxChar?: number;
+}) => {
+  if (summary) {
+    const strings = content.content.map((item: any) => {
+      if (item.nodeType === 'embedded-asset-block') {
+        return;
+      }
+      return item.content[0].value;
+    });
+    if (maxChar) {
+      return (
+        <>
+          {strings.join(' ').length < maxChar
+            ? strings.join(' ')
+            : `${strings.join(' ').substring(0, maxChar)}...`}
+        </>
+      );
+    }
+    return (
+      <>
+        {strings.join(' ').length < 256
+          ? strings.join(' ')
+          : `${strings.join(' ').substring(0, 256)}...`}
+      </>
+    );
+  }
   return <>{documentToReactComponents(content, options)}</>;
 };
 

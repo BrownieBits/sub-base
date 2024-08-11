@@ -131,7 +131,7 @@ export default async function ProductPage({ params }: Props) {
   if (data.error === 'No Product') {
     return (
       <section>
-        <section className="flex w-full justify-between items-center px-4 py-8 gap-4">
+        <section className="flex w-full justify-between items-center px-4 py-4 gap-4">
           <h1>No Such Product</h1>
         </section>
       </section>

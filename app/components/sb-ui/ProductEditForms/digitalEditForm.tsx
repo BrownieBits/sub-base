@@ -453,9 +453,9 @@ export default function DigitalEditForm(props: Props) {
 
   return (
     <section className="relative">
-      <section className="w-full max-w-[2428px] mx-auto">
+      <section className="w-full max-w-[1754px] mx-auto">
         {props.name !== undefined && (
-          <section className="flex w-full justify-between items-center px-4 pt-8 gap-4">
+          <section className="flex w-full justify-between items-center px-4 pt-4 gap-4">
             <Breadcrumb>
               <BreadcrumbList>
                 <BreadcrumbItem>
@@ -473,8 +473,8 @@ export default function DigitalEditForm(props: Props) {
         )}
         <section
           className={cn('flex w-full justify-between items-center px-4 gap-4', {
-            'pt-[10px] pb-8 ': props.name !== undefined,
-            'py-8': props.name === undefined,
+            'pt-[10px] pb-4 ': props.name !== undefined,
+            'py-4': props.name === undefined,
           })}
         >
           {props.name !== undefined ? (
@@ -530,7 +530,7 @@ export default function DigitalEditForm(props: Props) {
         </section>
       </section>
       <Separator />
-      <section className="w-full max-w-[2428px] mx-auto relative">
+      <section className="w-full max-w-[1754px] mx-auto relative">
         <Form {...form}>
           <form
             onSubmit={form.handleSubmit(onSubmit)}

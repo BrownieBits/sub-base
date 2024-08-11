@@ -87,7 +87,7 @@ export default async function Home() {
 
   return (
     <main>
-      <section className="w-full max-w-[3096px] mx-auto">
+      <section className="w-full max-w-[2428px] mx-auto">
         {items.map((item: any, i: number) => {
           if (item.sys.contentType.sys.id === 'videoBlock') {
             return (

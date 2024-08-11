@@ -1,4 +1,3 @@
-import PageViewAnalytics from '@/components/sb-ui/AnalyticsPageView';
 import { DashboardSideNav } from '@/components/sb-ui/DashboardSideNav';
 import { MarketingNav } from '../components/sb-ui/MarketingNav';
 
@@ -22,7 +21,6 @@ export default function NoUserLayout({
           {children}
         </main>
       </section>
-      <PageViewAnalytics options={{}} />
     </section>
   );
 }
