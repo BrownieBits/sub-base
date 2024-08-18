@@ -1,6 +1,11 @@
 import { HeroBanner } from '@/components/sb-ui/HeroBanner';
+import { Button } from '@/components/ui/button';
 import { Separator } from '@/components/ui/separator';
 import { Metadata } from 'next';
+import { cookies, headers } from 'next/headers';
+import Link from 'next/link';
+import { Suspense } from 'react';
+import CartDetailPage from './CartDetailPage';
 
 export async function generateMetadata(): Promise<Metadata> {
   return {
@@ -28,16 +33,35 @@ export async function generateMetadata(): Promise<Metadata> {
   };
 }
 
-export default function Cart() {
+export default async function Cart() {
+  const cookieStore = cookies();
+  const cartId = cookieStore.get(`cart_id`);
+  const country = (headers().get('x-geo-country') as string) || 'US';
+  const city = (headers().get('x-geo-city') as string) || 'Los Angeles';
+  const region = (headers().get('x-geo-region') as string) || 'CA';
+  const ip = (headers().get('x-ip') as string) || '0.0.0.0';
+
   return (
-    <section>
-      <section className="w-full max-w-[2428px] mx-auto">
-        <section className="flex w-full justify-between items-center px-4 py-4 gap-4">
-          <h1>Cart</h1>
+    <Suspense fallback={<>Boop</>}>
+      <section>
+        <section className="w-full max-w-[2428px] mx-auto">
+          <section className="flex w-full justify-between items-center px-4 py-4 gap-4">
+            <h1>Cart</h1>
+            <Button asChild>
+              <Link href="/checkout">Checkout</Link>
+            </Button>
+          </section>
+          <HeroBanner page_slug="creator-cart" />
         </section>
-        <HeroBanner page_slug="creator-cart" />
+        <Separator />
+        <CartDetailPage
+          cart_id={cartId?.value!}
+          country={country}
+          city={city}
+          region={region}
+          ip={ip}
+        />
       </section>
-      <Separator />
-    </section>
+    </Suspense>
   );
 }

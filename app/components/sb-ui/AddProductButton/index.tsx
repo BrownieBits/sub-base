@@ -52,12 +52,12 @@ export const AddProductButton = (props: {
 
       <AlertDialogContent>
         <AlertDialogHeader>
-          <AlertDialogTitle className="w-full flex justify-between">
+          <AlertDialogHeader className="w-full flex justify-between">
             <AlertDialogTitle>Choose product type to add</AlertDialogTitle>
             <AlertDialogCancel className="border-0" asChild>
               <FontAwesomeIcon className="icon h-4 w-4" icon={faXmark} />
             </AlertDialogCancel>
-          </AlertDialogTitle>
+          </AlertDialogHeader>
           <AlertDialogDescription>
             <section className="w-full flex gap-8 pt-8">
               <AlertDialogTrigger asChild>

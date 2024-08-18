@@ -14,7 +14,7 @@ export const DashboardNav = () => {
     <nav className="flex items-center justify-between sticky px-4 h-[56px] top-0 z-10 overflow-auto border-r-[1px] bg-layer-one border-b-[1px] border-b-border">
       <div className="flex gap-4">
         <Sheet>
-          <SheetTrigger className="flex xl:hidden">
+          <SheetTrigger className="flex xl:hidden" asChild>
             <Button
               variant="outline"
               size="sm"

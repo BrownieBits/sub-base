@@ -685,6 +685,7 @@ export default function SelfEditForm(props: Props) {
           sku: form.getValues('sku'),
           revenue: 0,
           view_count: 0,
+          service_percent: 0.1,
         });
         uploadVariants.map(
           (

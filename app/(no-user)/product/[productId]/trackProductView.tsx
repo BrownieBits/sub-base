@@ -67,7 +67,7 @@ export default function TrackProductViews(props: {
           return;
         }
         const newSubs = productDoc.data().view_count + 1;
-        transaction.update(productRef, { view_count: newSubs });
+        await transaction.update(productRef, { view_count: newSubs });
       });
     }
   }

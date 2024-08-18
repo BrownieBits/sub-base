@@ -17,16 +17,26 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
-import { analytics } from '@/lib/firebase';
+import { analytics, db } from '@/lib/firebase';
 import { cn } from '@/lib/utils';
-import { faFlag, faShare } from '@fortawesome/free-solid-svg-icons';
+import { faFlag, faShare, faSpinner } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { getCookie } from 'cookies-next';
 import { logEvent } from 'firebase/analytics';
-import { Timestamp } from 'firebase/firestore';
+import {
+  CollectionReference,
+  DocumentReference,
+  Timestamp,
+  addDoc,
+  collection,
+  doc,
+  runTransaction,
+} from 'firebase/firestore';
 import Link from 'next/link';
 import React from 'react';
 import { useForm } from 'react-hook-form';
+import { toast } from 'sonner';
 import { z } from 'zod';
 import ProductImages from './ProductImages';
 import { ShowDetails } from './ShowDetails';
@@ -78,6 +88,7 @@ type Props = {
 };
 
 export default function ProductDetailPage(props: Props) {
+  const [thinking, setThinking] = React.useState<boolean>(false);
   const [maxQunaitity, setMaxQunaitity] = React.useState<number>();
   const [selectedOptions, setSelectedOptions] = React.useState<string[]>([]);
   const [price, setPrice] = React.useState<number>(0.0);
@@ -86,10 +97,56 @@ export default function ProductDetailPage(props: Props) {
     resolver: zodResolver(formSchema),
   });
 
-  async function verifyOptions() {}
-
   async function onSubmit() {
-    console.log('cool beans');
+    setThinking(true);
+    const userID = getCookie('user_id');
+    const cartID = getCookie('cart_id');
+    const quantity = form.getValues('quantity') as number;
+    let docID = props.product_id;
+    if (props.options.length > 0) {
+      docID += `_${selectedOptions.join('_')}`;
+    }
+    const cartItemRef: DocumentReference = doc(
+      db,
+      `carts/${cartID}/items`,
+      docID
+    );
+    await runTransaction(db, async (transaction) => {
+      const cartItemDoc = await transaction.get(cartItemRef);
+      if (!cartItemDoc.exists()) {
+        transaction.set(cartItemRef, {
+          quantity: quantity,
+          options: selectedOptions,
+          store_id: props.store_id,
+          created_at: Timestamp.fromDate(new Date()),
+        });
+      } else {
+        const newQuantity = cartItemDoc.data()?.quantity + quantity;
+        await transaction.update(cartItemRef, { quantity: newQuantity });
+      }
+    });
+
+    const analyticsColRef: CollectionReference = collection(
+      db,
+      `stores/${props.store_id}/analytics`
+    );
+    await addDoc(analyticsColRef, {
+      type: 'cart_add',
+      product_id: props.product_id,
+      quantity: quantity,
+      options: selectedOptions,
+      store_id: props.store_id,
+      user_id: userID != undefined ? userID : null,
+      country: props.country,
+      city: props.city,
+      region: props.region,
+      ip: props.ip,
+      created_at: Timestamp.fromDate(new Date()),
+    });
+    toast.success(`${props.product_name} Added to Cart!`, {
+      description: `You have added ${quantity}${selectedOptions.length > 0 ? ' ' : ''}${selectedOptions.join(' ')} ${props.product_name}${quantity > 1 ? 's' : ''} to your cart!`,
+    });
+    setThinking(false);
   }
 
   async function onOptionChange(event: string, index: number) {
@@ -282,13 +339,26 @@ export default function ProductDetailPage(props: Props) {
             <>
               {props.options.length == 0 ||
               (props.options.length > 0 && !selectedOptions.includes('')) ? (
-                <Button
-                  type="submit"
-                  onClick={form.handleSubmit(onSubmit)}
-                  className="mt-8"
-                >
-                  Add To Cart
-                </Button>
+                <>
+                  {thinking ? (
+                    <Button variant="outline" className="mt-8">
+                      <FontAwesomeIcon
+                        className="icon mr-2 h-4 w-4"
+                        icon={faSpinner}
+                        spin
+                      />
+                      Adding
+                    </Button>
+                  ) : (
+                    <Button
+                      type="submit"
+                      onClick={form.handleSubmit(onSubmit)}
+                      className="mt-8"
+                    >
+                      Add To Cart
+                    </Button>
+                  )}
+                </>
               ) : (
                 <Button variant="outline" className="mt-8">
                   Select Options

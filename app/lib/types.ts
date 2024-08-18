@@ -24,5 +24,4 @@ export type GridProduct = {
     id: string;
     revenue?: number;
     view_count?: number;
-
 }
