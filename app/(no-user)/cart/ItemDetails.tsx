@@ -37,61 +37,65 @@ import { Item } from './types';
 type Props = {
   cart_id: string;
   item: Item;
+  index: number;
+  updateQuantity: (store: string, index: number, item: Item) => void;
+  removeItem: (store: string, index: number) => void;
 };
 const formSchema = z.object({
   quantity: z.string(),
 });
 
-export default function ItemDetails({ item, cart_id }: Props) {
+export default function ItemDetails(props: Props) {
   const [selectableQuantity, setSelectableQuantity] = React.useState<string[]>(
     []
   );
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      quantity: item.quantity.toString(),
+      quantity: props.item.quantity.toString(),
     },
   });
 
   async function onSubmit() {}
   async function deleteItem() {
-    let cart_item_id = item.id;
-    if (item.options.length > 0) {
-      cart_item_id = `${item.id}_${item.options.join('_')}`;
+    let cart_item_id = props.item.id;
+    if (props.item.options.length > 0) {
+      cart_item_id = `${props.item.id}_${props.item.options.join('_')}`;
     }
     const itemRef: DocumentReference = doc(
       db,
       'carts',
-      cart_id,
+      props.cart_id,
       'items',
       cart_item_id
     );
-    const cartRef: DocumentReference = doc(db, 'carts', cart_id);
+    const cartRef: DocumentReference = doc(db, 'carts', props.cart_id);
     const batch = writeBatch(db);
     batch.delete(itemRef);
     batch.update(cartRef, {
       updated_at: Timestamp.fromDate(new Date()),
     });
     await batch.commit();
+    props.removeItem(props.item.store_id, props.index);
     toast.success('Product Removed', {
-      description: `You removed ${item.name} ${item.options.join(' ')}`,
+      description: `You removed ${props.item.name} ${props.item.options.join(' ')}`,
     });
     revalidate();
   }
 
   async function onOptionChange(event: string) {
-    let cart_item_id = item.id;
-    if (item.options.length > 0) {
-      cart_item_id = `${item.id}_${item.options.join('_')}`;
+    let cart_item_id = props.item.id;
+    if (props.item.options.length > 0) {
+      cart_item_id = `${props.item.id}_${props.item.options.join('_')}`;
     }
     const itemRef: DocumentReference = doc(
       db,
       'carts',
-      cart_id,
+      props.cart_id,
       'items',
       cart_item_id
     );
-    const cartRef: DocumentReference = doc(db, 'carts', cart_id);
+    const cartRef: DocumentReference = doc(db, 'carts', props.cart_id);
     const batch = writeBatch(db);
     batch.update(itemRef, {
       quantity: parseInt(event),
@@ -100,36 +104,37 @@ export default function ItemDetails({ item, cart_id }: Props) {
       updated_at: Timestamp.fromDate(new Date()),
     });
     await batch.commit();
+    props.item.quantity = parseInt(event);
+    props.updateQuantity(props.item.store_id, props.index, props.item);
     toast.success('Product Quantity Updated', {
-      description: `You updated the quantity of ${item.name} ${item.options.join(' ')}`,
+      description: `You updated the quantity of ${props.item.name} ${props.item.options.join(' ')}`,
     });
     revalidate();
   }
 
   React.useEffect(() => {
-    let selectable = Array.from({ length: item.inventory }, (_, i) =>
+    let selectable = Array.from({ length: props.item.inventory }, (_, i) =>
       (i + 1).toString()
     );
-    if (!item.track_inventory) {
+    if (!props.item.track_inventory) {
       selectable = Array.from({ length: 999 }, (_, i) => (i + 1).toString());
     }
-    console.log(item.inventory, item.track_inventory, selectable);
     setSelectableQuantity(selectable);
   }, []);
   return (
     <section className="w-full flex flex-col md:flex-row gap-4">
       <section className="flex-1 w-full flex gap-4">
-        {item.images.length > 0 && (
+        {props.item.images.length > 0 && (
           <section>
             <Link
-              href={`/product/${item.id}`}
+              href={`/product/${props.item.id}`}
               className="aspect-square w-[100px] flex justify-center items-center bg-layer-one border rounded overflow-hidden group"
             >
               <Image
-                src={item.images[0]}
+                src={props.item.images[0]}
                 width="300"
                 height="300"
-                alt={item.name}
+                alt={props.item.name}
                 className="flex w-full"
               />
             </Link>
@@ -137,30 +142,31 @@ export default function ItemDetails({ item, cart_id }: Props) {
         )}
         <section className="w-full flex-1 flex flex-col">
           <p>
-            <b>{item.name}</b>
+            <b>{props.item.name}</b>
           </p>
           <p className="text-sm text-muted-foreground pb-2">
-            {item.product_type}
+            {props.item.product_type}
           </p>
-          <p>{item.options.join(', ')}</p>
+          <p>{props.item.options.join(', ')}</p>
         </section>
       </section>
       <section className="w-full md:w-auto flex flex-row-reverse md:flex-col justify-between items-end gap-4">
         <section className="flex flex-col">
-          {item.compare_at > 0 && item.compare_at < item.price ? (
+          {props.item.compare_at > 0 &&
+          props.item.compare_at < props.item.price ? (
             <>
               <p className="text-destructive line-through">
                 {new Intl.NumberFormat('en-US', {
                   style: 'currency',
-                  currency: item.currency,
-                }).format(item.price)}
+                  currency: props.item.currency,
+                }).format(props.item.price)}
               </p>
               <p>
                 <b>
                   {new Intl.NumberFormat('en-US', {
                     style: 'currency',
-                    currency: item.currency,
-                  }).format(item.compare_at)}
+                    currency: props.item.currency,
+                  }).format(props.item.compare_at)}
                 </b>
               </p>
             </>
@@ -169,8 +175,8 @@ export default function ItemDetails({ item, cart_id }: Props) {
               <b>
                 {new Intl.NumberFormat('en-US', {
                   style: 'currency',
-                  currency: item.currency,
-                }).format(item.price)}
+                  currency: props.item.currency,
+                }).format(props.item.price)}
               </b>
             </p>
           )}

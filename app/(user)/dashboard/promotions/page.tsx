@@ -9,21 +9,21 @@ import {
   collection,
   getDocs,
   query,
-  where,
 } from 'firebase/firestore';
 import { Metadata } from 'next';
 import { cookies } from 'next/headers';
-import { redirect } from 'next/navigation';
 import { columns } from './DataColumns';
-import NewPromotionForm from './NewPromotionForm';
 import { NoPromotions } from './NoPromotions';
+import { NewPromotionButton } from './newPromotionButton';
 
-async function getData(slug: { [key: string]: string } | undefined) {
-  if (slug === undefined) {
-    redirect(`sign-in`);
-  }
-  const promotionsRef: CollectionReference = collection(db, 'promotions');
-  const q = query(promotionsRef, where('store_id', '==', slug.value));
+async function getData(store_id: string) {
+  const promotionsRef: CollectionReference = collection(
+    db,
+    'stores',
+    store_id,
+    'promotions'
+  );
+  const q = query(promotionsRef);
   const promotionsData: QuerySnapshot<DocumentData, DocumentData> =
     await getDocs(q);
 
@@ -76,13 +76,13 @@ export default async function Promotions() {
   const cookieStore = cookies();
   const user_id = cookieStore.get('user_id');
   const default_store = cookieStore.get('default_store');
-  const data = await getData(default_store);
+  const data = await getData(default_store?.value!);
   return (
     <section>
       <section className="w-full max-w-[2428px] mx-auto">
         <section className="flex w-full justify-between items-center px-4 py-4 gap-4">
           <h1>Promotions</h1>
-          <NewPromotionForm displayName={default_store?.value!} />
+          <NewPromotionButton text="Add Promotion" variant="outline" />
         </section>
         <HeroBanner page_slug="creator-promotions" />
       </section>

@@ -1,5 +1,4 @@
-import { Button } from '@/components/ui/button';
-import Link from 'next/link';
+import { NewPromotionButton } from './newPromotionButton';
 
 export const NoPromotions = () => {
   return (
@@ -19,12 +18,7 @@ export const NoPromotions = () => {
       <p className="mb-8">
         Simple copy about creating promotions and making money
       </p>
-      <Button asChild variant="outline">
-        <Link href="/dashboard/promotions/new" aria-label="Create Promotion">
-          <i className="mr-2 h-4 w-4 fa-solid fa-circle-plus text-primary"></i>
-          Create Promotion
-        </Link>
-      </Button>
+      <NewPromotionButton text="Add Promotion" />
     </section>
   );
 };

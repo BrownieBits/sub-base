@@ -25,6 +25,8 @@ type Props = {
   cart_id: string;
   store_id: string;
   items: Item[];
+  updateQuantity: (store: string, index: number, item: Item) => void;
+  removeItem: (store: string, index: number) => void;
 };
 
 export default function StoreItems(props: Props) {
@@ -61,11 +63,14 @@ export default function StoreItems(props: Props) {
         </p>
       </Link>
       <Separator />
-      <section className="w-full flex gap-4 p-4">
-        {props.items.map((item: Item) => (
+      <section className="w-full flex flex-col gap-4 p-4">
+        {props.items.map((item: Item, index: number) => (
           <ItemDetails
             item={item}
             cart_id={props.cart_id}
+            index={index}
+            updateQuantity={props.updateQuantity}
+            removeItem={props.removeItem}
             key={`item-${item.id}`}
           />
         ))}

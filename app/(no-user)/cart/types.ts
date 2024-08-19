@@ -10,5 +10,6 @@ export type Item = {
     inventory: number;
     track_inventory: boolean;
     product_type: string;
+    service_percent: number;
     name: string;
 };

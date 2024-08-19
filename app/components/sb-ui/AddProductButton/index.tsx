@@ -52,9 +52,9 @@ export const AddProductButton = (props: {
 
       <AlertDialogContent>
         <AlertDialogHeader>
-          <AlertDialogHeader className="w-full flex justify-between">
+          <AlertDialogHeader className="w-full flex flex-row items-center justify-between">
             <AlertDialogTitle>Choose product type to add</AlertDialogTitle>
-            <AlertDialogCancel className="border-0" asChild>
+            <AlertDialogCancel className="border-0 p-0 m-0" asChild>
               <FontAwesomeIcon className="icon h-4 w-4" icon={faXmark} />
             </AlertDialogCancel>
           </AlertDialogHeader>
@@ -71,10 +71,10 @@ export const AddProductButton = (props: {
                     className="flex flex-col items-center group"
                   >
                     <FontAwesomeIcon
-                      className="icon pb-4 text-6xl group-hover:text-primary"
+                      className="icon pb-4 text-6xl text-foreground group-hover:text-primary"
                       icon={faCloudArrowDown}
                     />
-                    <p className="text-xs group-hover:text-foreground">
+                    <p className="text-xs text-foreground">
                       <b>Digital Product</b>
                     </p>
                   </Link>
@@ -91,10 +91,10 @@ export const AddProductButton = (props: {
                     className="flex flex-col items-center group"
                   >
                     <FontAwesomeIcon
-                      className="icon pb-4 text-6xl group-hover:text-primary"
+                      className="icon pb-4 text-6xl text-foreground group-hover:text-primary"
                       icon={faImagePortrait}
                     />
-                    <p className="text-xs group-hover:text-foreground">
+                    <p className="text-xs text-foreground">
                       <b>My Own Product</b>
                     </p>
                   </Link>

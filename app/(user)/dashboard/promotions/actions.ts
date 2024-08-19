@@ -1,31 +1,14 @@
 'use server';
 
-import { db } from "@/lib/firebase";
-import { deleteDoc, doc, updateDoc } from "firebase/firestore";
 import { revalidatePath } from 'next/cache';
+import { redirect } from "next/navigation";
 
 export async function revalidate() {
     'use server';
     revalidatePath(`/dashboard/promotions`);
 }
 
-export async function ChangeStatus(action: string | boolean, id: string, item: 'status' | 'show') {
-    'use server';
-    const docRef = doc(db, 'promotions', id);
-    if (action === 'Delete') {
-        await deleteDoc(docRef);
-        return 'Success';
-    }
-    if (item === 'status') {
-        await updateDoc(docRef, {
-            status: action,
-        });
-    } else {
-        await updateDoc(docRef, {
-            show_in_banner: action,
-        });
-    }
-
-    revalidatePath(`/dashboard/promotions`);
-    return 'Success';
+export async function goTo(url: string) {
+    redirect(url);
 }
+

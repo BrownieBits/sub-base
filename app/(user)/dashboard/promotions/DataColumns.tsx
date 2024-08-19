@@ -2,6 +2,7 @@
 
 import { Button } from '@/components/ui/button';
 import { Switch } from '@/components/ui/switch';
+import { db } from '@/lib/firebase';
 import {
   faArrowDown,
   faArrowUp,
@@ -9,7 +10,9 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { ColumnDef } from '@tanstack/react-table';
-import { ChangeStatus } from './actions';
+import { getCookie } from 'cookies-next';
+import { deleteDoc, doc, updateDoc } from 'firebase/firestore';
+import { revalidate } from './actions';
 
 export type Promotion = {
   id: string;
@@ -23,6 +26,30 @@ export type Promotion = {
   status: 'Active' | 'Inactive';
   store_id: string;
 };
+
+export async function ChangeStatus(
+  action: string | boolean,
+  id: string,
+  item: 'status' | 'show'
+) {
+  const store_id = getCookie('default_store');
+  const docRef = doc(db, 'stores', store_id!, 'promotions', id);
+  if (action === 'Delete') {
+    await deleteDoc(docRef);
+    return 'Success';
+  }
+  if (item === 'status') {
+    await updateDoc(docRef, {
+      status: action,
+    });
+  } else {
+    await updateDoc(docRef, {
+      show_in_banner: action,
+    });
+  }
+
+  revalidate();
+}
 
 export const columns: ColumnDef<Promotion>[] = [
   {

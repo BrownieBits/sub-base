@@ -1,9 +1,5 @@
-import { HeroBanner } from '@/components/sb-ui/HeroBanner';
-import { Button } from '@/components/ui/button';
-import { Separator } from '@/components/ui/separator';
 import { Metadata } from 'next';
 import { cookies, headers } from 'next/headers';
-import Link from 'next/link';
 import { Suspense } from 'react';
 import CartDetailPage from './CartDetailPage';
 
@@ -42,26 +38,14 @@ export default async function Cart() {
   const ip = (headers().get('x-ip') as string) || '0.0.0.0';
 
   return (
-    <Suspense fallback={<>Boop</>}>
-      <section>
-        <section className="w-full max-w-[2428px] mx-auto">
-          <section className="flex w-full justify-between items-center px-4 py-4 gap-4">
-            <h1>Cart</h1>
-            <Button asChild>
-              <Link href="/checkout">Checkout</Link>
-            </Button>
-          </section>
-          <HeroBanner page_slug="creator-cart" />
-        </section>
-        <Separator />
-        <CartDetailPage
-          cart_id={cartId?.value!}
-          country={country}
-          city={city}
-          region={region}
-          ip={ip}
-        />
-      </section>
+    <Suspense fallback={<></>}>
+      <CartDetailPage
+        cart_id={cartId?.value!}
+        country={country}
+        city={city}
+        region={region}
+        ip={ip}
+      />
     </Suspense>
   );
 }
