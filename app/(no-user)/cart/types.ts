@@ -1,3 +1,5 @@
+import { Timestamp } from "firebase/firestore";
+
 export type Item = {
     id: string;
     options: string[];
@@ -12,4 +14,13 @@ export type Item = {
     product_type: string;
     service_percent: number;
     name: string;
+};
+export type Promotion = {
+    promo_id: string;
+    amount: number;
+    minimum_order_value: number;
+    expiration_date: Timestamp | null;
+    name: string;
+    status: string;
+    type: string;
 };

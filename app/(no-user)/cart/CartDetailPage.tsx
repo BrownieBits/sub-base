@@ -11,6 +11,7 @@ import {
   DocumentData,
   DocumentReference,
   QuerySnapshot,
+  Timestamp,
   collection,
   doc,
   getDoc,
@@ -21,10 +22,13 @@ import {
 import Link from 'next/link';
 import React from 'react';
 import StoreItems from './StoreItems';
-import { Item } from './types';
+import { Item, Promotion } from './types';
 
 type Items = {
   [key: string]: Item[];
+};
+type Promotions = {
+  [key: string]: Promotion;
 };
 type Props = {
   cart_id: string;
@@ -39,6 +43,8 @@ export default function CartDetailPage(props: Props) {
   const [itemsTotal, setItemsTotal] = React.useState<number>(0);
   const [serviceTotal, setServiceTotal] = React.useState<number>(0);
   const [cartTotal, setCartTotal] = React.useState<number>(0);
+  const [promotions, setPromotions] = React.useState<Promotions | null>(null);
+  const [discountsTotal, setDiscountsTotal] = React.useState<number>(0);
 
   async function updateQuantity(store_id: string, index: number, item: Item) {
     const newItems = { ...items! };
@@ -46,7 +52,6 @@ export default function CartDetailPage(props: Props) {
     newItems[store_id][index] = item;
     setItems(newItems);
   }
-
   async function removeItem(store_id: string, index: number) {
     const newItems = { ...items! };
     const newStoreItems = newItems[store_id].slice(0);
@@ -57,6 +62,15 @@ export default function CartDetailPage(props: Props) {
       newItems[store_id] = newStoreItems;
     }
     setItems(newItems);
+  }
+  async function updatePromotions(store_id: string, promotion?: Promotion) {
+    const newPromos = { ...promotions! };
+    if (promotion === undefined) {
+      delete newPromos[store_id];
+    } else {
+      newPromos[store_id] = promotion;
+    }
+    setPromotions(newPromos);
   }
 
   React.useEffect(() => {
@@ -160,6 +174,43 @@ export default function CartDetailPage(props: Props) {
           })
         );
       }
+
+      const promosRef: CollectionReference = collection(
+        db,
+        'carts',
+        props.cart_id,
+        'promotions'
+      );
+      const promosQuery = query(promosRef);
+      const promosData: QuerySnapshot<DocumentData, DocumentData> =
+        await getDocs(promosQuery);
+      const promotions: Promotions = {};
+      if (!promosData.empty) {
+        await Promise.all(
+          promosData.docs.map(async (promo) => {
+            const promotionRef: DocumentReference = doc(
+              db,
+              'stores',
+              promo.id,
+              'promotions',
+              promo.data().id
+            );
+            const promotionDoc: DocumentData = await getDoc(promotionRef);
+            if (promotionDoc.exists()) {
+              promotions[promo.id] = {
+                promo_id: promotionDoc.id,
+                amount: promotionDoc.data().amount,
+                minimum_order_value: promotionDoc.data().minimum_order_value,
+                expiration_date: promotionDoc.data().expiration_date,
+                name: promotionDoc.data().name,
+                status: promotionDoc.data().status,
+                type: promotionDoc.data().type,
+              };
+            }
+          })
+        );
+      }
+      setPromotions(promotions);
       setItems(cartItems);
     };
     getItems();
@@ -168,9 +219,14 @@ export default function CartDetailPage(props: Props) {
     if (items !== null) {
       let item_total = 0;
       let service_total = 0;
+      let discounts_total = 0;
+
       Object.keys(items).map((store) => {
+        let store_total = 0;
         items[store].map((item) => {
           if (item.compare_at > 0 && item.compare_at < item.price) {
+            store_total +=
+              parseFloat(item.compare_at.toString()) * item.quantity;
             item_total +=
               parseFloat(item.compare_at.toString()) * item.quantity;
             service_total +=
@@ -178,6 +234,7 @@ export default function CartDetailPage(props: Props) {
               item.quantity *
               parseFloat(item.service_percent.toString());
           } else {
+            store_total += parseFloat(item.price.toString()) * item.quantity;
             item_total += parseFloat(item.price.toString()) * item.quantity;
             service_total +=
               parseFloat(item.price.toString()) *
@@ -185,13 +242,41 @@ export default function CartDetailPage(props: Props) {
               parseFloat(item.service_percent.toString());
           }
         });
+        if (promotions?.hasOwnProperty(store)) {
+          const expiration = promotions[store].expiration_date as Timestamp;
+          let expiration_good = true;
+          if (expiration !== null) {
+            const expiration_date = new Date(expiration.seconds * 1000);
+            const today = new Date();
+            if (today.getTime() > expiration_date.getTime()) {
+              expiration_good = false;
+            }
+          }
+          let minimum_good = true;
+          if (
+            promotions[store].minimum_order_value > 0 &&
+            promotions[store].minimum_order_value > store_total
+          ) {
+            minimum_good = false;
+          }
+          if (minimum_good && expiration_good) {
+            if (promotions[store].type === 'Flat Amount') {
+              discounts_total += promotions[store].amount;
+            } else if (promotions[store].type === 'Percentage') {
+              const discount_amount =
+                store_total * (promotions[store].amount / 100);
+              discounts_total += discount_amount;
+            }
+          }
+        }
       });
 
+      setDiscountsTotal(discounts_total);
       setItemsTotal(item_total);
       setServiceTotal(service_total);
-      setCartTotal(item_total + service_total);
+      setCartTotal(item_total + service_total - discounts_total);
     }
-  }, [items]);
+  }, [items, promotions]);
 
   if (items === null) {
     return (
@@ -261,16 +346,24 @@ export default function CartDetailPage(props: Props) {
       <section className="w-full max-w-[1754px] mx-auto flex flex-col  px-4 py-8 gap-8">
         <section className="w-full flex flex-col md:flex-row gap-8">
           <section className="w-full flex1 flex flex-col gap-4">
-            {Object.keys(items).map((store) => (
-              <StoreItems
-                cart_id={props.cart_id}
-                store_id={store}
-                items={items[store]}
-                updateQuantity={updateQuantity}
-                removeItem={removeItem}
-                key={`store-${store}`}
-              />
-            ))}
+            {Object.keys(items).map((store) => {
+              let promo = null;
+              if (promotions?.hasOwnProperty(store)) {
+                promo = promotions[store];
+              }
+              return (
+                <StoreItems
+                  cart_id={props.cart_id}
+                  store_id={store}
+                  items={items[store]}
+                  promotion={promo}
+                  updateQuantity={updateQuantity}
+                  removeItem={removeItem}
+                  updatePromotions={updatePromotions}
+                  key={`store-${store}`}
+                />
+              );
+            })}
           </section>
           <section className="flex flex-col gap-4 w-full md:w-[350px] xl:w-[400px]">
             <h3>Summary</h3>
@@ -291,6 +384,16 @@ export default function CartDetailPage(props: Props) {
                     style: 'currency',
                     currency: 'USD',
                   }).format(serviceTotal)}
+                </p>
+              </section>
+              <section className="w-full flex justify-between">
+                <p>Discounts:</p>
+                <p>
+                  {discountsTotal > 0 && <>-</>}
+                  {new Intl.NumberFormat('en-US', {
+                    style: 'currency',
+                    currency: 'USD',
+                  }).format(discountsTotal)}
                 </p>
               </section>
               <section className="w-full flex justify-between pb-4">

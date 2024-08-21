@@ -46,7 +46,7 @@ import { useMediaQuery } from '@/lib/hooks/useMediaQuery';
 import {
   faCalendar,
   faClose,
-  faSquarePlus,
+  faPenToSquare,
 } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -57,7 +57,7 @@ import {
   Timestamp,
   doc,
   getDoc,
-  setDoc,
+  updateDoc,
 } from 'firebase/firestore';
 import React from 'react';
 import { useForm } from 'react-hook-form';
@@ -87,33 +87,28 @@ const formSchema = z.object({
   expiration_date: z.date().optional().or(z.literal('')),
 });
 
-export const NewPromotionButton = (props: {
-  text: string;
-  variant?:
-    | 'link'
-    | 'default'
-    | 'destructive'
-    | 'outline'
-    | 'secondary'
-    | 'ghost'
-    | null
-    | undefined;
-  size?: 'default' | 'icon' | 'lg' | 'sm' | null | undefined;
-  className?: string | '';
+export const EditPromotionButton = (props: {
+  id: string;
+  name: string;
+  minimum_order_value: number;
+  amount: number;
+  type: 'Flat Amount' | 'Percentage' | undefined;
+  expiration_date: Timestamp | undefined;
 }) => {
   const [open, setOpen] = React.useState(false);
   const isDesktop = useMediaQuery('(min-width: 768px)');
   const store_id = getCookie('default_store');
-  const user_id = getCookie('user_id');
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      name: '',
-      type: 'Flat Amount',
-      amount: 1,
-      min_order_value: 0,
-      expiration_date: '',
+      name: props.name,
+      type: props.type,
+      amount: props.amount,
+      min_order_value: props.minimum_order_value,
+      expiration_date: props.expiration_date
+        ? new Date(props.expiration_date.seconds * 1000)
+        : undefined,
     },
   });
 
@@ -122,36 +117,32 @@ export const NewPromotionButton = (props: {
     if (values.expiration_date !== undefined && values.expiration_date !== '') {
       expiration_date = Timestamp.fromDate(values.expiration_date);
     }
-    const documentReference: DocumentReference = doc(
+    const promotionDoc: DocumentReference = doc(
       db,
       'stores',
       store_id!,
       'promotions',
-      values.name.toUpperCase()
+      props.id
     );
-    const querySnapshot = await getDoc(documentReference);
-    if (querySnapshot.exists()) {
-      form.setError('name', {
-        message: 'You have already used this code before',
+    const querySnapshot = await getDoc(promotionDoc);
+    if (!querySnapshot.exists()) {
+      toast.error("Promotion ID doesn't exist", {
+        description: 'Try selecting another promotion to edit',
       });
-      return;
+    } else {
+      await updateDoc(promotionDoc, {
+        name: values.name.toUpperCase(),
+        number_of_uses: 0,
+        minimum_order_value: values.min_order_value,
+        amount: values.amount,
+        type: values.type,
+        expiration_date: expiration_date,
+      });
+      toast.success('Promotion Updated', {
+        description: 'Your promotion has been updated.',
+      });
     }
-    await setDoc(documentReference, {
-      name: values.name.toUpperCase(),
-      number_of_uses: 0,
-      minimum_order_value: values.min_order_value,
-      amount: values.amount,
-      type: values.type,
-      status: 'Inactive',
-      times_used: 0,
-      owner_id: user_id,
-      show_in_banner: false,
-      expiration_date: expiration_date,
-    });
-    toast.success('Promotion Created', {
-      description: 'Your promotion has been created.',
-    });
-    form.reset();
+
     revalidate();
     setOpen(false);
   }
@@ -160,22 +151,14 @@ export const NewPromotionButton = (props: {
     return (
       <Dialog open={open} onOpenChange={setOpen}>
         <DialogTrigger asChild>
-          <Button
-            variant={props.variant}
-            size={props.size}
-            className={props.className}
-          >
-            <FontAwesomeIcon
-              className="icon mr-2 h-4 w-4"
-              icon={faSquarePlus}
-            />
-            <p>{props.text}</p>
+          <Button variant="link" title="Edit" className="p-0 text-foreground">
+            <FontAwesomeIcon className="icon" icon={faPenToSquare} />
           </Button>
         </DialogTrigger>
         <DialogContent className="sm:max-w-[425px]">
           <DialogHeader>
             <DialogTitle>
-              <h3>Add Promotion</h3>
+              <h3>Edit Promotion</h3>
             </DialogTitle>
             <DialogDescription className="flex flex-col">
               <Form {...form}>
@@ -324,19 +307,14 @@ export const NewPromotionButton = (props: {
   return (
     <Drawer open={open} onOpenChange={setOpen}>
       <DrawerTrigger>
-        <Button
-          variant={props.variant}
-          size={props.size}
-          className={props.className}
-        >
-          <FontAwesomeIcon className="icon mr-2 h-4 w-4" icon={faSquarePlus} />
-          <p>{props.text}</p>
+        <Button variant="link" title="Edit" className="p-0 text-foreground">
+          <FontAwesomeIcon className="icon" icon={faPenToSquare} />
         </Button>
       </DrawerTrigger>
       <DrawerContent>
         <DrawerHeader className="w-full max-w-[2428px] mx-auto">
           <DrawerTitle className="flex justify-between">
-            <h3>Add Promotion</h3>
+            <h3>Edit Promotion</h3>
             <DrawerClose>
               <Button variant="outline">
                 <FontAwesomeIcon className="icon h-4 w-4" icon={faClose} />

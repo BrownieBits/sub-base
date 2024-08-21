@@ -1,9 +1,9 @@
 'use client';
 
-import ContentfulImage from '@/components/sb-ui/ConentfulImage';
 import RichText from '@/components/sb-ui/RichText';
 import { Button } from '@/components/ui/button';
 import { client } from '@/lib/contentful';
+import Image from 'next/image';
 import Link from 'next/link';
 import React from 'react';
 
@@ -33,7 +33,7 @@ export const LatestBlog = (props: {}) => {
     <section className="w-full flex flex-col justify-start items-start gap-8 p-8 bg-layer-one border rounded">
       <h3>SubBase News</h3>
       {blog.fields.banner && (
-        <ContentfulImage
+        <Image
           alt={blog.fields.title}
           src={`https:${blog.fields.banner.fields.file.url}`}
           width={blog.fields.banner.fields.file.details.image.width}
