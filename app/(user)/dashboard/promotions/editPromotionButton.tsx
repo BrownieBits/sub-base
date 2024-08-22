@@ -441,6 +441,7 @@ export const EditPromotionButton = (props: {
                             mode="single"
                             onSelect={field.onChange}
                             disabled={(date) => date < new Date()}
+                            initialFocus
                           />
                         </PopoverContent>
                       </Popover>

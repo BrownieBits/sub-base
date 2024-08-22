@@ -300,7 +300,6 @@ export const NewPromotionButton = (props: {
                               mode="single"
                               onSelect={field.onChange}
                               disabled={(date) => date < new Date()}
-                              initialFocus
                             />
                           </PopoverContent>
                         </Popover>
