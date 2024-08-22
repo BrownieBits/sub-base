@@ -54,12 +54,12 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     openGraphImages.push(`https:${data.banner.fields.file.url}`);
   }
   return {
-    title: `${data.title} - Blog - SubBase Creator Platform`,
+    title: `${data.title} - Blog`,
     description: strings.join(' '),
     openGraph: {
       type: 'website',
       url: `https://${process.env.NEXT_PUBLIC_BASE_URL}/store/${params.slug}`,
-      title: `${data.title} - Blog - SubBase Creator Platform`,
+      title: `${data.title} - Blog`,
       siteName: 'SubBase Creator Platform',
       description: strings.join(' '),
       images: openGraphImages,
@@ -68,7 +68,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       card: 'summary_large_image',
       creator: data.title,
       images: openGraphImages,
-      title: `${data.title} - Blog - SubBase Creator Platform`,
+      title: `${data.title} - Blog`,
       description: strings.join(' '),
       site: 'SubBase Creator Platform',
     },

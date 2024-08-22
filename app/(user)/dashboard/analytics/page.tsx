@@ -1,6 +1,33 @@
 import { HeroBanner } from '@/components/sb-ui/HeroBanner';
 import { Separator } from '@/components/ui/separator';
 import { cn } from '@/lib/utils';
+import { Metadata } from 'next';
+
+export async function generateMetadata(): Promise<Metadata> {
+  return {
+    title: `Analytics`,
+    description:
+      'Enjoy the products you love, and share it all with friends, family, and the world on SubBase.',
+    openGraph: {
+      type: 'website',
+      url: `https://${process.env.NEXT_PUBLIC_BASE_URL}/dashboard/analytics/`,
+      title: `Analytics`,
+      siteName: 'SubBase Creator Platform',
+      description:
+        'Enjoy the products you love, and share it all with friends, family, and the world on SubBase.',
+      images: [`https://${process.env.NEXT_PUBLIC_BASE_URL}/api/og_image`],
+    },
+    twitter: {
+      card: 'summary_large_image',
+      creator: 'SubBase',
+      title: `Analytics`,
+      description:
+        'Enjoy the products you love, and share it all with friends, family, and the world on SubBase.',
+      images: [`https://${process.env.NEXT_PUBLIC_BASE_URL}/api/og_image`],
+      site: 'SubBase Creator Platform',
+    },
+  };
+}
 
 export default function Analytics() {
   // const [date, setDate] = React.useState<DateRange | undefined>({

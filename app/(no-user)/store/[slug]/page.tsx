@@ -79,16 +79,24 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       : data.store.data().description;
   const openGraphImages: string[] = [];
 
-  if (data.store.data().banner_url !== '') {
-    openGraphImages.push(data.store.data().banner_url);
+  if (data.store.data().avatar_url !== '') {
+    const url = encodeURI(data.store.data().avatar_url);
+    const storeName = encodeURI(data.store.data().name);
+    openGraphImages.push(
+      `https://${process.env.NEXT_PUBLIC_BASE_URL}/api/og_image/${storeName}?image=${url}&store=${storeName}`
+    );
+  } else {
+    openGraphImages.push(
+      `https://${process.env.NEXT_PUBLIC_BASE_URL}/api/og_image`
+    );
   }
   return {
-    title: `${data.store.data().name} Store - SubBase Creator Platform`,
+    title: `${data.store.data().name} Store`,
     description: description,
     openGraph: {
       type: 'website',
       url: `https://${process.env.NEXT_PUBLIC_BASE_URL}/store/${params.slug}`,
-      title: `${data.store.data().name} Store - SubBase Creator Platform`,
+      title: `${data.store.data().name} Store`,
       siteName: 'SubBase Creator Platform',
       description: description,
       images: openGraphImages,
@@ -97,7 +105,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       card: 'summary_large_image',
       creator: data.store.data().name,
       images: openGraphImages,
-      title: `${data.store.data().name} Store - SubBase Creator Platform`,
+      title: `${data.store.data().name} Store`,
       description: description,
       site: 'SubBase Creator Platform',
     },

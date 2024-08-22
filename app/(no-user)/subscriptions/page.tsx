@@ -29,23 +29,23 @@ async function getData(id: { [key: string]: string } | undefined) {
 
 export async function generateMetadata(): Promise<Metadata> {
   return {
-    title: `Subscriptions - SubBase Creator Platform`,
+    title: `Subscriptions`,
     description:
       'Enjoy the products you love, and share it all with friends, family, and the world on SubBase.',
     openGraph: {
       type: 'website',
       url: `https://${process.env.NEXT_PUBLIC_BASE_URL}/subscriptions/`,
-      title: `Subscriptions - SubBase Creator Platform`,
+      title: `Subscriptions`,
       siteName: 'SubBase Creator Platform',
       description:
         'Enjoy the products you love, and share it all with friends, family, and the world on SubBase.',
-      images: [],
+      images: [`https://${process.env.NEXT_PUBLIC_BASE_URL}/api/og_image`],
     },
     twitter: {
       card: 'summary_large_image',
       creator: 'SubBase',
-      images: [],
-      title: `Subscriptions - SubBase Creator Platform`,
+      images: [`https://${process.env.NEXT_PUBLIC_BASE_URL}/api/og_image`],
+      title: `Subscriptions`,
       description:
         'Enjoy the products you love, and share it all with friends, family, and the world on SubBase.',
       site: 'SubBase Creator Platform',

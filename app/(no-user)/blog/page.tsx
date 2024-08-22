@@ -32,25 +32,25 @@ async function getData() {
 
 export async function generateMetadata(): Promise<Metadata> {
   return {
-    title: `Blog - SubBase Creator Platform`,
+    title: `Blog`,
     description:
       'Enjoy the products you love, and share it all with friends, family, and the world on SubBase.',
     openGraph: {
       type: 'website',
       url: `https://${process.env.NEXT_PUBLIC_BASE_URL}/blog/`,
-      title: `Blog - SubBase Creator Platform`,
+      title: `Blog`,
       siteName: 'SubBase Creator Platform',
       description:
         'Enjoy the products you love, and share it all with friends, family, and the world on SubBase.',
-      images: [],
+      images: [`https://${process.env.NEXT_PUBLIC_BASE_URL}/api/og_image`],
     },
     twitter: {
       card: 'summary_large_image',
       creator: 'SubBase',
-      images: [],
-      title: `Blog - SubBase Creator Platform`,
+      title: `Blog`,
       description:
         'Enjoy the products you love, and share it all with friends, family, and the world on SubBase.',
+      images: [`https://${process.env.NEXT_PUBLIC_BASE_URL}/api/og_image`],
       site: 'SubBase Creator Platform',
     },
   };

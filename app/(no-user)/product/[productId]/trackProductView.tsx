@@ -77,7 +77,7 @@ export default function TrackProductViews(props: {
         product_id: props.product_id,
       });
       logEvent(analytics, 'page_view', {
-        title: `${props.product_name} - ${props.store_name} - SubBase Creator Platform`,
+        title: `${props.product_name} - ${props.store_name}`,
       });
     }
     getAndSetAnalytics();

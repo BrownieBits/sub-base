@@ -46,10 +46,12 @@ export async function ChangeStatus(
     await updateDoc(docRef, {
       status: action,
     });
+    revalidate();
   } else {
     await updateDoc(docRef, {
       show_in_banner: action,
     });
+    revalidate();
   }
 }
 

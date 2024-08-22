@@ -64,23 +64,23 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     options: QuerySnapshot<DocumentData, DocumentData>;
   } = await getData(params.productID);
   return {
-    title: `${data.product.data().name} - SubBase Creator Platform`,
+    title: `${data.product.data().name}`,
     description:
       'Enjoy the products you love, and share it all with friends, family, and the world on SubBase.',
     openGraph: {
       type: 'website',
       url: `https://${process.env.NEXT_PUBLIC_BASE_URL}/dashboard/products/new-digital`,
-      title: `${data.product.data().name} - SubBase Creator Platform`,
+      title: `${data.product.data().name}`,
       siteName: 'SubBase Creator Platform',
       description:
         'Enjoy the products you love, and share it all with friends, family, and the world on SubBase.',
-      images: [],
+      images: [`https://${process.env.NEXT_PUBLIC_BASE_URL}/api/og_image`],
     },
     twitter: {
       card: 'summary_large_image',
       creator: 'SubBase',
-      images: [],
-      title: `${data.product.data().name} - SubBase Creator Platform`,
+      images: [`https://${process.env.NEXT_PUBLIC_BASE_URL}/api/og_image`],
+      title: `${data.product.data().name}`,
       description:
         'Enjoy the products you love, and share it all with friends, family, and the world on SubBase.',
       site: 'SubBase Creator Platform',

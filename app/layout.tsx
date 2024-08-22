@@ -21,23 +21,32 @@ const fontSans = FontSans({
 
 export async function generateMetadata(): Promise<Metadata> {
   return {
-    title: `SubBase Creator Platform`,
+    title: {
+      template: '%s - SubBase Creator Platform',
+      default: `SubBase Creator Platform`, // a default is required when creating a template
+    },
     description:
       'Enjoy the products you love, and share it all with friends, family, and the world on SubBase.',
     openGraph: {
       type: 'website',
       url: `https://${process.env.NEXT_PUBLIC_BASE_URL}/`,
-      title: `SubBase Creator Platform`,
+      title: {
+        template: '%s - SubBase Creator Platform',
+        default: `SubBase Creator Platform`, // a default is required when creating a template
+      },
       siteName: 'SubBase Creator Platform',
       description:
         'Enjoy the products you love, and share it all with friends, family, and the world on SubBase.',
-      images: [],
+      images: [`https://${process.env.NEXT_PUBLIC_BASE_URL}/api/og_image`],
     },
     twitter: {
       card: 'summary_large_image',
       creator: 'SubBase',
-      images: [],
-      title: `SubBase Creator Platform`,
+      images: [`https://${process.env.NEXT_PUBLIC_BASE_URL}/api/og_image`],
+      title: {
+        template: '%s - SubBase Creator Platform',
+        default: `SubBase Creator Platform`, // a default is required when creating a template
+      },
       description:
         'Enjoy the products you love, and share it all with friends, family, and the world on SubBase.',
       site: 'SubBase Creator Platform',

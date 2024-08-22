@@ -98,12 +98,12 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     openGraphImages.push(data.product?.data().images[0]);
   }
   return {
-    title: `${data.product?.data().name} - ${data.store?.data().name} - Product - SubBase Creator Platform`,
+    title: `${data.product?.data().name} - ${data.store?.data().name} - Product`,
     description: description,
     openGraph: {
       type: 'website',
       url: `https://${process.env.NEXT_PUBLIC_BASE_URL}/product/${params.productId}`,
-      title: `${data.product?.data().name} - ${data.store?.data().name} - SubBase Creator Platform`,
+      title: `${data.product?.data().name} - ${data.store?.data().name}`,
       siteName: 'SubBase Creator Platform',
       description: description,
       images: openGraphImages,
@@ -112,7 +112,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       card: 'summary_large_image',
       creator: data.store?.data().name,
       images: openGraphImages,
-      title: `${data.product?.data().name} - ${data.store?.data().name} - SubBase Creator Platform`,
+      title: `${data.product?.data().name} - ${data.store?.data().name}`,
       description: description,
       site: 'SubBase Creator Platform',
     },

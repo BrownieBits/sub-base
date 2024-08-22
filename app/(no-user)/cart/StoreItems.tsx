@@ -69,7 +69,7 @@ export default function StoreItems(props: Props) {
       promo
     );
     const document = await getDoc(promoRef);
-    if (!document.exists()) {
+    if (!document.exists() || document.data().status === 'Inactive') {
       form.setError('code', {
         message: 'Please use a valid Promotion',
       });

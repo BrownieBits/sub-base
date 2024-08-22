@@ -80,7 +80,7 @@ export default function CartDetailPage(props: Props) {
   React.useEffect(() => {
     if (analytics !== null) {
       logEvent(analytics, 'page_view', {
-        title: 'Cart - SubBase Creator Platform',
+        title: 'Cart',
       });
     }
     const getItems = async () => {
@@ -200,7 +200,10 @@ export default function CartDetailPage(props: Props) {
               promo.data().id
             );
             const promotionDoc: DocumentData = await getDoc(promotionRef);
-            if (promotionDoc.exists()) {
+            if (
+              promotionDoc.exists() &&
+              promotionDoc.data().status === 'Active'
+            ) {
               promotions[promo.id] = {
                 promo_id: promotionDoc.id,
                 amount: promotionDoc.data().amount,

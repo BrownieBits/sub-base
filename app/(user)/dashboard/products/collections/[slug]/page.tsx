@@ -32,23 +32,23 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const default_store = cookieStore.get('default_store');
   const data: DocumentData = await getData(params.slug, default_store?.value!);
   return {
-    title: `${data.data().name} Collection - SubBase Creator Platform`,
+    title: `${data.data().name} Collection`,
     description:
       'Enjoy the products you love, and share it all with friends, family, and the world on SubBase.',
     openGraph: {
       type: 'website',
       url: `https://${process.env.NEXT_PUBLIC_BASE_URL}/dashboard/products/collections/${params.slug}/`,
-      title: `${data.data().name} Collection - SubBase Creator Platform`,
+      title: `${data.data().name} Collection`,
       siteName: 'SubBase Creator Platform',
       description:
         'Enjoy the products you love, and share it all with friends, family, and the world on SubBase.',
-      images: [],
+      images: [`https://${process.env.NEXT_PUBLIC_BASE_URL}/api/og_image`],
     },
     twitter: {
       card: 'summary_large_image',
       creator: 'SubBase',
-      images: [],
-      title: `${data.data().name} Collection - SubBase Creator Platform`,
+      images: [`https://${process.env.NEXT_PUBLIC_BASE_URL}/api/og_image`],
+      title: `${data.data().name} Collection`,
       description:
         'Enjoy the products you love, and share it all with friends, family, and the world on SubBase.',
       site: 'SubBase Creator Platform',
