@@ -118,7 +118,7 @@ export const StoreAnalytics = (props: {}) => {
   }
 
   return (
-    <section className="w-full flex flex-col justify-start items-start gap-8 p-8 bg-layer-one border rounded">
+    <section className="w-full flex flex-col justify-start items-start gap-8 p-4 bg-layer-one border rounded">
       <h3>Store Analytics</h3>
       <section className="w-full flex flex-col gap-2">
         <p>

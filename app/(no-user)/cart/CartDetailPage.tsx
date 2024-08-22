@@ -1,10 +1,11 @@
 'use client';
 
+import ProductCard from '@/components/sb-ui/ProductCard';
 import { Button } from '@/components/ui/button';
 import { Separator } from '@/components/ui/separator';
+import { Skeleton } from '@/components/ui/skeleton';
 import { analytics, db } from '@/lib/firebase';
-import { faSpinner } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { GridProduct } from '@/lib/types';
 import { logEvent } from 'firebase/analytics';
 import {
   CollectionReference,
@@ -16,6 +17,8 @@ import {
   doc,
   getDoc,
   getDocs,
+  limit,
+  orderBy,
   query,
   where,
 } from 'firebase/firestore';
@@ -45,6 +48,7 @@ export default function CartDetailPage(props: Props) {
   const [cartTotal, setCartTotal] = React.useState<number>(0);
   const [promotions, setPromotions] = React.useState<Promotions | null>(null);
   const [discountsTotal, setDiscountsTotal] = React.useState<number>(0);
+  const [related, setRelated] = React.useState<GridProduct[]>([]);
 
   async function updateQuantity(store_id: string, index: number, item: Item) {
     const newItems = { ...items! };
@@ -212,6 +216,35 @@ export default function CartDetailPage(props: Props) {
       }
       setPromotions(promotions);
       setItems(cartItems);
+
+      const store_ids = Object.keys(cartItems);
+
+      const relatedRef: CollectionReference = collection(db, 'products');
+      const relatedQuery = query(
+        relatedRef,
+        where('store_id', 'in', store_ids),
+        where('revenue', '>=', 0),
+        orderBy('revenue'),
+        limit(8)
+      );
+      const relatedData: QuerySnapshot<DocumentData, DocumentData> =
+        await getDocs(relatedQuery);
+
+      const products: GridProduct[] = relatedData.docs.map((product) => {
+        return {
+          name: product.data().name,
+          images: product.data().images,
+          product_type: product.data().product_type,
+          price: product.data().price,
+          compare_at: product.data().compare_at,
+          currency: product.data().currency,
+          like_count: product.data().like_count,
+          store_id: product.data().store_id,
+          created_at: product.data().created_at,
+          id: product.id,
+        };
+      });
+      setRelated(products);
     };
     getItems();
   }, []);
@@ -287,13 +320,41 @@ export default function CartDetailPage(props: Props) {
           </section>
         </section>
         <Separator />
-        <section className="w-full max-w-[1754px] mx-auto flex items-center px-4 py-8 gap-1">
-          <FontAwesomeIcon
-            className="icon mr-2 h-4 w-4"
-            icon={faSpinner}
-            spin
-          />
-          <p>Loading Cart</p>
+        <section className="w-full max-w-[1754px] mx-auto flex flex-col  px-4 py-8 gap-8">
+          <section className="w-full flex flex-col md:flex-row gap-8">
+            <section className="w-full flex1 flex flex-col gap-4">
+              <Skeleton className="w-full h-[200px] rounded bg-layer-two" />
+              <Skeleton className="w-full h-[200px] rounded bg-layer-two" />
+            </section>
+            <section className="flex flex-col gap-4 w-full md:w-[350px] xl:w-[400px]">
+              <Skeleton className="w-[100px] h-7 rounded bg-layer-two" />
+              <section className="w-full flex flex-col gap-2">
+                <section className="w-full flex justify-between">
+                  <Skeleton className="w-[150px] h-5 rounded bg-layer-two" />
+                  <Skeleton className="w-[50px] h-5 rounded bg-layer-two" />
+                </section>
+                <section className="w-full flex justify-between">
+                  <Skeleton className="w-[150px] h-5 rounded bg-layer-two" />
+                  <Skeleton className="w-[50px] h-5 rounded bg-layer-two" />
+                </section>
+                <section className="w-full flex justify-between">
+                  <Skeleton className="w-[150px] h-5 rounded bg-layer-two" />
+                  <Skeleton className="w-[50px] h-5 rounded bg-layer-two" />
+                </section>
+                <section className="w-full flex justify-between pb-4">
+                  <Skeleton className="w-full h-4 rounded bg-layer-two" />
+                </section>
+                <Separator />
+                <section className="w-full flex justify-between pt-4">
+                  <Skeleton className="w-[150px] h-5 rounded bg-layer-two" />
+                  <Skeleton className="w-[50px] h-5 rounded bg-layer-two" />
+                </section>
+              </section>
+              <Skeleton className="w-full h-[40px] rounded bg-layer-two" />
+            </section>
+          </section>
+          <section></section>
+          <section></section>
         </section>
       </>
     );
@@ -343,7 +404,7 @@ export default function CartDetailPage(props: Props) {
         </section>
       </section>
       <Separator />
-      <section className="w-full max-w-[1754px] mx-auto flex flex-col  px-4 py-8 gap-8">
+      <section className="w-full max-w-[1754px] mx-auto flex flex-col px-4 py-8 gap-8">
         <section className="w-full flex flex-col md:flex-row gap-8">
           <section className="w-full flex1 flex flex-col gap-4">
             {Object.keys(items).map((store) => {
@@ -421,7 +482,17 @@ export default function CartDetailPage(props: Props) {
             </Button>
           </section>
         </section>
-        <section></section>
+        {related.length > 0 && (
+          <section className="w-full flex flex-col gap-4">
+            <h3>You might like</h3>
+            <section className="grid grid-cols-1 md:grid-cols-3 xl:grid-cols-6 gap-8">
+              {related?.map((doc) => (
+                <ProductCard product={doc} show_creator={true} key={doc.id} />
+              ))}
+            </section>
+          </section>
+        )}
+
         <section></section>
       </section>
     </>

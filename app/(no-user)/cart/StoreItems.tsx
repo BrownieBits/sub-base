@@ -11,6 +11,7 @@ import {
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import { Separator } from '@/components/ui/separator';
+import { Skeleton } from '@/components/ui/skeleton';
 import { db } from '@/lib/firebase';
 import { faClose, faTag } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -139,7 +140,7 @@ export default function StoreItems(props: Props) {
   }, []);
 
   if (store === null) {
-    return <></>;
+    return <Skeleton className="w-full h-[200px] rounded bg-layer-two" />;
   }
 
   return (

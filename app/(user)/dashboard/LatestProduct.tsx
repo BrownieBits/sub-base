@@ -100,7 +100,7 @@ export const LatestProduct = (props: { user_id: string }) => {
     );
   }
   return (
-    <section className="w-full flex flex-col gap-4 p-8">
+    <section className="w-full flex flex-col gap-4 p-4">
       <h3>Latest Product Performance</h3>
       <section className="aspect-square flex justify-center items-center bg-layer-one border rounded overflow-hidden group">
         <Image

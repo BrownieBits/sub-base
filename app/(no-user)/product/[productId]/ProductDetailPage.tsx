@@ -38,7 +38,9 @@ import React from 'react';
 import { useForm } from 'react-hook-form';
 import { toast } from 'sonner';
 import { z } from 'zod';
+import ProductComments from './ProductComments';
 import ProductImages from './ProductImages';
+import RelatedProducts from './RelatedProducts';
 import { ShowDetails } from './ShowDetails';
 import { options, variants } from './typedef';
 
@@ -75,6 +77,7 @@ type Props = {
   currency: string;
   product_id: string;
   product_description: string;
+  tags: string[];
   like_count: number;
   options: options[];
   variants: variants[];
@@ -203,7 +206,10 @@ export default function ProductDetailPage(props: Props) {
   return (
     <section className="flex flex-col gap-8 p-4 max-w-[1754px] mx-auto">
       <section key="productInfo" className="flex flex-col md:flex-row gap-8">
-        <ProductImages images={props.images} />
+        <section className="w-full flex-1 flex flex-col gap-4">
+          <ProductImages images={props.images} />
+          <ProductComments />
+        </section>
         <section className="w-full md:w-[350px] xl:w-[400px] flex flex-col">
           <section className="flex justify-between">
             <section className="flex flex-col items-start gap-1">
@@ -398,6 +404,12 @@ export default function ProductDetailPage(props: Props) {
             created_at={props.created_at}
             view_count={props.view_count}
             like_count={props.like_count}
+          />
+
+          <RelatedProducts
+            product_id={props.product_id}
+            store_id={props.store_id}
+            tags={props.tags}
           />
         </section>
       </section>

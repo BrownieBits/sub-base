@@ -173,6 +173,7 @@ export default async function ProductPage({ params }: Props) {
         product_id={data.product?.id}
         product_description={data.product?.data().description}
         like_count={data.product?.data().like_count}
+        tags={data.product?.data().tags}
         created_at={data.product?.data().created_at}
         options={options}
         variants={variants}

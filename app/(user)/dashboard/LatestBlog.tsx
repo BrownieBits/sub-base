@@ -14,7 +14,6 @@ export const LatestBlog = (props: {}) => {
     const getLatest = async () => {
       const currentClient = client;
 
-      // fetch data
       const data = await currentClient.getEntries({
         content_type: 'blogPost',
         order: '-sys.createdAt',
@@ -30,7 +29,7 @@ export const LatestBlog = (props: {}) => {
   }
 
   return (
-    <section className="w-full flex flex-col justify-start items-start gap-8 p-8 bg-layer-one border rounded">
+    <section className="w-full flex flex-col justify-start items-start gap-8 p-4 bg-layer-one border rounded">
       <h3>SubBase News</h3>
       {blog.fields.banner && (
         <Image
