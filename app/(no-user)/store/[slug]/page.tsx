@@ -83,7 +83,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     const url = encodeURIComponent(data.store.data().avatar_url);
     const storeName = encodeURIComponent(data.store.data().name);
     openGraphImages.push(
-      `https://${process.env.NEXT_PUBLIC_BASE_URL}/api/og_image/${storeName}?image=${url}&store=${storeName}`
+      `https://${process.env.NEXT_PUBLIC_BASE_URL}/api/og_image/${params.slug}?store=${storeName}&image=${url}`
     );
   } else {
     openGraphImages.push(

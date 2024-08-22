@@ -94,7 +94,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       : data.product?.data().description;
   const openGraphImages: string[] = [];
 
-  if (data.product?.data().images.lenght > 0) {
+  if (data.product?.data().images.length > 0) {
     openGraphImages.push(data.product?.data().images[0]);
   }
   return {
