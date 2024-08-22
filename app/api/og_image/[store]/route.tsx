@@ -408,9 +408,11 @@ export async function GET(
             justifyContent: 'center',
           }}
         >
+
           <img
             width="300"
             height="300"
+            alt={storeName!}
             src={image!}
             style={{
               borderRadius: 150,
