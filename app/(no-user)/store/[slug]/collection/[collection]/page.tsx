@@ -96,8 +96,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const openGraphImages: string[] = [];
 
   if (data.store.data().avatar_url !== '') {
-    const url = encodeURI(data.store.data().avatar_url);
-    const storeName = encodeURI(data.store.data().name);
+    const url = encodeURIComponent(data.store.data().avatar_url);
+    const storeName = encodeURIComponent(data.store.data().name);
     openGraphImages.push(
       `https://${process.env.NEXT_PUBLIC_BASE_URL}/api/og_image/${storeName}?image=${url}&store=${storeName}`
     );
