@@ -35,10 +35,10 @@ export default function SignIn({
 }: {
   searchParams: { [key: string]: string | string[] | undefined };
 }) {
-  const country = (headers().get('x-geo-country') as string) || 'US';
-  const city = (headers().get('x-geo-city') as string) || 'Los Angeles';
-  const region = (headers().get('x-geo-region') as string) || 'CA';
-  const ip = (headers().get('x-ip') as string) || '0.0.0.0';
+  const country = headers().get('x-geo-country') as string;
+  const city = headers().get('x-geo-city') as string;
+  const region = headers().get('x-geo-region') as string;
+  const ip = headers().get('x-ip') as string;
 
   return (
     <section className="w-full flex flex-col justify-between">

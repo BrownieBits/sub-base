@@ -116,10 +116,10 @@ export default async function Store({ params }: Props) {
   const cookieStore = cookies();
   const store_pw = cookieStore.get(`${params.slug}-pw`);
   const data: Data | 'No Store' = await getData(params.slug);
-  const country = (headers().get('x-geo-country') as string) || 'US';
-  const city = (headers().get('x-geo-city') as string) || 'Los Angeles';
-  const region = (headers().get('x-geo-region') as string) || 'CA';
-  const ip = (headers().get('x-ip') as string) || '0.0.0.0';
+  const country = headers().get('x-geo-country') as string;
+  const city = headers().get('x-geo-city') as string;
+  const region = headers().get('x-geo-region') as string;
+  const ip = headers().get('x-ip') as string;
 
   async function revalidate() {
     'use server';

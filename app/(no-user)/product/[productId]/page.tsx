@@ -121,10 +121,10 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 export default async function ProductPage({ params }: Props) {
   const data: Data = await getData(params.productId);
-  const country = (headers().get('x-geo-country') as string) || 'US';
-  const city = (headers().get('x-geo-city') as string) || 'Los Angeles';
-  const region = (headers().get('x-geo-region') as string) || 'CA';
-  const ip = (headers().get('x-ip') as string) || '0.0.0.0';
+  const country = headers().get('x-geo-country') as string;
+  const city = headers().get('x-geo-city') as string;
+  const region = headers().get('x-geo-region') as string;
+  const ip = headers().get('x-ip') as string;
 
   let options: options[] = [];
   let variants: variants[] = [];
@@ -190,7 +190,7 @@ export default async function ProductPage({ params }: Props) {
         region={region}
         ip={ip}
         product_id={params.productId}
-        product_name={data.store?.data().name}
+        product_name={data.product?.data().name}
         store_name={data.store?.data().name}
         store_id={data.store?.id}
       />

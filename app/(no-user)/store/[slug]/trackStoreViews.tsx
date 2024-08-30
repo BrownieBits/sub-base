@@ -26,12 +26,11 @@ export default function TrackStoreViews(props: {
   ip: string;
 }) {
   const user_id = getCookie('user_id');
-  const default_store = getCookie('default_store');
 
   async function getAndSetAnalytics() {
     const analyticsColRef: CollectionReference = collection(
       db,
-      `stores/${default_store}/analytics`
+      `stores/${props.store_id}/analytics`
     );
     const now = new Date();
     const threeHoursAgo = new Date(now.getHours() - 3);
@@ -48,10 +47,10 @@ export default function TrackStoreViews(props: {
         type: 'store_view',
         store_id: props.store_id,
         user_id: user_id,
-        country: props.country,
-        city: props.city,
-        region: props.region,
-        ip: props.ip,
+        country: props.country === 'undefined' ? 'SW' : props.country,
+        city: props.city === 'undefined' ? 'Mos Eisley' : props.city,
+        region: props.region === 'undefined' ? 'TAT' : props.region,
+        ip: props.ip === 'undefined' ? '0.0.0.0' : props.ip,
         created_at: Timestamp.fromDate(new Date()),
       });
 

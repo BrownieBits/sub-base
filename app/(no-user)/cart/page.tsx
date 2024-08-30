@@ -32,10 +32,10 @@ export async function generateMetadata(): Promise<Metadata> {
 export default async function Cart() {
   const cookieStore = cookies();
   const cartId = cookieStore.get(`cart_id`);
-  const country = (headers().get('x-geo-country') as string) || 'US';
-  const city = (headers().get('x-geo-city') as string) || 'Los Angeles';
-  const region = (headers().get('x-geo-region') as string) || 'CA';
-  const ip = (headers().get('x-ip') as string) || '0.0.0.0';
+  const country = headers().get('x-geo-country') as string;
+  const city = headers().get('x-geo-city') as string;
+  const region = headers().get('x-geo-region') as string;
+  const ip = headers().get('x-ip') as string;
 
   return (
     <Suspense fallback={<></>}>

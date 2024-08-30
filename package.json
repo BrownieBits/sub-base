@@ -60,7 +60,8 @@
     "firebase": "^10.7.1",
     "graphql-request": "^7.1.0",
     "libphonenumber-js": "^1.11.3",
-    "lucide-react": "^0.408.0",
+    "lucide-react": "^0.436.0",
+    "luxon": "^3.5.0",
     "next": "^15.0.0-rc.0",
     "next-themes": "^0.3.0",
     "printful-sdk-js": "^1.0.7",
@@ -72,7 +73,7 @@
     "react-dom": "^19.0.0-rc-6230622a1a-20240610",
     "react-firebase-hooks": "^5.1.1",
     "react-hook-form": "^7.49.3",
-    "recharts": "^2.10.4",
+    "recharts": "^2.13.0-alpha.4",
     "server-only": "^0.0.1",
     "sharp": "^0.33.5",
     "sonner": "^1.3.1",
@@ -114,5 +115,8 @@
     "ts-jest": "^29.1.1",
     "ts-node": "^10.9.2",
     "typescript": "5.4.5"
+  },
+  "resolutions": {
+    "react-is": "^19.0.0-rc-6230622a1a-20240610"
   }
 }

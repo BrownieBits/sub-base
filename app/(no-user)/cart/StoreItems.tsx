@@ -13,6 +13,7 @@ import { Input } from '@/components/ui/input';
 import { Separator } from '@/components/ui/separator';
 import { Skeleton } from '@/components/ui/skeleton';
 import { db } from '@/lib/firebase';
+import { Item, Promotion } from '@/lib/types';
 import { faClose, faTag } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -30,7 +31,6 @@ import React from 'react';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 import ItemDetails from './ItemDetails';
-import { Item, Promotion } from './types';
 
 type Store = {
   name: string;

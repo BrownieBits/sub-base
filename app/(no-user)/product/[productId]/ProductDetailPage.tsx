@@ -140,10 +140,10 @@ export default function ProductDetailPage(props: Props) {
       options: selectedOptions,
       store_id: props.store_id,
       user_id: userID != undefined ? userID : null,
-      country: props.country,
-      city: props.city,
-      region: props.region,
-      ip: props.ip,
+      country: props.country === 'undefined' ? 'SW' : props.country,
+      city: props.city === 'undefined' ? 'Mos Eisley' : props.city,
+      region: props.region === 'undefined' ? 'TAT' : props.region,
+      ip: props.ip === 'undefined' ? '0.0.0.0' : props.ip,
       created_at: Timestamp.fromDate(new Date()),
     });
     toast.success(`${props.product_name} Added to Cart!`, {

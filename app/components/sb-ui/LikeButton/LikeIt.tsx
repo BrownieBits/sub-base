@@ -61,12 +61,12 @@ export const LikeIt = ({
         date: Timestamp.fromDate(new Date()),
       });
       await addDoc(analyticsColRef, {
-        city: city,
-        country: country,
+        city: city === 'undefined' ? 'Mos Eisley' : city,
+        country: country === 'undefined' ? 'SW' : country,
         created_at: Timestamp.fromDate(new Date()),
-        ip: ip,
+        ip: ip === 'undefined' ? '0.0.0.0' : ip,
         product_id: product_id,
-        region: region,
+        region: region === 'undefined' ? 'TAT' : region,
         store_id: store_id,
         type: 'like',
         user_id: user_id,
@@ -81,12 +81,12 @@ export const LikeIt = ({
         transaction.update(docRef, { like_count: newLikes });
       });
       await addDoc(analyticsColRef, {
-        city: city,
-        country: country,
+        city: city === 'undefined' ? 'Mos Eisley' : city,
+        country: country === 'undefined' ? 'SW' : country,
         created_at: Timestamp.fromDate(new Date()),
-        ip: ip,
+        ip: ip === 'undefined' ? '0.0.0.0' : ip,
         product_id: product_id,
-        region: region,
+        region: region === 'undefined' ? 'TAT' : region,
         store_id: store_id,
         type: 'unlike',
         user_id: user_id,

@@ -5,7 +5,7 @@ import { Button } from '@/components/ui/button';
 import { Separator } from '@/components/ui/separator';
 import { Skeleton } from '@/components/ui/skeleton';
 import { analytics, db } from '@/lib/firebase';
-import { GridProduct } from '@/lib/types';
+import { GridProduct, Item, Promotion } from '@/lib/types';
 import { logEvent } from 'firebase/analytics';
 import {
   CollectionReference,
@@ -25,7 +25,6 @@ import {
 import Link from 'next/link';
 import React from 'react';
 import StoreItems from './StoreItems';
-import { Item, Promotion } from './types';
 
 type Items = {
   [key: string]: Item[];
@@ -462,7 +461,7 @@ export default function CartDetailPage(props: Props) {
               </section>
               <section className="w-full flex justify-between pb-4">
                 <p className="text-sm text-muted-foreground">
-                  Shipping, taxes, and discount codes are calculated at checkout
+                  Shipping, and taxes are calculated at checkout
                 </p>
               </section>
               <Separator />
