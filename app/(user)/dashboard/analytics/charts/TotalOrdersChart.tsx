@@ -47,13 +47,13 @@ export const TotalOrdersChart = (props: {
     let orderJSON: ChartJSON = buildHourly();
 
     if (diffInMonths <= 1) {
-      orderJSON = buildDaily(diffInDays, props.from);
+      orderJSON = buildDaily(diffInDays + 1, props.from);
       dataType = 'daily';
     } else if (diffInMonths <= 12) {
-      orderJSON = buildMonthly(diffInMonths, props.from);
+      orderJSON = buildMonthly(diffInMonths + 1, props.from);
       dataType = 'monthly';
     } else if (diffInMonths > 12) {
-      orderJSON = buildYearly(diffInYears, props.from);
+      orderJSON = buildYearly(diffInYears + 1, props.from);
       dataType = 'yearly';
     }
 
