@@ -206,6 +206,7 @@ export default function AnalyticsPage(props: Props) {
           user_id: doc.data().user_id,
           store_id: doc.data().store_id,
           created_at: doc.data().created_at,
+          revenue: doc.data().revenue,
         };
       });
       analyticsData.slice(0);
