@@ -15,7 +15,7 @@ import {
 } from 'date-fns';
 import { Timestamp } from 'firebase/firestore';
 import React from 'react';
-import { Area, AreaChart, CartesianGrid, XAxis, YAxis } from 'recharts';
+import { CartesianGrid, Line, LineChart, XAxis } from 'recharts';
 import { Analytic, ChartData, ChartJSON } from '../types';
 import { buildDaily, buildHourly, buildMonthly, buildYearly } from './actions';
 
@@ -44,7 +44,7 @@ export const ProductLikesChart = (props: {
     let likesJSON: ChartJSON = buildHourly();
 
     let dataType = 'hourly';
-    if (diffInMonths < 1) {
+    if (diffInMonths <= 1) {
       likesJSON = buildDaily(diffInDays + 1, props.from);
       dataType = 'daily';
     } else if (diffInMonths <= 12) {
@@ -105,40 +105,40 @@ export const ProductLikesChart = (props: {
       </p>
       {likes.length > 0 ? (
         <ChartContainer config={chartConfig}>
-          <AreaChart
+          <LineChart
             accessibilityLayer
             data={likes}
             margin={{
-              left: -10,
+              left: 12,
               right: 12,
             }}
           >
-            <CartesianGrid vertical={false} />
+            <CartesianGrid vertical={true} />
             <XAxis
               dataKey="date"
-              tickLine={false}
-              axisLine={false}
+              tickLine={true}
+              axisLine={true}
+              minTickGap={32}
               tickMargin={8}
               tickFormatter={(value) => value}
             />
-            <YAxis
-              tickLine={false}
-              axisLine={false}
-              tickMargin={8}
-              tickCount={3}
-            />
             <ChartTooltip
-              cursor={false}
-              content={<ChartTooltipContent indicator="line" />}
+              cursor={true}
+              content={<ChartTooltipContent hideLabel />}
             />
-            <Area
+            <Line
               dataKey="data"
               type="natural"
-              fill="var(--color-data)"
-              fillOpacity={0.4}
               stroke="var(--color-data)"
+              strokeWidth={2}
+              dot={{
+                fill: 'var(--color-data)',
+              }}
+              activeDot={{
+                r: 6,
+              }}
             />
-          </AreaChart>
+          </LineChart>
         </ChartContainer>
       ) : (
         <section className="flex justify-center items-center w-full h-full min-h-[200px]">

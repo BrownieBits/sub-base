@@ -19,14 +19,6 @@ import { Area, AreaChart, CartesianGrid, XAxis, YAxis } from 'recharts';
 import { Analytic, ChartData, ChartJSON } from '../types';
 import { buildDaily, buildHourly, buildMonthly, buildYearly } from './actions';
 
-const chartData = [
-  { month: 'January', desktop: 186 },
-  { month: 'February', desktop: 305 },
-  { month: 'March', desktop: 237 },
-  { month: 'April', desktop: 73 },
-  { month: 'May', desktop: 209 },
-  { month: 'June', desktop: 214 },
-];
 const chartConfig = {
   data: {
     label: 'Views',
@@ -52,7 +44,7 @@ export const ProductViewsChart = (props: {
     let productViewsJSON: ChartJSON = buildHourly();
 
     let dataType = 'hourly';
-    if (diffInMonths < 1) {
+    if (diffInMonths <= 1) {
       productViewsJSON = buildDaily(diffInDays + 1, props.from);
       dataType = 'daily';
     } else if (diffInMonths <= 12) {
@@ -113,29 +105,44 @@ export const ProductViewsChart = (props: {
               right: 12,
             }}
           >
-            <CartesianGrid vertical={false} />
+            <defs>
+              <linearGradient id="fillData" x1="0" y1="0" x2="0" y2="1">
+                <stop
+                  offset="5%"
+                  stopColor="var(--color-data)"
+                  stopOpacity={0.8}
+                />
+                <stop
+                  offset="95%"
+                  stopColor="var(--color-data)"
+                  stopOpacity={0.1}
+                />
+              </linearGradient>
+            </defs>
+            <CartesianGrid vertical={true} />
             <XAxis
               dataKey="date"
-              tickLine={false}
-              axisLine={false}
+              tickLine={true}
+              axisLine={true}
               tickMargin={8}
+              minTickGap={32}
               tickFormatter={(value) => value}
             />
             <YAxis
-              tickLine={false}
-              axisLine={false}
+              tickLine={true}
+              axisLine={true}
               tickMargin={8}
               tickCount={3}
             />
             <ChartTooltip
-              cursor={false}
+              cursor={true}
               content={<ChartTooltipContent indicator="line" />}
             />
             <Area
               dataKey="data"
               type="natural"
-              fill="var(--color-data)"
-              fillOpacity={1.0}
+              fill="url(#fillData)"
+              fillOpacity={0.5}
               stroke="var(--color-data)"
             />
           </AreaChart>

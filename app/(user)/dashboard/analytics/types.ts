@@ -26,4 +26,5 @@ export type Analytic = {
     type: string;
     user_id?: string;
     created_at: Timestamp;
+    revenue?: string;
 };

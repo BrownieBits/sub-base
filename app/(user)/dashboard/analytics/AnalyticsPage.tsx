@@ -46,7 +46,6 @@ import { ProductLikesChart } from './charts/ProductLikesChart';
 import { ProductViewsChart } from './charts/ProductViewsChart';
 import { StoreSubscriptionChart } from './charts/StoreSubscriptionsChart';
 import { StoreViewsChart } from './charts/StoreViewsChart';
-import { TopProductsChart } from './charts/TopProductChart';
 import { TotalOrdersChart } from './charts/TotalOrdersChart';
 import { TotalRevenueChart } from './charts/TotalRevenueChart';
 import { Analytic } from './types';
@@ -374,7 +373,7 @@ export default function AnalyticsPage(props: Props) {
           <AnalyticsLoading />
         ) : (
           <>
-            <section className="w-full flex gap-8">
+            <section className="w-full flex flex-col md:flex-row gap-8">
               <TotalOrdersChart data={data} to={date?.to!} from={date?.from!} />
               <TotalRevenueChart
                 data={data}
@@ -382,7 +381,7 @@ export default function AnalyticsPage(props: Props) {
                 from={date?.from!}
               />
             </section>
-            <section className="w-full flex gap-8">
+            <section className="w-full flex flex-col md:flex-row gap-8">
               <ConversionRateChart
                 data={data}
                 to={date?.to!}
@@ -395,9 +394,7 @@ export default function AnalyticsPage(props: Props) {
                 from={date?.from!}
               />
             </section>
-            <section className="w-full flex gap-8">
-              <CitiesReachedChart data={data} />
-
+            <section className="w-full flex-col md:flex-row flex gap-8">
               <StoreViewsChart data={data} to={date?.to!} from={date?.from!} />
 
               <StoreSubscriptionChart
@@ -406,7 +403,8 @@ export default function AnalyticsPage(props: Props) {
                 from={date?.from!}
               />
             </section>
-            <section className="w-full flex gap-8">
+            <section className="w-full flex-col md:flex-row flex gap-8">
+              <CitiesReachedChart data={data} />
               <ProductViewsChart
                 data={data}
                 to={date?.to!}
@@ -418,7 +416,6 @@ export default function AnalyticsPage(props: Props) {
                 to={date?.to!}
                 from={date?.from!}
               />
-              <TopProductsChart data={data} to={date?.to!} from={date?.from!} />
             </section>
           </>
         )}

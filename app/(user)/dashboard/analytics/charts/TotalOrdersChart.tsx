@@ -19,14 +19,6 @@ import { Area, AreaChart, CartesianGrid, XAxis, YAxis } from 'recharts';
 import { Analytic, ChartData, ChartJSON } from '../types';
 import { buildDaily, buildHourly, buildMonthly, buildYearly } from './actions';
 
-const chartData = [
-  { month: 'January', desktop: 186 },
-  { month: 'February', desktop: 305 },
-  { month: 'March', desktop: 237 },
-  { month: 'April', desktop: 73 },
-  { month: 'May', desktop: 209 },
-  { month: 'June', desktop: 214 },
-];
 const chartConfig = {
   data: {
     label: 'Orders',
@@ -51,10 +43,10 @@ export const TotalOrdersChart = (props: {
     const diffInMonths = differenceInCalendarMonths(props.to, props.from);
     const diffInYears = differenceInCalendarYears(props.to, props.from);
 
+    let dataType = 'hourly';
     let orderJSON: ChartJSON = buildHourly();
 
-    let dataType = 'hourly';
-    if (diffInMonths < 1) {
+    if (diffInMonths <= 1) {
       orderJSON = buildDaily(diffInDays, props.from);
       dataType = 'daily';
     } else if (diffInMonths <= 12) {
@@ -77,24 +69,26 @@ export const TotalOrdersChart = (props: {
         formattedDate = format(docDate, 'yyyy');
       }
       const city = doc.city;
-      const country = doc.country;
-      const ip = doc.ip;
-      const options = doc.options;
-      const product_id = doc.product_id;
-      const quantity = doc.quantity;
-      const region = doc.region;
       const type = doc.type;
+      const revenue = doc.revenue;
+
+      if (city !== 'undefined' && type === 'order') {
+        orderJSON[formattedDate].push(revenue!);
+      }
     });
 
     const orderData: ChartData[] = [];
 
     Object.keys(orderJSON).map((key) => {
+      let orders = 0;
+      orderJSON[key].map((item) => {
+        orders += 1;
+      });
       orderData.push({
         date: key,
-        data: orderJSON[key].length,
+        data: orders,
       });
     });
-
     setOrders(orderData);
   }, [props.data]);
   if (orders === undefined) {
@@ -117,28 +111,43 @@ export const TotalOrdersChart = (props: {
               right: 12,
             }}
           >
-            <CartesianGrid vertical={false} />
+            <defs>
+              <linearGradient id="fillData" x1="0" y1="0" x2="0" y2="1">
+                <stop
+                  offset="5%"
+                  stopColor="var(--color-data)"
+                  stopOpacity={0.8}
+                />
+                <stop
+                  offset="95%"
+                  stopColor="var(--color-data)"
+                  stopOpacity={0.1}
+                />
+              </linearGradient>
+            </defs>
+            <CartesianGrid vertical={true} />
             <XAxis
               dataKey="date"
-              tickLine={false}
-              axisLine={false}
+              tickLine={true}
+              axisLine={true}
               tickMargin={8}
+              minTickGap={32}
               tickFormatter={(value) => value}
             />
             <YAxis
-              tickLine={false}
-              axisLine={false}
+              tickLine={true}
+              axisLine={true}
               tickMargin={8}
               tickCount={3}
             />
             <ChartTooltip
-              cursor={false}
+              cursor={true}
               content={<ChartTooltipContent indicator="line" />}
             />
             <Area
               dataKey="data"
               type="natural"
-              fill="var(--color-data)"
+              fill="url(#fillData)"
               fillOpacity={1.0}
               stroke="var(--color-data)"
             />

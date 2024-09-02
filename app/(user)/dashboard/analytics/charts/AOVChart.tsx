@@ -15,20 +15,12 @@ import {
 } from 'date-fns';
 import { Timestamp } from 'firebase/firestore';
 import React from 'react';
-import { Area, AreaChart, CartesianGrid, XAxis, YAxis } from 'recharts';
+import { Bar, BarChart, CartesianGrid, XAxis } from 'recharts';
 import { Analytic, ChartData, ChartJSON } from '../types';
 import { buildDaily, buildHourly, buildMonthly, buildYearly } from './actions';
 
-const chartData = [
-  { month: 'January', desktop: 186 },
-  { month: 'February', desktop: 305 },
-  { month: 'March', desktop: 237 },
-  { month: 'April', desktop: 73 },
-  { month: 'May', desktop: 209 },
-  { month: 'June', desktop: 214 },
-];
 const chartConfig = {
-  orders: {
+  data: {
     label: 'Orders',
     color: 'hsl(var(--primary))',
   },
@@ -50,7 +42,7 @@ export const AOVChart = (props: { data: Analytic[]; from: Date; to: Date }) => {
     let orderJSON: ChartJSON = buildHourly();
 
     let dataType = 'hourly';
-    if (diffInMonths < 1) {
+    if (diffInMonths <= 1) {
       orderJSON = buildDaily(diffInDays, props.from);
       dataType = 'daily';
     } else if (diffInMonths <= 12) {
@@ -73,23 +65,36 @@ export const AOVChart = (props: { data: Analytic[]; from: Date; to: Date }) => {
         formattedDate = format(docDate, 'yyyy');
       }
       const city = doc.city;
-      const country = doc.country;
-      const ip = doc.ip;
-      const options = doc.options;
-      const product_id = doc.product_id;
-      const quantity = doc.quantity;
-      const region = doc.region;
       const type = doc.type;
+      const revenue = doc.revenue;
+
+      if (city !== 'undefined' && type === 'order') {
+        orderJSON[formattedDate].push(revenue!);
+      }
     });
 
     const orderData: ChartData[] = [];
 
     Object.keys(orderJSON).map((key) => {
-      orderData.push({
-        date: key,
-        data: orderJSON[key].length,
+      let amount = 0;
+      let orders = 0;
+      orderJSON[key].map((item) => {
+        orders += 1;
+        amount += parseFloat(item);
       });
+      if (orders === 0) {
+        orderData.push({
+          date: key,
+          data: 0,
+        });
+      } else {
+        orderData.push({
+          date: key,
+          data: amount / orders,
+        });
+      }
     });
+    setOrders(orderData);
   }, [props.data]);
   if (orders === undefined) {
     return (
@@ -103,40 +108,22 @@ export const AOVChart = (props: { data: Analytic[]; from: Date; to: Date }) => {
       </p>
       {orders.length > 0 ? (
         <ChartContainer config={chartConfig}>
-          <AreaChart
-            accessibilityLayer
-            data={orders}
-            margin={{
-              left: -30,
-              right: 12,
-            }}
-          >
-            <CartesianGrid vertical={false} />
+          <BarChart accessibilityLayer data={orders}>
+            <CartesianGrid vertical={true} />
             <XAxis
               dataKey="date"
-              tickLine={false}
-              axisLine={false}
-              tickMargin={8}
+              tickLine={true}
+              tickMargin={10}
+              minTickGap={32}
+              axisLine={true}
               tickFormatter={(value) => value}
             />
-            <YAxis
-              tickLine={false}
-              axisLine={false}
-              tickMargin={8}
-              tickCount={3}
-            />
             <ChartTooltip
-              cursor={false}
-              content={<ChartTooltipContent indicator="line" />}
+              cursor={true}
+              content={<ChartTooltipContent hideLabel />}
             />
-            <Area
-              dataKey="data"
-              type="natural"
-              fill="var(--color-orders)"
-              fillOpacity={1.0}
-              stroke="var(--color-orders)"
-            />
-          </AreaChart>
+            <Bar dataKey="data" fill="var(--color-data)" radius={8} />
+          </BarChart>
         </ChartContainer>
       ) : (
         <section className="flex justify-center items-center w-full h-full min-h-[200px]">
