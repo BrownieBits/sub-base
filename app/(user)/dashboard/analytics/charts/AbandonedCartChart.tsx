@@ -28,7 +28,7 @@ const chartData = [
   { month: 'June', desktop: 214 },
 ];
 const chartConfig = {
-  orders: {
+  data: {
     label: 'Orders',
     color: 'hsl(var(--primary))',
   },
