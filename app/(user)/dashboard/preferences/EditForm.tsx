@@ -37,6 +37,7 @@ import {
 import { deleteObject, getDownloadURL, ref } from 'firebase/storage';
 import Image from 'next/image';
 import Link from 'next/link';
+import { generate } from 'random-words';
 import React from 'react';
 import { useUploadFile } from 'react-firebase-hooks/storage';
 import { useForm } from 'react-hook-form';
@@ -208,6 +209,20 @@ export default function EditForm(props: {
   }
 
   async function onSubmit() {
+    let password = form.getValues('password');
+
+    if (
+      form.getValues('password_protected') &&
+      form.getValues('password') === ''
+    ) {
+      const words = generate({
+        exactly: 2,
+        formatter: (word) => {
+          return word.slice(0, 1).toUpperCase().concat(word.slice(1));
+        },
+      }) as string[];
+      password = words.join('-');
+    }
     const docRef: DocumentReference = doc(db, 'stores', props.storeID);
     try {
       setDisabled(true);
@@ -222,7 +237,7 @@ export default function EditForm(props: {
         banner_url: banner,
         banner_filename: banner_fileName,
         password_protected: form.getValues('password_protected'),
-        password: form.getValues('password'),
+        password: password,
         country: form.getValues('country'),
         updated_at: Timestamp.fromDate(new Date()),
       });
