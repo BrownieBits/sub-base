@@ -2,10 +2,17 @@
 
 import ProductCard from '@/components/sb-ui/ProductCard';
 import { Button } from '@/components/ui/button';
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+} from '@/components/ui/dialog';
 import { Separator } from '@/components/ui/separator';
 import { Skeleton } from '@/components/ui/skeleton';
 import { analytics, db } from '@/lib/firebase';
-import { GridProduct, Item, Promotion } from '@/lib/types';
+import { GridProduct, Item, Promotion, RemovedProduct } from '@/lib/types';
 import { logEvent } from 'firebase/analytics';
 import {
   CollectionReference,
@@ -21,7 +28,9 @@ import {
   orderBy,
   query,
   where,
+  writeBatch,
 } from 'firebase/firestore';
+import Image from 'next/image';
 import Link from 'next/link';
 import React from 'react';
 import StoreItems from './StoreItems';
@@ -32,6 +41,7 @@ type Items = {
 type Promotions = {
   [key: string]: Promotion;
 };
+
 type Props = {
   cart_id: string;
   country: string;
@@ -48,6 +58,9 @@ export default function CartDetailPage(props: Props) {
   const [promotions, setPromotions] = React.useState<Promotions | null>(null);
   const [discountsTotal, setDiscountsTotal] = React.useState<number>(0);
   const [related, setRelated] = React.useState<GridProduct[]>([]);
+  const [removedItems, setRemovedItems] = React.useState<RemovedProduct[]>([]);
+  const [removedDialogueOpen, setRemovedDialogueOpen] =
+    React.useState<boolean>(false);
 
   async function updateQuantity(store_id: string, index: number, item: Item) {
     const newItems = { ...items! };
@@ -95,12 +108,15 @@ export default function CartDetailPage(props: Props) {
 
       const productIDs: string[] = [];
       const cartItems: Items = {};
+      const removed_items: RemovedProduct[] = [];
+      const batch = writeBatch(db);
       if (!itemsData.empty) {
         itemsData.docs.map((doc) => {
           productIDs.push(doc.id.split('_')[0]);
           if (!cartItems.hasOwnProperty(doc.data().store_id)) {
             cartItems[doc.data().store_id] = [
               {
+                cart_item_id: doc.id,
                 id: doc.id.split('_')[0],
                 options: doc.data().options || [],
                 quantity: doc.data().quantity,
@@ -118,6 +134,7 @@ export default function CartDetailPage(props: Props) {
             ];
           } else {
             cartItems[doc.data().store_id].push({
+              cart_item_id: doc.id,
               id: doc.id.split('_')[0],
               options: doc.data().options || [],
               quantity: doc.data().quantity,
@@ -144,40 +161,101 @@ export default function CartDetailPage(props: Props) {
 
         await Promise.all(
           productsData.docs.map(async (document) => {
-            await Promise.all(
-              cartItems[document.data().store_id].map(async (item) => {
+            if (document.data().status === 'Private') {
+              let removeIndex = 0;
+              cartItems[document.data().store_id].map((item, index) => {
                 if (item.id === document.id) {
-                  item.compare_at = document.data().compare_at as number;
-                  item.price = document.data().price as number;
-                  item.currency = document.data().currency;
-                  item.images = document.data().images;
-                  item.inventory = document.data().inventory;
-                  item.track_inventory = document.data().track_inventory;
-                  item.product_type = document.data().product_type;
-                  item.name = document.data().name;
-                  item.service_percent = document.data().service_percent;
-                  if (item.options.length > 0) {
-                    const variantRef: DocumentReference = doc(
-                      db,
-                      'products',
-                      document.id,
-                      'variants',
-                      item.options.join('-')
-                    );
-                    const variantDoc: DocumentData = await getDoc(variantRef);
-                    if (variantDoc.exists()) {
-                      item.compare_at = variantDoc.data().compare_at as number;
-                      item.price = variantDoc.data().price as number;
-                      item.inventory = variantDoc.data().inventory;
+                  removeIndex = index;
+                  removed_items.push({
+                    image_url: document.data().images[0],
+                    name: document.data().name,
+                    reason: 'Product no longer public.',
+                  });
+                  const removeDoc: DocumentReference = doc(
+                    db,
+                    `carts/${props.cart_id}/items`,
+                    item.cart_item_id
+                  );
+                  batch.delete(removeDoc);
+                }
+              });
+              cartItems[document.data().store_id].splice(removeIndex, 1);
+              if (cartItems[document.data().store_id].length === 0) {
+                delete cartItems[document.data().store_id];
+              }
+            } else if (
+              document.data().track_inventory &&
+              document.data().inventory === 0
+            ) {
+              let removeIndex = 0;
+              cartItems[document.data().store_id].map((item, index) => {
+                if (item.id === document.id) {
+                  removeIndex = index;
+                  removed_items.push({
+                    image_url: document.data().images[0],
+                    name: document.data().name,
+                    reason: 'Product out of stock.',
+                  });
+                  const removeDoc: DocumentReference = doc(
+                    db,
+                    `carts/${props.cart_id}/items`,
+                    item.cart_item_id
+                  );
+                  batch.delete(removeDoc);
+                }
+              });
+              cartItems[document.data().store_id].splice(removeIndex, 1);
+              if (cartItems[document.data().store_id].length === 0) {
+                delete cartItems[document.data().store_id];
+              }
+            } else {
+              await Promise.all(
+                cartItems[document.data().store_id].map(async (item) => {
+                  if (item.id === document.id) {
+                    item.compare_at = document.data().compare_at as number;
+                    item.price = document.data().price as number;
+                    item.currency = document.data().currency;
+                    item.images = document.data().images;
+                    item.inventory = document.data().inventory;
+                    item.track_inventory = document.data().track_inventory;
+                    item.product_type = document.data().product_type;
+                    item.name = document.data().name;
+                    item.service_percent = document.data().service_percent;
+                    if (item.options.length > 0) {
+                      const variantRef: DocumentReference = doc(
+                        db,
+                        'products',
+                        document.id,
+                        'variants',
+                        item.options.join('-')
+                      );
+                      const variantDoc: DocumentData = await getDoc(variantRef);
+                      if (variantDoc.exists()) {
+                        item.compare_at = variantDoc.data()
+                          .compare_at as number;
+                        item.price = variantDoc.data().price as number;
+                        item.inventory = variantDoc.data().inventory;
+                      }
+                    }
+                    if (
+                      item.track_inventory &&
+                      item.inventory < item.quantity
+                    ) {
+                      item.quantity = item.inventory;
+                      removed_items.push({
+                        image_url: document.data().images[0],
+                        name: document.data().name,
+                        reason: `Only ${item.inventory} in stock.`,
+                      });
                     }
                   }
-                }
-              })
-            );
+                })
+              );
+            }
           })
         );
       }
-
+      await batch.commit();
       const promosRef: CollectionReference = collection(
         db,
         'carts',
@@ -216,6 +294,7 @@ export default function CartDetailPage(props: Props) {
           })
         );
       }
+      setRemovedItems(removed_items);
       setPromotions(promotions);
       setItems(cartItems);
 
@@ -226,6 +305,7 @@ export default function CartDetailPage(props: Props) {
         relatedRef,
         where('store_id', 'in', store_ids),
         where('revenue', '>=', 0),
+        where('status', '==', 'Public'),
         orderBy('revenue'),
         limit(8)
       );
@@ -312,6 +392,11 @@ export default function CartDetailPage(props: Props) {
       setCartTotal(item_total + service_total - discounts_total);
     }
   }, [items, promotions]);
+  React.useEffect(() => {
+    if (removedItems.length > 0) {
+      setRemovedDialogueOpen(true);
+    }
+  }, [removedItems]);
 
   if (items === null) {
     return (
@@ -497,6 +582,39 @@ export default function CartDetailPage(props: Props) {
 
         <section></section>
       </section>
+      <Dialog open={removedDialogueOpen} onOpenChange={setRemovedDialogueOpen}>
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>We adjusted your cart...</DialogTitle>
+            <DialogDescription>
+              <section className="w-full flex flex-col gap-4 pt-4">
+                {removedItems.map((item) => {
+                  return (
+                    <section
+                      className="w-full flex gap-4 items-center"
+                      key={`removed-item-${item.name}`}
+                    >
+                      <Image
+                        src={item.image_url}
+                        alt={`Removed Item-${item.name}`}
+                        width={50}
+                        height={50}
+                        className="w-[50px]"
+                      />
+                      <section className="w-full flex-1">
+                        <p className="text-foreground">{item.name}</p>
+                        <p className="text-xs text-destructive">
+                          {item.reason}
+                        </p>
+                      </section>
+                    </section>
+                  );
+                })}
+              </section>
+            </DialogDescription>
+          </DialogHeader>
+        </DialogContent>
+      </Dialog>
     </>
   );
 }

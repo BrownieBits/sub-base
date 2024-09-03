@@ -1,6 +1,6 @@
 import { Separator } from '@/components/ui/separator';
 import { db } from '@/lib/firebase';
-import { Item, Promotion } from '@/lib/types';
+import { Item, Promotion, RemovedProduct } from '@/lib/types';
 import {
   CollectionReference,
   DocumentData,
@@ -12,6 +12,7 @@ import {
   getDocs,
   query,
   where,
+  writeBatch,
 } from 'firebase/firestore';
 import { Metadata } from 'next';
 import { cookies, headers } from 'next/headers';
@@ -28,6 +29,7 @@ type Data = {
   store_ids?: string[];
   items?: Items;
   promotions?: Promotions;
+  removedItems?: RemovedProduct[];
   error?: string;
 };
 
@@ -66,6 +68,7 @@ async function getData(cartId: string) {
     if (!cartItems.hasOwnProperty(doc.data().store_id)) {
       cartItems[doc.data().store_id] = [
         {
+          cart_item_id: doc.id,
           id: doc.id.split('_')[0],
           options: doc.data().options || [],
           quantity: doc.data().quantity,
@@ -83,6 +86,7 @@ async function getData(cartId: string) {
       ];
     } else {
       cartItems[doc.data().store_id].push({
+        cart_item_id: doc.id,
         id: doc.id.split('_')[0],
         options: doc.data().options || [],
         quantity: doc.data().quantity,
@@ -104,40 +108,109 @@ async function getData(cartId: string) {
   const productsData: QuerySnapshot<DocumentData, DocumentData> =
     await getDocs(productsQuery);
 
+  const batch = writeBatch(db);
+  const removed_items: RemovedProduct[] = [];
+
   await Promise.all(
     productsData.docs.map(async (document) => {
-      await Promise.all(
-        cartItems[document.data().store_id].map(async (item) => {
+      if (document.data().status === 'Private') {
+        let removeIndex = 0;
+        cartItems[document.data().store_id].map((item, index) => {
           if (item.id === document.id) {
-            item.compare_at = document.data().compare_at as number;
-            item.price = document.data().price as number;
-            item.currency = document.data().currency;
-            item.images = document.data().images;
-            item.inventory = document.data().inventory;
-            item.track_inventory = document.data().track_inventory;
-            item.product_type = document.data().product_type;
-            item.name = document.data().name;
-            item.service_percent = document.data().service_percent;
-            if (item.options.length > 0) {
-              const variantRef: DocumentReference = doc(
-                db,
-                'products',
-                document.id,
-                'variants',
-                item.options.join('-')
-              );
-              const variantDoc: DocumentData = await getDoc(variantRef);
-              if (variantDoc.exists()) {
-                item.compare_at = variantDoc.data().compare_at as number;
-                item.price = variantDoc.data().price as number;
-                item.inventory = variantDoc.data().inventory;
+            removeIndex = index;
+            removed_items.push({
+              image_url: document.data().images[0],
+              name: document.data().name,
+              reason: 'Product no longer public.',
+            });
+            const removeDoc: DocumentReference = doc(
+              db,
+              `carts/${cartId}/items`,
+              item.cart_item_id
+            );
+            batch.delete(removeDoc);
+          }
+        });
+        cartItems[document.data().store_id].splice(removeIndex, 1);
+        if (cartItems[document.data().store_id].length === 0) {
+          delete cartItems[document.data().store_id];
+        }
+      } else if (
+        document.data().track_inventory &&
+        document.data().inventory === 0
+      ) {
+        let removeIndex = 0;
+        cartItems[document.data().store_id].map((item, index) => {
+          if (item.id === document.id) {
+            removeIndex = index;
+            removed_items.push({
+              image_url: document.data().images[0],
+              name: document.data().name,
+              reason: 'Product out of stock.',
+            });
+            const removeDoc: DocumentReference = doc(
+              db,
+              `carts/${cartId}/items`,
+              item.cart_item_id
+            );
+            batch.delete(removeDoc);
+          }
+        });
+        cartItems[document.data().store_id].splice(removeIndex, 1);
+        if (cartItems[document.data().store_id].length === 0) {
+          delete cartItems[document.data().store_id];
+        }
+      } else {
+        await Promise.all(
+          cartItems[document.data().store_id].map(async (item) => {
+            if (item.id === document.id) {
+              item.compare_at = document.data().compare_at as number;
+              item.price = document.data().price as number;
+              item.currency = document.data().currency;
+              item.images = document.data().images;
+              item.inventory = document.data().inventory;
+              item.track_inventory = document.data().track_inventory;
+              item.product_type = document.data().product_type;
+              item.name = document.data().name;
+              item.service_percent = document.data().service_percent;
+              if (item.options.length > 0) {
+                const variantRef: DocumentReference = doc(
+                  db,
+                  'products',
+                  document.id,
+                  'variants',
+                  item.options.join('-')
+                );
+                const variantDoc: DocumentData = await getDoc(variantRef);
+                if (variantDoc.exists()) {
+                  item.compare_at = variantDoc.data().compare_at as number;
+                  item.price = variantDoc.data().price as number;
+                  item.inventory = variantDoc.data().inventory;
+                }
+              }
+              if (item.track_inventory && item.inventory < item.quantity) {
+                item.quantity = item.inventory;
+                removed_items.push({
+                  image_url: document.data().images[0],
+                  name: document.data().name,
+                  reason: `Only ${item.inventory} in stock.`,
+                });
+                const updateDoc: DocumentReference = doc(
+                  db,
+                  `carts/${cartId}/items`,
+                  item.cart_item_id
+                );
+                batch.update(updateDoc, {
+                  quantity: item.quantity,
+                });
               }
             }
-          }
-        })
-      );
+          })
+        );
+      }
     })
   );
+  await batch.commit();
 
   const promotions: Promotions = {};
   if (!promosData.empty) {
@@ -171,6 +244,7 @@ async function getData(cartId: string) {
     store_ids: store_ids,
     items: cartItems,
     promotions: promotions,
+    removedItems: removed_items,
   };
 }
 
@@ -228,7 +302,11 @@ export default async function Checkout() {
         </section>
       </section>
       <Separator />
-      <CheckoutPage items={data.items!} promotions={data.promotions!} />
+      <CheckoutPage
+        items={data.items!}
+        promotions={data.promotions!}
+        removed_items={data.removedItems!}
+      />
       <TrackCheckout
         store_ids={data.store_ids!}
         user_id={user_id?.value}

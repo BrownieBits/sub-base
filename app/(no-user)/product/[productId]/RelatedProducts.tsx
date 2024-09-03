@@ -90,13 +90,11 @@ export default function RelatedProducts(props: {
         <Separator />
         <section className="w-full flex flex-col gap-4">
           {related?.map((doc) => {
-            return (
-              <>
-                {doc.id !== props.product_id && (
-                  <ProductCard product={doc} show_creator={true} key={doc.id} />
-                )}
-              </>
-            );
+            if (doc.id !== props.product_id) {
+              return (
+                <ProductCard product={doc} show_creator={true} key={doc.id} />
+              );
+            }
           })}
         </section>
       </section>

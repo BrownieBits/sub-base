@@ -27,6 +27,7 @@ export type GridProduct = {
 }
 
 export type Item = {
+    cart_item_id: string;
     id: string;
     options: string[];
     quantity: number;
@@ -49,4 +50,10 @@ export type Promotion = {
     name: string;
     status: string;
     type: string;
+};
+
+export type RemovedProduct = {
+    image_url: string;
+    name: string;
+    reason: string;
 };

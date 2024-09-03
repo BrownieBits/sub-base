@@ -1,11 +1,12 @@
 'use client';
 
 import { Separator } from '@/components/ui/separator';
-import { Item, Promotion } from '@/lib/types';
+import { Item, Promotion, RemovedProduct } from '@/lib/types';
 import { Timestamp } from 'firebase/firestore';
 import React from 'react';
 import AddressForm from './AddressForm';
 import ItemDetails from './ItemDetails';
+import RemovedItemsDialogue from './RemovedItemsDialogue';
 
 type Items = {
   [key: string]: Item[];
@@ -16,6 +17,7 @@ type Promotions = {
 type Props = {
   items: Items;
   promotions: Promotions;
+  removed_items: RemovedProduct[];
 };
 
 export default function CheckoutPage(props: Props) {
@@ -25,6 +27,7 @@ export default function CheckoutPage(props: Props) {
   const [discountsTotal, setDiscountsTotal] = React.useState<number>(0);
   const [shippingTotal, setShippingTotal] = React.useState<number>(0);
   const [taxesTotal, setTaxesTotal] = React.useState<number>(0);
+  const [removedItems, setRemovedItems] = React.useState<RemovedProduct[]>([]);
 
   React.useEffect(() => {}, []);
   React.useEffect(() => {
@@ -85,6 +88,9 @@ export default function CheckoutPage(props: Props) {
     setServiceTotal(service_total);
     setCartTotal(item_total + service_total - discounts_total);
   }, [props.items, props.promotions]);
+  React.useEffect(() => {
+    setRemovedItems(props.removed_items);
+  }, [props.removed_items]);
 
   return (
     <section className="w-full max-w-[1754px] mx-auto px-4 py-4">
@@ -166,6 +172,7 @@ export default function CheckoutPage(props: Props) {
           </section>
         </aside>
       </section>
+      <RemovedItemsDialogue removedItems={removedItems} />
     </section>
   );
 }

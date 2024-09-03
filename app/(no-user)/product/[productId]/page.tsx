@@ -179,6 +179,7 @@ export default async function ProductPage({ params }: Props) {
         variants={variants}
         view_count={data.product?.data().view_count}
         track_inventory={data.product?.data().track_inventory}
+        inventory={data.product?.data().inventory}
         country={country}
         city={city}
         region={region}

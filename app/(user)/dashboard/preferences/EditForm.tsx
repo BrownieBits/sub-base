@@ -222,6 +222,7 @@ export default function EditForm(props: {
         },
       }) as string[];
       password = words.join('-');
+      form.setValue('password', password);
     }
     const docRef: DocumentReference = doc(db, 'stores', props.storeID);
     try {

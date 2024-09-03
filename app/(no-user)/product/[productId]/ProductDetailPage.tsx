@@ -84,6 +84,7 @@ type Props = {
   created_at: Timestamp;
   view_count: number;
   track_inventory: boolean;
+  inventory: number;
   country: string;
   city: string;
   region: string;
@@ -92,7 +93,7 @@ type Props = {
 
 export default function ProductDetailPage(props: Props) {
   const [thinking, setThinking] = React.useState<boolean>(false);
-  const [maxQunaitity, setMaxQunaitity] = React.useState<number>();
+  const [maxQuantity, setMaxQuantity] = React.useState<number>();
   const [selectedOptions, setSelectedOptions] = React.useState<string[]>([]);
   const [price, setPrice] = React.useState<number>(0.0);
   const [compareAt, setCompareAt] = React.useState<number>(0.0);
@@ -101,54 +102,63 @@ export default function ProductDetailPage(props: Props) {
   });
 
   async function onSubmit() {
+    console.log('adding?');
     setThinking(true);
-    const userID = getCookie('user_id');
-    const cartID = getCookie('cart_id');
-    const quantity = form.getValues('quantity') as number;
-    let docID = props.product_id;
-    if (props.options.length > 0) {
-      docID += `_${selectedOptions.join('_')}`;
-    }
-    const cartItemRef: DocumentReference = doc(
-      db,
-      `carts/${cartID}/items`,
-      docID
-    );
-    await runTransaction(db, async (transaction) => {
-      const cartItemDoc = await transaction.get(cartItemRef);
-      if (!cartItemDoc.exists()) {
-        transaction.set(cartItemRef, {
-          quantity: quantity,
-          options: selectedOptions,
-          store_id: props.store_id,
-          created_at: Timestamp.fromDate(new Date()),
-        });
-      } else {
-        const newQuantity = cartItemDoc.data()?.quantity + quantity;
-        await transaction.update(cartItemRef, { quantity: newQuantity });
+    try {
+      const userID = getCookie('user_id');
+      const cartID = getCookie('cart_id');
+      const quantity = form.getValues('quantity') as number;
+      let docID = props.product_id;
+      if (props.options.length > 0) {
+        docID += `_${selectedOptions.join('_')}`;
       }
-    });
+      const cartItemRef: DocumentReference = doc(
+        db,
+        `carts/${cartID}/items`,
+        docID
+      );
+      await runTransaction(db, async (transaction) => {
+        const cartItemDoc = await transaction.get(cartItemRef);
+        if (!cartItemDoc.exists()) {
+          transaction.set(cartItemRef, {
+            quantity: quantity,
+            options: selectedOptions,
+            store_id: props.store_id,
+            created_at: Timestamp.fromDate(new Date()),
+          });
+        } else {
+          const newQuantity = cartItemDoc.data()?.quantity + quantity;
+          await transaction.update(cartItemRef, { quantity: newQuantity });
+        }
+      });
 
-    const analyticsColRef: CollectionReference = collection(
-      db,
-      `stores/${props.store_id}/analytics`
-    );
-    await addDoc(analyticsColRef, {
-      type: 'cart_add',
-      product_id: props.product_id,
-      quantity: quantity,
-      options: selectedOptions,
-      store_id: props.store_id,
-      user_id: userID != undefined ? userID : null,
-      country: props.country === 'undefined' ? 'SW' : props.country,
-      city: props.city === 'undefined' ? 'Mos Eisley' : props.city,
-      region: props.region === 'undefined' ? 'TAT' : props.region,
-      ip: props.ip === 'undefined' ? '0.0.0.0' : props.ip,
-      created_at: Timestamp.fromDate(new Date()),
-    });
-    toast.success(`${props.product_name} Added to Cart!`, {
-      description: `You have added ${quantity}${selectedOptions.length > 0 ? ' ' : ''}${selectedOptions.join(' ')} ${props.product_name}${quantity > 1 ? 's' : ''} to your cart!`,
-    });
+      const analyticsColRef: CollectionReference = collection(
+        db,
+        `stores/${props.store_id}/analytics`
+      );
+      await addDoc(analyticsColRef, {
+        type: 'cart_add',
+        product_id: props.product_id,
+        quantity: quantity,
+        options: selectedOptions,
+        store_id: props.store_id,
+        user_id: userID != undefined ? userID : null,
+        country: props.country === 'undefined' ? 'SW' : props.country,
+        city: props.city === 'undefined' ? 'Mos Eisley' : props.city,
+        region: props.region === 'undefined' ? 'TAT' : props.region,
+        ip: props.ip === 'undefined' ? '0.0.0.0' : props.ip,
+        created_at: Timestamp.fromDate(new Date()),
+      });
+      toast.success(`${props.product_name} Added to Cart!`, {
+        description: `You have added ${quantity}${selectedOptions.length > 0 ? ' ' : ''}${selectedOptions.join(' ')} ${props.product_name}${quantity > 1 ? 's' : ''} to your cart!`,
+      });
+    } catch (error) {
+      console.log(error);
+      toast.error(`We had an issue adding to your cart.`, {
+        description: `Please try again later.`,
+      });
+    }
+
     setThinking(false);
   }
 
@@ -168,7 +178,7 @@ export default function ProductDetailPage(props: Props) {
     if (selectedVariant.length > 0) {
       setPrice(selectedVariant[0].price);
       setCompareAt(selectedVariant[0].compare_at);
-      setMaxQunaitity(selectedVariant[0].inventory);
+      setMaxQuantity(selectedVariant[0].inventory);
       if (selectedVariant[0].inventory > 0) {
         form.setValue('quantity', 1);
       } else {
@@ -191,12 +201,18 @@ export default function ProductDetailPage(props: Props) {
       setCompareAt(props.compare_at);
     }
     if (props.product_type === 'Digital') {
-      setMaxQunaitity(1);
+      setMaxQuantity(1);
       form.setValue('quantity', 1);
     }
     if (!props.track_inventory) {
-      setMaxQunaitity(100);
+      setMaxQuantity(100);
       form.setValue('quantity', 1);
+    } else if (props.track_inventory && props.inventory > 0) {
+      setMaxQuantity(props.inventory);
+      form.setValue('quantity', 1);
+    } else {
+      setMaxQuantity(0);
+      form.setValue('quantity', 0);
     }
     let newOptionList = selectedOptions.slice(0);
     newOptionList = props.options.map((option) => '');
@@ -311,7 +327,7 @@ export default function ProductDetailPage(props: Props) {
                     })}
                   </section>
                 )}
-                {maxQunaitity != null && (
+                {maxQuantity != null && (
                   <FormField
                     control={form.control}
                     name="quantity"
@@ -323,7 +339,7 @@ export default function ProductDetailPage(props: Props) {
                             onChangeCapture={field.onChange}
                             id="quantity"
                             type="number"
-                            max={maxQunaitity}
+                            max={maxQuantity}
                             min={0}
                             {...field}
                           />
@@ -337,7 +353,7 @@ export default function ProductDetailPage(props: Props) {
             </Form>
           </section>
 
-          {maxQunaitity == 0 ? (
+          {maxQuantity == 0 ? (
             <Button variant="outline" className="mt-8">
               Sold Out
             </Button>
