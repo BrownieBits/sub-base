@@ -318,7 +318,7 @@ export default function EditForm(props: {
                   up on search engines.
                 </p>
               </aside>
-              <aside className="w-full flex flex1 flex-col gap-8 bg-layer-one p-8 rounded drop-shadow">
+              <aside className="w-full flex flex-1 flex-col gap-8 bg-layer-one p-8 rounded drop-shadow">
                 <FormField
                   control={form.control}
                   name="name"
@@ -399,7 +399,7 @@ export default function EditForm(props: {
                   brand and personality.
                 </p>
               </aside>
-              <aside className="w-full flex flex1 flex-col gap-8 bg-layer-one p-8 rounded drop-shadow">
+              <aside className="w-full flex flex-1 flex-col gap-8 bg-layer-one p-8 rounded drop-shadow">
                 <FormField
                   control={form.control}
                   name="avatar"
@@ -490,7 +490,7 @@ export default function EditForm(props: {
                         <FormControl>
                           {selectedBanner ? (
                             <section className="w-full flex items-center gap-8">
-                              <section className="flex flex1">
+                              <section className="flex flex-1">
                                 <Image
                                   src={selectedBanner}
                                   alt="Store Banner"
@@ -568,7 +568,7 @@ export default function EditForm(props: {
                 </p>
                 <p>Limit who can access your online store.</p>
               </aside>
-              <aside className="w-full flex flex1 flex-col gap-8 bg-layer-one p-8 rounded drop-shadow">
+              <aside className="w-full flex flex-1 flex-col gap-8 bg-layer-one p-8 rounded drop-shadow">
                 <FormField
                   control={form.control}
                   name="password_protected"

@@ -354,7 +354,7 @@ export default function Edit(props: {
                     collection shows up on search engines.
                   </p>
                 </aside>
-                <aside className="w-full flex flex1 flex-col gap-8 bg-layer-one p-8 rounded drop-shadow">
+                <aside className="w-full flex flex-1 flex-col gap-8 bg-layer-one p-8 rounded drop-shadow">
                   <FormField
                     control={form.control}
                     name="name"
@@ -439,7 +439,7 @@ export default function Edit(props: {
                       of products for you.
                     </p>
                   </aside>
-                  <aside className="w-full flex flex1 flex-col gap-8 bg-layer-one p-8 rounded drop-shadow">
+                  <aside className="w-full flex flex-1 flex-col gap-8 bg-layer-one p-8 rounded drop-shadow">
                     <FormField
                       control={form.control}
                       name="tags"
@@ -496,7 +496,7 @@ export default function Edit(props: {
                 </AlertDialogContent>
               </AlertDialog>
             </aside>
-            <aside className="w-full flex flex1 flex-col gap-8 bg-layer-one p-8 rounded drop-shadow">
+            <aside className="w-full flex flex-1 flex-col gap-8 bg-layer-one p-8 rounded drop-shadow">
               {loading1 ? (
                 <div>Loading</div>
               ) : (

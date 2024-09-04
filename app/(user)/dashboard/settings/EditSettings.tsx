@@ -134,7 +134,7 @@ export default function EditSettings(props: {
                     more that we will use in various locations on the site.
                   </p>
                 </aside>
-                <aside className="w-full flex flex1 flex-col gap-8 bg-layer-one p-8 rounded drop-shadow">
+                <aside className="w-full flex flex-1 flex-col gap-8 bg-layer-one p-8 rounded drop-shadow">
                   <FormField
                     control={form.control}
                     name="name"
@@ -242,7 +242,7 @@ export default function EditSettings(props: {
                 subscription based services.
               </p>
             </aside>
-            <aside className="w-full flex flex1 flex-col gap-8 bg-layer-one p-8 rounded drop-shadow">
+            <aside className="w-full flex flex-1 flex-col gap-8 bg-layer-one p-8 rounded drop-shadow">
               <p>TODO: Fill in once connected to stripe</p>
             </aside>
           </section>

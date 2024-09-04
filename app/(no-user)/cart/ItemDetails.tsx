@@ -188,7 +188,7 @@ export default function ItemDetails(props: Props) {
                 control={form.control}
                 name={`quantity`}
                 render={({ field }) => (
-                  <FormItem className="w-full flex1">
+                  <FormItem className="w-full flex-1">
                     <Select
                       onValueChange={(event) => onOptionChange(event)}
                       defaultValue={field.value}

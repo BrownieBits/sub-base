@@ -547,7 +547,7 @@ export default function DigitalEditForm(props: Props) {
                   shows up on search engines.
                 </p>
               </aside>
-              <aside className="w-full flex flex1 flex-col gap-8 bg-layer-one p-8 rounded drop-shadow">
+              <aside className="w-full flex flex-1 flex-col gap-8 bg-layer-one p-8 rounded drop-shadow">
                 <FormField
                   control={form.control}
                   name="name"
@@ -683,7 +683,7 @@ export default function DigitalEditForm(props: Props) {
                   }}
                 />
               </aside>
-              <aside className="w-full overflow-x-auto flex flex1 flex-col gap-8 bg-layer-one p-8 rounded drop-shadow">
+              <aside className="w-full overflow-x-auto flex flex-1 flex-col gap-8 bg-layer-one p-8 rounded drop-shadow">
                 <DraggableImages
                   product_images={productImages}
                   product_image_files={productImageFiles}
@@ -776,7 +776,7 @@ export default function DigitalEditForm(props: Props) {
                   }}
                 />
               </aside>
-              <aside className="w-full flex flex1 flex-col gap-8 bg-layer-one p-8 rounded drop-shadow">
+              <aside className="w-full flex flex-1 flex-col gap-8 bg-layer-one p-8 rounded drop-shadow">
                 {digitalFile === '' ? (
                   <section className="flex flex-col">
                     <p>
@@ -822,13 +822,13 @@ export default function DigitalEditForm(props: Props) {
                   searchable.
                 </p>
               </aside>
-              <aside className="w-full flex flex1 flex-col gap-8 bg-layer-one p-8 rounded drop-shadow">
+              <aside className="w-full flex flex-1 flex-col gap-8 bg-layer-one p-8 rounded drop-shadow">
                 <section className="w-full flex flex-col md:flex-row gap-8">
                   <FormField
                     control={form.control}
                     name="prices.price"
                     render={({ field }) => (
-                      <FormItem className="w-full flex1">
+                      <FormItem className="w-full flex-1">
                         <FormLabel>Price</FormLabel>
                         <FormControl>
                           <Input
@@ -846,7 +846,7 @@ export default function DigitalEditForm(props: Props) {
                     control={form.control}
                     name="prices.compare_at"
                     render={({ field }) => (
-                      <FormItem className="w-full flex1">
+                      <FormItem className="w-full flex-1">
                         <FormLabel>Compare At Price</FormLabel>
                         <FormControl>
                           <Input
@@ -864,7 +864,7 @@ export default function DigitalEditForm(props: Props) {
                     control={form.control}
                     name="currency"
                     render={({ field }) => (
-                      <FormItem className="w-full flex1">
+                      <FormItem className="w-full flex-1">
                         <FormLabel>Currency</FormLabel>
                         <Select
                           onValueChange={field.onChange}

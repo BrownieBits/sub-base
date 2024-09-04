@@ -957,7 +957,7 @@ export default function SelfEditForm(props: Props) {
                   shows up on search engines.
                 </p>
               </aside>
-              <aside className="w-full flex flex1 flex-col gap-8 bg-layer-one p-8 rounded drop-shadow">
+              <aside className="w-full flex flex-1 flex-col gap-8 bg-layer-one p-8 rounded drop-shadow">
                 <FormField
                   control={form.control}
                   name="name"
@@ -1114,7 +1114,7 @@ export default function SelfEditForm(props: Props) {
                   }}
                 />
               </aside>
-              <aside className="w-full overflow-x-auto flex flex1 flex-col gap-8 bg-layer-one p-8 rounded drop-shadow">
+              <aside className="w-full overflow-x-auto flex flex-1 flex-col gap-8 bg-layer-one p-8 rounded drop-shadow">
                 <DraggableImages
                   product_images={productImages}
                   product_image_files={productImageFiles}
@@ -1134,7 +1134,7 @@ export default function SelfEditForm(props: Props) {
                   searchable.
                 </p>
               </aside>
-              <aside className="w-full flex flex1 flex-col gap-8 bg-layer-one p-8 rounded drop-shadow">
+              <aside className="w-full flex flex-1 flex-col gap-8 bg-layer-one p-8 rounded drop-shadow">
                 <section className="w-full flex flex-col md:flex-row gap-8">
                   <FormField
                     control={form.control}
@@ -1142,7 +1142,7 @@ export default function SelfEditForm(props: Props) {
                     render={({ field }) => (
                       <FormItem
                         className={cn(
-                          'w-full flex1',
+                          'w-full flex-1',
                           variants.length > 0 ? 'hidden' : 'block'
                         )}
                       >
@@ -1166,7 +1166,7 @@ export default function SelfEditForm(props: Props) {
                     render={({ field }) => (
                       <FormItem
                         className={cn(
-                          'w-full flex1',
+                          'w-full flex-1',
                           variants.length > 0 ? 'hidden' : 'block'
                         )}
                       >
@@ -1188,7 +1188,7 @@ export default function SelfEditForm(props: Props) {
                     control={form.control}
                     name="currency"
                     render={({ field }) => (
-                      <FormItem className="w-full flex1">
+                      <FormItem className="w-full flex-1">
                         <FormLabel>Currency</FormLabel>
                         <Select
                           onValueChange={field.onChange}
@@ -1227,7 +1227,7 @@ export default function SelfEditForm(props: Props) {
                   searchable.
                 </p>
               </aside>
-              <aside className="w-full flex flex1 flex-col gap-8 bg-layer-one p-8 rounded drop-shadow">
+              <aside className="w-full flex flex-1 flex-col gap-8 bg-layer-one p-8 rounded drop-shadow">
                 <section className="w-full flex gap-8 items-center justify-between">
                   <p>
                     <b>Options</b>
@@ -1310,7 +1310,7 @@ export default function SelfEditForm(props: Props) {
                     {variants.map((variant, index) => (
                       <div
                         key={`variant-${index}`}
-                        className="w-full grid grid-cols-4 flex1 items-center gap-8"
+                        className="w-full grid grid-cols-4 flex-1 items-center gap-8"
                       >
                         <p>{variant}</p>
                         <div className="col-span-4 md:col-span-3 grid grid-cols-6 gap-8">
@@ -1398,7 +1398,7 @@ export default function SelfEditForm(props: Props) {
                   searchable.
                 </p>
               </aside>
-              <aside className="w-full flex flex1 flex-col gap-8 bg-layer-one p-8 rounded drop-shadow">
+              <aside className="w-full flex flex-1 flex-col gap-8 bg-layer-one p-8 rounded drop-shadow">
                 <FormField
                   control={form.control}
                   name="tags"
@@ -1511,13 +1511,13 @@ export default function SelfEditForm(props: Props) {
                   settings.
                 </p>
               </aside>
-              <aside className="w-full flex flex1 flex-col gap-8 bg-layer-one p-8 rounded drop-shadow">
+              <aside className="w-full flex flex-1 flex-col gap-8 bg-layer-one p-8 rounded drop-shadow">
                 <section className="w-full flex flex-col md:flex-row gap-8">
                   <FormField
                     control={form.control}
                     name="weight"
                     render={({ field }) => (
-                      <FormItem className="w-full flex1">
+                      <FormItem className="w-full flex-1">
                         <FormLabel>Weight</FormLabel>
                         <FormControl>
                           <Input
@@ -1534,7 +1534,7 @@ export default function SelfEditForm(props: Props) {
                     control={form.control}
                     name="weight_units"
                     render={({ field }) => (
-                      <FormItem className="w-full flex1">
+                      <FormItem className="w-full flex-1">
                         <FormLabel>Weight Units</FormLabel>
                         <Select
                           onValueChange={field.onChange}
@@ -1570,7 +1570,7 @@ export default function SelfEditForm(props: Props) {
                     control={form.control}
                     name="length"
                     render={({ field }) => (
-                      <FormItem className="w-full flex1">
+                      <FormItem className="w-full flex-1">
                         <FormLabel>Length</FormLabel>
                         <FormControl>
                           <Input
@@ -1587,7 +1587,7 @@ export default function SelfEditForm(props: Props) {
                     control={form.control}
                     name="width"
                     render={({ field }) => (
-                      <FormItem className="w-full flex1">
+                      <FormItem className="w-full flex-1">
                         <FormLabel>Width</FormLabel>
                         <FormControl>
                           <Input
@@ -1604,7 +1604,7 @@ export default function SelfEditForm(props: Props) {
                     control={form.control}
                     name="height"
                     render={({ field }) => (
-                      <FormItem className="w-full flex1">
+                      <FormItem className="w-full flex-1">
                         <FormLabel>Height</FormLabel>
                         <FormControl>
                           <Input
@@ -1621,7 +1621,7 @@ export default function SelfEditForm(props: Props) {
                     control={form.control}
                     name="dimension_units"
                     render={({ field }) => (
-                      <FormItem className="w-full flex1">
+                      <FormItem className="w-full flex-1">
                         <FormLabel>Measurment Units</FormLabel>
                         <Select
                           onValueChange={field.onChange}

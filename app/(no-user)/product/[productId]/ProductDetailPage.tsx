@@ -293,7 +293,7 @@ export default function ProductDetailPage(props: Props) {
                             control={form.control}
                             name={`options.${index}.option`}
                             render={({ field }) => (
-                              <FormItem className="w-full flex1">
+                              <FormItem className="w-full flex-1">
                                 <FormLabel>{option.name}</FormLabel>
                                 <Select
                                   onValueChange={(event) =>

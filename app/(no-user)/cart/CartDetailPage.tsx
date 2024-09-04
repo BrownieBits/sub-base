@@ -409,7 +409,7 @@ export default function CartDetailPage(props: Props) {
         <Separator />
         <section className="w-full max-w-[1754px] mx-auto flex flex-col  px-4 py-8 gap-8">
           <section className="w-full flex flex-col md:flex-row gap-8">
-            <section className="w-full flex1 flex flex-col gap-4">
+            <section className="w-full flex-1 flex flex-col gap-4">
               <Skeleton className="w-full h-[200px] rounded bg-layer-two" />
               <Skeleton className="w-full h-[200px] rounded bg-layer-two" />
             </section>
@@ -493,7 +493,7 @@ export default function CartDetailPage(props: Props) {
       <Separator />
       <section className="w-full max-w-[1754px] mx-auto flex flex-col px-4 py-8 gap-8">
         <section className="w-full flex flex-col md:flex-row gap-8">
-          <section className="w-full flex1 flex flex-col gap-4">
+          <section className="w-full flex-1 flex flex-col gap-4">
             {Object.keys(items).map((store) => {
               let promo = null;
               if (promotions?.hasOwnProperty(store)) {

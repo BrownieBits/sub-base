@@ -40,27 +40,33 @@ export default function ItemDetails(props: Props) {
     getStore();
   }, []);
 
-  if (store === null) {
-    return <Skeleton className="w-full h-[200px] rounded bg-layer-two" />;
-  }
   return (
     <section className="w-full border rounded bg-layer-one">
       <section className="w-full flex items-center gap-4 p-2">
-        <Avatar className="h-[25px] w-[25px]">
-          <AvatarImage src={store.avatar_url} alt="Avatar" />
-          <AvatarFallback className="bg-foreground text-background border-background">
-            <b>{store.name.slice(0, 1).toUpperCase()}</b>
-          </AvatarFallback>
-        </Avatar>
-        <p className="text-sm">
-          <b>{store.name}</b>
-        </p>
+        {store === null ? (
+          <>
+            <Skeleton className="w-[25px] h-[25px] rounded-full bg-layer-three" />
+            <Skeleton className="w-[120px] h-[20px] rounded-full bg-layer-three" />
+          </>
+        ) : (
+          <>
+            <Avatar className="h-[25px] w-[25px]">
+              <AvatarImage src={store.avatar_url} alt="Avatar" />
+              <AvatarFallback className="bg-primary text-primary-foreground border-background">
+                <b>{store.name.slice(0, 1).toUpperCase()}</b>
+              </AvatarFallback>
+            </Avatar>
+            <p className="text-sm">
+              <b>{store.name}</b>
+            </p>
+          </>
+        )}
       </section>
       <Separator />
       <section className="w-full flex flex-col gap-4 p-2">
         {props.items.map((item: Item, index: number) => (
           <section
-            className="w-full flex flex-col md:flex-row gap-4"
+            className="w-full flex gap-4"
             key={`item-breakdown-item-${item.id}`}
           >
             <section className="flex-1 w-full flex gap-2 whitespace-nowrap overflow-hidden">
@@ -84,28 +90,26 @@ export default function ItemDetails(props: Props) {
                 </p>
               </section>
             </section>
-            <section className="w-full md:w-auto flex flex-row-reverse md:flex-col justify-between items-end gap-4">
-              <section className="flex flex-col">
-                {item.compare_at > 0 && item.compare_at < item.price ? (
-                  <p className="text-sm">
-                    <b>
-                      {new Intl.NumberFormat('en-US', {
-                        style: 'currency',
-                        currency: item.currency,
-                      }).format(item.compare_at * item.quantity)}
-                    </b>
-                  </p>
-                ) : (
-                  <p className="text-sm">
-                    <b>
-                      {new Intl.NumberFormat('en-US', {
-                        style: 'currency',
-                        currency: item.currency,
-                      }).format(item.price * item.quantity)}
-                    </b>
-                  </p>
-                )}
-              </section>
+            <section className="flex">
+              {item.compare_at > 0 && item.compare_at < item.price ? (
+                <p className="text-sm">
+                  <b>
+                    {new Intl.NumberFormat('en-US', {
+                      style: 'currency',
+                      currency: item.currency,
+                    }).format(item.compare_at * item.quantity)}
+                  </b>
+                </p>
+              ) : (
+                <p className="text-sm">
+                  <b>
+                    {new Intl.NumberFormat('en-US', {
+                      style: 'currency',
+                      currency: item.currency,
+                    }).format(item.price * item.quantity)}
+                  </b>
+                </p>
+              )}
             </section>
           </section>
         ))}

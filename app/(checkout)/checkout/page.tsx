@@ -1,4 +1,3 @@
-import { Separator } from '@/components/ui/separator';
 import { db } from '@/lib/firebase';
 import { Item, Promotion, RemovedProduct } from '@/lib/types';
 import {
@@ -295,17 +294,12 @@ export default async function Checkout() {
   }
 
   return (
-    <section>
-      <section className="w-full max-w-[1754px] mx-auto">
-        <section className="flex w-full justify-between items-center px-4 py-4 gap-4">
-          <h1>Checkout</h1>
-        </section>
-      </section>
-      <Separator />
+    <section className="w-full">
       <CheckoutPage
         items={data.items!}
         promotions={data.promotions!}
         removed_items={data.removedItems!}
+        user_id={user_id?.value}
       />
       <TrackCheckout
         store_ids={data.store_ids!}

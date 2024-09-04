@@ -129,7 +129,7 @@ export default async function SwitchStores() {
               </p>
               <p>These are stores you have started and own.</p>
             </aside>
-            <aside className="w-full flex flex1 flex-col gap-8 bg-layer-one p-8 rounded drop-shadow">
+            <aside className="w-full flex flex-1 flex-col gap-8 bg-layer-one p-8 rounded drop-shadow">
               {data.my_stores.length === 0 ? (
                 <p>No Stores</p>
               ) : (
@@ -184,7 +184,7 @@ export default async function SwitchStores() {
                 manage.
               </p>
             </aside>
-            <aside className="w-full flex flex1 flex-col gap-8 bg-layer-one p-8 rounded drop-shadow">
+            <aside className="w-full flex flex-1 flex-col gap-8 bg-layer-one p-8 rounded drop-shadow">
               {data.team_stores.length === 0 ? (
                 <p>No Stores</p>
               ) : (
@@ -239,7 +239,7 @@ export default async function SwitchStores() {
                 accepted.
               </p>
             </aside>
-            <aside className="w-full flex flex1 flex-col gap-8 bg-layer-one p-8 rounded drop-shadow">
+            <aside className="w-full flex flex-1 flex-col gap-8 bg-layer-one p-8 rounded drop-shadow">
               {data.invited_stores.length === 0 ? (
                 <p>No Stores</p>
               ) : (

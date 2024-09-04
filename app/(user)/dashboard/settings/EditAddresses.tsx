@@ -315,7 +315,7 @@ export default function EditAddresses(props: {
           </AlertDialogContent>
         </AlertDialog>
       </aside>
-      <aside className="w-full flex flex1 flex-col gap-8 bg-layer-one p-8 rounded drop-shadow">
+      <aside className="w-full flex flex-1 flex-col gap-8 bg-layer-one p-8 rounded drop-shadow">
         {props.addresses.length === 0 ? (
           <p>You currently have no stored addresses.</p>
         ) : (
