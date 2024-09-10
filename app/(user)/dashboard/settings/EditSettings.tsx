@@ -125,7 +125,7 @@ export default function EditSettings(props: {
           <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)}>
               <section className="flex flex-col md:flex-row gap-8">
-                <aside className="w-full md:w-[400px] lg:w-[600px]">
+                <aside className="w-full md:w-[200px] lg:w-[300px] xl:w-[600px]">
                   <p className="pb-4">
                     <b>Profile</b>
                   </p>
@@ -233,7 +233,7 @@ export default function EditSettings(props: {
           />
 
           <section className="flex flex-col md:flex-row gap-8">
-            <aside className="w-full md:w-[400px] lg:w-[600px]">
+            <aside className="w-full md:w-[200px] lg:w-[300px] xl:w-[600px]">
               <p className="pb-4">
                 <b>Saved Credit Cards</b>
               </p>

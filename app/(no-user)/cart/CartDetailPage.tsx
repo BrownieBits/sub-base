@@ -300,33 +300,37 @@ export default function CartDetailPage(props: Props) {
 
       const store_ids = Object.keys(cartItems);
 
-      const relatedRef: CollectionReference = collection(db, 'products');
-      const relatedQuery = query(
-        relatedRef,
-        where('store_id', 'in', store_ids),
-        where('revenue', '>=', 0),
-        where('status', '==', 'Public'),
-        orderBy('revenue'),
-        limit(8)
-      );
-      const relatedData: QuerySnapshot<DocumentData, DocumentData> =
-        await getDocs(relatedQuery);
+      if (store_ids.length > 0) {
+        const relatedRef: CollectionReference = collection(db, 'products');
+        const relatedQuery = query(
+          relatedRef,
+          where('store_id', 'in', store_ids),
+          where('revenue', '>=', 0),
+          where('status', '==', 'Public'),
+          orderBy('revenue'),
+          limit(8)
+        );
+        const relatedData: QuerySnapshot<DocumentData, DocumentData> =
+          await getDocs(relatedQuery);
 
-      const products: GridProduct[] = relatedData.docs.map((product) => {
-        return {
-          name: product.data().name,
-          images: product.data().images,
-          product_type: product.data().product_type,
-          price: product.data().price,
-          compare_at: product.data().compare_at,
-          currency: product.data().currency,
-          like_count: product.data().like_count,
-          store_id: product.data().store_id,
-          created_at: product.data().created_at,
-          id: product.id,
-        };
-      });
-      setRelated(products);
+        const products: GridProduct[] = relatedData.docs.map((product) => {
+          return {
+            name: product.data().name,
+            images: product.data().images,
+            product_type: product.data().product_type,
+            price: product.data().price,
+            compare_at: product.data().compare_at,
+            currency: product.data().currency,
+            like_count: product.data().like_count,
+            store_id: product.data().store_id,
+            created_at: product.data().created_at,
+            id: product.id,
+          };
+        });
+        setRelated(products);
+      } else {
+        setRelated([]);
+      }
     };
     getItems();
   }, []);

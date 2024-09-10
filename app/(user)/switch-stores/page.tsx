@@ -123,7 +123,7 @@ export default async function SwitchStores() {
       <section className="w-full max-w-[1754px] mx-auto">
         <section className="flex flex-col px-4 pt-4 pb-8 w-full gap-8">
           <section className="flex flex-col md:flex-row gap-8">
-            <aside className="w-full md:w-[400px] lg:w-[600px]">
+            <aside className="w-full md:w-[200px] lg:w-[300px] xl:w-[600px]">
               <p className="pb-4">
                 <b>My Stores</b>
               </p>
@@ -175,7 +175,7 @@ export default async function SwitchStores() {
           </section>
 
           <section className="flex flex-col md:flex-row gap-8">
-            <aside className="w-full md:w-[400px] lg:w-[600px]">
+            <aside className="w-full md:w-[200px] lg:w-[300px] xl:w-[600px]">
               <p className="pb-4">
                 <b>Team Stores</b>
               </p>
@@ -230,7 +230,7 @@ export default async function SwitchStores() {
           </section>
 
           <section className="flex flex-col md:flex-row gap-8">
-            <aside className="w-full md:w-[400px] lg:w-[600px]">
+            <aside className="w-full md:w-[200px] lg:w-[300px] xl:w-[600px]">
               <p className="pb-4">
                 <b>Invites</b>
               </p>

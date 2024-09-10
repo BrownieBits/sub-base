@@ -31,7 +31,10 @@ import {
   addDoc,
   collection,
   doc,
+  getDoc,
   runTransaction,
+  setDoc,
+  updateDoc,
 } from 'firebase/firestore';
 import Link from 'next/link';
 import React from 'react';
@@ -102,7 +105,6 @@ export default function ProductDetailPage(props: Props) {
   });
 
   async function onSubmit() {
-    console.log('adding?');
     setThinking(true);
     try {
       const userID = getCookie('user_id');
@@ -131,6 +133,19 @@ export default function ProductDetailPage(props: Props) {
           await transaction.update(cartItemRef, { quantity: newQuantity });
         }
       });
+
+      const cartRef: DocumentReference = doc(db, `carts`, cartID!);
+      const cartDoc = await getDoc(cartRef);
+      if (cartDoc.exists()) {
+        await updateDoc(cartRef, {
+          updated_at: Timestamp.fromDate(new Date()),
+        });
+      } else {
+        await setDoc(cartRef, {
+          created_at: Timestamp.fromDate(new Date()),
+          updated_at: Timestamp.fromDate(new Date()),
+        });
+      }
 
       const analyticsColRef: CollectionReference = collection(
         db,

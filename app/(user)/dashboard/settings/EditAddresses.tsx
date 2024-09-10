@@ -1,24 +1,6 @@
 'use client';
 
-import {
-  AlertDialog,
-  AlertDialogCancel,
-  AlertDialogContent,
-  AlertDialogDescription,
-  AlertDialogHeader,
-  AlertDialogTitle,
-  AlertDialogTrigger,
-} from '@/components/ui/alert-dialog';
 import { Button } from '@/components/ui/button';
-import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from '@/components/ui/form';
-import { Input } from '@/components/ui/input';
 import {
   Tooltip,
   TooltipContent,
@@ -26,14 +8,13 @@ import {
   TooltipTrigger,
 } from '@/components/ui/tooltip';
 import { db } from '@/lib/firebase';
+import { Address } from '@/lib/types';
 import {
   faCircle,
   faCircleDot,
-  faSquarePlus,
   faTrash,
 } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { zodResolver } from '@hookform/resolvers/zod';
 import {
   CollectionReference,
   DocumentData,
@@ -51,35 +32,10 @@ import {
   where,
 } from 'firebase/firestore';
 import React from 'react';
-import { useFormStatus } from 'react-dom';
-import { useForm } from 'react-hook-form';
 import { toast } from 'sonner';
-import * as z from 'zod';
+import AddAddress from './AddAddress';
+import SelectVerifiedAddress from './SelectVerifiedAddress';
 import { revalidate } from './actions';
-
-const formSchema = z.object({
-  name: z
-    .string()
-    .min(1, { message: 'Full Name is a required field' })
-    .refine(
-      (value) => /^[a-zA-Z]+[-'s]?[a-zA-Z ]+$/.test(value ?? ''),
-      'Name should contain only alphabets'
-    )
-    .refine(
-      (value) => /^[a-zA-Z]+\s+[a-zA-Z]+$/.test(value ?? ''),
-      'Please enter both firstname and lastname'
-    ),
-  addressLine1: z
-    .string()
-    .min(1, { message: 'Address Line 1 must be 1 or more characters long' }),
-  addressLine2: z.string().optional(),
-  city: z.string().min(1, { message: 'City is a required field' }),
-  province: z
-    .string()
-    .min(1, { message: 'State/Province is a required field' }),
-  country: z.string().min(1, { message: 'Country is a required field' }),
-  postal: z.string().min(1, { message: 'Postal Code is a required field' }),
-});
 
 export default function EditAddresses(props: {
   userID: string;
@@ -89,40 +45,23 @@ export default function EditAddresses(props: {
   const [addressData, setAddressData] = React.useState<
     QueryDocumentSnapshot<DocumentData, DocumentData>[]
   >([]);
-  const [open, setOpen] = React.useState(false);
-  const [error, setError] = React.useState('');
-  const { pending } = useFormStatus();
+  const [matchedAddress, setMatchedAddress] = React.useState<Address | null>(
+    null
+  );
+  const [originalAddress, setOriginalAddress] = React.useState<Address | null>(
+    null
+  );
 
-  const form = useForm<z.infer<typeof formSchema>>({
-    resolver: zodResolver(formSchema),
-    defaultValues: {
-      name: '',
-      addressLine1: '',
-      addressLine2: '',
-      city: '',
-      province: '',
-      country: '',
-      postal: '',
-    },
-  });
-
-  async function onAddNew(values: z.infer<typeof formSchema>) {
+  async function addValidatedAddress(address: Address) {
+    setMatchedAddress(null);
+    setOriginalAddress(null);
     const docRef: DocumentReference = doc(db, 'users', props.userID);
     const addressesRef: CollectionReference = collection(db, 'addresses');
-
+    address.owner_id = props.userID;
+    address.created_at = Timestamp.fromDate(new Date());
     const newDoc: DocumentReference<DocumentData, DocumentData> = await addDoc(
       addressesRef,
-      {
-        name: values.name,
-        address_line_1: values.addressLine1,
-        address_line_2: values.addressLine2 || '',
-        city: values.city,
-        province: values.province,
-        country: values.country,
-        postal_code: values.postal,
-        owner_id: props.userID,
-        created_at: Timestamp.fromDate(new Date()),
-      }
+      address
     );
     let default_address = props.default_address;
     const addresses = props.addresses;
@@ -135,11 +74,14 @@ export default function EditAddresses(props: {
       default_address: default_address,
     });
     revalidate();
-    setOpen(false);
-    form.reset();
-    toast('User Updated', {
+    toast.success('User Updated', {
       description: 'Your user info has been updated.',
     });
+  }
+
+  function setValidated(matched: Address, original: Address) {
+    setMatchedAddress(matched);
+    setOriginalAddress(original);
   }
 
   async function makeDefault(newID: string) {
@@ -176,7 +118,7 @@ export default function EditAddresses(props: {
 
   return (
     <section className="flex flex-col md:flex-row gap-8">
-      <aside className="w-full md:w-[400px] lg:w-[600px]">
+      <aside className="w-full md:w-[200px] lg:w-[300px] xl:w-[600px]">
         <p className="pb-4">
           <b>Addresses</b>
         </p>
@@ -184,136 +126,7 @@ export default function EditAddresses(props: {
           These are addresses we can use for quicker checkouts or for
           subscription based services.
         </p>
-        <AlertDialog open={open} onOpenChange={setOpen}>
-          <AlertDialogTrigger>
-            <Button variant="outline" asChild>
-              <div>
-                <FontAwesomeIcon
-                  className="icon mr-2 h-4 w-4"
-                  icon={faSquarePlus}
-                />
-                Add Address
-              </div>
-            </Button>
-          </AlertDialogTrigger>
-
-          <AlertDialogContent>
-            <AlertDialogHeader>
-              <AlertDialogTitle>New Address</AlertDialogTitle>
-              <AlertDialogDescription>
-                <Form {...form}>
-                  <form
-                    onSubmit={form.handleSubmit(onAddNew)}
-                    className="space-y-8 w-full"
-                  >
-                    <FormField
-                      control={form.control}
-                      name="name"
-                      render={({ field }) => (
-                        <FormItem className="w-full">
-                          <FormLabel>Full Name</FormLabel>
-                          <FormControl>
-                            <Input id="name" {...field} />
-                          </FormControl>
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    />
-                    <FormField
-                      control={form.control}
-                      name="addressLine1"
-                      render={({ field }) => (
-                        <FormItem className="w-full">
-                          <FormLabel>Address Line 1</FormLabel>
-                          <FormControl>
-                            <Input id="AddressLine1" {...field} />
-                          </FormControl>
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    />
-                    <FormField
-                      control={form.control}
-                      name="addressLine2"
-                      render={({ field }) => (
-                        <FormItem className="w-full">
-                          <FormLabel>Address Line 2</FormLabel>
-                          <FormControl>
-                            <Input id="AddressLine2" {...field} />
-                          </FormControl>
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    />
-                    <FormField
-                      control={form.control}
-                      name="city"
-                      render={({ field }) => (
-                        <FormItem className="w-full">
-                          <FormLabel>City</FormLabel>
-                          <FormControl>
-                            <Input id="city" {...field} />
-                          </FormControl>
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    />
-                    <FormField
-                      control={form.control}
-                      name="province"
-                      render={({ field }) => (
-                        <FormItem className="w-full">
-                          <FormLabel>State/Province</FormLabel>
-                          <FormControl>
-                            <Input id="province" {...field} />
-                          </FormControl>
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    />
-                    <FormField
-                      control={form.control}
-                      name="country"
-                      render={({ field }) => (
-                        <FormItem className="w-full">
-                          <FormLabel>Country</FormLabel>
-                          <FormControl>
-                            <Input id="country" {...field} />
-                          </FormControl>
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    />
-                    <FormField
-                      control={form.control}
-                      name="postal"
-                      render={({ field }) => (
-                        <FormItem className="w-full">
-                          <FormLabel>Postal Code</FormLabel>
-                          <FormControl>
-                            <Input id="postal" {...field} />
-                          </FormControl>
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    />
-                    {error ? (
-                      <p className="text-destructive">{error}</p>
-                    ) : (
-                      <></>
-                    )}
-                    <section className="flex gap-4 w-full justify-end">
-                      <AlertDialogCancel>Cancel</AlertDialogCancel>
-                      <Button disabled={pending} type="submit">
-                        Submit
-                      </Button>
-                    </section>
-                  </form>
-                </Form>
-              </AlertDialogDescription>
-            </AlertDialogHeader>
-          </AlertDialogContent>
-        </AlertDialog>
+        <AddAddress setValidated={setValidated} />
       </aside>
       <aside className="w-full flex flex-1 flex-col gap-8 bg-layer-one p-8 rounded drop-shadow">
         {props.addresses.length === 0 ? (
@@ -322,7 +135,7 @@ export default function EditAddresses(props: {
           <>
             {addressData.map((doc) => (
               <section
-                className="flex flex-col md:flex-row items-center bg-layer-two rounded-lg border p-3 shadow-sm gap-8"
+                className="flex  items-center bg-layer-two rounded-lg border p-3 shadow-sm gap-8"
                 key={doc.id}
               >
                 {doc.id === props.default_address ? (
@@ -363,17 +176,17 @@ export default function EditAddresses(props: {
                     </Tooltip>
                   </TooltipProvider>
                 )}
-                <div className="flex-1 space-y-0.5">
+                <div className="flex-1">
                   <p>
                     <b>{doc.data().name}</b>
                   </p>
                   <p className="text-sm text-muted-foreground">
-                    {doc.data().address_line_1}
-                    {doc.data().address_line_2}
+                    {doc.data().address_line1}
+                    {doc.data().address_line2}
                     {', '}
-                    {doc.data().city}
+                    {doc.data().city_locality}
                     {', '}
-                    {doc.data().province} {doc.data().postal_code}
+                    {doc.data().state_province} {doc.data().postal_code}
                   </p>
                 </div>
                 {doc.id === props.default_address ? (
@@ -403,7 +216,7 @@ export default function EditAddresses(props: {
                           asChild
                         >
                           <FontAwesomeIcon
-                            className="icon h-4 w-4"
+                            className="icon h-4 w-4 text-destructive"
                             icon={faTrash}
                           />
                         </Button>
@@ -419,6 +232,11 @@ export default function EditAddresses(props: {
           </>
         )}
       </aside>
+      <SelectVerifiedAddress
+        matchedAddress={matchedAddress}
+        originalAddress={originalAddress}
+        selectAddress={addValidatedAddress}
+      />
     </section>
   );
 }

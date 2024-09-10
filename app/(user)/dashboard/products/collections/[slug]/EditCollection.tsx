@@ -345,7 +345,7 @@ export default function Edit(props: {
           <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)}>
               <section className="flex flex-col md:flex-row gap-8">
-                <aside className="w-full md:w-[400px] lg:w-[600px]">
+                <aside className="w-full md:w-[200px] lg:w-[300px] xl:w-[600px]">
                   <p className="pb-4">
                     <b>Title and meta description</b>
                   </p>
@@ -430,7 +430,7 @@ export default function Edit(props: {
                 <></>
               ) : (
                 <section className="flex flex-col md:flex-row gap-8 pt-8">
-                  <aside className="w-full md:w-[400px] lg:w-[600px]">
+                  <aside className="w-full md:w-[200px] lg:w-[300px] xl:w-[600px]">
                     <p className="pb-4">
                       <b>Smart Collection Tags</b>
                     </p>
@@ -463,7 +463,7 @@ export default function Edit(props: {
             </form>
           </Form>
           <section className="flex flex-col md:flex-row gap-8">
-            <aside className="w-full md:w-[400px] lg:w-[600px]">
+            <aside className="w-full md:w-[200px] lg:w-[300px] xl:w-[600px]">
               <p className="pb-4">
                 <b>Products</b>
               </p>

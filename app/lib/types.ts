@@ -57,3 +57,21 @@ export type RemovedProduct = {
     name: string;
     reason: string;
 };
+
+export type Address = {
+    id?: string;
+    address_line1: string;
+    address_line2: string;
+    address_line3: string | null;
+    address_residential_indicator: string;
+    city_locality: string;
+    company_name: string | null;
+    country_code: string;
+    email: string | null;
+    name: string;
+    phone: string | null;
+    postal_code: string;
+    state_province: string;
+    owner_id?: string;
+    created_at?: Timestamp;
+};

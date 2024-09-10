@@ -1,5 +1,5 @@
 import { db } from '@/lib/firebase';
-import { Item, Promotion, RemovedProduct } from '@/lib/types';
+import { Address, Item, Promotion, RemovedProduct } from '@/lib/types';
 import {
   CollectionReference,
   DocumentData,
@@ -29,6 +29,7 @@ type Data = {
   items?: Items;
   promotions?: Promotions;
   removedItems?: RemovedProduct[];
+  address?: Address;
   error?: string;
 };
 
@@ -48,6 +49,9 @@ async function getData(cartId: string) {
       error: 'No Products',
     };
   }
+
+  const cartRef: DocumentReference = doc(db, 'carts', cartId);
+  const cartDoc = await getDoc(cartRef);
 
   const promosRef: CollectionReference = collection(
     db,
@@ -243,6 +247,7 @@ async function getData(cartId: string) {
     store_ids: store_ids,
     items: cartItems,
     promotions: promotions,
+    address: cartDoc?.data()?.address,
     removedItems: removed_items,
   };
 }
@@ -300,6 +305,12 @@ export default async function Checkout() {
         promotions={data.promotions!}
         removed_items={data.removedItems!}
         user_id={user_id?.value}
+        address={data.address}
+        cart_id={cartId?.value!}
+        country={country}
+        city={city}
+        region={region}
+        ip={ip}
       />
       <TrackCheckout
         store_ids={data.store_ids!}

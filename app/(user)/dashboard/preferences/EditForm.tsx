@@ -309,7 +309,7 @@ export default function EditForm(props: {
             className="flex flex-col px-4 py-8 w-full gap-8"
           >
             <section className="flex flex-col md:flex-row gap-8">
-              <aside className="w-full md:w-[400px] lg:w-[600px]">
+              <aside className="w-full md:w-[200px] lg:w-[300px] xl:w-[600px]">
                 <p className="pb-4">
                   <b>Name and meta description</b>
                 </p>
@@ -390,7 +390,7 @@ export default function EditForm(props: {
             </section>
 
             <section className="flex flex-col md:flex-row gap-8">
-              <aside className="w-full md:w-[400px] lg:w-[600px]">
+              <aside className="w-full md:w-[200px] lg:w-[300px] xl:w-[600px]">
                 <p className="pb-4">
                   <b>Avatar and Store Banner</b>
                 </p>
@@ -562,7 +562,7 @@ export default function EditForm(props: {
             </section>
 
             <section className="flex flex-col md:flex-row gap-8">
-              <aside className="w-full md:w-[400px] lg:w-[600px]">
+              <aside className="w-full md:w-[200px] lg:w-[300px] xl:w-[600px]">
                 <p className="pb-4">
                   <b>Restrict Store Access</b>
                 </p>

@@ -948,7 +948,7 @@ export default function SelfEditForm(props: Props) {
             className="flex flex-col px-4 py-8 w-full gap-8"
           >
             <section className="flex flex-col md:flex-row gap-8">
-              <aside className="w-full md:w-[400px] lg:w-[600px]">
+              <aside className="w-full md:w-[200px] lg:w-[300px] xl:w-[600px]">
                 <p className="pb-4">
                   <b>Title and meta description</b>
                 </p>
@@ -1018,7 +1018,7 @@ export default function SelfEditForm(props: Props) {
             </section>
 
             <section className="flex flex-col md:flex-row gap-8">
-              <aside className="w-full md:w-[400px] lg:w-[600px]">
+              <aside className="w-full md:w-[200px] lg:w-[300px] xl:w-[600px]">
                 <p className="pb-4">
                   <b>Images</b>
                 </p>
@@ -1125,7 +1125,7 @@ export default function SelfEditForm(props: Props) {
             </section>
 
             <section className="flex flex-col md:flex-row gap-8">
-              <aside className="w-full md:w-[400px] lg:w-[600px]">
+              <aside className="w-full md:w-[200px] lg:w-[300px] xl:w-[600px]">
                 <p className="pb-4">
                   <b>Pricing and Currency</b>
                 </p>
@@ -1218,7 +1218,7 @@ export default function SelfEditForm(props: Props) {
             </section>
 
             <section className="flex flex-col md:flex-row gap-8">
-              <aside className="w-full md:w-[400px] lg:w-[600px]">
+              <aside className="w-full md:w-[200px] lg:w-[300px] xl:w-[600px]">
                 <p className="pb-4">
                   <b>Variants</b>
                 </p>
@@ -1389,7 +1389,7 @@ export default function SelfEditForm(props: Props) {
             </section>
 
             <section className="flex flex-col md:flex-row gap-8">
-              <aside className="w-full md:w-[400px] lg:w-[600px]">
+              <aside className="w-full md:w-[200px] lg:w-[300px] xl:w-[600px]">
                 <p className="pb-4">
                   <b>Options</b>
                 </p>
@@ -1502,7 +1502,7 @@ export default function SelfEditForm(props: Props) {
             </section>
 
             <section className="flex flex-col md:flex-row gap-8">
-              <aside className="w-full md:w-[400px] lg:w-[600px]">
+              <aside className="w-full md:w-[200px] lg:w-[300px] xl:w-[600px]">
                 <p className="pb-4">
                   <b>Shipping</b>
                 </p>
