@@ -328,15 +328,17 @@ export default function CheckoutPage(props: Props) {
           />
         </section>
       </section>
-      <LoginForm
-        user_id={userID}
-        country={props.country}
-        city={props.city}
-        region={props.region}
-        ip={props.ip}
-        setUserID={setUserID}
-      />
-      <RemovedItemsDialogue removedItems={removedItems} />
+      {userID === '' && (
+        <LoginForm
+          user_id={userID}
+          country={props.country}
+          city={props.city}
+          region={props.region}
+          ip={props.ip}
+          setUserID={setUserID}
+        />
+      )}
+      {userID !== '' && <RemovedItemsDialogue removedItems={removedItems} />}
     </>
   );
 }

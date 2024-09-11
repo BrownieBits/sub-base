@@ -31,10 +31,7 @@ import {
   addDoc,
   collection,
   doc,
-  getDoc,
   runTransaction,
-  setDoc,
-  updateDoc,
 } from 'firebase/firestore';
 import Link from 'next/link';
 import React from 'react';
@@ -135,17 +132,24 @@ export default function ProductDetailPage(props: Props) {
       });
 
       const cartRef: DocumentReference = doc(db, `carts`, cartID!);
-      const cartDoc = await getDoc(cartRef);
-      if (cartDoc.exists()) {
-        await updateDoc(cartRef, {
-          updated_at: Timestamp.fromDate(new Date()),
-        });
-      } else {
-        await setDoc(cartRef, {
-          created_at: Timestamp.fromDate(new Date()),
-          updated_at: Timestamp.fromDate(new Date()),
-        });
-      }
+
+      await runTransaction(db, async (transaction) => {
+        const cartItemDoc = await transaction.get(cartRef);
+        if (!cartItemDoc.exists()) {
+          transaction.set(cartRef, {
+            items: quantity,
+            created_at: Timestamp.fromDate(new Date()),
+            updated_at: Timestamp.fromDate(new Date()),
+          });
+        } else {
+          const newItems = (parseInt(cartItemDoc.data()?.items) +
+            quantity) as number;
+          await transaction.update(cartRef, {
+            items: newItems,
+            updated_at: Timestamp.fromDate(new Date()),
+          });
+        }
+      });
 
       const analyticsColRef: CollectionReference = collection(
         db,
@@ -157,7 +161,7 @@ export default function ProductDetailPage(props: Props) {
         quantity: quantity,
         options: selectedOptions,
         store_id: props.store_id,
-        user_id: userID != undefined ? userID : null,
+        user_id: userID !== undefined ? userID : null,
         country: props.country === 'undefined' ? 'SW' : props.country,
         city: props.city === 'undefined' ? 'Mos Eisley' : props.city,
         region: props.region === 'undefined' ? 'TAT' : props.region,

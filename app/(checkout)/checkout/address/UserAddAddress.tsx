@@ -345,7 +345,7 @@ export default function AddAddress(props: Props) {
   return (
     <Drawer open={open} onOpenChange={setOpen}>
       <DrawerTrigger>
-        <Button variant="outline" asChild>
+        <Button variant="outline" asChild className="w-full">
           <div>
             <FontAwesomeIcon
               className="icon mr-2 h-4 w-4"

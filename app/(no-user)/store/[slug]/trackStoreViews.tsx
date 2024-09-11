@@ -46,7 +46,7 @@ export default function TrackStoreViews(props: {
       await addDoc(analyticsColRef, {
         type: 'store_view',
         store_id: props.store_id,
-        user_id: user_id,
+        user_id: user_id !== undefined ? user_id : null,
         country: props.country === 'undefined' ? 'SW' : props.country,
         city: props.city === 'undefined' ? 'Mos Eisley' : props.city,
         region: props.region === 'undefined' ? 'TAT' : props.region,
