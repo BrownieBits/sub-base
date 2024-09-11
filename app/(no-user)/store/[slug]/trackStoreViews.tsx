@@ -32,11 +32,12 @@ export default function TrackStoreViews(props: {
       db,
       `stores/${props.store_id}/analytics`
     );
+    const ip = props.ip === 'undefined' ? '0.0.0.0' : props.ip;
     const now = new Date();
     const threeHoursAgo = new Date(now.getHours() - 3);
     const q = query(
       analyticsColRef,
-      where('ip', '==', props.ip),
+      where('ip', '==', ip),
       where('store_id', '==', props.store_id),
       where('created_at', '<', Timestamp.fromDate(threeHoursAgo))
     );
