@@ -69,7 +69,7 @@ export const LikeIt = ({
         region: region === 'undefined' ? 'TAT' : region,
         store_id: store_id,
         type: 'like',
-        user_id: user_id,
+        user_id: user_id !== undefined ? user_id : null,
       });
     } else {
       await runTransaction(db, async (transaction) => {

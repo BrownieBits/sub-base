@@ -67,7 +67,7 @@ export const SubButton = ({
         region: region === 'undefined' ? 'TAT' : region,
         store_id: store_id,
         type: 'subscribe',
-        user_id: user_id,
+        user_id: user_id !== undefined ? user_id : null,
       });
     } else {
       await runTransaction(db, async (transaction) => {

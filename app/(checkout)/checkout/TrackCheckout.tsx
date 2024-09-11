@@ -30,9 +30,8 @@ export default function TrackCheckout(props: {
       const analyticsDoc: DocumentReference = doc(analyticsColRef);
       batch.set(analyticsDoc, {
         type: 'checkout_reached',
-
         store_id: store,
-        user_id: props.user_id,
+        user_id: props.user_id !== undefined ? props.user_id : null,
         country: props.country === 'undefined' ? 'SW' : props.country,
         city: props.city === 'undefined' ? 'Mos Eisley' : props.city,
         region: props.region === 'undefined' ? 'TAT' : props.region,
