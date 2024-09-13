@@ -165,7 +165,7 @@ export default function StoreItems(props: Props) {
             index={index}
             updateQuantity={props.updateQuantity}
             removeItem={props.removeItem}
-            key={`item-${item.id}`}
+            key={`item-${item.id}${item.options.join('')}`}
           />
         ))}
       </section>

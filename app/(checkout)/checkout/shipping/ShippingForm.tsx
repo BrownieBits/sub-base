@@ -146,9 +146,7 @@ export default function ShippingSelect(props: Props) {
         </>
       )}
       {Object.keys(shipments).map((shipment) => {
-        if (shipment === 'digital' || shipment === 'printful') {
-          return <></>;
-        } else {
+        if (shipment !== 'digital' && shipment !== 'printful') {
           return (
             <SelfShipment
               items={shipments[shipment]}
