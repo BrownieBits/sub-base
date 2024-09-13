@@ -64,7 +64,7 @@
     "libphonenumber-js": "^1.11.8",
     "lucide-react": "^0.436.0",
     "luxon": "^3.5.0",
-    "next": "^15.0.0-rc.154",
+    "next": "^15.0.0-rc.0",
     "next-themes": "^0.3.0",
     "printful-sdk-js": "^1.0.7",
     "printful-ts": "^1.0.6",
