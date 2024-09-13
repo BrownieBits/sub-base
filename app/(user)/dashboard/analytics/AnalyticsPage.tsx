@@ -119,7 +119,7 @@ export default function AnalyticsPage(props: Props) {
   React.useEffect(() => {
     if (analytics !== null) {
       logEvent(analytics, 'page_view', {
-        title: 'Analytics - SubBase Creator Platform',
+        title: 'Analytics - SubPort Creator Platform',
       });
     }
     const today = new Date();

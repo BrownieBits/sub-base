@@ -38,26 +38,26 @@ async function getData() {
 
 export async function generateMetadata(): Promise<Metadata> {
   return {
-    title: `SubBase Creator Platform`,
+    title: `SubPort Creator Platform`,
     description:
-      'Enjoy the products you love, and share it all with friends, family, and the world on SubBase.',
+      'Enjoy the products you love, and share it all with friends, family, and the world on SubPort.',
     openGraph: {
       type: 'website',
       url: `https://${process.env.NEXT_PUBLIC_BASE_URL}/`,
-      title: `SubBase Creator Platform`,
-      siteName: 'SubBase Creator Platform',
+      title: `SubPort Creator Platform`,
+      siteName: 'SubPort Creator Platform',
       description:
-        'Enjoy the products you love, and share it all with friends, family, and the world on SubBase.',
-        images: [`https://${process.env.NEXT_PUBLIC_BASE_URL}/api/og_image`],
+        'Enjoy the products you love, and share it all with friends, family, and the world on SubPort.',
+      images: [`https://${process.env.NEXT_PUBLIC_BASE_URL}/api/og_image`],
     },
     twitter: {
       card: 'summary_large_image',
-      creator: 'SubBase',
+      creator: 'SubPort',
       images: [`https://${process.env.NEXT_PUBLIC_BASE_URL}/api/og_image`],
-      title: `SubBase Creator Platform`,
+      title: `SubPort Creator Platform`,
       description:
-        'Enjoy the products you love, and share it all with friends, family, and the world on SubBase.',
-      site: 'SubBase Creator Platform',
+        'Enjoy the products you love, and share it all with friends, family, and the world on SubPort.',
+      site: 'SubPort Creator Platform',
     },
   };
 }

@@ -22,40 +22,41 @@ const fontSans = FontSans({
 export async function generateMetadata(): Promise<Metadata> {
   return {
     title: {
-      template: '%s - SubBase Creator Platform',
-      default: `SubBase Creator Platform`, // a default is required when creating a template
+      template: '%s - SubPort Creator Platform',
+      default: `SubPort Creator Platform`, // a default is required when creating a template
     },
     description:
-      'Enjoy the products you love, and share it all with friends, family, and the world on SubBase.',
+      'Enjoy the products you love, and share it all with friends, family, and the world on SubPort.',
     openGraph: {
       type: 'website',
       url: `https://${process.env.NEXT_PUBLIC_BASE_URL}/`,
       title: {
-        template: '%s - SubBase Creator Platform',
-        default: `SubBase Creator Platform`, // a default is required when creating a template
+        template: '%s - SubPort Creator Platform',
+        default: `SubPort Creator Platform`, // a default is required when creating a template
       },
-      siteName: 'SubBase Creator Platform',
+      siteName: 'SubPort Creator Platform',
       description:
-        'Enjoy the products you love, and share it all with friends, family, and the world on SubBase.',
+        'Enjoy the products you love, and share it all with friends, family, and the world on SubPort.',
       images: [`https://${process.env.NEXT_PUBLIC_BASE_URL}/api/og_image`],
     },
     twitter: {
       card: 'summary_large_image',
-      creator: 'SubBase',
+      creator: 'SubPort',
       images: [`https://${process.env.NEXT_PUBLIC_BASE_URL}/api/og_image`],
       title: {
-        template: '%s - SubBase Creator Platform',
-        default: `SubBase Creator Platform`, // a default is required when creating a template
+        template: '%s - SubPort Creator Platform',
+        default: `SubPort Creator Platform`, // a default is required when creating a template
       },
       description:
-        'Enjoy the products you love, and share it all with friends, family, and the world on SubBase.',
-      site: 'SubBase Creator Platform',
+        'Enjoy the products you love, and share it all with friends, family, and the world on SubPort.',
+      site: 'SubPort Creator Platform',
     },
     keywords: 'e-commerce, shopping, creators, social, products',
     referrer: 'origin',
-    publisher: 'SubBase',
-    creator: 'SubBase',
+    publisher: 'SubPort',
+    creator: 'SubPort',
     robots: 'index, follow',
+    icons: ['/favicon.svg'],
   };
 }
 

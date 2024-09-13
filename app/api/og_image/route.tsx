@@ -363,7 +363,7 @@ export async function GET() {
             whiteSpace: 'pre-wrap',
           }}
         >
-          <b>SubBase Creator Platform</b>
+          <b>SubPort Creator Platform</b>
         </div>
       </div>
     ),

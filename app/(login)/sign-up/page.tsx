@@ -8,22 +8,22 @@ export async function generateMetadata(): Promise<Metadata> {
   return {
     title: `Sign Up`,
     description:
-      'Enjoy the products you love, and share it all with friends, family, and the world on SubBase.',
+      'Enjoy the products you love, and share it all with friends, family, and the world on SubPort.',
     openGraph: {
       type: 'website',
       url: `https://${process.env.NEXT_PUBLIC_BASE_URL}/sign-up/`,
       title: `Sign Up`,
-      siteName: 'SubBase Creator Platform',
+      siteName: 'SubPort Creator Platform',
       description:
-        'Enjoy the products you love, and share it all with friends, family, and the world on SubBase.',
+        'Enjoy the products you love, and share it all with friends, family, and the world on SubPort.',
     },
     twitter: {
       card: 'summary_large_image',
-      creator: 'SubBase',
+      creator: 'SubPort',
       title: `Sign Up`,
       description:
-        'Enjoy the products you love, and share it all with friends, family, and the world on SubBase.',
-      site: 'SubBase Creator Platform',
+        'Enjoy the products you love, and share it all with friends, family, and the world on SubPort.',
+      site: 'SubPort Creator Platform',
     },
   };
 }

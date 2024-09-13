@@ -113,7 +113,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       type: 'website',
       url: `https://${process.env.NEXT_PUBLIC_BASE_URL}/store/${params.slug}/${params.collection}`,
       title: `${data.store.data().name} Store`,
-      siteName: 'SubBase Creator Platform',
+      siteName: 'SubPort Creator Platform',
       description: description,
       images: openGraphImages,
     },
@@ -123,7 +123,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       images: openGraphImages,
       title: `${data.store.data().name} Store`,
       description: description,
-      site: 'SubBase Creator Platform',
+      site: 'SubPort Creator Platform',
     },
   };
 }

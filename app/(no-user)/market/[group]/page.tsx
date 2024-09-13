@@ -95,7 +95,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     };
   }
 
-  const description = `Discover a vast selection of ${params.group} products at SubBase. Find everything from ${data.products?.docs[0].data().name} to ${data.products?.docs[1].data().name} and more. Compare prices, read reviews, and enjoy safe and secure shopping. Explore our diverse range of ${params.group} products today!`;
+  const description = `Discover a vast selection of ${params.group} products at SubPort. Find everything from ${data.products?.docs[0].data().name} to ${data.products?.docs[1].data().name} and more. Compare prices, read reviews, and enjoy safe and secure shopping. Explore our diverse range of ${params.group} products today!`;
   return {
     title: `${data.title} Marketplace`,
     description: description,
@@ -103,16 +103,16 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       type: 'website',
       url: `https://${process.env.NEXT_PUBLIC_BASE_URL}/market/${params.group}`,
       title: `${data.title} Marketplace`,
-      siteName: 'SubBase Creator Platform',
+      siteName: 'SubPort Creator Platform',
       description: description,
       images: [`https://${process.env.NEXT_PUBLIC_BASE_URL}/api/og_image`],
     },
     twitter: {
       card: 'summary_large_image',
-      creator: 'SubBase',
+      creator: 'SubPort',
       title: `${data.title} Marketplace`,
       description: description,
-      site: 'SubBase Creator Platform',
+      site: 'SubPort Creator Platform',
       images: [`https://${process.env.NEXT_PUBLIC_BASE_URL}/api/og_image`],
     },
   };

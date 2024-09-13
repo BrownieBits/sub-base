@@ -375,7 +375,7 @@ export async function GET(
               whiteSpace: 'pre-wrap',
             }}
           >
-            <b>SubBase Creator Platform</b>
+            <b>SubPort Creator Platform</b>
           </div>
         </div>
       ),
@@ -408,7 +408,6 @@ export async function GET(
             justifyContent: 'center',
           }}
         >
-
           <img
             width="300"
             height="300"
@@ -443,7 +442,7 @@ export async function GET(
             whiteSpace: 'pre-wrap',
           }}
         >
-          <b>by SubBase Creator Platform</b>
+          <b>by SubPort Creator Platform</b>
         </div>
       </div>
     ),

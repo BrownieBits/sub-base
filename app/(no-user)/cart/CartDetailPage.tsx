@@ -129,7 +129,9 @@ export default function CartDetailPage(props: Props) {
                 track_inventory: false,
                 product_type: '',
                 name: '',
+                vendor: '',
                 service_percent: 0,
+                ship_from: null,
               },
             ];
           } else {
@@ -147,7 +149,9 @@ export default function CartDetailPage(props: Props) {
               track_inventory: false,
               product_type: '',
               name: '',
+              vendor: '',
               service_percent: 0,
+              ship_from: null,
             });
           }
         });
@@ -220,7 +224,8 @@ export default function CartDetailPage(props: Props) {
                     item.track_inventory = document.data().track_inventory;
                     item.product_type = document.data().product_type;
                     item.name = document.data().name;
-                    item.service_percent = document.data().service_percent;
+                    (item.vendor = document.data().vendor),
+                      (item.service_percent = document.data().service_percent);
                     if (item.options.length > 0) {
                       const variantRef: DocumentReference = doc(
                         db,

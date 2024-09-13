@@ -84,7 +84,9 @@ async function getData(cartId: string) {
           track_inventory: false,
           product_type: '',
           name: '',
+          vendor: '',
           service_percent: 0,
+          ship_from: null,
         },
       ];
     } else {
@@ -102,7 +104,9 @@ async function getData(cartId: string) {
         track_inventory: false,
         product_type: '',
         name: '',
+        vendor: '',
         service_percent: 0,
+        ship_from: null,
       });
     }
   });
@@ -175,7 +179,9 @@ async function getData(cartId: string) {
               item.track_inventory = document.data().track_inventory;
               item.product_type = document.data().product_type;
               item.name = document.data().name;
-              item.service_percent = document.data().service_percent;
+              item.ship_from = document.data().ship_from_address;
+              (item.vendor = document.data().vendor),
+                (item.service_percent = document.data().service_percent);
               if (item.options.length > 0) {
                 const variantRef: DocumentReference = doc(
                   db,
@@ -256,24 +262,24 @@ export async function generateMetadata(): Promise<Metadata> {
   return {
     title: `Checkout`,
     description:
-      'Enjoy the products you love, and share it all with friends, family, and the world on SubBase.',
+      'Enjoy the products you love, and share it all with friends, family, and the world on SubPort.',
     openGraph: {
       type: 'website',
       url: `https://${process.env.NEXT_PUBLIC_BASE_URL}/checkout/`,
       title: `Checkout`,
-      siteName: 'SubBase Creator Platform',
+      siteName: 'SubPort Creator Platform',
       description:
-        'Enjoy the products you love, and share it all with friends, family, and the world on SubBase.',
+        'Enjoy the products you love, and share it all with friends, family, and the world on SubPort.',
       images: [`https://${process.env.NEXT_PUBLIC_BASE_URL}/api/og_image`],
     },
     twitter: {
       card: 'summary_large_image',
-      creator: 'SubBase',
+      creator: 'SubPort',
       title: `Checkout`,
       description:
-        'Enjoy the products you love, and share it all with friends, family, and the world on SubBase.',
+        'Enjoy the products you love, and share it all with friends, family, and the world on SubPort.',
       images: [`https://${process.env.NEXT_PUBLIC_BASE_URL}/api/og_image`],
-      site: 'SubBase Creator Platform',
+      site: 'SubPort Creator Platform',
     },
   };
 }

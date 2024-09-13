@@ -184,6 +184,7 @@ export const CartIcon = () => {
     <Button
       asChild
       variant="outline"
+      size="sm"
       className="bg-layer-one hover:bg-layer-two"
     >
       <Link href="/cart" aria-label="Cart" title="Cart">

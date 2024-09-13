@@ -6,24 +6,24 @@ export async function generateMetadata(): Promise<Metadata> {
   return {
     title: `Analytics`,
     description:
-      'Enjoy the products you love, and share it all with friends, family, and the world on SubBase.',
+      'Enjoy the products you love, and share it all with friends, family, and the world on SubPort.',
     openGraph: {
       type: 'website',
       url: `https://${process.env.NEXT_PUBLIC_BASE_URL}/dashboard/analytics/`,
       title: `Analytics`,
-      siteName: 'SubBase Creator Platform',
+      siteName: 'SubPort Creator Platform',
       description:
-        'Enjoy the products you love, and share it all with friends, family, and the world on SubBase.',
+        'Enjoy the products you love, and share it all with friends, family, and the world on SubPort.',
       images: [`https://${process.env.NEXT_PUBLIC_BASE_URL}/api/og_image`],
     },
     twitter: {
       card: 'summary_large_image',
-      creator: 'SubBase',
+      creator: 'SubPort',
       title: `Analytics`,
       description:
-        'Enjoy the products you love, and share it all with friends, family, and the world on SubBase.',
+        'Enjoy the products you love, and share it all with friends, family, and the world on SubPort.',
       images: [`https://${process.env.NEXT_PUBLIC_BASE_URL}/api/og_image`],
-      site: 'SubBase Creator Platform',
+      site: 'SubPort Creator Platform',
     },
   };
 }
@@ -33,5 +33,10 @@ export default function Analytics() {
   const user_id = cookieStore.get('user_id');
   const default_store = cookieStore.get('default_store');
 
-  return <AnalyticsPage user_id={user_id?.value!} default_store={default_store?.value!}   />;
+  return (
+    <AnalyticsPage
+      user_id={user_id?.value!}
+      default_store={default_store?.value!}
+    />
+  );
 }

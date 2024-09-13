@@ -30,7 +30,7 @@ export const LatestBlog = (props: {}) => {
 
   return (
     <section className="w-full flex flex-col justify-start items-start gap-8 p-4 bg-layer-one border rounded">
-      <h3>SubBase News</h3>
+      <h3>SubPort News</h3>
       {blog.fields.banner && (
         <Image
           alt={blog.fields.title}

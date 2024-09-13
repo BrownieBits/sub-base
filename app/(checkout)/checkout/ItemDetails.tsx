@@ -67,7 +67,7 @@ export default function ItemDetails(props: Props) {
         {props.items.map((item: Item, index: number) => (
           <section
             className="w-full flex gap-4"
-            key={`item-breakdown-item-${item.id}`}
+            key={`item-breakdown-item-${item.id}${item.options.join('')}`}
           >
             <section className="flex-1 w-full flex gap-2 whitespace-nowrap overflow-hidden">
               {item.images.length > 0 && (

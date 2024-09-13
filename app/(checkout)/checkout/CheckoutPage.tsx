@@ -32,6 +32,7 @@ import RemovedItemsDialogue from './RemovedItemsDialogue';
 import CheckoutSummary from './Summary';
 import AddressForm from './address/AddressForm';
 import EditAddress from './address/EditAddress';
+import ShippingSelect from './shipping/ShippingForm';
 
 type Items = {
   [key: string]: Item[];
@@ -163,8 +164,8 @@ export default function CheckoutPage(props: Props) {
     <>
       <section className="w-full max-w-[1200px] mx-auto">
         <section className="flex w-full justify-between items-center px-4 py-4 gap-4">
-          <section className="flex justify-start items-center gap-2">
-            <section className="w-[20px] md:w-[120px]">
+          <section className="flex flex-col md:flex-row jusitfy-center md:justify-start items-center gap-2">
+            <section className="w-[40px] md:w-[120px]">
               <Logo url="/" />
             </section>
             <p className="text-xs md:text-md ">Secure Checkout</p>
@@ -313,6 +314,9 @@ export default function CheckoutPage(props: Props) {
                     address={address!}
                     selectAddress={selectAddress}
                   />
+                )}
+                {address !== null && step === 'shipping' && (
+                  <ShippingSelect items={props.items} ship_to={address} />
                 )}
               </>
             )}

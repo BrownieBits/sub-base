@@ -41,6 +41,8 @@ export type Item = {
     product_type: string;
     service_percent: number;
     name: string;
+    vendor: string;
+    ship_from: string | null;
 };
 export type Promotion = {
     promo_id: string;
@@ -74,4 +76,25 @@ export type Address = {
     state_province: string;
     owner_id?: string;
     created_at?: Timestamp;
+};
+export type Shipment = {
+    ship_to: string | Address;
+    ship_from: Address | null;
+    items: Item[];
+}
+export type Shipments = {
+    [key: string]: Shipment;
+};
+export type ShippingCarrier = {
+    name: string;
+    carrier_id: string;
+};
+export type Rate = {
+    carrier_name: string;
+    carrier_id: string;
+    delivery_days: number;
+    estimated_delivery_date: Date;
+    rate: number;
+    service_code: string;
+    service_type: string;
 };

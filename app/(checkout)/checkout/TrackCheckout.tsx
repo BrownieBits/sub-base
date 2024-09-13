@@ -61,7 +61,7 @@ export default function TrackCheckout(props: {
   React.useEffect(() => {
     if (analytics !== null) {
       logEvent(analytics, 'page_view', {
-        title: `Checkout - SubBase Creator Platform`,
+        title: `Checkout - SubPort Creator Platform`,
       });
     }
     getAndSetAnalytics();
