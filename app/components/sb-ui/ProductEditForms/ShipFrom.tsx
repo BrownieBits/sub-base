@@ -86,7 +86,7 @@ export function ShipFromSelect(props: Props) {
                     ' - ' +
                     addressSnapShots?.docs
                       .find((address) => address.id === value)
-                      ?.data().address_line11 +
+                      ?.data().address_line1 +
                     ' ' +
                     addressSnapShots?.docs
                       .find((address) => address.id === value)
