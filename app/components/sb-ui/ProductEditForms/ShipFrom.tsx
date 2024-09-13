@@ -86,15 +86,15 @@ export function ShipFromSelect(props: Props) {
                     ' - ' +
                     addressSnapShots?.docs
                       .find((address) => address.id === value)
-                      ?.data().address_line_1 +
+                      ?.data().address_line11 +
                     ' ' +
                     addressSnapShots?.docs
                       .find((address) => address.id === value)
-                      ?.data().city +
+                      ?.data().city_locality +
                     ', ' +
                     addressSnapShots?.docs
                       .find((address) => address.id === value)
-                      ?.data().province +
+                      ?.data().state_province +
                     ' ' +
                     addressSnapShots?.docs
                       .find((address) => address.id === value)
@@ -120,11 +120,11 @@ export function ShipFromSelect(props: Props) {
                     >
                       {address.data().name +
                         ' - ' +
-                        address.data().address_line_1 +
+                        address.data().address_line1 +
                         ' ' +
-                        address.data().city +
+                        address.data().city_locality +
                         ', ' +
-                        address.data().province +
+                        address.data().state_province +
                         ' ' +
                         address.data().postal_code}
                       <CheckIcon
