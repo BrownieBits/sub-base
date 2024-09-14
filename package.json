@@ -75,7 +75,7 @@
     "react-dom": "^19.0.0-rc-6230622a1a-20240610",
     "react-firebase-hooks": "^5.1.1",
     "react-hook-form": "^7.53.0",
-    "recharts": "^2.12.7",
+    "recharts": "^2.13.0-alpha.4",
     "server-only": "^0.0.1",
     "sharp": "^0.33.5",
     "shipengine": "^1.0.7",
