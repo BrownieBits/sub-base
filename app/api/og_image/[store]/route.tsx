@@ -12,7 +12,7 @@ export async function GET(
   const searchParams = request.nextUrl.searchParams;
   const image = searchParams.get('image');
   const storeName = searchParams.get('store');
-
+  console.log('PARAMS', image, storeName);
   if (storeName === null || image === null) {
     return new ImageResponse(
       (
