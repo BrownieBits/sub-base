@@ -18,7 +18,7 @@ export async function GET(
   const searchParams = request.nextUrl.searchParams;
 
   const image = searchParams.get('image');
-  const storeName = searchParams.get('store');
+  const storeName = searchParams.get('shop');
   console.log('PARAMS', image, storeName, searchItems);
   if (storeName === null || image === null) {
     return new ImageResponse(
