@@ -126,7 +126,7 @@ export const LikeIt = ({
       <Button variant="outline" onClick={() => UpdateSubStatus('Like')}>
         <section>
           <FontAwesomeIcon
-            className="icon pr-2 mr-2 h-4 w-4 border-r"
+            className="icon mr-2 h-4 w-4 border-r pr-2"
             icon={faThumbsUpRegular}
           />
           {like_count} Like{like_count > 1 ? 's' : ''}
@@ -139,7 +139,7 @@ export const LikeIt = ({
     <Button variant="outline" onClick={() => UpdateSubStatus('Unlike')}>
       <section>
         <FontAwesomeIcon
-          className="icon pr-2 mr-2 h-4 w-4 border-r"
+          className="icon mr-2 h-4 w-4 border-r pr-2"
           icon={faThumbsUp}
         />
         {like_count} Like{like_count > 1 ? 's' : ''}

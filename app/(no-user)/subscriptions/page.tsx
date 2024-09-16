@@ -1,4 +1,3 @@
-import { HeroBanner } from '@/components/sb-ui/HeroBanner';
 import StoreCard from '@/components/sb-ui/StoreCard';
 import { Separator } from '@/components/ui/separator';
 import { db } from '@/lib/firebase';
@@ -59,18 +58,17 @@ export default async function Subscriptions() {
   const data = await getData(user_id);
   return (
     <section>
-      <section className="w-full max-w-[2428px] mx-auto">
-        <section className="flex w-full justify-between items-center px-4 py-4 gap-4">
+      <section className="mx-auto w-full max-w-[2428px]">
+        <section className="flex w-full items-center justify-between gap-4 px-4 py-4">
           <h1>My Subscriptions</h1>
         </section>
-        <HeroBanner page_slug="creator-liked-items" />
       </section>
       <Separator />
-      <section className="w-full max-w-[2428px] mx-auto">
+      <section className="mx-auto w-full max-w-[2428px]">
         {data.docs.length === 0 ? (
           <NoSubscriptions />
         ) : (
-          <section className="grid grid-cols-2 md:grid-cols-4 xl:grid-cols-6 gap-x-8 gap-y-[60px] px-4 py-8">
+          <section className="grid grid-cols-2 gap-x-8 gap-y-[60px] px-4 py-8 md:grid-cols-4 xl:grid-cols-6">
             {data.docs.map((doc) => {
               return <StoreCard id={doc.id} key={doc.id} />;
             })}

@@ -60,7 +60,7 @@ export default function AddProductsToCollectionForm(props: {
       <Form {...form}>
         <form
           onSubmit={form.handleSubmit(onSubmit)}
-          className="space-y-8 w-full"
+          className="w-full space-y-8"
           id="new-collection"
         >
           <FormField
@@ -80,7 +80,7 @@ export default function AddProductsToCollectionForm(props: {
       {props.loading ? (
         <div>Loading</div>
       ) : (
-        <ScrollArea className="flex flex-col max-h-[300px]">
+        <ScrollArea className="flex max-h-[300px] flex-col">
           {props.products?.docs?.length! > 0 ? (
             <>
               {props.products?.docs.map((doc) => {
@@ -99,7 +99,7 @@ export default function AddProductsToCollectionForm(props: {
                 }
                 return (
                   <section
-                    className="flex items-center gap-4 my-4"
+                    className="my-4 flex items-center gap-4"
                     key={doc.id}
                   >
                     <input
@@ -108,7 +108,7 @@ export default function AddProductsToCollectionForm(props: {
                       onChange={checkChange}
                       checked={selectedProducts.includes(doc.id)}
                     />
-                    <div className="w-[50px] aspect-square border bg-layer-one overflow-hidden flex justify-center items-center">
+                    <div className="flex aspect-square w-[50px] items-center justify-center overflow-hidden border bg-layer-one">
                       <Image
                         alt={doc.data().name}
                         src={doc.data().images[0]}
@@ -119,11 +119,11 @@ export default function AddProductsToCollectionForm(props: {
                     <span className="flex-1">{doc.data().name}</span>
                     <span className="flex-1">{doc.data().product_type}</span>
                     {doc.data().status === 'Public' ? (
-                      <span className="bg-success text-success-foreground text-xs font-medium mr-2 px-2.5 py-0.5 rounded">
+                      <span className="mr-2 rounded bg-success px-2.5 py-0.5 text-xs font-medium text-success-foreground">
                         {doc.data().status}
                       </span>
                     ) : (
-                      <span className="bg-destructive text-destructive-foreground text-xs font-medium mr-2 px-2.5 py-0.5 rounded">
+                      <span className="mr-2 rounded bg-destructive px-2.5 py-0.5 text-xs font-medium text-destructive-foreground">
                         {doc.data().status}
                       </span>
                     )}
@@ -137,7 +137,7 @@ export default function AddProductsToCollectionForm(props: {
         </ScrollArea>
       )}
 
-      <section className="flex justify-between items-center gap-4">
+      <section className="flex items-center justify-between gap-4">
         <span>
           {selectedProducts?.length} Product
           {selectedProducts?.length === 1 ? '' : 's'} Selected

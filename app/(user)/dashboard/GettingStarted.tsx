@@ -61,35 +61,35 @@ export const GettingStartedGuide = (props: {}) => {
 
   if (latestProduct === null) {
     return (
-      <section className="w-full flex flex-col gap-4 p-4">
-        <Skeleton className="w-[150px] h-7 bg-layer-two" />
-        <Skeleton className="w-full aspect-square rounded bg-layer-two" />
-        <Skeleton className="w-[125px] h-5 bg-layer-two" />
-        <section className="w-full flex justify-between gap-4">
-          <Skeleton className="w-[125px] h-5 bg-layer-two" />
-          <Skeleton className="w-[50px] h-5 bg-layer-two" />
+      <section className="flex w-full flex-col gap-4 p-4">
+        <Skeleton className="h-7 w-[150px] bg-layer-two" />
+        <Skeleton className="aspect-square w-full rounded bg-layer-two" />
+        <Skeleton className="h-5 w-[125px] bg-layer-two" />
+        <section className="flex w-full justify-between gap-4">
+          <Skeleton className="h-5 w-[125px] bg-layer-two" />
+          <Skeleton className="h-5 w-[50px] bg-layer-two" />
         </section>
-        <section className="w-full flex justify-between gap-4">
-          <Skeleton className="w-[125px] h-5 bg-layer-two" />
-          <Skeleton className="w-[50px] h-5 bg-layer-two" />
+        <section className="flex w-full justify-between gap-4">
+          <Skeleton className="h-5 w-[125px] bg-layer-two" />
+          <Skeleton className="h-5 w-[50px] bg-layer-two" />
         </section>
-        <section className="w-full flex justify-between gap-4">
-          <Skeleton className="w-[125px] h-5 bg-layer-two" />
-          <Skeleton className="w-[50px] h-5 bg-layer-two" />
+        <section className="flex w-full justify-between gap-4">
+          <Skeleton className="h-5 w-[125px] bg-layer-two" />
+          <Skeleton className="h-5 w-[50px] bg-layer-two" />
         </section>
 
-        <section className="w-full flex  gap-4">
-          <Skeleton className="w-[75px] h-[40px] bg-layer-two" />
-          <Skeleton className="w-[75px] h-[40px] bg-layer-two" />
+        <section className="flex w-full gap-4">
+          <Skeleton className="h-[40px] w-[75px] bg-layer-two" />
+          <Skeleton className="h-[40px] w-[75px] bg-layer-two" />
         </section>
       </section>
     );
   }
   if (latestProduct === '') {
     return (
-      <section className="w-full flex flex-col items-start gap-4 p-4">
+      <section className="flex w-full flex-col items-start gap-4 p-4">
         <h3>Latest Product Performance</h3>
-        <Skeleton className="w-full aspect-square rounded bg-layer-two" />
+        <Skeleton className="aspect-square w-full rounded bg-layer-two" />
         <p>
           <b>No Products Yet</b>
         </p>
@@ -99,9 +99,9 @@ export const GettingStartedGuide = (props: {}) => {
     );
   }
   return (
-    <section className="w-full flex flex-col gap-4 p-8">
+    <section className="flex w-full flex-col gap-4 p-8">
       <h3>Latest Product Performance</h3>
-      <section className="aspect-square flex justify-center items-center bg-layer-one border rounded overflow-hidden group">
+      <section className="group flex aspect-square items-center justify-center overflow-hidden rounded border bg-layer-one">
         <Image
           src={latestProduct.images[0]}
           width="1000"
@@ -113,15 +113,15 @@ export const GettingStartedGuide = (props: {}) => {
       <p>
         <b>{latestProduct.name}</b>
       </p>
-      <section className="w-full flex justify-between gap-4">
+      <section className="flex w-full justify-between gap-4">
         <p>Views</p>
         <p>{latestProduct.view_count}</p>
       </section>
-      <section className="w-full flex justify-between gap-4">
+      <section className="flex w-full justify-between gap-4">
         <p>Likes</p>
         <p>{latestProduct.like_count}</p>
       </section>
-      <section className="w-full flex justify-between gap-4">
+      <section className="flex w-full justify-between gap-4">
         <p>Revenue</p>
         <p>
           {new Intl.NumberFormat('en-US', {
@@ -131,7 +131,7 @@ export const GettingStartedGuide = (props: {}) => {
         </p>
       </section>
 
-      <section className="w-full flex  gap-4">
+      <section className="flex w-full gap-4">
         <Button asChild>
           <Link href={`/product/${latestProduct.id}`}>View Product</Link>
         </Button>

@@ -120,7 +120,7 @@ export default function EditAddress(props: Props) {
   }
 
   return (
-    <section className="w-full flex flex-col gap-4 border rounded bg-layer-one drop-shadow p-8">
+    <section className="flex w-full flex-col gap-4 rounded border bg-layer-one p-4 drop-shadow">
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)}>
           <section className="flex flex-col gap-4">

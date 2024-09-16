@@ -49,9 +49,9 @@ export const ShowDetails = (props: {
 
   if (isDesktop) {
     return (
-      <section className="w-full p-4 border rounded bg-layer-one mt-8">
+      <section className="mt-8 w-full rounded border bg-layer-one p-4">
         <h4>Product Details</h4>
-        <p className="pt-[5px] text-sm text-muted-foreground whitespace-pre-wrap">
+        <p className="whitespace-pre-wrap pt-[5px] text-sm text-muted-foreground">
           {props.text.length < props.howManyToShow
             ? props.text.replaceAll('\\n', '\n')
             : `${props.text.replaceAll('\\n', '\n').substring(0, props.howManyToShow)}...`}
@@ -59,7 +59,7 @@ export const ShowDetails = (props: {
             <DialogTrigger asChild>
               <Button
                 variant="link"
-                className="text-foreground p-[0] px-4 h-auto hover:no-underline"
+                className="h-auto p-[0] px-4 text-foreground hover:no-underline"
                 asChild
               >
                 <span>...more</span>
@@ -71,11 +71,11 @@ export const ShowDetails = (props: {
                   <h3>Product Details</h3>
                 </DialogTitle>
                 <DialogDescription className="flex flex-col">
-                  <span className="text-foreground pb-4 whitespace-pre-wrap">
+                  <span className="whitespace-pre-wrap pb-4 text-foreground">
                     {props.text.replaceAll('\\n', '\n')}
                   </span>
 
-                  <span className="w-full flex justify-start gap-0 text-foreground pb-4">
+                  <span className="flex w-full justify-start gap-0 pb-4 text-foreground">
                     <FontAwesomeIcon
                       className="icon mr-2 h-4 w-4"
                       icon={faGlobe}
@@ -83,7 +83,7 @@ export const ShowDetails = (props: {
                     htttps://{process.env.NEXT_PUBLIC_BASE_URL}/product/
                     {props.product_id}
                   </span>
-                  <span className="w-full flex justify-start gap-0 text-foreground pb-4">
+                  <span className="flex w-full justify-start gap-0 pb-4 text-foreground">
                     <FontAwesomeIcon
                       className="icon mr-2 h-4 w-4"
                       icon={faStore}
@@ -91,7 +91,7 @@ export const ShowDetails = (props: {
                     htttps://{process.env.NEXT_PUBLIC_BASE_URL}/store/
                     {props.store_name}
                   </span>
-                  <span className="text-foreground pb-4">
+                  <span className="pb-4 text-foreground">
                     <FontAwesomeIcon
                       className="icon mr-2 h-4 w-4"
                       icon={faThumbsUp}
@@ -99,14 +99,14 @@ export const ShowDetails = (props: {
                     {props.like_count} like
                     {props.like_count > 1 ? 's' : ''}
                   </span>
-                  <span className="text-foreground pb-4">
+                  <span className="pb-4 text-foreground">
                     <FontAwesomeIcon
                       className="icon mr-2 h-4 w-4"
                       icon={faBinoculars}
                     />
                     {props.view_count} view{props.view_count > 1 ? 's' : ''}
                   </span>
-                  <span className="text-foreground pb-4">
+                  <span className="pb-4 text-foreground">
                     <FontAwesomeIcon
                       className="icon mr-2 h-4 w-4"
                       icon={faInfoCircle}
@@ -139,9 +139,9 @@ export const ShowDetails = (props: {
   }
 
   return (
-    <section className="w-full p-4 border rounded bg-layer-one mt-8">
+    <section className="mt-8 w-full rounded border bg-layer-one p-4">
       <h4>Product Details</h4>
-      <p className="pt-[5px] text-sm text-muted-foreground whitespace-pre-wrap">
+      <p className="whitespace-pre-wrap pt-[5px] text-sm text-muted-foreground">
         {props.text.length < props.howManyToShow
           ? props.text.replaceAll('\\n', '\n')
           : `${props.text.replaceAll('\\n', '\n').substring(0, props.howManyToShow)}...`}
@@ -150,14 +150,14 @@ export const ShowDetails = (props: {
           <DrawerTrigger>
             <Button
               variant="link"
-              className="text-foreground p-[0] px-4 h-auto hover:no-underline"
+              className="h-auto p-[0] px-4 text-foreground hover:no-underline"
               asChild
             >
               <span>...more</span>
             </Button>
           </DrawerTrigger>
           <DrawerContent>
-            <DrawerHeader className="w-full max-w-[2428px] mx-auto">
+            <DrawerHeader className="mx-auto w-full max-w-[2428px]">
               <DrawerTitle className="flex justify-between">
                 <h3>Product Details</h3>
                 <DrawerClose>
@@ -166,11 +166,11 @@ export const ShowDetails = (props: {
                   </Button>
                 </DrawerClose>
               </DrawerTitle>
-              <DrawerDescription className="w-full flex flex-col items-start text-left">
-                <span className="text-foreground pb-4 whitespace-pre-wrap">
+              <DrawerDescription className="flex w-full flex-col items-start text-left">
+                <span className="whitespace-pre-wrap pb-4 text-foreground">
                   {props.text.replaceAll('\\n', '\n')}
                 </span>
-                <span className="w-full flex justify-start gap-0 text-foreground pb-4">
+                <span className="flex w-full justify-start gap-0 pb-4 text-foreground">
                   <FontAwesomeIcon
                     className="icon mr-2 h-4 w-4"
                     icon={faGlobe}
@@ -178,7 +178,7 @@ export const ShowDetails = (props: {
                   htttps://{process.env.NEXT_PUBLIC_BASE_URL}/product/
                   {props.product_id}
                 </span>
-                <span className="w-full flex justify-start gap-0 text-foreground pb-4">
+                <span className="flex w-full justify-start gap-0 pb-4 text-foreground">
                   <FontAwesomeIcon
                     className="icon mr-2 h-4 w-4"
                     icon={faStore}
@@ -186,7 +186,7 @@ export const ShowDetails = (props: {
                   htttps://{process.env.NEXT_PUBLIC_BASE_URL}/store/
                   {props.store_name}
                 </span>
-                <span className="text-foreground pb-4">
+                <span className="pb-4 text-foreground">
                   <FontAwesomeIcon
                     className="icon mr-2 h-4 w-4"
                     icon={faThumbsUp}
@@ -194,14 +194,14 @@ export const ShowDetails = (props: {
                   {props.like_count} like
                   {props.like_count > 1 ? 's' : ''}
                 </span>
-                <span className="text-foreground pb-4">
+                <span className="pb-4 text-foreground">
                   <FontAwesomeIcon
                     className="icon mr-2 h-4 w-4"
                     icon={faBinoculars}
                   />
                   {props.view_count} view{props.view_count > 1 ? 's' : ''}
                 </span>
-                <span className="text-foreground pb-4">
+                <span className="pb-4 text-foreground">
                   <FontAwesomeIcon
                     className="icon mr-2 h-4 w-4"
                     icon={faInfoCircle}

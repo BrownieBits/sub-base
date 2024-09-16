@@ -24,10 +24,10 @@ export default function DraggableImage(props: Props) {
   return (
     <section
       className={cn(
-        'aspect-square cursor-pointer border rounded overflow-hidden relative group',
+        'group relative aspect-square cursor-pointer overflow-hidden rounded border',
         {
           'bg-layer-two': !props.draggableSnapshot.isDragging,
-          'bg-layer-three left-auto top-auto':
+          'left-auto top-auto bg-layer-three':
             props.draggableSnapshot.isDragging,
         }
       )}
@@ -41,14 +41,14 @@ export default function DraggableImage(props: Props) {
         onClick={(event) => {
           props.removeProductImage(event, props.index);
         }}
-        className="absolute top-0 right-0 hidden group-hover:block"
+        className="absolute right-0 top-0 hidden group-hover:block"
       >
         <p>
           <FontAwesomeIcon className="icon" icon={faTrash} />
         </p>
       </Button>
 
-      <section className="h-full flex items-center">
+      <section className="flex h-full items-center">
         <Image
           src={props.image.image}
           alt={props.image.id.toString()}

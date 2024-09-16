@@ -32,7 +32,7 @@ export const MenuItem = (props: any) => {
               variant="link"
               aria-label="Sign In to Access"
               title="Sign In to Access"
-              className="px-4 py-0 w-full justify-start text-muted-foreground rounded-none"
+              className="w-full justify-start rounded-none px-4 py-0 text-muted-foreground"
             >
               <Link
                 href="/sign-in"
@@ -54,7 +54,7 @@ export const MenuItem = (props: any) => {
           variant="link"
           aria-label="Sign In to Access"
           title="Sign In to Access"
-          className="px-4 py-0 w-full justify-start text-muted-foreground rounded-none"
+          className="w-full justify-start rounded-none px-4 py-0 text-muted-foreground"
         >
           <Link
             href="/sign-in"
@@ -74,7 +74,7 @@ export const MenuItem = (props: any) => {
         <Button
           asChild
           variant="link"
-          className="px-4 py-0 w-full justify-start text-foreground rounded-none"
+          className="w-full justify-start rounded-none px-4 py-0 text-foreground"
         >
           <SheetClose asChild>
             <Link
@@ -98,7 +98,7 @@ export const MenuItem = (props: any) => {
       <Button
         asChild
         variant="link"
-        className="px-4 py-0 w-full justify-start text-foreground rounded-none"
+        className="w-full justify-start rounded-none px-4 py-0 text-foreground"
       >
         <Link
           href={props.item.fields.url}

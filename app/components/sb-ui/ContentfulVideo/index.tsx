@@ -5,7 +5,7 @@ export const ContentfulVideo = (props: any) => {
       autoPlay
       muted
       loop
-      className="w-full h-auto mx-auto my-0"
+      className="mx-auto my-0 h-auto w-full"
       style={{ maxWidth: props.maxWidth }}
       src={props.src}
     />

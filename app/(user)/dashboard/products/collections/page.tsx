@@ -1,5 +1,4 @@
 import { DataTable } from '@/components/sb-ui/DataTable';
-import { HeroBanner } from '@/components/sb-ui/HeroBanner';
 import { Button } from '@/components/ui/button';
 import { Separator } from '@/components/ui/separator';
 import { db } from '@/lib/firebase';
@@ -79,17 +78,16 @@ export default async function Collections() {
   const data = await getData(default_store);
   return (
     <section>
-      <section className="w-full max-w-[2428px] mx-auto">
-        <section className="flex w-full justify-between items-center px-4 py-4 gap-4">
+      <section className="mx-auto w-full max-w-[2428px]">
+        <section className="flex w-full items-center justify-between gap-4 px-4 py-4">
           <h1>Collections</h1>
           <NewCollectionForm />
         </section>
-        <HeroBanner page_slug="creator-collections" />
-        <section className="flex w-full gap-8 justify-start px-4">
+        <section className="flex w-full justify-start gap-8 px-4">
           <Button
             asChild
             variant="link"
-            className="px-0 text-md text-foreground rounded-none hover:no-underline border-b-[2px] border-transparent"
+            className="text-md rounded-none border-b-[2px] border-transparent px-0 text-foreground hover:no-underline"
           >
             <Link href={`/dashboard/products`} aria-label="Products">
               Products
@@ -98,7 +96,7 @@ export default async function Collections() {
           <Button
             asChild
             variant="link"
-            className="px-0 text-md text-foreground border-b-[2px] rounded-none hover:no-underline"
+            className="text-md rounded-none border-b-[2px] px-0 text-foreground hover:no-underline"
           >
             <Link
               href={`/dashboard/products/collections`}
@@ -110,7 +108,7 @@ export default async function Collections() {
         </section>
       </section>
       <Separator />
-      <section className="w-full max-w-[2428px] mx-auto">
+      <section className="mx-auto w-full max-w-[2428px]">
         {data.length! > 0 ? (
           <DataTable columns={columns} data={data!} />
         ) : (

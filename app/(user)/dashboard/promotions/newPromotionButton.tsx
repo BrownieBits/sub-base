@@ -181,7 +181,7 @@ export const NewPromotionButton = (props: {
               <Form {...form}>
                 <form
                   onSubmit={form.handleSubmit(onSubmit)}
-                  className="space-y-8 w-full"
+                  className="w-full space-y-8"
                 >
                   <FormField
                     control={form.control}
@@ -281,7 +281,7 @@ export const NewPromotionButton = (props: {
                             <FormControl>
                               <Button
                                 variant={'outline'}
-                                className="w-full text-left font-normal justify-start text-foreground"
+                                className="w-full justify-start text-left font-normal text-foreground"
                               >
                                 {field.value ? (
                                   format(field.value, 'LLL dd, yyyy')
@@ -307,7 +307,7 @@ export const NewPromotionButton = (props: {
                       </FormItem>
                     )}
                   />
-                  <section className="flex gap-4 w-full justify-end">
+                  <section className="flex w-full justify-end gap-4">
                     <DialogClose>Cancel</DialogClose>
                     <Button type="submit">Submit</Button>
                   </section>
@@ -333,7 +333,7 @@ export const NewPromotionButton = (props: {
         </Button>
       </DrawerTrigger>
       <DrawerContent>
-        <DrawerHeader className="w-full max-w-[2428px] mx-auto">
+        <DrawerHeader className="mx-auto w-full max-w-[2428px]">
           <DrawerTitle className="flex justify-between">
             <h3>Add Promotion</h3>
             <DrawerClose>
@@ -342,11 +342,11 @@ export const NewPromotionButton = (props: {
               </Button>
             </DrawerClose>
           </DrawerTitle>
-          <DrawerDescription className="w-full flex flex-col items-start text-left">
+          <DrawerDescription className="flex w-full flex-col items-start text-left">
             <Form {...form}>
               <form
                 onSubmit={form.handleSubmit(onSubmit)}
-                className="space-y-8 w-full"
+                className="w-full space-y-8"
               >
                 <FormField
                   control={form.control}
@@ -444,7 +444,7 @@ export const NewPromotionButton = (props: {
                           <FormControl>
                             <Button
                               variant={'outline'}
-                              className="w-full text-left font-normal justify-start text-foreground"
+                              className="w-full justify-start text-left font-normal text-foreground"
                             >
                               {field.value ? (
                                 format(field.value, 'LLL dd, yyyy')
@@ -471,7 +471,7 @@ export const NewPromotionButton = (props: {
                     </FormItem>
                   )}
                 />
-                <section className="flex gap-4 w-full justify-end">
+                <section className="flex w-full justify-end gap-4">
                   <DrawerClose>Cancel</DrawerClose>
                   <Button type="submit">Submit</Button>
                 </section>

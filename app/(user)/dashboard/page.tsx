@@ -1,4 +1,3 @@
-import { HeroBanner } from '@/components/sb-ui/HeroBanner';
 import { Button } from '@/components/ui/button';
 import { Separator } from '@/components/ui/separator';
 import { db } from '@/lib/firebase';
@@ -70,7 +69,7 @@ export default async function Dashboard() {
       {!data.data().password_protected ? (
         <></>
       ) : (
-        <section className="w-full flex justify-center bg-destructive py-[5px]">
+        <section className="flex w-full justify-center bg-destructive py-[5px]">
           <p>
             Your store is currently password protect with:{' '}
             <b>{data.data().password}</b>. You can change this in the{' '}
@@ -78,7 +77,7 @@ export default async function Dashboard() {
               variant="link"
               size="sm"
               asChild
-              className="text-foreground px-[5px]"
+              className="px-[5px] text-foreground"
             >
               <Link href="/dashboard/preferences">
                 <FontAwesomeIcon className="icon mr-[5px]" icon={faStore} />
@@ -88,15 +87,14 @@ export default async function Dashboard() {
           </p>
         </section>
       )}
-      <section className="w-full max-w-[2428px] mx-auto">
-        <section className="flex w-full justify-between items-center px-4 py-4 gap-4">
+      <section className="mx-auto w-full max-w-[2428px]">
+        <section className="flex w-full items-center justify-between gap-4 px-4 py-4">
           <h1>Dashboard</h1>
         </section>
-        <HeroBanner page_slug="creator-dashboard" />
       </section>
       <Separator />
-      <section className="w-full max-w-[2428px] mx-auto flex flex-col md:flex-row gap-8 py-8 px-4">
-        <section className="flex-1 bg-layer-one border rounded">
+      <section className="mx-auto flex w-full max-w-[2428px] flex-col gap-8 px-4 py-8 md:flex-row">
+        <section className="flex-1 rounded border bg-layer-one">
           <LatestProduct user_id={user_id?.value!} />
         </section>
         <section className="flex-1">

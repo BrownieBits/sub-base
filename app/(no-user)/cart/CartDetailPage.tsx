@@ -410,43 +410,43 @@ export default function CartDetailPage(props: Props) {
   if (items === null) {
     return (
       <>
-        <section className="w-full max-w-[1754px] mx-auto">
-          <section className="flex w-full justify-between items-center px-4 py-4 gap-4">
+        <section className="mx-auto w-full max-w-[1754px]">
+          <section className="flex w-full items-center justify-between gap-4 px-4 py-4">
             <h1>Cart</h1>
           </section>
         </section>
         <Separator />
-        <section className="w-full max-w-[1754px] mx-auto flex flex-col  px-4 py-8 gap-8">
-          <section className="w-full flex flex-col md:flex-row gap-8">
-            <section className="w-full flex-1 flex flex-col gap-4">
-              <Skeleton className="w-full h-[200px] rounded bg-layer-two" />
-              <Skeleton className="w-full h-[200px] rounded bg-layer-two" />
+        <section className="mx-auto flex w-full max-w-[1754px] flex-col gap-8 px-4 py-8">
+          <section className="flex w-full flex-col gap-8 md:flex-row">
+            <section className="flex w-full flex-1 flex-col gap-4">
+              <Skeleton className="h-[200px] w-full rounded bg-layer-two" />
+              <Skeleton className="h-[200px] w-full rounded bg-layer-two" />
             </section>
-            <section className="flex flex-col gap-4 w-full md:w-[350px] xl:w-[400px]">
-              <Skeleton className="w-[100px] h-7 rounded bg-layer-two" />
-              <section className="w-full flex flex-col gap-2">
-                <section className="w-full flex justify-between">
-                  <Skeleton className="w-[150px] h-5 rounded bg-layer-two" />
-                  <Skeleton className="w-[50px] h-5 rounded bg-layer-two" />
+            <section className="flex w-full flex-col gap-4 md:w-[350px] xl:w-[400px]">
+              <Skeleton className="h-7 w-[100px] rounded bg-layer-two" />
+              <section className="flex w-full flex-col gap-2">
+                <section className="flex w-full justify-between">
+                  <Skeleton className="h-5 w-[150px] rounded bg-layer-two" />
+                  <Skeleton className="h-5 w-[50px] rounded bg-layer-two" />
                 </section>
-                <section className="w-full flex justify-between">
-                  <Skeleton className="w-[150px] h-5 rounded bg-layer-two" />
-                  <Skeleton className="w-[50px] h-5 rounded bg-layer-two" />
+                <section className="flex w-full justify-between">
+                  <Skeleton className="h-5 w-[150px] rounded bg-layer-two" />
+                  <Skeleton className="h-5 w-[50px] rounded bg-layer-two" />
                 </section>
-                <section className="w-full flex justify-between">
-                  <Skeleton className="w-[150px] h-5 rounded bg-layer-two" />
-                  <Skeleton className="w-[50px] h-5 rounded bg-layer-two" />
+                <section className="flex w-full justify-between">
+                  <Skeleton className="h-5 w-[150px] rounded bg-layer-two" />
+                  <Skeleton className="h-5 w-[50px] rounded bg-layer-two" />
                 </section>
-                <section className="w-full flex justify-between pb-4">
-                  <Skeleton className="w-full h-4 rounded bg-layer-two" />
+                <section className="flex w-full justify-between pb-4">
+                  <Skeleton className="h-4 w-full rounded bg-layer-two" />
                 </section>
                 <Separator />
-                <section className="w-full flex justify-between pt-4">
-                  <Skeleton className="w-[150px] h-5 rounded bg-layer-two" />
-                  <Skeleton className="w-[50px] h-5 rounded bg-layer-two" />
+                <section className="flex w-full justify-between pt-4">
+                  <Skeleton className="h-5 w-[150px] rounded bg-layer-two" />
+                  <Skeleton className="h-5 w-[50px] rounded bg-layer-two" />
                 </section>
               </section>
-              <Skeleton className="w-full h-[40px] rounded bg-layer-two" />
+              <Skeleton className="h-[40px] w-full rounded bg-layer-two" />
             </section>
           </section>
           <section></section>
@@ -458,19 +458,19 @@ export default function CartDetailPage(props: Props) {
   if (Object.keys(items).length === 0) {
     return (
       <>
-        <section className="w-full max-w-[1754px] mx-auto">
-          <section className="flex w-full justify-between items-center px-4 py-4 gap-4">
+        <section className="mx-auto w-full max-w-[1754px]">
+          <section className="flex w-full items-center justify-between gap-4 px-4 py-4">
             <h1>Cart</h1>
           </section>
         </section>
         <Separator />
-        <section className="w-full max-w-[1754px] mx-auto flex flex-col  px-4 py-8 gap-8">
-          <section className="flex flex-col w-full justify-start items-center p-8">
+        <section className="mx-auto flex w-full max-w-[1754px] flex-col gap-8 px-4 py-8">
+          <section className="flex w-full flex-col items-center justify-start p-8">
             <svg
               width="150"
               height="150"
               viewBox="0 0 150 150"
-              className="fill-primary mb-8"
+              className="mb-8 fill-primary"
               xmlns="http://www.w3.org/2000/svg"
             >
               <path d="M118.75 6.25L110.875 23.4375L93.75 31.25L110.875 39.125L118.75 56.25L126.562 39.125L143.75 31.25L126.562 23.4375M56.25 25L40.625 59.375L6.25 75L40.625 90.625L56.25 125L71.875 90.625L106.25 75L71.875 59.375M118.75 93.75L110.875 110.875L93.75 118.75L110.875 126.562L118.75 143.75L126.562 126.562L143.75 118.75L126.562 110.875" />
@@ -491,8 +491,8 @@ export default function CartDetailPage(props: Props) {
   }
   return (
     <>
-      <section className="w-full max-w-[1754px] mx-auto">
-        <section className="flex w-full justify-between items-center px-4 py-4 gap-4">
+      <section className="mx-auto w-full max-w-[1754px]">
+        <section className="flex w-full items-center justify-between gap-4 px-4 py-4">
           <h1>Cart</h1>
           <Button asChild>
             <Link href="/checkout">Checkout</Link>
@@ -500,9 +500,9 @@ export default function CartDetailPage(props: Props) {
         </section>
       </section>
       <Separator />
-      <section className="w-full max-w-[1754px] mx-auto flex flex-col px-4 py-8 gap-8">
-        <section className="w-full flex flex-col md:flex-row gap-8">
-          <section className="w-full flex-1 flex flex-col gap-4">
+      <section className="mx-auto flex w-full max-w-[1754px] flex-col gap-8 px-4 py-8">
+        <section className="flex w-full flex-col gap-8 md:flex-row">
+          <section className="flex w-full flex-1 flex-col gap-4">
             {Object.keys(items).map((store) => {
               let promo = null;
               if (promotions?.hasOwnProperty(store)) {
@@ -522,10 +522,10 @@ export default function CartDetailPage(props: Props) {
               );
             })}
           </section>
-          <section className="flex flex-col gap-4 w-full md:w-[350px] xl:w-[400px]">
+          <section className="flex w-full flex-col gap-4 md:w-[350px] xl:w-[400px]">
             <h3>Summary</h3>
-            <section className="w-full flex flex-col gap-2">
-              <section className="w-full flex justify-between">
+            <section className="flex w-full flex-col gap-2">
+              <section className="flex w-full justify-between">
                 <p>Item(s) Total:</p>
                 <p>
                   {new Intl.NumberFormat('en-US', {
@@ -534,7 +534,7 @@ export default function CartDetailPage(props: Props) {
                   }).format(itemsTotal)}
                 </p>
               </section>
-              <section className="w-full flex justify-between">
+              <section className="flex w-full justify-between">
                 <p>Service Fees:</p>
                 <p>
                   {new Intl.NumberFormat('en-US', {
@@ -543,7 +543,7 @@ export default function CartDetailPage(props: Props) {
                   }).format(serviceTotal)}
                 </p>
               </section>
-              <section className="w-full flex justify-between">
+              <section className="flex w-full justify-between">
                 <p>Discounts:</p>
                 <p>
                   {discountsTotal > 0 && <>-</>}
@@ -553,13 +553,13 @@ export default function CartDetailPage(props: Props) {
                   }).format(discountsTotal)}
                 </p>
               </section>
-              <section className="w-full flex justify-between pb-4">
+              <section className="flex w-full justify-between pb-4">
                 <p className="text-sm text-muted-foreground">
                   Shipping, and taxes are calculated at checkout
                 </p>
               </section>
               <Separator />
-              <section className="w-full flex justify-between pt-4">
+              <section className="flex w-full justify-between pt-4">
                 <p>
                   <b>Total:</b>
                 </p>
@@ -579,9 +579,9 @@ export default function CartDetailPage(props: Props) {
           </section>
         </section>
         {related.length > 0 && (
-          <section className="w-full flex flex-col gap-4">
+          <section className="flex w-full flex-col gap-4">
             <h3>You might like</h3>
-            <section className="grid grid-cols-1 md:grid-cols-3 xl:grid-cols-6 gap-8">
+            <section className="grid grid-cols-1 gap-8 md:grid-cols-3 xl:grid-cols-6">
               {related?.map((doc) => (
                 <ProductCard product={doc} show_creator={true} key={doc.id} />
               ))}
@@ -596,11 +596,11 @@ export default function CartDetailPage(props: Props) {
           <DialogHeader>
             <DialogTitle>We adjusted your cart...</DialogTitle>
             <DialogDescription>
-              <section className="w-full flex flex-col gap-4 pt-4">
+              <section className="flex w-full flex-col gap-4 pt-4">
                 {removedItems.map((item) => {
                   return (
                     <section
-                      className="w-full flex gap-4 items-center"
+                      className="flex w-full items-center gap-4"
                       key={`removed-item-${item.name}`}
                     >
                       <Image

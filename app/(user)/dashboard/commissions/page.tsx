@@ -1,4 +1,3 @@
-import { HeroBanner } from '@/components/sb-ui/HeroBanner';
 import { Button } from '@/components/ui/button';
 import { Separator } from '@/components/ui/separator';
 import { Metadata } from 'next';
@@ -33,8 +32,8 @@ export async function generateMetadata(): Promise<Metadata> {
 export default function Commisions() {
   return (
     <section>
-      <section className="w-full max-w-[2428px] mx-auto">
-        <section className="flex w-full justify-between items-center px-4 py-4 gap-4">
+      <section className="mx-auto w-full max-w-[2428px]">
+        <section className="flex w-full items-center justify-between gap-4 px-4 py-4">
           <h1>Commissions</h1>
           <Button asChild variant="outline">
             <Link
@@ -42,15 +41,14 @@ export default function Commisions() {
               aria-label="Create Product"
               className="bg-layer hover:bg-layer-one hover:no-underline"
             >
-              <i className="mr-2 h-4 w-4 fa-solid fa-circle-plus"></i>
+              <i className="fa-solid fa-circle-plus mr-2 h-4 w-4"></i>
               New Payout
             </Link>
           </Button>
         </section>
-        <HeroBanner page_slug="creator-commisions" />
       </section>
       <Separator />
-      <section className="w-full max-w-[2428px] mx-auto"></section>
+      <section className="mx-auto w-full max-w-[2428px]"></section>
     </section>
   );
 }

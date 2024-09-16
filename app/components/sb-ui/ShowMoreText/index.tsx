@@ -53,7 +53,7 @@ export const ShowMoreText = (props: {
 
   if (isDesktop) {
     return (
-      <p className="pt-[5px] text-sm text-muted-foreground whitespace-pre-wrap">
+      <p className="whitespace-pre-wrap pt-[5px] text-sm text-muted-foreground">
         {props.text.length < props.howManyToShow
           ? props.text.replaceAll('\\n', '\n')
           : `${props.text.replaceAll('\\n', '\n').substring(0, props.howManyToShow)}...`}
@@ -61,7 +61,7 @@ export const ShowMoreText = (props: {
           <DialogTrigger asChild>
             <Button
               variant="link"
-              className="text-foreground p-[0] px-4 h-auto hover:no-underline"
+              className="h-auto p-[0] px-4 text-foreground hover:no-underline"
               asChild
             >
               <span>...more</span>
@@ -73,13 +73,13 @@ export const ShowMoreText = (props: {
                 <h3>About</h3>
               </DialogTitle>
               <DialogDescription className="flex flex-col">
-                <span className="text-foreground pb-4 whitespace-pre-wrap">
+                <span className="whitespace-pre-wrap pb-4 text-foreground">
                   {props.text.replaceAll('\\n', '\n')}
                 </span>
-                <span className="text-xl font-bold text-foreground pb-2">
+                <span className="pb-2 text-xl font-bold text-foreground">
                   Store Details
                 </span>
-                <span className="w-full flex justify-start gap-0 text-foreground pb-4">
+                <span className="flex w-full justify-start gap-0 pb-4 text-foreground">
                   <FontAwesomeIcon
                     className="icon mr-2 h-4 w-4"
                     icon={faGlobe}
@@ -87,7 +87,7 @@ export const ShowMoreText = (props: {
                   htttps://{process.env.NEXT_PUBLIC_BASE_URL}/store/
                   {props.store_name}
                 </span>
-                <span className="text-foreground pb-4">
+                <span className="pb-4 text-foreground">
                   <FontAwesomeIcon
                     className="icon mr-2 h-4 w-4"
                     icon={faHeart}
@@ -95,7 +95,7 @@ export const ShowMoreText = (props: {
                   {props.subscription_count} subscriber
                   {props.subscription_count > 1 ? 's' : ''}
                 </span>
-                <span className="text-foreground pb-4">
+                <span className="pb-4 text-foreground">
                   <FontAwesomeIcon
                     className="icon mr-2 h-4 w-4"
                     icon={faShirt}
@@ -103,14 +103,14 @@ export const ShowMoreText = (props: {
                   {props.product_count} product
                   {props.product_count > 1 ? 's' : ''}
                 </span>
-                <span className="text-foreground pb-4">
+                <span className="pb-4 text-foreground">
                   <FontAwesomeIcon
                     className="icon mr-2 h-4 w-4"
                     icon={faBinoculars}
                   />
                   {props.view_count} view{props.view_count > 1 ? 's' : ''}
                 </span>
-                <span className="text-foreground pb-4">
+                <span className="pb-4 text-foreground">
                   <FontAwesomeIcon
                     className="icon mr-2 h-4 w-4"
                     icon={faInfoCircle}
@@ -122,7 +122,7 @@ export const ShowMoreText = (props: {
                     year: 'numeric',
                   }).format(timestamp)}
                 </span>
-                <span className="text-foreground pb-8">
+                <span className="pb-8 text-foreground">
                   <FontAwesomeIcon
                     className="icon mr-2 h-4 w-4"
                     icon={faGlobeAmericas}
@@ -134,7 +134,7 @@ export const ShowMoreText = (props: {
                   }
                 </span>
 
-                <section className="w-full flex gap-4">
+                <section className="flex w-full gap-4">
                   <Button variant="outline" className="text-foreground">
                     <FontAwesomeIcon
                       className="icon mr-2 h-4 w-4"
@@ -159,7 +159,7 @@ export const ShowMoreText = (props: {
   }
 
   return (
-    <p className="pt-[5px] text-sm text-muted-foreground whitespace-pre-wrap">
+    <p className="whitespace-pre-wrap pt-[5px] text-sm text-muted-foreground">
       {props.text.length < props.howManyToShow
         ? props.text
         : `${props.text.substring(0, props.howManyToShow)}...`}
@@ -168,14 +168,14 @@ export const ShowMoreText = (props: {
         <DrawerTrigger>
           <Button
             variant="link"
-            className="text-foreground p-[0] px-4 h-auto hover:no-underline"
+            className="h-auto p-[0] px-4 text-foreground hover:no-underline"
             asChild
           >
             <span>...more</span>
           </Button>
         </DrawerTrigger>
         <DrawerContent>
-          <DrawerHeader className="w-full max-w-[2428px] mx-auto">
+          <DrawerHeader className="mx-auto w-full max-w-[2428px]">
             <DrawerTitle className="flex justify-between">
               <h3>About</h3>
               <DrawerClose>
@@ -184,36 +184,36 @@ export const ShowMoreText = (props: {
                 </Button>
               </DrawerClose>
             </DrawerTitle>
-            <DrawerDescription className="w-full flex flex-col items-start text-left">
-              <span className="text-foreground pb-4 whitespace-pre-wrap">
+            <DrawerDescription className="flex w-full flex-col items-start text-left">
+              <span className="whitespace-pre-wrap pb-4 text-foreground">
                 {props.text.replaceAll('\\n', '\n')}
               </span>
-              <span className="text-xl font-bold text-foreground pb-2">
+              <span className="pb-2 text-xl font-bold text-foreground">
                 Store Details
               </span>
-              <span className="w-full flex justify-start gap-0 text-foreground pb-4">
+              <span className="flex w-full justify-start gap-0 pb-4 text-foreground">
                 <FontAwesomeIcon className="icon mr-2 h-4 w-4" icon={faGlobe} />
                 htttps://{process.env.NEXT_PUBLIC_BASE_URL}/store/
                 {props.store_name}
               </span>
-              <span className="text-foreground pb-4">
+              <span className="pb-4 text-foreground">
                 <FontAwesomeIcon className="icon mr-2 h-4 w-4" icon={faHeart} />
                 {props.subscription_count} subscriber
                 {props.subscription_count > 1 ? 's' : ''}
               </span>
-              <span className="text-foreground pb-4">
+              <span className="pb-4 text-foreground">
                 <FontAwesomeIcon className="icon mr-2 h-4 w-4" icon={faShirt} />
                 {props.product_count} product
                 {props.product_count > 1 ? 's' : ''}
               </span>
-              <span className="text-foreground pb-4">
+              <span className="pb-4 text-foreground">
                 <FontAwesomeIcon
                   className="icon mr-2 h-4 w-4"
                   icon={faBinoculars}
                 />
                 {props.view_count} view{props.view_count > 1 ? 's' : ''}
               </span>
-              <span className="text-foreground pb-4">
+              <span className="pb-4 text-foreground">
                 <FontAwesomeIcon
                   className="icon mr-2 h-4 w-4"
                   icon={faInfoCircle}
@@ -225,7 +225,7 @@ export const ShowMoreText = (props: {
                   year: 'numeric',
                 }).format(timestamp)}
               </span>
-              <span className="text-foreground pb-8">
+              <span className="pb-8 text-foreground">
                 <FontAwesomeIcon
                   className="icon mr-2 h-4 w-4"
                   icon={faGlobeAmericas}
@@ -233,7 +233,7 @@ export const ShowMoreText = (props: {
                 {props.location}
               </span>
 
-              <section className="w-full flex gap-4">
+              <section className="flex w-full gap-4">
                 <Button variant="outline" className="text-foreground">
                   <FontAwesomeIcon
                     className="icon mr-2 h-4 w-4"

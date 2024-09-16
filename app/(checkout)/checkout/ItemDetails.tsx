@@ -41,18 +41,18 @@ export default function ItemDetails(props: Props) {
   }, []);
 
   return (
-    <section className="w-full border rounded bg-layer-one">
-      <section className="w-full flex items-center gap-4 p-2">
+    <section className="w-full rounded border bg-layer-one">
+      <section className="flex w-full items-center gap-4 p-4">
         {store === null ? (
           <>
-            <Skeleton className="w-[25px] h-[25px] rounded-full bg-layer-three" />
-            <Skeleton className="w-[120px] h-[20px] rounded-full bg-layer-three" />
+            <Skeleton className="h-[25px] w-[25px] rounded-full bg-layer-three" />
+            <Skeleton className="h-[20px] w-[120px] rounded-full bg-layer-three" />
           </>
         ) : (
           <>
             <Avatar className="h-[25px] w-[25px]">
               <AvatarImage src={store.avatar_url} alt="Avatar" />
-              <AvatarFallback className="bg-primary text-primary-foreground border-background">
+              <AvatarFallback className="border-background bg-primary text-primary-foreground">
                 <b>{store.name.slice(0, 1).toUpperCase()}</b>
               </AvatarFallback>
             </Avatar>
@@ -63,15 +63,15 @@ export default function ItemDetails(props: Props) {
         )}
       </section>
       <Separator />
-      <section className="w-full flex flex-col gap-4 p-2">
+      <section className="flex w-full flex-col gap-4 p-4">
         {props.items.map((item: Item, index: number) => (
           <section
-            className="w-full flex gap-4"
+            className="flex w-full gap-4"
             key={`item-breakdown-item-${item.id}${item.options.join('')}`}
           >
-            <section className="flex-1 w-full flex gap-2 whitespace-nowrap overflow-hidden">
+            <section className="flex w-full flex-1 gap-2 overflow-hidden whitespace-nowrap">
               {item.images.length > 0 && (
-                <section className="aspect-square w-[50px] flex justify-center items-center bg-layer-one border rounded overflow-hidden group">
+                <section className="group flex aspect-square w-[50px] items-center justify-center overflow-hidden rounded border bg-layer-one">
                   <Image
                     src={item.images[0]}
                     width="300"
@@ -81,11 +81,11 @@ export default function ItemDetails(props: Props) {
                   />
                 </section>
               )}
-              <section className="w-full flex-1 flex flex-col">
-                <p className="text-sm">
+              <section className="flex w-full flex-1 flex-col">
+                <p className="truncate text-sm">
                   <b>{item.name}</b>
                 </p>
-                <p className="text-xs text-muted-foreground">
+                <p className="truncate text-xs text-muted-foreground">
                   {item.options.join(', ')} x {item.quantity}
                 </p>
               </section>

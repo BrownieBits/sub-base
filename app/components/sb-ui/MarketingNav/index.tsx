@@ -15,10 +15,10 @@ import { UserIcon } from './user-icon';
 
 export const MarketingNav = () => {
   return (
-    <nav className="flex items-center justify-between px-4 h-[56px] bg-layer-one border-b-[1px] border-b-border">
+    <nav className="flex h-[56px] items-center justify-between border-b-[1px] border-b-border bg-layer-one px-4">
       <div className="flex items-center gap-4">
         <Sheet>
-          <SheetTrigger className="flex xl:hidden">
+          <SheetTrigger className="flex xl:hidden" asChild>
             <Button
               variant="outline"
               size="sm"
@@ -30,7 +30,7 @@ export const MarketingNav = () => {
           <SheetContent side="left" className="p-0">
             <SheetTitle className="hidden"></SheetTitle>
             <SheetDescription>
-              <nav className={`flex bg-layer-one h-[100vh]`}>
+              <nav className={`flex h-[100vh] bg-layer-one`}>
                 <DashboardSideNav menu="Marketing Menu" inSheet={true} />
               </nav>
             </SheetDescription>
@@ -40,7 +40,7 @@ export const MarketingNav = () => {
           <Logo url="/" />
         </section>
       </div>
-      <ul className="flex gap-4 items-center">
+      <ul className="flex items-center gap-4">
         <li>
           <CartIcon />
         </li>

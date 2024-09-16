@@ -237,8 +237,8 @@ export default function Edit(props: {
 
   return (
     <section>
-      <section className="w-full max-w-[1754px] mx-auto">
-        <section className="flex w-full justify-between items-center px-4 pt-4 gap-4">
+      <section className="mx-auto w-full max-w-[1754px]">
+        <section className="flex w-full items-center justify-between gap-4 px-4 pt-4">
           <Breadcrumb>
             <BreadcrumbList>
               <BreadcrumbItem>
@@ -259,9 +259,9 @@ export default function Edit(props: {
             </BreadcrumbList>
           </Breadcrumb>
         </section>
-        <section className="flex w-full justify-between items-center px-4 pt-[10px] pb-4 gap-4">
+        <section className="flex w-full items-center justify-between gap-4 px-4 pb-4 pt-[10px]">
           <h1>{props.name}</h1>
-          <div className="flex gap-4 items-center">
+          <div className="flex items-center gap-4">
             {disabled ? (
               <></>
             ) : (
@@ -340,11 +340,11 @@ export default function Edit(props: {
         </section>
       </section>
       <Separator />
-      <section className="w-full max-w-[1754px] mx-auto">
-        <section className="flex flex-col px-4 pt-4 pb-8 w-full gap-8">
+      <section className="mx-auto w-full max-w-[1754px]">
+        <section className="flex w-full flex-col gap-8 px-4 pb-8 pt-4">
           <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)}>
-              <section className="flex flex-col md:flex-row gap-8">
+              <section className="flex flex-col gap-8 md:flex-row">
                 <aside className="w-full md:w-[200px] lg:w-[300px] xl:w-[600px]">
                   <p className="pb-4">
                     <b>Title and meta description</b>
@@ -354,7 +354,7 @@ export default function Edit(props: {
                     collection shows up on search engines.
                   </p>
                 </aside>
-                <aside className="w-full flex flex-1 flex-col gap-8 bg-layer-one p-8 rounded drop-shadow">
+                <aside className="flex w-full flex-1 flex-col gap-8 rounded bg-layer-one p-8 drop-shadow">
                   <FormField
                     control={form.control}
                     name="name"
@@ -400,7 +400,7 @@ export default function Edit(props: {
                           <RadioGroup
                             onValueChange={updateForm}
                             defaultValue={field.value}
-                            className="flex  items-center space-x-6"
+                            className="flex items-center space-x-6"
                           >
                             <FormItem className="flex items-center space-x-3 space-y-0">
                               <FormControl>
@@ -429,7 +429,7 @@ export default function Edit(props: {
               {selectedType === 'Manual' ? (
                 <></>
               ) : (
-                <section className="flex flex-col md:flex-row gap-8 pt-8">
+                <section className="flex flex-col gap-8 pt-8 md:flex-row">
                   <aside className="w-full md:w-[200px] lg:w-[300px] xl:w-[600px]">
                     <p className="pb-4">
                       <b>Smart Collection Tags</b>
@@ -439,7 +439,7 @@ export default function Edit(props: {
                       of products for you.
                     </p>
                   </aside>
-                  <aside className="w-full flex flex-1 flex-col gap-8 bg-layer-one p-8 rounded drop-shadow">
+                  <aside className="flex w-full flex-1 flex-col gap-8 rounded bg-layer-one p-8 drop-shadow">
                     <FormField
                       control={form.control}
                       name="tags"
@@ -462,7 +462,7 @@ export default function Edit(props: {
               )}
             </form>
           </Form>
-          <section className="flex flex-col md:flex-row gap-8">
+          <section className="flex flex-col gap-8 md:flex-row">
             <aside className="w-full md:w-[200px] lg:w-[300px] xl:w-[600px]">
               <p className="pb-4">
                 <b>Products</b>
@@ -496,7 +496,7 @@ export default function Edit(props: {
                 </AlertDialogContent>
               </AlertDialog>
             </aside>
-            <aside className="w-full flex flex-1 flex-col gap-8 bg-layer-one p-8 rounded drop-shadow">
+            <aside className="flex w-full flex-1 flex-col gap-8 rounded bg-layer-one p-8 drop-shadow">
               {loading1 ? (
                 <div>Loading</div>
               ) : (
@@ -512,7 +512,7 @@ export default function Edit(props: {
                             className="flex items-center gap-4"
                             key={doc.id}
                           >
-                            <div className="w-[50px] aspect-square border bg-layer-one overflow-hidden flex justify-center items-center">
+                            <div className="flex aspect-square w-[50px] items-center justify-center overflow-hidden border bg-layer-one">
                               <Image
                                 alt={doc.data().name}
                                 src={doc.data().images[0]}
@@ -525,11 +525,11 @@ export default function Edit(props: {
                               {doc.data().product_type}
                             </span>
                             {doc.data().status === 'Public' ? (
-                              <span className="bg-success text-success-foreground text-xs font-medium mr-2 px-2.5 py-0.5 rounded">
+                              <span className="mr-2 rounded bg-success px-2.5 py-0.5 text-xs font-medium text-success-foreground">
                                 {doc.data().status}
                               </span>
                             ) : (
-                              <span className="bg-destructive text-destructive-foreground text-xs font-medium mr-2 px-2.5 py-0.5 rounded">
+                              <span className="mr-2 rounded bg-destructive px-2.5 py-0.5 text-xs font-medium text-destructive-foreground">
                                 {doc.data().status}
                               </span>
                             )}

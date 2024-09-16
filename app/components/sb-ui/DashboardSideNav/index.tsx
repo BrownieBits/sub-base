@@ -48,7 +48,7 @@ export const DashboardSideNav = async ({
   });
   const items = data.items[0]?.fields.menuBlocks;
   return (
-    <ScrollArea className="flex flex-col h-full rounded-md">
+    <ScrollArea className="flex h-full flex-col rounded-md">
       {items.map((item: any, i: number) => {
         return (
           <MenuItems
@@ -66,9 +66,9 @@ export const DashboardSideNav = async ({
                 <Link
                   href={link.link}
                   className={cn(
-                    'text-xs text-foreground px-0 py-0',
+                    'px-0 py-0 text-xs text-foreground',
                     index !== subMenu.length - 1 &&
-                      "after:content-['|'] after:pl-2"
+                      "after:pl-2 after:content-['|']"
                   )}
                   aria-label={link.name}
                 >
@@ -81,8 +81,8 @@ export const DashboardSideNav = async ({
             <Link
               href={link.link}
               className={cn(
-                'text-xs text-foreground px-0 py-0',
-                index !== subMenu.length - 1 && "after:content-['|'] after:pl-2"
+                'px-0 py-0 text-xs text-foreground',
+                index !== subMenu.length - 1 && "after:pl-2 after:content-['|']"
               )}
               aria-label={link.name}
               key={link.name}

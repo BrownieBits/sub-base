@@ -98,10 +98,10 @@ export default function EditSettings(props: {
 
   return (
     <section>
-      <section className="w-full max-w-[1754px] mx-auto">
-        <section className="flex w-full justify-between items-center px-4 py-4 gap-4">
+      <section className="mx-auto w-full max-w-[1754px]">
+        <section className="flex w-full items-center justify-between gap-4 px-4 py-4">
           <h1>Settings</h1>
-          <div className="flex gap-4 items-center">
+          <div className="flex items-center gap-4">
             {disabled ? (
               <></>
             ) : (
@@ -120,11 +120,11 @@ export default function EditSettings(props: {
         </section>
       </section>
       <Separator />
-      <section className="w-full max-w-[1754px] mx-auto">
-        <section className="flex flex-col px-4 py-8 w-full gap-8">
+      <section className="mx-auto w-full max-w-[1754px]">
+        <section className="flex w-full flex-col gap-8 px-4 py-8">
           <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)}>
-              <section className="flex flex-col md:flex-row gap-8">
+              <section className="flex flex-col gap-8 md:flex-row">
                 <aside className="w-full md:w-[200px] lg:w-[300px] xl:w-[600px]">
                   <p className="pb-4">
                     <b>Profile</b>
@@ -134,7 +134,7 @@ export default function EditSettings(props: {
                     more that we will use in various locations on the site.
                   </p>
                 </aside>
-                <aside className="w-full flex flex-1 flex-col gap-8 bg-layer-one p-8 rounded drop-shadow">
+                <aside className="flex w-full flex-1 flex-col gap-8 rounded bg-layer-one p-8 drop-shadow">
                   <FormField
                     control={form.control}
                     name="name"
@@ -232,7 +232,7 @@ export default function EditSettings(props: {
             userID={props.userID}
           />
 
-          <section className="flex flex-col md:flex-row gap-8">
+          <section className="flex flex-col gap-8 md:flex-row">
             <aside className="w-full md:w-[200px] lg:w-[300px] xl:w-[600px]">
               <p className="pb-4">
                 <b>Saved Credit Cards</b>
@@ -242,7 +242,7 @@ export default function EditSettings(props: {
                 subscription based services.
               </p>
             </aside>
-            <aside className="w-full flex flex-1 flex-col gap-8 bg-layer-one p-8 rounded drop-shadow">
+            <aside className="flex w-full flex-1 flex-col gap-8 rounded bg-layer-one p-8 drop-shadow">
               <p>TODO: Fill in once connected to stripe</p>
             </aside>
           </section>

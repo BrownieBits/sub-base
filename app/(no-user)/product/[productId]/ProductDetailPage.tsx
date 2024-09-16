@@ -239,19 +239,19 @@ export default function ProductDetailPage(props: Props) {
   }, []);
 
   return (
-    <section className="flex flex-col gap-8 p-4 max-w-[1754px] mx-auto">
-      <section key="productInfo" className="flex flex-col md:flex-row gap-8">
-        <section className="w-full flex-1 flex flex-col gap-4">
+    <section className="mx-auto flex max-w-[1754px] flex-col gap-8 p-4">
+      <section key="productInfo" className="flex flex-col gap-8 md:flex-row">
+        <section className="flex w-full flex-1 flex-col gap-4">
           <ProductImages images={props.images} />
           <ProductComments />
         </section>
-        <section className="w-full md:w-[350px] xl:w-[400px] flex flex-col">
+        <section className="flex w-full flex-col md:w-[350px] xl:w-[400px]">
           <section className="flex justify-between">
             <section className="flex flex-col items-start gap-1">
               <h1 className="text-xl">{props.product_name}</h1>
               <Link
                 href={`/store/${props.store_id}`}
-                className="flex gap-4 items-center"
+                className="flex items-center gap-4"
               >
                 <p className="text-sm">
                   <b>{props.store_name}</b>{' '}
@@ -285,7 +285,7 @@ export default function ProductDetailPage(props: Props) {
                   </p>
                 </>
               ) : (
-                <p className="font-bold text-xl">
+                <p className="text-xl font-bold">
                   {new Intl.NumberFormat('en-US', {
                     style: 'currency',
                     currency: props.currency,
@@ -299,12 +299,12 @@ export default function ProductDetailPage(props: Props) {
             <Form {...form}>
               <form
                 onSubmit={form.handleSubmit(onSubmit)}
-                className={cn('flex flex-col w-full gap-4 pt-4', {
+                className={cn('flex w-full flex-col gap-4 pt-4', {
                   hidden: props.product_type === 'Digital',
                 })}
               >
                 {props.options.length > 0 && (
-                  <section className="flex flex-row md:flex-col w-full gap-4">
+                  <section className="flex w-full flex-row gap-4 md:flex-col">
                     {props.options.map((option, index) => {
                       return (
                         <div key={`option-${index}`} className="w-full">
@@ -408,7 +408,7 @@ export default function ProductDetailPage(props: Props) {
             </>
           )}
 
-          <div className="flex gap-2 justify-between pt-8">
+          <div className="flex justify-between gap-2 pt-8">
             <LikeButton
               product_id={props.product_id}
               like_count={props.like_count}

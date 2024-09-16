@@ -95,18 +95,36 @@
   }
 }
 
+body {
+  color: var(--foreground);
+  background: var(--background);
+  font-family: Arial, Helvetica, sans-serif;
+}
+
 h1 {
-  @apply text-3xl font-bold;
+  @apply font-bold;
 }
 h2 {
-  @apply text-2xl font-bold;
+  @apply font-bold;
 }
 h3 {
-  @apply text-xl font-bold;
+  @apply font-bold;
 }
 h4 {
-  @apply text-lg font-bold;
+  @apply font-bold;
 }
 img {
   width: 100%;
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
 }

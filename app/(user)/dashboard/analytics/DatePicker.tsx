@@ -48,13 +48,13 @@ export const DatePicker = (props: {
         <DialogTrigger asChild>
           <Button
             variant="link"
-            className="w-full hover:no-underline px-2 py-1"
+            className="w-full px-2 py-1 hover:no-underline"
             onClick={() => setOpen(true)}
           >
-            <section className="w-full flex justify-between">
+            <section className="flex w-full justify-between">
               <p>Custom</p>
               {props.selected.includes('Custom') && (
-                <FontAwesomeIcon className="icon " icon={faCheck} />
+                <FontAwesomeIcon className="icon" icon={faCheck} />
               )}
             </section>
           </Button>
@@ -89,16 +89,16 @@ export const DatePicker = (props: {
           className="w-full hover:no-underline"
           onClick={() => setOpen(true)}
         >
-          <section className="w-full flex justify-between">
+          <section className="flex w-full justify-between">
             <p>Custom</p>
             {props.selected.includes('Custom:') && (
-              <FontAwesomeIcon className="icon " icon={faCheck} />
+              <FontAwesomeIcon className="icon" icon={faCheck} />
             )}
           </section>
         </Button>
       </DrawerTrigger>
       <DrawerContent>
-        <DrawerHeader className="w-full max-w-[2428px] mx-auto">
+        <DrawerHeader className="mx-auto w-full max-w-[2428px]">
           <DrawerTitle className="flex justify-between">
             <h3>Select Dates</h3>
             <DrawerClose>
@@ -107,8 +107,8 @@ export const DatePicker = (props: {
               </Button>
             </DrawerClose>
           </DrawerTitle>
-          <DrawerDescription className="w-full flex flex-col items-end text-left">
-            <section className="w-full flex justify-center pb-4">
+          <DrawerDescription className="flex w-full flex-col items-end text-left">
+            <section className="flex w-full justify-center pb-4">
               <Calendar
                 initialFocus
                 mode="range"

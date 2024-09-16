@@ -36,7 +36,7 @@ export default function AcceptButton(props: {
   return (
     <Button variant="outline" onClick={accept}>
       <>
-        <i className="mr-2 h-4 w-4 fa-solid fa-circle-check"></i>
+        <i className="fa-solid fa-circle-check mr-2 h-4 w-4"></i>
         Accept Invite
       </>
     </Button>

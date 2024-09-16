@@ -33,7 +33,7 @@ export default function CheckoutSummary(props: Props) {
 
   if (isDesktop) {
     return (
-      <aside className="flex flex-col gap-4 w-full md:w-[350px] xl:w-[400px]">
+      <aside className="flex w-full flex-col gap-4 md:w-[350px] xl:w-[400px]">
         {Object.keys(props.items).map((store) => {
           return (
             <ItemDetails
@@ -43,8 +43,8 @@ export default function CheckoutSummary(props: Props) {
             />
           );
         })}
-        <section className="w-full flex flex-col gap-2">
-          <section className="w-full flex justify-between">
+        <section className="flex w-full flex-col gap-2">
+          <section className="flex w-full justify-between">
             <p>Item(s) Total:</p>
             <p>
               {new Intl.NumberFormat('en-US', {
@@ -53,7 +53,7 @@ export default function CheckoutSummary(props: Props) {
               }).format(props.items_total)}
             </p>
           </section>
-          <section className="w-full flex justify-between">
+          <section className="flex w-full justify-between">
             <p>Service Fees:</p>
             <p>
               {new Intl.NumberFormat('en-US', {
@@ -62,7 +62,7 @@ export default function CheckoutSummary(props: Props) {
               }).format(props.service_total)}
             </p>
           </section>
-          <section className="w-full flex justify-between">
+          <section className="flex w-full justify-between">
             <p>Discounts:</p>
             <p>
               {props.discount_total > 0 && <>-</>}
@@ -72,7 +72,7 @@ export default function CheckoutSummary(props: Props) {
               }).format(props.discount_total)}
             </p>
           </section>
-          <section className="w-full flex justify-between">
+          <section className="flex w-full justify-between">
             <p>Shipping:</p>
             <p>
               {props.shipping_total > 0 && <>-</>}
@@ -82,7 +82,7 @@ export default function CheckoutSummary(props: Props) {
               }).format(props.shipping_total)}
             </p>
           </section>
-          <section className="w-full flex justify-between">
+          <section className="flex w-full justify-between">
             <p>Taxes:</p>
             <p>
               {props.taxes_total > 0 && <>-</>}
@@ -93,7 +93,7 @@ export default function CheckoutSummary(props: Props) {
             </p>
           </section>
           <Separator />
-          <section className="w-full flex justify-between pt-4">
+          <section className="flex w-full justify-between pt-4">
             <p>
               <b>Total:</b>
             </p>
@@ -117,11 +117,11 @@ export default function CheckoutSummary(props: Props) {
       className="pb-2"
     >
       <AccordionItem value="item-1">
-        <AccordionTrigger className="w-full flex gap-4">
+        <AccordionTrigger className="flex w-full gap-4">
           <p className="text-sm">
             <FontAwesomeIcon className="icon" icon={faCartShopping} />
           </p>
-          <section className="flex-1 flex justify-start">
+          <section className="flex flex-1 justify-start">
             {open === '' ? (
               <p className="text-sm">Show order summary</p>
             ) : (
@@ -136,7 +136,7 @@ export default function CheckoutSummary(props: Props) {
           </span>
         </AccordionTrigger>
         <AccordionContent>
-          <aside className="flex flex-col gap-4 w-full md:w-[350px] xl:w-[400px]">
+          <aside className="flex w-full flex-col gap-4 md:w-[350px] xl:w-[400px]">
             {Object.keys(props.items).map((store) => {
               return (
                 <ItemDetails
@@ -146,8 +146,8 @@ export default function CheckoutSummary(props: Props) {
                 />
               );
             })}
-            <section className="w-full flex flex-col gap-2">
-              <section className="w-full flex justify-between">
+            <section className="flex w-full flex-col gap-2">
+              <section className="flex w-full justify-between">
                 <p>Item(s) Total:</p>
                 <p>
                   {new Intl.NumberFormat('en-US', {
@@ -156,7 +156,7 @@ export default function CheckoutSummary(props: Props) {
                   }).format(props.items_total)}
                 </p>
               </section>
-              <section className="w-full flex justify-between">
+              <section className="flex w-full justify-between">
                 <p>Service Fees:</p>
                 <p>
                   {new Intl.NumberFormat('en-US', {
@@ -165,7 +165,7 @@ export default function CheckoutSummary(props: Props) {
                   }).format(props.service_total)}
                 </p>
               </section>
-              <section className="w-full flex justify-between">
+              <section className="flex w-full justify-between">
                 <p>Discounts:</p>
                 <p>
                   {props.discount_total > 0 && <>-</>}
@@ -175,7 +175,7 @@ export default function CheckoutSummary(props: Props) {
                   }).format(props.discount_total)}
                 </p>
               </section>
-              <section className="w-full flex justify-between">
+              <section className="flex w-full justify-between">
                 <p>Shipping:</p>
                 <p>
                   {props.shipping_total > 0 && <>-</>}
@@ -185,7 +185,7 @@ export default function CheckoutSummary(props: Props) {
                   }).format(props.shipping_total)}
                 </p>
               </section>
-              <section className="w-full flex justify-between">
+              <section className="flex w-full justify-between">
                 <p>Taxes:</p>
                 <p>
                   {props.taxes_total > 0 && <>-</>}
@@ -196,7 +196,7 @@ export default function CheckoutSummary(props: Props) {
                 </p>
               </section>
               <Separator />
-              <section className="w-full flex justify-between pt-4">
+              <section className="flex w-full justify-between pt-4">
                 <p>
                   <b>Total:</b>
                 </p>

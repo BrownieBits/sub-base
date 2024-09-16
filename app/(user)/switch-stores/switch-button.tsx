@@ -20,7 +20,7 @@ export default function SwitchButton(props: {
   return (
     <Button variant="outline" onClick={updateDefault}>
       <>
-        <i className="mr-2 h-4 w-4 fa-solid fa-repeat"></i>
+        <i className="fa-solid fa-repeat mr-2 h-4 w-4"></i>
         Switch to Store
       </>
     </Button>

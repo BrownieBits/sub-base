@@ -1,4 +1,3 @@
-import { HeroBanner } from '@/components/sb-ui/HeroBanner';
 import { Separator } from '@/components/ui/separator';
 import { Metadata } from 'next';
 
@@ -31,8 +30,8 @@ export async function generateMetadata(): Promise<Metadata> {
 export default function Tools() {
   return (
     <section>
-      <section className="w-full max-w-[2428px] mx-auto">
-        <section className="flex w-full justify-between items-center px-4 py-4 gap-4">
+      <section className="mx-auto w-full max-w-[2428px]">
+        <section className="flex w-full items-center justify-between gap-4 px-4 py-4">
           <h1>Tools</h1>
           {/* <Button asChild variant="outline">
           <Link
@@ -45,10 +44,9 @@ export default function Tools() {
           </Link>
         </Button> */}
         </section>
-        <HeroBanner page_slug="creator-tools" />
       </section>
       <Separator />
-      <section className="w-full max-w-[2428px] mx-auto"></section>
+      <section className="mx-auto w-full max-w-[2428px]"></section>
     </section>
   );
 }

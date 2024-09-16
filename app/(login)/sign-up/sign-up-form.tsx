@@ -203,7 +203,7 @@ export function SignUpForm({
         <Form {...form}>
           <form
             onSubmit={form.handleSubmit(onSubmit)}
-            className="space-y-6 w-[300px]"
+            className="w-[300px] space-y-6"
           >
             <FormField
               control={form.control}

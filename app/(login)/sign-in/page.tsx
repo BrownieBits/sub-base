@@ -41,8 +41,8 @@ export default function SignIn({
   const ip = headers().get('x-ip') as string;
 
   return (
-    <section className="w-full flex flex-col justify-between">
-      <section className="w-full flex justify-between items-center">
+    <section className="flex w-full flex-col justify-between">
+      <section className="flex w-full items-center justify-between">
         <section className="w- md:w-[150px]">
           <Logo url="/" />
         </section>
@@ -55,11 +55,11 @@ export default function SignIn({
           </section>
         </section>
       </section>
-      <section className="w-full flex flex-col justify-center items-center">
+      <section className="flex w-full flex-col items-center justify-center">
         <h1 className="mb-8">Sign In</h1>
         <SignInForm country={country} city={city} region={region} ip={ip} />
       </section>
-      <section className="w-full h-[53px] md:h-[61px]"></section>
+      <section className="h-[53px] w-full md:h-[61px]"></section>
     </section>
   );
 }

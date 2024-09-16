@@ -87,11 +87,11 @@ export const StoreViewsChart = (props: {
   }, [props.data]);
   if (views === undefined) {
     return (
-      <Skeleton className="flex-1 min-h-[258px] bg-layer-one border rounded" />
+      <Skeleton className="min-h-[258px] flex-1 rounded border bg-layer-one" />
     );
   }
   return (
-    <section className="flex-1 flex flex-col gap-4 p-4 bg-layer-one rounded border">
+    <section className="flex flex-1 flex-col gap-4 rounded border bg-layer-one p-4">
       <p>
         <b>Store Views</b>
       </p>
@@ -148,7 +148,7 @@ export const StoreViewsChart = (props: {
           </AreaChart>
         </ChartContainer>
       ) : (
-        <section className="flex justify-center items-center w-full h-full min-h-[200px]">
+        <section className="flex h-full min-h-[200px] w-full items-center justify-center">
           <p>There was no data found for this date range.</p>
         </section>
       )}

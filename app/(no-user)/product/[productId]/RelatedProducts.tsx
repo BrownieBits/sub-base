@@ -86,9 +86,9 @@ export default function RelatedProducts(props: {
 
   if (isDesktop) {
     return (
-      <section className="w-full flex flex-col gap-4 py-4">
+      <section className="flex w-full flex-col gap-4 py-4">
         <Separator />
-        <section className="w-full flex flex-col gap-4">
+        <section className="flex w-full flex-col gap-4">
           {related?.map((doc) => {
             if (doc.id !== props.product_id) {
               return (
@@ -101,32 +101,26 @@ export default function RelatedProducts(props: {
     );
   }
   return (
-    <section className="w-full flex flex-col gap-4 py-4">
+    <section className="flex w-full flex-col gap-4 py-4">
       <Separator />
       <Carousel opts={{ loop: true }} setApi={setApi}>
         <CarouselContent>
           {related?.map((doc) => {
-            return (
-              <>
-                {doc.id !== props.product_id && (
-                  <CarouselItem key={doc.id}>
-                    <ProductCard
-                      product={doc}
-                      show_creator={true}
-                      key={doc.id}
-                    />
-                  </CarouselItem>
-                )}
-              </>
-            );
+            if (doc.id !== props.product_id) {
+              return (
+                <CarouselItem key={doc.id}>
+                  <ProductCard product={doc} show_creator={true} key={doc.id} />
+                </CarouselItem>
+              );
+            }
           })}
         </CarouselContent>
       </Carousel>
-      <div className="w-full flex justify-center gap-2">
+      <div className="flex w-full justify-center gap-2">
         {[...Array(count).keys()].map((dot, index) => {
           return (
             <section
-              className={cn('w-[10px] h-[10px] rounded', {
+              className={cn('h-[10px] w-[10px] rounded', {
                 'bg-primary': index === current - 1,
                 'bg-layer-one': index !== current - 1,
               })}

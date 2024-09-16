@@ -15,7 +15,7 @@ export default function StoreCard({ id }: { id: string }) {
       <div className="flex flex-col items-start space-x-4">
         <Skeleton className="aspect-square w-full rounded-full" />
         <div className="space-y-2">
-          <Skeleton className="h-4 w-[250px] mt-4" />
+          <Skeleton className="mt-4 h-4 w-[250px]" />
           <Skeleton className="h-4 w-[200px]" />
         </div>
       </div>
@@ -30,20 +30,20 @@ export default function StoreCard({ id }: { id: string }) {
     <>
       <Link
         href={`/store/${id}`}
-        className="flex flex-col items-center justify-center group w-full"
+        className="group flex w-full flex-col items-center justify-center"
       >
-        <div className="flex justify-center items-center aspect-square rounded-full overflow-hidden w-full">
-          <Avatar className="w-full h-full aspect-square">
+        <div className="flex aspect-square w-full items-center justify-center overflow-hidden rounded-full">
+          <Avatar className="aspect-square h-full w-full">
             <AvatarImage
               src={value?.data()?.avatar_url!}
               alt={value?.data()?.name}
             />
-            <AvatarFallback className="bg-foreground text-background border-background">
+            <AvatarFallback className="border-background bg-foreground text-background">
               {value?.data()?.name.slice(0, 1).toUpperCase()}
             </AvatarFallback>
           </Avatar>
         </div>
-        <p className="font-bold text-lg mt-[10px]">{value?.data()?.name}</p>
+        <p className="mt-[10px] text-lg font-bold">{value?.data()?.name}</p>
         <p className="text-muted-foreground">
           {value?.data()?.subscription_count} subscriber
           {value?.data()?.subscribers > 1 ? <>s</> : <></>}

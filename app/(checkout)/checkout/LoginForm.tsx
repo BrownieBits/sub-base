@@ -129,7 +129,7 @@ export default function LoginForm(props: Props) {
               <Form {...form}>
                 <form
                   onSubmit={form.handleSubmit(onSubmit)}
-                  className="w-full flex flex-col items-center justify-center gap-8"
+                  className="flex w-full flex-col items-center justify-center gap-8"
                 >
                   <FormField
                     control={form.control}
@@ -186,15 +186,15 @@ export default function LoginForm(props: Props) {
   return (
     <Drawer open={open} onOpenChange={setGuest}>
       <DrawerContent>
-        <DrawerHeader className="w-full max-w-[2428px] mx-auto">
+        <DrawerHeader className="mx-auto w-full max-w-[2428px]">
           <DrawerTitle className="flex justify-between">
             <h3>Login</h3>
           </DrawerTitle>
-          <DrawerDescription className="w-full flex flex-col items-center gap-4 text-left">
+          <DrawerDescription className="flex w-full flex-col items-center gap-4 text-left">
             <Form {...form}>
               <form
                 onSubmit={form.handleSubmit(onSubmit)}
-                className="w-full flex flex-col items-center justify-center gap-8"
+                className="flex w-full flex-col items-center justify-center gap-8"
               >
                 <FormField
                   control={form.control}

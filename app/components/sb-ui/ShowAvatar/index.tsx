@@ -29,7 +29,7 @@ export const ShowAvatar = ({
           'h-[32px] w-[32px]': size === 'sm',
         })}
       >
-        <AvatarFallback className="bg-foreground text-background border-background">
+        <AvatarFallback className="border-background bg-foreground text-background">
           {store_id.slice(0, 1).toUpperCase()}
         </AvatarFallback>
       </Avatar>
@@ -45,7 +45,7 @@ export const ShowAvatar = ({
       })}
     >
       <AvatarImage src={value?.data()?.avatar_url} alt={store_id} />
-      <AvatarFallback className="bg-foreground text-background border-background">
+      <AvatarFallback className="border-background bg-foreground text-background">
         {store_id.slice(0, 1).toUpperCase()}
       </AvatarFallback>
     </Avatar>

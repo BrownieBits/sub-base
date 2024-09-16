@@ -171,7 +171,7 @@ export default function AddAddress(props: Props) {
               <Form {...form}>
                 <form
                   onSubmit={form.handleSubmit(onSubmit)}
-                  className="flex flex-col gap-4 w-full"
+                  className="flex w-full flex-col gap-4"
                 >
                   <FormField
                     control={form.control}
@@ -314,7 +314,7 @@ export default function AddAddress(props: Props) {
                       </FormItem>
                     )}
                   />
-                  <section className="flex gap-4 w-full justify-end">
+                  <section className="flex w-full justify-end gap-4">
                     <AlertDialogCancel>Cancel</AlertDialogCancel>
                     {disabled ? (
                       <Button variant="outline">
@@ -356,16 +356,16 @@ export default function AddAddress(props: Props) {
         </Button>
       </DrawerTrigger>
       <DrawerContent>
-        <DrawerHeader className="w-full max-w-[2428px] mx-auto">
+        <DrawerHeader className="mx-auto w-full max-w-[2428px]">
           <DrawerTitle className="flex justify-between">
             <h3>New Address</h3>
           </DrawerTitle>
           <DrawerDescription className="w-full text-left">
-            <ScrollArea className="flex flex-col max-h-[600px]">
+            <ScrollArea className="flex max-h-[600px] flex-col">
               <Form {...form}>
                 <form
                   onSubmit={form.handleSubmit(onSubmit)}
-                  className="flex flex-col gap-4 w-full"
+                  className="flex w-full flex-col gap-4"
                 >
                   <FormField
                     control={form.control}
@@ -508,7 +508,7 @@ export default function AddAddress(props: Props) {
                       </FormItem>
                     )}
                   />
-                  <section className="flex gap-4 w-full justify-end">
+                  <section className="flex w-full justify-end gap-4">
                     <DrawerClose>Cancel</DrawerClose>
                     {disabled ? (
                       <Button variant="outline">

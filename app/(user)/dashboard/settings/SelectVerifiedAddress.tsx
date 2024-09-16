@@ -105,11 +105,11 @@ export default function SelectVerifiedAddress(props: Props) {
             <AlertDialogTitle>
               <h3>Address Verification</h3>
             </AlertDialogTitle>
-            <AlertDialogDescription className="flex flex-col items-center justify-center gap-4y pt-4">
+            <AlertDialogDescription className="gap-4y flex flex-col items-center justify-center pt-4">
               <Form {...form}>
                 <form
                   onSubmit={form.handleSubmit(onSubmit)}
-                  className="w-full flex flex-col gap-8"
+                  className="flex w-full flex-col gap-8"
                 >
                   <FormField
                     control={form.control}
@@ -120,7 +120,7 @@ export default function SelectVerifiedAddress(props: Props) {
                           <RadioGroup
                             onValueChange={field.onChange}
                             defaultValue={field.value}
-                            className="flex flex-col gap-4 items-start"
+                            className="flex flex-col items-start gap-4"
                           >
                             <FormItem className="flex items-center gap-4">
                               <FormControl>
@@ -182,15 +182,15 @@ export default function SelectVerifiedAddress(props: Props) {
   return (
     <Drawer open={open} onOpenChange={closeDrawer}>
       <DrawerContent>
-        <DrawerHeader className="w-full max-w-[2428px] mx-auto">
+        <DrawerHeader className="mx-auto w-full max-w-[2428px]">
           <DrawerTitle className="flex justify-between">
             <h3>Address Verification</h3>
           </DrawerTitle>
-          <DrawerDescription className="w-full flex flex-col items-center gap-4 text-left">
+          <DrawerDescription className="flex w-full flex-col items-center gap-4 text-left">
             <Form {...form}>
               <form
                 onSubmit={form.handleSubmit(onSubmit)}
-                className="w-full flex flex-col gap-8"
+                className="flex w-full flex-col gap-8"
               >
                 <FormField
                   control={form.control}
@@ -201,7 +201,7 @@ export default function SelectVerifiedAddress(props: Props) {
                         <RadioGroup
                           onValueChange={field.onChange}
                           defaultValue={field.value}
-                          className="flex flex-col gap-4 items-start"
+                          className="flex flex-col items-start gap-4"
                         >
                           <FormItem className="flex items-center gap-4">
                             <FormControl>

@@ -140,14 +140,14 @@ export default function StoreItems(props: Props) {
   }, []);
 
   if (store === null) {
-    return <Skeleton className="w-full h-[200px] rounded bg-layer-two" />;
+    return <Skeleton className="h-[200px] w-full rounded bg-layer-two" />;
   }
 
   return (
-    <section className="w-full border rounded bg-layer-one">
+    <section className="w-full rounded border bg-layer-one">
       <Link
         href={`/store/${props.store_id}`}
-        className="w-full flex items-center gap-4 p-4"
+        className="flex w-full items-center gap-4 p-4"
       >
         <Avatar className="h-[50px] w-[50px]">
           <AvatarImage src={store.avatar_url} alt="Avatar" />
@@ -157,7 +157,7 @@ export default function StoreItems(props: Props) {
         </p>
       </Link>
       <Separator />
-      <section className="w-full flex flex-col gap-4 p-4">
+      <section className="flex w-full flex-col gap-4 p-4">
         {props.items.map((item: Item, index: number) => (
           <ItemDetails
             item={item}
@@ -170,7 +170,7 @@ export default function StoreItems(props: Props) {
         ))}
       </section>
       <Separator />
-      <section className="w-full flex flex-col items-start gap-4 p-4">
+      <section className="flex w-full flex-col items-start gap-4 p-4">
         {!showPromoCode && props.promotion === null && (
           <Button
             variant="outline"
@@ -213,7 +213,7 @@ export default function StoreItems(props: Props) {
           <section className="flex items-center gap-4">
             <p>Promotion: </p>
             <Button variant="link" asChild onClick={removePromo}>
-              <span className="flex gap-4 bg-layer-two text-foreground text-xs px-2 py-0.5 rounded border">
+              <span className="flex gap-4 rounded border bg-layer-two px-2 py-0.5 text-xs text-foreground">
                 <b>{props.promotion?.name}</b>
                 <FontAwesomeIcon className="icon h-4 w-4" icon={faClose} />
               </span>

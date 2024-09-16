@@ -125,7 +125,7 @@ export default function NewCollectionForm() {
             <Form {...form}>
               <form
                 onSubmit={form.handleSubmit(onSubmit)}
-                className="space-y-8 w-full"
+                className="w-full space-y-8"
               >
                 <FormField
                   control={form.control}
@@ -173,7 +173,7 @@ export default function NewCollectionForm() {
                   )}
                 />
                 {error ? <p className="text-destructive">{error}</p> : <></>}
-                <section className="flex gap-4 w-full justify-end">
+                <section className="flex w-full justify-end gap-4">
                   <AlertDialogCancel>Cancel</AlertDialogCancel>
                   <Button disabled={pending} type="submit">
                     Submit

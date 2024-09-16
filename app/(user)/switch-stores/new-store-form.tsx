@@ -152,7 +152,7 @@ export default function NewStoreForm({ userID }: { userID: string }) {
             <Form {...form}>
               <form
                 onSubmit={form.handleSubmit(onSubmit)}
-                className="space-y-6 w-full"
+                className="w-full space-y-6"
               >
                 <FormField
                   control={form.control}
@@ -184,7 +184,7 @@ export default function NewStoreForm({ userID }: { userID: string }) {
                     </FormItem>
                   )}
                 />
-                <section className="w-full flex justify-end gap-4">
+                <section className="flex w-full justify-end gap-4">
                   <AlertDialogCancel>Cancel</AlertDialogCancel>
                   <Button type="submit">Submit</Button>
                 </section>

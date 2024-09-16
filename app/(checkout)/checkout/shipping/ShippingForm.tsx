@@ -122,7 +122,7 @@ export default function ShippingSelect(props: Props) {
   */
   if (shipments === null) {
     return (
-      <section className="w-full flex flex-col gap-4 border rounded bg-layer-one drop-shadow p-8">
+      <section className="flex w-full flex-col gap-4 rounded border bg-layer-one p-8 drop-shadow">
         <h3>Shipping</h3>
         <p>
           <FontAwesomeIcon className="icon" icon={faSpinner} spin /> Loading
@@ -133,7 +133,7 @@ export default function ShippingSelect(props: Props) {
   }
 
   return (
-    <section className="w-full flex flex-col gap-4 border rounded bg-layer-one drop-shadow p-8">
+    <section className="flex w-full flex-col gap-4 rounded border bg-layer-one p-4 drop-shadow">
       <h3>Shipping</h3>
       {shipments.hasOwnProperty('digital') && (
         <>

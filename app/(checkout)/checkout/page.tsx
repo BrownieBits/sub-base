@@ -297,7 +297,7 @@ export default async function Checkout() {
   if (data.error === 'No Products') {
     return (
       <section>
-        <section className="flex w-full justify-between items-center px-4 py-4 gap-4">
+        <section className="flex w-full items-center justify-between gap-4 px-4 py-4">
           <h1>Cart is empty</h1>
         </section>
       </section>

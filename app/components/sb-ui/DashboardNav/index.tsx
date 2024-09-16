@@ -17,7 +17,7 @@ import { UserDropdown } from '../UserDropdown';
 
 export const DashboardNav = () => {
   return (
-    <nav className="flex items-center justify-between px-4 h-[56px] bg-layer-one border-b-[1px] border-b-border">
+    <nav className="flex h-[56px] items-center justify-between border-b-[1px] border-b-border bg-layer-one px-4">
       <div className="flex items-center gap-4">
         <Sheet>
           <SheetTrigger className="flex xl:hidden" asChild>
@@ -32,7 +32,7 @@ export const DashboardNav = () => {
           <SheetContent side="left" className="p-0">
             <SheetTitle className="hidden"></SheetTitle>
             <SheetDescription>
-              <nav className={`flex bg-layer-one h-[100vh]`}>
+              <nav className={`flex h-[100vh] bg-layer-one`}>
                 <DashboardSideNav menu="Dashboard Menu" inSheet={true} />
               </nav>
             </SheetDescription>
@@ -42,7 +42,7 @@ export const DashboardNav = () => {
           <Logo url="/dashboard" />
         </section>
       </div>
-      <ul className="flex gap-4 md:gap-8 items-center">
+      <ul className="flex items-center gap-4 md:gap-8">
         <li>
           <Button asChild variant="link" size="sm" className="px-0">
             <Link href="/" aria-label="Spring by Amaze">

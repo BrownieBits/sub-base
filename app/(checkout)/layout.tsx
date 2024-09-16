@@ -6,7 +6,7 @@ export default async function CheckoutLayout({
   return (
     <section className="overflow-y-auto overflow-x-hidden">
       <main className="flex min-h-svh w-full">
-        <section className="w-full flex">{children}</section>
+        <section className="flex w-full">{children}</section>
       </main>
     </section>
   );

@@ -865,9 +865,9 @@ export default function SelfEditForm(props: Props) {
 
   return (
     <section className="relative">
-      <section className="w-full max-w-[1754px] mx-auto">
+      <section className="mx-auto w-full max-w-[1754px]">
         {props.name !== undefined && (
-          <section className="flex w-full justify-between items-center px-4 pt-4 gap-4">
+          <section className="flex w-full items-center justify-between gap-4 px-4 pt-4">
             <Breadcrumb>
               <BreadcrumbList>
                 <BreadcrumbItem>
@@ -884,8 +884,8 @@ export default function SelfEditForm(props: Props) {
           </section>
         )}
         <section
-          className={cn('flex w-full justify-between items-center px-4 gap-4', {
-            'pt-[10px] pb-4 ': props.name !== undefined,
+          className={cn('flex w-full items-center justify-between gap-4 px-4', {
+            'pb-4 pt-[10px]': props.name !== undefined,
             'py-4': props.name === undefined,
           })}
         >
@@ -894,7 +894,7 @@ export default function SelfEditForm(props: Props) {
           ) : (
             <h1>Add Product</h1>
           )}
-          <div className="flex gap-4 items-center">
+          <div className="flex items-center gap-4">
             {props.status !== undefined && props.status === 'Public' && (
               <Button
                 variant="outline"
@@ -941,13 +941,13 @@ export default function SelfEditForm(props: Props) {
         </section>
       </section>
       <Separator />
-      <section className="w-full max-w-[1754px] mx-auto relative">
+      <section className="relative mx-auto w-full max-w-[1754px]">
         <Form {...form}>
           <form
             onSubmit={form.handleSubmit(onSubmit)}
-            className="flex flex-col px-4 py-8 w-full gap-8"
+            className="flex w-full flex-col gap-8 px-4 py-8"
           >
-            <section className="flex flex-col md:flex-row gap-8">
+            <section className="flex flex-col gap-8 md:flex-row">
               <aside className="w-full md:w-[200px] lg:w-[300px] xl:w-[600px]">
                 <p className="pb-4">
                   <b>Title and meta description</b>
@@ -957,7 +957,7 @@ export default function SelfEditForm(props: Props) {
                   shows up on search engines.
                 </p>
               </aside>
-              <aside className="w-full flex flex-1 flex-col gap-8 bg-layer-one p-8 rounded drop-shadow">
+              <aside className="flex w-full flex-1 flex-col gap-8 rounded bg-layer-one p-8 drop-shadow">
                 <FormField
                   control={form.control}
                   name="name"
@@ -1017,7 +1017,7 @@ export default function SelfEditForm(props: Props) {
               </aside>
             </section>
 
-            <section className="flex flex-col md:flex-row gap-8">
+            <section className="flex flex-col gap-8 md:flex-row">
               <aside className="w-full md:w-[200px] lg:w-[300px] xl:w-[600px]">
                 <p className="pb-4">
                   <b>Images</b>
@@ -1114,7 +1114,7 @@ export default function SelfEditForm(props: Props) {
                   }}
                 />
               </aside>
-              <aside className="w-full overflow-x-auto flex flex-1 flex-col gap-8 bg-layer-one p-8 rounded drop-shadow">
+              <aside className="flex w-full flex-1 flex-col gap-8 overflow-x-auto rounded bg-layer-one p-8 drop-shadow">
                 <DraggableImages
                   product_images={productImages}
                   product_image_files={productImageFiles}
@@ -1124,7 +1124,7 @@ export default function SelfEditForm(props: Props) {
               </aside>
             </section>
 
-            <section className="flex flex-col md:flex-row gap-8">
+            <section className="flex flex-col gap-8 md:flex-row">
               <aside className="w-full md:w-[200px] lg:w-[300px] xl:w-[600px]">
                 <p className="pb-4">
                   <b>Pricing and Currency</b>
@@ -1134,8 +1134,8 @@ export default function SelfEditForm(props: Props) {
                   searchable.
                 </p>
               </aside>
-              <aside className="w-full flex flex-1 flex-col gap-8 bg-layer-one p-8 rounded drop-shadow">
-                <section className="w-full flex flex-col md:flex-row gap-8">
+              <aside className="flex w-full flex-1 flex-col gap-8 rounded bg-layer-one p-8 drop-shadow">
+                <section className="flex w-full flex-col gap-8 md:flex-row">
                   <FormField
                     control={form.control}
                     name="prices.price"
@@ -1217,7 +1217,7 @@ export default function SelfEditForm(props: Props) {
               </aside>
             </section>
 
-            <section className="flex flex-col md:flex-row gap-8">
+            <section className="flex flex-col gap-8 md:flex-row">
               <aside className="w-full md:w-[200px] lg:w-[300px] xl:w-[600px]">
                 <p className="pb-4">
                   <b>Variants</b>
@@ -1227,8 +1227,8 @@ export default function SelfEditForm(props: Props) {
                   searchable.
                 </p>
               </aside>
-              <aside className="w-full flex flex-1 flex-col gap-8 bg-layer-one p-8 rounded drop-shadow">
-                <section className="w-full flex gap-8 items-center justify-between">
+              <aside className="flex w-full flex-1 flex-col gap-8 rounded bg-layer-one p-8 drop-shadow">
+                <section className="flex w-full items-center justify-between gap-8">
                   <p>
                     <b>Options</b>
                   </p>
@@ -1245,16 +1245,16 @@ export default function SelfEditForm(props: Props) {
                   <>
                     {options.map((item, index) => (
                       <section
-                        className="w-full flex items-center gap-4"
+                        className="flex w-full items-center gap-4"
                         key={index}
                       >
-                        <aside className="flex-1 flex flex-col gap-4">
+                        <aside className="flex flex-1 flex-col gap-4">
                           <p>{item.name}</p>
-                          <div className="w-full flex gap-4">
+                          <div className="flex w-full gap-4">
                             {item.options.map((opt, i) => {
                               return (
                                 <span
-                                  className="bg-layer-four text-background text-xs font-medium px-2.5 py-0.5 rounded"
+                                  className="rounded bg-layer-four px-2.5 py-0.5 text-xs font-medium text-background"
                                   key={i}
                                 >
                                   {opt}
@@ -1298,7 +1298,7 @@ export default function SelfEditForm(props: Props) {
                   </>
                 )}
                 <Separator />
-                <section className="w-full flex gap-8 items-center justify-between">
+                <section className="flex w-full items-center justify-between gap-8">
                   <p>
                     <b>Variants</b>
                   </p>
@@ -1310,10 +1310,10 @@ export default function SelfEditForm(props: Props) {
                     {variants.map((variant, index) => (
                       <div
                         key={`variant-${index}`}
-                        className="w-full grid grid-cols-4 flex-1 items-center gap-8"
+                        className="grid w-full flex-1 grid-cols-4 items-center gap-8"
                       >
                         <p>{variant}</p>
-                        <div className="col-span-4 md:col-span-3 grid grid-cols-6 gap-8">
+                        <div className="col-span-4 grid grid-cols-6 gap-8 md:col-span-3">
                           <div className="col-span-3 md:col-span-2">
                             <FormField
                               control={form.control}
@@ -1388,7 +1388,7 @@ export default function SelfEditForm(props: Props) {
               </aside>
             </section>
 
-            <section className="flex flex-col md:flex-row gap-8">
+            <section className="flex flex-col gap-8 md:flex-row">
               <aside className="w-full md:w-[200px] lg:w-[300px] xl:w-[600px]">
                 <p className="pb-4">
                   <b>Options</b>
@@ -1398,7 +1398,7 @@ export default function SelfEditForm(props: Props) {
                   searchable.
                 </p>
               </aside>
-              <aside className="w-full flex flex-1 flex-col gap-8 bg-layer-one p-8 rounded drop-shadow">
+              <aside className="flex w-full flex-1 flex-col gap-8 rounded bg-layer-one p-8 drop-shadow">
                 <FormField
                   control={form.control}
                   name="tags"
@@ -1501,7 +1501,7 @@ export default function SelfEditForm(props: Props) {
               </aside>
             </section>
 
-            <section className="flex flex-col md:flex-row gap-8">
+            <section className="flex flex-col gap-8 md:flex-row">
               <aside className="w-full md:w-[200px] lg:w-[300px] xl:w-[600px]">
                 <p className="pb-4">
                   <b>Shipping</b>
@@ -1511,8 +1511,8 @@ export default function SelfEditForm(props: Props) {
                   settings.
                 </p>
               </aside>
-              <aside className="w-full flex flex-1 flex-col gap-8 bg-layer-one p-8 rounded drop-shadow">
-                <section className="w-full flex flex-col md:flex-row gap-8">
+              <aside className="flex w-full flex-1 flex-col gap-8 rounded bg-layer-one p-8 drop-shadow">
+                <section className="flex w-full flex-col gap-8 md:flex-row">
                   <FormField
                     control={form.control}
                     name="weight"
@@ -1565,7 +1565,7 @@ export default function SelfEditForm(props: Props) {
                     )}
                   />
                 </section>
-                <section className="w-full flex flex-col md:flex-row gap-8">
+                <section className="flex w-full flex-col gap-8 md:flex-row">
                   <FormField
                     control={form.control}
                     name="length"

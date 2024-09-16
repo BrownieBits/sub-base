@@ -29,7 +29,7 @@ export const LatestBlog = (props: {}) => {
   }
 
   return (
-    <section className="w-full flex flex-col justify-start items-start gap-8 p-4 bg-layer-one border rounded">
+    <section className="flex w-full flex-col items-start justify-start gap-8 rounded border bg-layer-one p-4">
       <h3>SubPort News</h3>
       {blog.fields.banner && (
         <Image
@@ -37,11 +37,11 @@ export const LatestBlog = (props: {}) => {
           src={`https:${blog.fields.banner.fields.file.url}`}
           width={blog.fields.banner.fields.file.details.image.width}
           height={blog.fields.banner.fields.file.details.image.height}
-          className="flex w-full mb-[5px]"
+          className="mb-[5px] flex w-full"
         />
       )}
 
-      <section className="w-full flex flex-col gap-2">
+      <section className="flex w-full flex-col gap-2">
         <p>
           <b>{blog.fields.title}</b>
         </p>

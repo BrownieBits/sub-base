@@ -38,13 +38,13 @@ export default function ProductImages(props: { images: string[] }) {
     return <></>;
   }
   return (
-    <section className="w-full flex-1 flex gap-4 items-start">
+    <section className="flex w-full flex-1 items-start gap-4">
       {props.images.length > 1 && (
-        <div className="hidden md:flex flex-col justify-center items-center gap-4 ">
+        <div className="hidden flex-col items-center justify-center gap-4 md:flex">
           {props.images.map((image, index) => (
             <section
-              className={`cursor-pointer w-[50px] xl:w-[100px] aspect-square flex justify-center items-center border bg-layer-one rounded overflow-hidden ${
-                index + 1 === current ? 'border-primary border-2' : ''
+              className={`flex aspect-square w-[50px] cursor-pointer items-center justify-center overflow-hidden rounded border bg-layer-one xl:w-[100px] ${
+                index + 1 === current ? 'border-2 border-primary' : ''
               }`}
               key={`sub-image-${index}`}
             >
@@ -67,7 +67,7 @@ export default function ProductImages(props: { images: string[] }) {
               return (
                 <CarouselItem key={image}>
                   <section
-                    className="aspect-square flex justify-center items-center border bg-layer-one rounded overflow-hidden"
+                    className="flex aspect-square items-center justify-center overflow-hidden rounded border bg-layer-one"
                     key={image}
                   >
                     <Image
@@ -75,7 +75,8 @@ export default function ProductImages(props: { images: string[] }) {
                       alt="Product Image"
                       width="1000"
                       height="1000"
-                      className="cursor-pointer w-full"
+                      priority
+                      className="w-full cursor-pointer"
                       onClick={() => setMainImage(image)}
                     />
                   </section>

@@ -60,20 +60,20 @@ export const UserDropdown = () => {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button variant="ghost" className="p-0 bg-layer-one hover:bg-layer-one">
-          <Avatar className="bg-secondary text-foreground h-[29px] w-[29px]">
+        <Button variant="ghost" className="bg-layer-one p-0 hover:bg-layer-one">
+          <Avatar className="h-[29px] w-[29px] bg-secondary text-foreground">
             <AvatarImage
               src={value?.data()?.avatar_url}
               alt={value?.data()?.name}
             />
-            <AvatarFallback className="bg-primary text-foreground border-primary">
+            <AvatarFallback className="border-primary bg-primary text-foreground">
               <b>{value?.data()?.name.slice(0, 1).toUpperCase()}</b>
             </AvatarFallback>
           </Avatar>
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent className="w-[250px]">
-        <DropdownMenuGroup className="p-4 space-y-[5px]">
+        <DropdownMenuGroup className="space-y-[5px] p-4">
           <DropdownMenuItem asChild className="p-[0] focus:bg-background">
             <p>
               <b>{user_name}</b>
@@ -82,7 +82,7 @@ export const UserDropdown = () => {
           <DropdownMenuItem asChild className="p-[0] focus:bg-layer-one">
             <Link
               href={`/store/${default_store}`}
-              className="w-full "
+              className="w-full"
               aria-label="Store"
             >
               @{default_store}
@@ -91,7 +91,7 @@ export const UserDropdown = () => {
         </DropdownMenuGroup>
 
         <DropdownMenuSeparator />
-        <DropdownMenuGroup className="p-4 space-y-[5px]">
+        <DropdownMenuGroup className="space-y-[5px] p-4">
           <DropdownMenuItem asChild className="p-[0] focus:bg-layer-one">
             <Link href={`/switch-stores`} className="w-full" aria-label="Store">
               <FontAwesomeIcon className="icon mr-4" icon={faRepeat} />
@@ -109,7 +109,7 @@ export const UserDropdown = () => {
         </DropdownMenuGroup>
 
         <DropdownMenuSeparator />
-        <DropdownMenuGroup className="p-4 space-y-[5px]">
+        <DropdownMenuGroup className="space-y-[5px] p-4">
           <DropdownMenuItem asChild className="p-[0] focus:bg-layer-one">
             <Link href={`/dashboard`} className="w-full" aria-label="Store">
               <FontAwesomeIcon className="icon mr-4" icon={faColumns} />
@@ -139,14 +139,14 @@ export const UserDropdown = () => {
         </DropdownMenuGroup>
 
         <DropdownMenuSeparator />
-        <DropdownMenuGroup className="p-4 space-y-[5px]">
+        <DropdownMenuGroup className="space-y-[5px] p-4">
           <DropdownMenuSub>
             <DropdownMenuSubTrigger className="p-[0] focus:bg-layer-one">
               <FontAwesomeIcon className="icon mr-4" icon={faBrush} />
               Appearance
             </DropdownMenuSubTrigger>
             <DropdownMenuPortal>
-              <DropdownMenuSubContent className="p-4 space-y-[5px]">
+              <DropdownMenuSubContent className="space-y-[5px] p-4">
                 <DropdownMenuItem
                   className="p-[0] focus:bg-layer-one"
                   onClick={() => setTheme('light')}
@@ -174,7 +174,7 @@ export const UserDropdown = () => {
               Language
             </DropdownMenuSubTrigger>
             <DropdownMenuPortal>
-              <DropdownMenuSubContent className="p-4 space-y-[5px]">
+              <DropdownMenuSubContent className="space-y-[5px] p-4">
                 <DropdownMenuItem
                   className="p-[0] focus:bg-layer-one"
                   onClick={() => setTheme('light')}
@@ -202,7 +202,7 @@ export const UserDropdown = () => {
               Location
             </DropdownMenuSubTrigger>
             <DropdownMenuPortal>
-              <DropdownMenuSubContent className="p-4 space-y-[5px]">
+              <DropdownMenuSubContent className="space-y-[5px] p-4">
                 <DropdownMenuItem
                   className="p-[0] focus:bg-layer-one"
                   onClick={() => setTheme('light')}
@@ -227,7 +227,7 @@ export const UserDropdown = () => {
         </DropdownMenuGroup>
 
         <DropdownMenuSeparator />
-        <DropdownMenuGroup className="p-4 space-y-[5px]">
+        <DropdownMenuGroup className="space-y-[5px] p-4">
           <DropdownMenuItem asChild className="p-[0] focus:bg-layer-one">
             <Link
               href={`/dashboard/settings`}
@@ -241,7 +241,7 @@ export const UserDropdown = () => {
         </DropdownMenuGroup>
 
         <DropdownMenuSeparator />
-        <DropdownMenuGroup className="p-4 space-y-[5px]">
+        <DropdownMenuGroup className="space-y-[5px] p-4">
           <DropdownMenuItem asChild className="p-[0] focus:bg-layer-one">
             <Link href={`/help`} className="w-full" aria-label="Store">
               <FontAwesomeIcon className="icon mr-4" icon={faQuestion} />

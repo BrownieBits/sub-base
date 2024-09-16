@@ -86,7 +86,7 @@ export default function AddOptionDrawer(props: Props) {
             variant="ghost"
             size="icon"
             type="button"
-            className="bg-layer-one hover:bg-layer-two text-xl"
+            className="bg-layer-one text-xl hover:bg-layer-two"
             asChild
           >
             <p className="text-lg">
@@ -105,19 +105,19 @@ export default function AddOptionDrawer(props: Props) {
         )}
       </DrawerTrigger>
       <DrawerContent>
-        <DrawerHeader className="flex flex-col justify-start items-start w-full max-w-[1754px] mx-auto">
+        <DrawerHeader className="mx-auto flex w-full max-w-[1754px] flex-col items-start justify-start">
           <DrawerTitle>Add Option</DrawerTitle>
           <DrawerDescription className="w-full">
             <Form {...addForm}>
               <form
                 onSubmit={addForm.handleSubmit(onAdd)}
-                className="flex flex-col justify-start items-start pt-4 w-full gap-8"
+                className="flex w-full flex-col items-start justify-start gap-8 pt-4"
               >
                 <FormField
                   control={addForm.control}
                   name="name"
                   render={({ field }) => (
-                    <FormItem className="w-full flex flex-col justify-start items-start text-foreground">
+                    <FormItem className="flex w-full flex-col items-start justify-start text-foreground">
                       <FormLabel className="text-foreground">Name</FormLabel>
                       <FormControl>
                         <Input
@@ -134,7 +134,7 @@ export default function AddOptionDrawer(props: Props) {
                   control={addForm.control}
                   name="options"
                   render={({ field }) => (
-                    <FormItem className="w-full flex flex-col justify-start items-start text-foreground">
+                    <FormItem className="flex w-full flex-col items-start justify-start text-foreground">
                       <FormLabel className="text-foreground">Options</FormLabel>
                       <FormControl>
                         <Input
@@ -154,8 +154,8 @@ export default function AddOptionDrawer(props: Props) {
             </Form>
           </DrawerDescription>
         </DrawerHeader>
-        <DrawerFooter className="w-full max-w-[1754px] mx-auto">
-          <section className="w-full flex justify-end gap-8">
+        <DrawerFooter className="mx-auto w-full max-w-[1754px]">
+          <section className="flex w-full justify-end gap-8">
             <DrawerClose>
               <Button variant="outline">Cancel</Button>
             </DrawerClose>

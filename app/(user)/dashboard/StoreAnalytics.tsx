@@ -82,45 +82,45 @@ export const StoreAnalytics = (props: {}) => {
 
   if (analytics === null) {
     return (
-      <section className="w-full flex flex-col item-start gap-8 p-4 rounded border bg-layer-one">
-        <Skeleton className="w-[100px] h-7 bg-layer-two" />
+      <section className="item-start flex w-full flex-col gap-8 rounded border bg-layer-one p-4">
+        <Skeleton className="h-7 w-[100px] bg-layer-two" />
 
-        <section className="w-full flex flex-col gap-2">
-          <Skeleton className="w-[125px] h-5 bg-layer-two" />
-          <Skeleton className="w-[50px] h-10 bg-layer-two" />
+        <section className="flex w-full flex-col gap-2">
+          <Skeleton className="h-5 w-[125px] bg-layer-two" />
+          <Skeleton className="h-10 w-[50px] bg-layer-two" />
         </section>
-        <section className="w-full flex flex-col gap-2">
-          <Skeleton className="w-[100px] h-5 bg-layer-two" />
-          <Skeleton className="w-[100px] h-3 bg-layer-two" />
-          <section className="w-full flex justify-between gap-4">
-            <Skeleton className="w-[125px] h-5 bg-layer-two" />
-            <Skeleton className="w-[50px] h-5 bg-layer-two" />
+        <section className="flex w-full flex-col gap-2">
+          <Skeleton className="h-5 w-[100px] bg-layer-two" />
+          <Skeleton className="h-3 w-[100px] bg-layer-two" />
+          <section className="flex w-full justify-between gap-4">
+            <Skeleton className="h-5 w-[125px] bg-layer-two" />
+            <Skeleton className="h-5 w-[50px] bg-layer-two" />
           </section>
-          <section className="w-full flex justify-between gap-4">
-            <Skeleton className="w-[125px] h-5 bg-layer-two" />
-            <Skeleton className="w-[50px] h-5 bg-layer-two" />
+          <section className="flex w-full justify-between gap-4">
+            <Skeleton className="h-5 w-[125px] bg-layer-two" />
+            <Skeleton className="h-5 w-[50px] bg-layer-two" />
           </section>
         </section>
 
-        <section className="w-full flex flex-col gap-2">
-          <Skeleton className="w-[100px] h-5 bg-layer-two" />
-          <Skeleton className="w-[100px] h-3 bg-layer-two" />
-          <section className="w-full flex items-center gap-4">
-            <Skeleton className="w-[50px] aspect-square bg-layer-two" />
-            <Skeleton className="w-[125px] h-5 bg-layer-two" />
+        <section className="flex w-full flex-col gap-2">
+          <Skeleton className="h-5 w-[100px] bg-layer-two" />
+          <Skeleton className="h-3 w-[100px] bg-layer-two" />
+          <section className="flex w-full items-center gap-4">
+            <Skeleton className="aspect-square w-[50px] bg-layer-two" />
+            <Skeleton className="h-5 w-[125px] bg-layer-two" />
             <div className="flex-1" />
-            <Skeleton className="w-[50px] h-5 bg-layer-two" />
+            <Skeleton className="h-5 w-[50px] bg-layer-two" />
           </section>
         </section>
-        <Skeleton className="w-[100px] h-[40px] bg-layer-two" />
+        <Skeleton className="h-[40px] w-[100px] bg-layer-two" />
       </section>
     );
   }
 
   return (
-    <section className="w-full flex flex-col justify-start items-start gap-8 p-4 bg-layer-one border rounded">
+    <section className="flex w-full flex-col items-start justify-start gap-8 rounded border bg-layer-one p-4">
       <h3>Store Analytics</h3>
-      <section className="w-full flex flex-col gap-2">
+      <section className="flex w-full flex-col gap-2">
         <p>
           <b>Channel Subscriptions</b>
         </p>
@@ -128,25 +128,25 @@ export const StoreAnalytics = (props: {}) => {
           <b>{analytics.subscription_count}</b>
         </p>
       </section>
-      <section className="w-full flex flex-col gap-4">
-        <section className="w-full flex flex-col">
+      <section className="flex w-full flex-col gap-4">
+        <section className="flex w-full flex-col">
           <p>
             <b>Summary</b>
           </p>
           <p className="text-sm text-muted-foreground">Last 30 Days</p>
         </section>
-        <section className="w-full flex justify-between gap-4">
+        <section className="flex w-full justify-between gap-4">
           <p>Views</p>
           <p>{analytics.view_count}</p>
         </section>
-        <section className="w-full flex justify-between gap-4">
+        <section className="flex w-full justify-between gap-4">
           <p>Likes</p>
           <p>{analytics.like_count}</p>
         </section>
       </section>
 
-      <section className="w-full flex flex-col gap-4">
-        <section className="w-full flex flex-col">
+      <section className="flex w-full flex-col gap-4">
+        <section className="flex w-full flex-col">
           <p>
             <b>Top Products</b>
           </p>
@@ -159,10 +159,10 @@ export const StoreAnalytics = (props: {}) => {
             {analytics.products.map((product) => {
               return (
                 <section
-                  className="w-full flex items-center gap-4"
+                  className="flex w-full items-center gap-4"
                   key={product.name}
                 >
-                  <section className="aspect-square flex justify-center items-center bg-layer-one border rounded overflow-hidden">
+                  <section className="flex aspect-square items-center justify-center overflow-hidden rounded border bg-layer-one">
                     <Image
                       src={product.image_url}
                       width="300"
@@ -171,7 +171,7 @@ export const StoreAnalytics = (props: {}) => {
                       className="flex w-full"
                     />
                   </section>
-                  <Skeleton className="w-[50px] aspect-square bg-layer-two" />
+                  <Skeleton className="aspect-square w-[50px] bg-layer-two" />
                   <p className="flex-1">{product.name}</p>
                   <p>
                     {new Intl.NumberFormat('en-US', {

@@ -3,6 +3,6 @@
 import { revalidatePath } from 'next/cache';
 
 export async function revalidate() {
-    'use server';
-    revalidatePath(`/switch-stores`);
+  'use server';
+  revalidatePath(`/switch-stores`);
 }

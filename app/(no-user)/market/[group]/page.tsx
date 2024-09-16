@@ -1,4 +1,3 @@
-import { HeroBanner } from '@/components/sb-ui/HeroBanner';
 import ProductCard from '@/components/sb-ui/ProductCard';
 import { Separator } from '@/components/ui/separator';
 import { client } from '@/lib/contentful';
@@ -145,18 +144,17 @@ export default async function MarketplacePage({ params }: Props) {
 
   return (
     <section>
-      <section className="w-full max-w-[2428px] mx-auto">
-        <section className="flex w-full justify-between items-center px-4 py-4 gap-4">
+      <section className="mx-auto w-full max-w-[2428px]">
+        <section className="flex w-full items-center justify-between gap-4 px-4 py-4">
           <h1>{data.title}</h1>
         </section>
-        <HeroBanner page_slug="creator-liked-items" />
       </section>
       <Separator />
-      <section className="w-full max-w-[2428px] mx-auto">
+      <section className="mx-auto w-full max-w-[2428px]">
         {products.length === 0 ? (
           <NoProducts />
         ) : (
-          <section className="grid grid-cols-1 md:grid-cols-3 xl:grid-cols-6 gap-8 p-4">
+          <section className="grid grid-cols-1 gap-8 p-4 md:grid-cols-3 xl:grid-cols-6">
             {products?.map((doc) => (
               <ProductCard product={doc} show_creator={true} key={doc.id} />
             ))}

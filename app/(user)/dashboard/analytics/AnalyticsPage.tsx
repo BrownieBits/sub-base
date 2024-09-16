@@ -220,13 +220,13 @@ export default function AnalyticsPage(props: Props) {
   if (selected === '' || date === undefined) {
     return (
       <>
-        <section className="w-full max-w-[2428px] mx-auto">
-          <section className="flex w-full justify-between items-center px-4 py-4 gap-4">
+        <section className="mx-auto w-full max-w-[2428px]">
+          <section className="flex w-full items-center justify-between gap-4 px-4 py-4">
             <h1>Analytics</h1>
           </section>
         </section>
         <Separator />
-        <section className="w-full max-w-[2428px] mx-auto">
+        <section className="mx-auto w-full max-w-[2428px]">
           <AnalyticsLoading />
         </section>
       </>
@@ -235,8 +235,8 @@ export default function AnalyticsPage(props: Props) {
 
   return (
     <>
-      <section className="w-full max-w-[2428px] mx-auto">
-        <section className="flex w-full justify-between items-center px-4 py-4 gap-4">
+      <section className="mx-auto w-full max-w-[2428px]">
+        <section className="flex w-full items-center justify-between gap-4 px-4 py-4">
           <h1>Analytics</h1>
           <DropdownMenu open={open} onOpenChange={setOpen}>
             <DropdownMenuTrigger asChild>
@@ -248,116 +248,116 @@ export default function AnalyticsPage(props: Props) {
               <DropdownMenuItem asChild className="focus:bg-layer-two">
                 <Button
                   variant="link"
-                  className="w-full hover:no-underline px-2 py-1"
+                  className="w-full px-2 py-1 hover:no-underline"
                   onClick={() => changeDates('today')}
                 >
-                  <section className="w-full flex justify-between">
+                  <section className="flex w-full justify-between">
                     <p>Today</p>
                     {selected.includes('Today:') && (
-                      <FontAwesomeIcon className="icon " icon={faCheck} />
+                      <FontAwesomeIcon className="icon" icon={faCheck} />
                     )}
                   </section>
                 </Button>
               </DropdownMenuItem>
-              <DropdownMenuItem asChild className=" focus:bg-layer-two">
+              <DropdownMenuItem asChild className="focus:bg-layer-two">
                 <Button
                   variant="link"
-                  className="w-full hover:no-underline px-2 py-1"
+                  className="w-full px-2 py-1 hover:no-underline"
                   onClick={() => changeDates('yesterday')}
                 >
-                  <section className="w-full flex justify-between">
+                  <section className="flex w-full justify-between">
                     <p>Yesterday</p>
                     {selected.includes('Yesterday:') && (
-                      <FontAwesomeIcon className="icon " icon={faCheck} />
+                      <FontAwesomeIcon className="icon" icon={faCheck} />
                     )}
                   </section>
                 </Button>
               </DropdownMenuItem>
-              <DropdownMenuItem asChild className=" focus:bg-layer-two">
+              <DropdownMenuItem asChild className="focus:bg-layer-two">
                 <Button
                   variant="link"
-                  className="w-full hover:no-underline px-2 py-1"
+                  className="w-full px-2 py-1 hover:no-underline"
                   onClick={() => changeDates('last_7')}
                 >
-                  <section className="w-full flex justify-between">
+                  <section className="flex w-full justify-between">
                     <p>Last 7 Days</p>
                     {selected.includes('Last 7 Days:') && (
-                      <FontAwesomeIcon className="icon " icon={faCheck} />
+                      <FontAwesomeIcon className="icon" icon={faCheck} />
                     )}
                   </section>
                 </Button>
               </DropdownMenuItem>
-              <DropdownMenuItem asChild className=" focus:bg-layer-two">
+              <DropdownMenuItem asChild className="focus:bg-layer-two">
                 <Button
                   variant="link"
-                  className="w-full hover:no-underline px-2 py-1"
+                  className="w-full px-2 py-1 hover:no-underline"
                   onClick={() => changeDates('last_30')}
                 >
-                  <section className="w-full flex justify-between">
+                  <section className="flex w-full justify-between">
                     <p>Last 30 Days</p>
                     {selected.includes('Last 30 Days:') && (
-                      <FontAwesomeIcon className="icon " icon={faCheck} />
+                      <FontAwesomeIcon className="icon" icon={faCheck} />
                     )}
                   </section>
                 </Button>
               </DropdownMenuItem>
-              <DropdownMenuItem asChild className=" focus:bg-layer-two">
+              <DropdownMenuItem asChild className="focus:bg-layer-two">
                 <Button
                   variant="link"
-                  className="w-full hover:no-underline px-2 py-1"
+                  className="w-full px-2 py-1 hover:no-underline"
                   onClick={() => changeDates('this_month')}
                 >
-                  <section className="w-full flex justify-between">
+                  <section className="flex w-full justify-between">
                     <p>This Month</p>
                     {selected.includes('This Month') && (
-                      <FontAwesomeIcon className="icon " icon={faCheck} />
+                      <FontAwesomeIcon className="icon" icon={faCheck} />
                     )}
                   </section>
                 </Button>
               </DropdownMenuItem>
-              <DropdownMenuItem asChild className=" focus:bg-layer-two">
+              <DropdownMenuItem asChild className="focus:bg-layer-two">
                 <Button
                   variant="link"
-                  className="w-full hover:no-underline px-2 py-1"
+                  className="w-full px-2 py-1 hover:no-underline"
                   onClick={() => changeDates('this_year')}
                 >
-                  <section className="w-full flex justify-between">
+                  <section className="flex w-full justify-between">
                     <p>This Year</p>
                     {selected.includes('This Year') && (
-                      <FontAwesomeIcon className="icon " icon={faCheck} />
+                      <FontAwesomeIcon className="icon" icon={faCheck} />
                     )}
                   </section>
                 </Button>
               </DropdownMenuItem>
-              <DropdownMenuItem asChild className=" focus:bg-layer-two">
+              <DropdownMenuItem asChild className="focus:bg-layer-two">
                 <Button
                   variant="link"
-                  className="w-full hover:no-underline px-2 py-1"
+                  className="w-full px-2 py-1 hover:no-underline"
                   onClick={() => changeDates('last_year')}
                 >
-                  <section className="w-full flex justify-between">
+                  <section className="flex w-full justify-between">
                     <p>Last Year</p>
                     {selected.includes('Last Year') && (
-                      <FontAwesomeIcon className="icon " icon={faCheck} />
+                      <FontAwesomeIcon className="icon" icon={faCheck} />
                     )}
                   </section>
                 </Button>
               </DropdownMenuItem>
-              <DropdownMenuItem asChild className=" focus:bg-layer-two">
+              <DropdownMenuItem asChild className="focus:bg-layer-two">
                 <Button
                   variant="link"
-                  className="w-full hover:no-underline px-2 py-1"
+                  className="w-full px-2 py-1 hover:no-underline"
                   onClick={() => changeDates('all_time')}
                 >
-                  <section className="w-full flex justify-between">
+                  <section className="flex w-full justify-between">
                     <p>All Time</p>
                     {selected.includes('All Time') && (
-                      <FontAwesomeIcon className="icon " icon={faCheck} />
+                      <FontAwesomeIcon className="icon" icon={faCheck} />
                     )}
                   </section>
                 </Button>
               </DropdownMenuItem>
-              <DropdownMenuItem asChild className=" focus:bg-layer-two">
+              <DropdownMenuItem asChild className="focus:bg-layer-two">
                 <DatePicker
                   selected={selected}
                   dates={date}
@@ -369,12 +369,12 @@ export default function AnalyticsPage(props: Props) {
         </section>
       </section>
       <Separator />
-      <section className="w-full max-w-[2428px] flex flex-col gap-8 mx-auto px-4 py-8">
+      <section className="mx-auto flex w-full max-w-[2428px] flex-col gap-8 px-4 py-8">
         {data === null || data === undefined ? (
           <AnalyticsLoading />
         ) : (
           <>
-            <section className="w-full flex flex-col md:flex-row gap-8">
+            <section className="flex w-full flex-col gap-8 md:flex-row">
               <TotalOrdersChart data={data} to={date?.to!} from={date?.from!} />
               <TotalRevenueChart
                 data={data}
@@ -382,7 +382,7 @@ export default function AnalyticsPage(props: Props) {
                 from={date?.from!}
               />
             </section>
-            <section className="w-full flex flex-col md:flex-row gap-8">
+            <section className="flex w-full flex-col gap-8 md:flex-row">
               <ConversionRateChart
                 data={data}
                 to={date?.to!}
@@ -395,7 +395,7 @@ export default function AnalyticsPage(props: Props) {
                 from={date?.from!}
               />
             </section>
-            <section className="w-full flex-col md:flex-row flex gap-8">
+            <section className="flex w-full flex-col gap-8 md:flex-row">
               <StoreViewsChart data={data} to={date?.to!} from={date?.from!} />
 
               <StoreSubscriptionChart
@@ -404,7 +404,7 @@ export default function AnalyticsPage(props: Props) {
                 from={date?.from!}
               />
             </section>
-            <section className="w-full flex-col md:flex-row flex gap-8">
+            <section className="flex w-full flex-col gap-8 md:flex-row">
               <CitiesReachedChart data={data} />
               <ProductViewsChart
                 data={data}

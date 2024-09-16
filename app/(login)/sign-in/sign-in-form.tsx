@@ -104,7 +104,7 @@ export function SignInForm({
         <Form {...form}>
           <form
             onSubmit={form.handleSubmit(onSubmit)}
-            className="space-y-8 w-[300px]"
+            className="w-[300px] space-y-8"
           >
             <FormField
               control={form.control}

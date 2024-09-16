@@ -11,9 +11,9 @@ export default function NoUserLayout({
       <section className="w-full">
         <MarketingNav />
       </section>
-      <section className="w-full grid grid-cols-[0_auto] xl:grid-cols-[250px_auto]">
+      <section className="grid w-full grid-cols-[0_auto] xl:grid-cols-[250px_auto]">
         <nav
-          className={`flex border-r-[1px] border-r-border bg-layer-one h-[calc(100vh-56px)] min-h-[calc(100vh-56px)]`}
+          className={`flex h-[calc(100vh-56px)] min-h-[calc(100vh-56px)] border-r-[1px] border-r-border bg-layer-one`}
         >
           <DashboardSideNav menu="Marketing Menu" inSheet={false} />
         </nav>

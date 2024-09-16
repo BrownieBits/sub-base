@@ -26,8 +26,8 @@ const CookieConsent = () => {
   }
 
   return (
-    <div className="fixed inset-0 bg-background/75 z-10">
-      <div className="fixed bg-background bottom-0 left-0 right-0 flex flex-col md:flex-row gap-8 items-center justify-between p-4">
+    <div className="fixed inset-0 z-10 bg-background/75">
+      <div className="fixed bottom-0 left-0 right-0 flex flex-col items-center justify-between gap-8 bg-background p-4 md:flex-row">
         <span>
           This website uses cookies to improve user experience. By using our
           website you consent to all cookies in accordance with our Cookie

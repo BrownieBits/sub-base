@@ -14,7 +14,7 @@ export default function DigitalShipment(props: Props) {
   React.useEffect(() => {}, [props.items]);
 
   return (
-    <section className="w-full flex flex-col gap-4">
+    <section className="flex w-full flex-col gap-4">
       <p>
         <b>Digital Delivery</b>
       </p>
@@ -30,11 +30,11 @@ export default function DigitalShipment(props: Props) {
       {props.items.items.map((item) => {
         return (
           <section
-            className="w-full flex items-center gap-4"
+            className="flex w-full items-center gap-4"
             key={`shipping-item-${item.name}${item.options.join('')}`}
           >
             {item.images.length > 0 && (
-              <section className="aspect-square w-[50px] flex justify-center items-center bg-layer-one border rounded overflow-hidden group">
+              <section className="group flex aspect-square w-[50px] items-center justify-center overflow-hidden rounded border bg-layer-one">
                 <Image
                   src={item.images[0]}
                   width="50"
@@ -44,7 +44,7 @@ export default function DigitalShipment(props: Props) {
                 />
               </section>
             )}
-            <section className="w-full flex-1 flex flex-col">
+            <section className="flex w-full flex-1 flex-col">
               <p className="text-sm">
                 <b>{item.name}</b>
               </p>

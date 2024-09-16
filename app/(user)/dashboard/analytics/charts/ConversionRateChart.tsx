@@ -124,12 +124,12 @@ export const ConversionRateChart = (props: {
   }, [props.data]);
   if (sessions === undefined) {
     return (
-      <Skeleton className="flex-1 min-h-[258px] bg-layer-one border rounded" />
+      <Skeleton className="min-h-[258px] flex-1 rounded border bg-layer-one" />
     );
   }
   return (
-    <section className="flex-1 flex flex-col gap-4 p-4 bg-layer-one rounded border">
-      <section className="w-full flex flex-col gap-1 justify-start">
+    <section className="flex flex-1 flex-col gap-4 rounded border bg-layer-one p-4">
+      <section className="flex w-full flex-col justify-start gap-1">
         <p>
           <b>Conversion Rate</b>
         </p>
@@ -142,7 +142,7 @@ export const ConversionRateChart = (props: {
         </p>
       </section>
 
-      <section className="flex justify-between items-center">
+      <section className="flex items-center justify-between">
         <aside>
           <p>Add to Cart</p>
           <p className="text-sm text-muted-foreground">{sessions} sessions</p>
@@ -157,7 +157,7 @@ export const ConversionRateChart = (props: {
       </section>
       <Separator />
 
-      <section className="flex justify-between items-center">
+      <section className="flex items-center justify-between">
         <aside>
           <p>Reached Checkout</p>
           <p className="text-sm text-muted-foreground">{sessions} sessions</p>
@@ -172,7 +172,7 @@ export const ConversionRateChart = (props: {
       </section>
       <Separator />
 
-      <section className="flex justify-between items-center">
+      <section className="flex items-center justify-between">
         <aside>
           <p>Checkout Converted</p>
           <p className="text-sm text-muted-foreground">{sessions} sessions</p>

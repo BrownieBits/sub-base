@@ -72,7 +72,7 @@ export const AiDescriptionWriter = (props: {}) => {
         <DialogTrigger asChild>
           <Button
             variant="link"
-            className="text-foreground p-[0] px-4 h-auto hover:no-underline"
+            className="h-auto p-[0] px-4 text-foreground hover:no-underline"
             asChild
           >
             <span>Click Here</span>
@@ -87,7 +87,7 @@ export const AiDescriptionWriter = (props: {}) => {
               <Form {...aiForm}>
                 <form
                   onSubmit={aiForm.handleSubmit(onSubmit)}
-                  className="flex flex-col py-8 w-full gap-8"
+                  className="flex w-full flex-col gap-8 py-8"
                 >
                   <FormField
                     control={aiForm.control}
@@ -126,7 +126,7 @@ export const AiDescriptionWriter = (props: {}) => {
               )}
 
               <p
-                className={cn('pt-4 text-foreground whitespace-pre-wrap', {
+                className={cn('whitespace-pre-wrap pt-4 text-foreground', {
                   hidden: generation === '',
                 })}
               >
@@ -144,14 +144,14 @@ export const AiDescriptionWriter = (props: {}) => {
       <DrawerTrigger>
         <Button
           variant="link"
-          className="text-foreground p-[0] px-4 h-auto hover:no-underline"
+          className="h-auto p-[0] px-4 text-foreground hover:no-underline"
           asChild
         >
           <span>Click Here</span>
         </Button>
       </DrawerTrigger>
       <DrawerContent>
-        <DrawerHeader className="w-full max-w-[2428px] mx-auto">
+        <DrawerHeader className="mx-auto w-full max-w-[2428px]">
           <DrawerTitle className="flex justify-between">
             <h3>Ai Generation</h3>
             <DrawerClose>
@@ -160,11 +160,11 @@ export const AiDescriptionWriter = (props: {}) => {
               </Button>
             </DrawerClose>
           </DrawerTitle>
-          <DrawerDescription className="w-full flex flex-col items-start text-left">
+          <DrawerDescription className="flex w-full flex-col items-start text-left">
             <Form {...aiForm}>
               <form
                 onSubmit={aiForm.handleSubmit(onSubmit)}
-                className="flex flex-col py-8 w-full gap-8"
+                className="flex w-full flex-col gap-8 py-8"
               >
                 <FormField
                   control={aiForm.control}
@@ -203,7 +203,7 @@ export const AiDescriptionWriter = (props: {}) => {
             )}
 
             <p
-              className={cn('pt-4 text-foreground whitespace-pre-wrap', {
+              className={cn('whitespace-pre-wrap pt-4 text-foreground', {
                 hidden: generation === '',
               })}
             >

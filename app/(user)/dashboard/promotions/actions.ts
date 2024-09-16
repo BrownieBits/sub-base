@@ -1,14 +1,13 @@
 'use server';
 
 import { revalidatePath } from 'next/cache';
-import { redirect } from "next/navigation";
+import { redirect } from 'next/navigation';
 
 export async function revalidate() {
-    'use server';
-    revalidatePath(`/dashboard/promotions`);
+  'use server';
+  revalidatePath(`/dashboard/promotions`);
 }
 
 export async function goTo(url: string) {
-    redirect(url);
+  redirect(url);
 }
-

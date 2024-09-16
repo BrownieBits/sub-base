@@ -454,9 +454,9 @@ export default function DigitalEditForm(props: Props) {
 
   return (
     <section className="relative">
-      <section className="w-full max-w-[1754px] mx-auto">
+      <section className="mx-auto w-full max-w-[1754px]">
         {props.name !== undefined && (
-          <section className="flex w-full justify-between items-center px-4 pt-4 gap-4">
+          <section className="flex w-full items-center justify-between gap-4 px-4 pt-4">
             <Breadcrumb>
               <BreadcrumbList>
                 <BreadcrumbItem>
@@ -473,8 +473,8 @@ export default function DigitalEditForm(props: Props) {
           </section>
         )}
         <section
-          className={cn('flex w-full justify-between items-center px-4 gap-4', {
-            'pt-[10px] pb-4 ': props.name !== undefined,
+          className={cn('flex w-full items-center justify-between gap-4 px-4', {
+            'pb-4 pt-[10px]': props.name !== undefined,
             'py-4': props.name === undefined,
           })}
         >
@@ -483,7 +483,7 @@ export default function DigitalEditForm(props: Props) {
           ) : (
             <h1>Add Product</h1>
           )}
-          <div className="flex gap-4 items-center">
+          <div className="flex items-center gap-4">
             {props.status !== undefined && props.status === 'Public' && (
               <Button
                 variant="outline"
@@ -531,13 +531,13 @@ export default function DigitalEditForm(props: Props) {
         </section>
       </section>
       <Separator />
-      <section className="w-full max-w-[1754px] mx-auto relative">
+      <section className="relative mx-auto w-full max-w-[1754px]">
         <Form {...form}>
           <form
             onSubmit={form.handleSubmit(onSubmit)}
-            className="flex flex-col px-4 py-8 w-full gap-8"
+            className="flex w-full flex-col gap-8 px-4 py-8"
           >
-            <section className="flex flex-col md:flex-row gap-8">
+            <section className="flex flex-col gap-8 md:flex-row">
               <aside className="w-full md:w-[200px] lg:w-[300px] xl:w-[600px]">
                 <p className="pb-4">
                   <b>Title and meta description</b>
@@ -547,7 +547,7 @@ export default function DigitalEditForm(props: Props) {
                   shows up on search engines.
                 </p>
               </aside>
-              <aside className="w-full flex flex-1 flex-col gap-8 bg-layer-one p-8 rounded drop-shadow">
+              <aside className="flex w-full flex-1 flex-col gap-8 rounded bg-layer-one p-8 drop-shadow">
                 <FormField
                   control={form.control}
                   name="name"
@@ -586,7 +586,7 @@ export default function DigitalEditForm(props: Props) {
               </aside>
             </section>
 
-            <section className="flex flex-col md:flex-row gap-8">
+            <section className="flex flex-col gap-8 md:flex-row">
               <aside className="w-full md:w-[200px] lg:w-[300px] xl:w-[600px]">
                 <p className="pb-4">
                   <b>Images</b>
@@ -683,7 +683,7 @@ export default function DigitalEditForm(props: Props) {
                   }}
                 />
               </aside>
-              <aside className="w-full overflow-x-auto flex flex-1 flex-col gap-8 bg-layer-one p-8 rounded drop-shadow">
+              <aside className="flex w-full flex-1 flex-col gap-8 overflow-x-auto rounded bg-layer-one p-8 drop-shadow">
                 <DraggableImages
                   product_images={productImages}
                   product_image_files={productImageFiles}
@@ -693,7 +693,7 @@ export default function DigitalEditForm(props: Props) {
               </aside>
             </section>
 
-            <section className="flex flex-col md:flex-row gap-8">
+            <section className="flex flex-col gap-8 md:flex-row">
               <aside className="w-full md:w-[200px] lg:w-[300px] xl:w-[600px]">
                 <p className="pb-4">
                   <b>Digital File</b>
@@ -776,7 +776,7 @@ export default function DigitalEditForm(props: Props) {
                   }}
                 />
               </aside>
-              <aside className="w-full flex flex-1 flex-col gap-8 bg-layer-one p-8 rounded drop-shadow">
+              <aside className="flex w-full flex-1 flex-col gap-8 rounded bg-layer-one p-8 drop-shadow">
                 {digitalFile === '' ? (
                   <section className="flex flex-col">
                     <p>
@@ -788,9 +788,9 @@ export default function DigitalEditForm(props: Props) {
                   </section>
                 ) : (
                   <section className="flex items-center gap-8">
-                    <section className="flex flex-col justify-center items-center">
+                    <section className="flex flex-col items-center justify-center">
                       <FontAwesomeIcon
-                        className="icon text-8xl mb-4"
+                        className="icon mb-4 text-8xl"
                         icon={faFile}
                       />
                       <p>{digitalFileName}</p>
@@ -812,7 +812,7 @@ export default function DigitalEditForm(props: Props) {
               </aside>
             </section>
 
-            <section className="flex flex-col md:flex-row gap-8">
+            <section className="flex flex-col gap-8 md:flex-row">
               <aside className="w-full md:w-[200px] lg:w-[300px] xl:w-[600px]">
                 <p className="pb-4">
                   <b>Options and Pricing</b>
@@ -822,8 +822,8 @@ export default function DigitalEditForm(props: Props) {
                   searchable.
                 </p>
               </aside>
-              <aside className="w-full flex flex-1 flex-col gap-8 bg-layer-one p-8 rounded drop-shadow">
-                <section className="w-full flex flex-col md:flex-row gap-8">
+              <aside className="flex w-full flex-1 flex-col gap-8 rounded bg-layer-one p-8 drop-shadow">
+                <section className="flex w-full flex-col gap-8 md:flex-row">
                   <FormField
                     control={form.control}
                     name="prices.price"

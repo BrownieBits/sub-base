@@ -1,4 +1,3 @@
-import { HeroBanner } from '@/components/sb-ui/HeroBanner';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Separator } from '@/components/ui/separator';
 import { db } from '@/lib/firebase';
@@ -112,24 +111,23 @@ export default async function SwitchStores() {
 
   return (
     <>
-      <section className="w-full max-w-[1754px] mx-auto">
-        <section className="flex w-full justify-between items-center px-4 py-4 gap-4">
+      <section className="mx-auto w-full max-w-[1754px]">
+        <section className="flex w-full items-center justify-between gap-4 px-4 py-4">
           <h1>Stores</h1>
           <NewStoreForm userID={user_id?.value!} />
         </section>
-        <HeroBanner page_slug="creator-switch-store" />
       </section>
       <Separator />
-      <section className="w-full max-w-[1754px] mx-auto">
-        <section className="flex flex-col px-4 pt-4 pb-8 w-full gap-8">
-          <section className="flex flex-col md:flex-row gap-8">
+      <section className="mx-auto w-full max-w-[1754px]">
+        <section className="flex w-full flex-col gap-8 px-4 pb-8 pt-4">
+          <section className="flex flex-col gap-8 md:flex-row">
             <aside className="w-full md:w-[200px] lg:w-[300px] xl:w-[600px]">
               <p className="pb-4">
                 <b>My Stores</b>
               </p>
               <p>These are stores you have started and own.</p>
             </aside>
-            <aside className="w-full flex flex-1 flex-col gap-8 bg-layer-one p-8 rounded drop-shadow">
+            <aside className="flex w-full flex-1 flex-col gap-8 rounded bg-layer-one p-8 drop-shadow">
               {data.my_stores.length === 0 ? (
                 <p>No Stores</p>
               ) : (
@@ -137,15 +135,15 @@ export default async function SwitchStores() {
                   {data.my_stores.map((doc: any) => {
                     return (
                       <section
-                        className="flex flex-col md:flex-row items-center bg-layer-two rounded-lg border p-3 shadow-sm gap-8"
+                        className="flex flex-col items-center gap-8 rounded-lg border bg-layer-two p-3 shadow-sm md:flex-row"
                         key={doc.id}
                       >
-                        <Avatar className="bg-secondary text-foreground h-[72px] w-[72px]">
+                        <Avatar className="h-[72px] w-[72px] bg-secondary text-foreground">
                           <AvatarImage
                             src={doc.data().avatar_url}
                             alt={doc.data().name}
                           />
-                          <AvatarFallback className="bg-foreground text-background border-background">
+                          <AvatarFallback className="border-background bg-foreground text-background">
                             <b>{doc.data().name?.slice(0, 1).toUpperCase()}</b>
                           </AvatarFallback>
                         </Avatar>
@@ -174,7 +172,7 @@ export default async function SwitchStores() {
             </aside>
           </section>
 
-          <section className="flex flex-col md:flex-row gap-8">
+          <section className="flex flex-col gap-8 md:flex-row">
             <aside className="w-full md:w-[200px] lg:w-[300px] xl:w-[600px]">
               <p className="pb-4">
                 <b>Team Stores</b>
@@ -184,7 +182,7 @@ export default async function SwitchStores() {
                 manage.
               </p>
             </aside>
-            <aside className="w-full flex flex-1 flex-col gap-8 bg-layer-one p-8 rounded drop-shadow">
+            <aside className="flex w-full flex-1 flex-col gap-8 rounded bg-layer-one p-8 drop-shadow">
               {data.team_stores.length === 0 ? (
                 <p>No Stores</p>
               ) : (
@@ -192,15 +190,15 @@ export default async function SwitchStores() {
                   {data.team_stores.map((doc: any) => {
                     return (
                       <section
-                        className="flex flex-col md:flex-row items-center bg-layer-two rounded-lg border p-3 shadow-sm gap-8"
+                        className="flex flex-col items-center gap-8 rounded-lg border bg-layer-two p-3 shadow-sm md:flex-row"
                         key={doc.id}
                       >
-                        <Avatar className="bg-secondary text-foreground h-[72px] w-[72px]">
+                        <Avatar className="h-[72px] w-[72px] bg-secondary text-foreground">
                           <AvatarImage
                             src={doc.data().avatar_url}
                             alt={doc.data().name}
                           />
-                          <AvatarFallback className="bg-foreground text-background border-background">
+                          <AvatarFallback className="border-background bg-foreground text-background">
                             <b>{doc.data().name?.slice(0, 1).toUpperCase()}</b>
                           </AvatarFallback>
                         </Avatar>
@@ -229,7 +227,7 @@ export default async function SwitchStores() {
             </aside>
           </section>
 
-          <section className="flex flex-col md:flex-row gap-8">
+          <section className="flex flex-col gap-8 md:flex-row">
             <aside className="w-full md:w-[200px] lg:w-[300px] xl:w-[600px]">
               <p className="pb-4">
                 <b>Invites</b>
@@ -239,7 +237,7 @@ export default async function SwitchStores() {
                 accepted.
               </p>
             </aside>
-            <aside className="w-full flex flex-1 flex-col gap-8 bg-layer-one p-8 rounded drop-shadow">
+            <aside className="flex w-full flex-1 flex-col gap-8 rounded bg-layer-one p-8 drop-shadow">
               {data.invited_stores.length === 0 ? (
                 <p>No Stores</p>
               ) : (
@@ -247,15 +245,15 @@ export default async function SwitchStores() {
                   {data.invited_stores.map((doc: any) => {
                     return (
                       <section
-                        className="flex flex-col md:flex-row items-center bg-layer-two rounded-lg border p-3 shadow-sm gap-8"
+                        className="flex flex-col items-center gap-8 rounded-lg border bg-layer-two p-3 shadow-sm md:flex-row"
                         key={doc.id}
                       >
-                        <Avatar className="bg-secondary text-foreground h-[72px] w-[72px]">
+                        <Avatar className="h-[72px] w-[72px] bg-secondary text-foreground">
                           <AvatarImage
                             src={doc.data().avatar_url}
                             alt={doc.data().name}
                           />
-                          <AvatarFallback className="bg-foreground text-background border-background">
+                          <AvatarFallback className="border-background bg-foreground text-background">
                             <b>{doc.data().name?.slice(0, 1).toUpperCase()}</b>
                           </AvatarFallback>
                         </Avatar>

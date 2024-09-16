@@ -162,20 +162,20 @@ export default function CheckoutPage(props: Props) {
 
   return (
     <>
-      <section className="w-full max-w-[1200px] mx-auto">
-        <section className="flex w-full justify-between items-center px-4 py-4 gap-4">
-          <section className="flex flex-col md:flex-row jusitfy-center md:justify-start items-center gap-2">
+      <section className="mx-auto w-full max-w-[1200px]">
+        <section className="flex w-full items-center justify-between gap-4 px-4 py-4">
+          <section className="jusitfy-center flex flex-col items-center gap-2 md:flex-row md:justify-start">
             <section className="w-[40px] md:w-[120px]">
               <Logo url="/" />
             </section>
-            <p className="text-xs md:text-md ">Secure Checkout</p>
+            <p className="md:text-md text-xs">Secure Checkout</p>
           </section>
           {userID !== '' && (
-            <section className="w-[200px] md:w-[350px] xl:w-[400px] flex items-center gap-2">
-              <aside className="flex flex-col jusitify-center items-center gap-2">
+            <section className="flex w-[200px] items-center gap-2 md:w-[350px] xl:w-[400px]">
+              <aside className="jusitify-center flex flex-col items-center gap-2">
                 <>
                   {step !== 'address' && step !== 'edit_address' ? (
-                    <p className="text-md md:text-xl text-success">
+                    <p className="text-md text-success md:text-xl">
                       <FontAwesomeIcon className="icon" icon={faCircleCheck} />
                     </p>
                   ) : (
@@ -195,10 +195,10 @@ export default function CheckoutPage(props: Props) {
               <aside className="w-auto flex-1">
                 <Separator />
               </aside>
-              <aside className="flex flex-col jusitify-center items-center gap-2">
+              <aside className="jusitify-center flex flex-col items-center gap-2">
                 <>
                   {(step === 'address' || step === 'edit_address') && (
-                    <p className="text-md md:text-xl text-muted-foreground">
+                    <p className="text-md text-muted-foreground md:text-xl">
                       <FontAwesomeIcon
                         className="icon"
                         icon={faCircleRegular}
@@ -206,12 +206,12 @@ export default function CheckoutPage(props: Props) {
                     </p>
                   )}
                   {step === 'shipping' && (
-                    <p className="text-md md:text-xl text-foreground">
+                    <p className="text-md text-foreground md:text-xl">
                       <FontAwesomeIcon className="icon" icon={faCircle} />
                     </p>
                   )}
                   {step === 'payment' && (
-                    <p className="text-md md:text-xl text-success">
+                    <p className="text-md text-success md:text-xl">
                       <FontAwesomeIcon className="icon" icon={faCircleCheck} />
                     </p>
                   )}
@@ -231,12 +231,12 @@ export default function CheckoutPage(props: Props) {
               <aside className="w-auto flex-1">
                 <Separator />
               </aside>
-              <aside className="flex flex-col jusitify-center items-center gap-2">
+              <aside className="jusitify-center flex flex-col items-center gap-2">
                 <>
                   {(step === 'address' ||
                     step === 'edit_address' ||
                     step === 'shipping') && (
-                    <p className="text-md md:text-xl text-muted-foreground">
+                    <p className="text-md text-muted-foreground md:text-xl">
                       <FontAwesomeIcon
                         className="icon"
                         icon={faCircleRegular}
@@ -244,7 +244,7 @@ export default function CheckoutPage(props: Props) {
                     </p>
                   )}
                   {step === 'payment' && (
-                    <p className="text-md md:text-xl text-foreground">
+                    <p className="text-md text-foreground md:text-xl">
                       <FontAwesomeIcon className="icon" icon={faCircle} />
                     </p>
                   )}
@@ -263,17 +263,17 @@ export default function CheckoutPage(props: Props) {
         </section>
       </section>
       <Separator />
-      <section className="w-full max-w-[1200px] mx-auto">
-        <section className="w-full flex flex-col-reverse md:flex-row px-4 py-4 gap-4">
-          <aside className="w-full flex-1 flex flex-col gap-4">
+      <section className="mx-auto w-full max-w-[1200px]">
+        <section className="flex w-full flex-col-reverse gap-4 px-4 py-4 md:flex-row">
+          <aside className="flex w-full flex-1 flex-col gap-4">
             {userID !== '' && (
               <>
                 {address === null && step !== 'edit_address' && (
                   <AddressForm user_id={userID} selectAddress={selectAddress} />
                 )}
                 {address !== null && step !== 'edit_address' && (
-                  <section className="w-full flex flex-col gap-4 border rounded bg-layer-one drop-shadow p-8">
-                    <section className="flex justify-between items-start gap-4">
+                  <section className="flex w-full flex-col gap-4 rounded border bg-layer-one p-4 drop-shadow">
+                    <section className="flex items-start justify-between gap-4">
                       <h4>Shipping Address</h4>
                       <TooltipProvider>
                         <Tooltip>

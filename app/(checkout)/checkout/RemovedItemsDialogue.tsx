@@ -37,11 +37,11 @@ export default function RemovedItemsDialogue(props: {
         <AlertDialogHeader>
           <AlertDialogTitle>We adjusted your cart...</AlertDialogTitle>
           <AlertDialogDescription>
-            <section className="w-full flex flex-col gap-4 pt-4">
+            <section className="flex w-full flex-col gap-4 pt-4">
               {removedItems.map((item) => {
                 return (
                   <section
-                    className="w-full flex gap-4 items-center"
+                    className="flex w-full items-center gap-4"
                     key={`removed-item-${item.name}`}
                   >
                     <Image
@@ -61,7 +61,7 @@ export default function RemovedItemsDialogue(props: {
             </section>
           </AlertDialogDescription>
         </AlertDialogHeader>
-        <AlertDialogFooter className="w-full flex justify-end gap-4">
+        <AlertDialogFooter className="flex w-full justify-end gap-4">
           <Button variant="outline" asChild>
             <Link href="/" title="Continue Shopping">
               Continue Shopping

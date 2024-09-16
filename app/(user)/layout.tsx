@@ -8,17 +8,17 @@ export default function UserLayout({
   children: React.ReactNode;
 }) {
   return (
-    <section className="w-full overflow-hidden relative">
+    <section className="relative w-full overflow-hidden">
       <section className="w-full">
         <DashboardNav />
       </section>
-      <section className="w-full grid grid-cols-[0_auto] xl:grid-cols-[250px_auto]">
+      <section className="grid w-full grid-cols-[0_auto] xl:grid-cols-[250px_auto]">
         <nav
-          className={`flex border-r-[1px] border-r-border bg-layer-one h-[calc(100vh-56px)] min-h-[calc(100vh-56px)]`}
+          className={`flex h-[calc(100vh-56px)] min-h-[calc(100vh-56px)] border-r-[1px] border-r-border bg-layer-one`}
         >
           <DashboardSideNav menu="Dashboard Menu" inSheet={false} />
         </nav>
-        <main className="h-[calc(100vh-56px)] overflow-x-hidden pb-12 relative">
+        <main className="relative h-[calc(100vh-56px)] overflow-x-hidden pb-12">
           {children}
         </main>
       </section>

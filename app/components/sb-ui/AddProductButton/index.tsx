@@ -52,23 +52,23 @@ export const AddProductButton = (props: {
 
       <AlertDialogContent>
         <AlertDialogHeader>
-          <AlertDialogHeader className="w-full flex flex-row items-center justify-between">
+          <AlertDialogHeader className="flex w-full flex-row items-center justify-between">
             <AlertDialogTitle>Choose product type to add</AlertDialogTitle>
-            <AlertDialogCancel className="border-0 p-0 m-0" asChild>
+            <AlertDialogCancel className="m-0 border-0 p-0" asChild>
               <FontAwesomeIcon className="icon h-4 w-4" icon={faXmark} />
             </AlertDialogCancel>
           </AlertDialogHeader>
           <AlertDialogDescription>
-            <section className="w-full flex gap-8 pt-8">
+            <section className="flex w-full gap-8 pt-8">
               <AlertDialogTrigger asChild>
                 <Button
                   variant="outline"
-                  className="flex-1 h-auto py-4"
+                  className="h-auto flex-1 py-4"
                   asChild
                 >
                   <Link
                     href="/dashboard/products/new-digital"
-                    className="flex flex-col items-center group"
+                    className="group flex flex-col items-center"
                   >
                     <FontAwesomeIcon
                       className="icon pb-4 text-6xl text-foreground group-hover:text-primary"
@@ -83,12 +83,12 @@ export const AddProductButton = (props: {
               <AlertDialogTrigger asChild>
                 <Button
                   variant="outline"
-                  className="flex-1 h-auto py-4"
+                  className="h-auto flex-1 py-4"
                   asChild
                 >
                   <Link
                     href="/dashboard/products/new-self-made"
-                    className="flex flex-col items-center group"
+                    className="group flex flex-col items-center"
                   >
                     <FontAwesomeIcon
                       className="icon pb-4 text-6xl text-foreground group-hover:text-primary"

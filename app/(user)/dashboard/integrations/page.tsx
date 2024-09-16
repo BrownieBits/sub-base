@@ -1,4 +1,3 @@
-import { HeroBanner } from '@/components/sb-ui/HeroBanner';
 import { Button } from '@/components/ui/button';
 import { Separator } from '@/components/ui/separator';
 import { Metadata } from 'next';
@@ -36,8 +35,8 @@ export default function Integrations() {
   const user_id = cookieStore.get('user_id');
   return (
     <section>
-      <section className="w-full max-w-[2428px] mx-auto">
-        <section className="flex w-full justify-between items-center px-4 py-4 gap-4">
+      <section className="mx-auto w-full max-w-[2428px]">
+        <section className="flex w-full items-center justify-between gap-4 px-4 py-4">
           <h1>Integrations</h1>
           {/* <Button asChild variant="outline">
           <Link
@@ -50,10 +49,9 @@ export default function Integrations() {
           </Link>
         </Button> */}
         </section>
-        <HeroBanner page_slug="creator-integrations" />
       </section>
       <Separator />
-      <section className="w-full max-w-[2428px] mx-auto">
+      <section className="mx-auto w-full max-w-[2428px]">
         <Button asChild>
           <Link
             href={`https://www.printful.com/oauth/authorize?client_id=${process.env.NEXT_PUBLIC_PRINTFUL_CLIENT_ID}&state=${user_id?.value!}&redirect_url=https://${process.env.NEXT_PUBLIC_BASE_URL}/printful`}

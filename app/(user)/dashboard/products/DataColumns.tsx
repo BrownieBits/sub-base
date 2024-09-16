@@ -80,7 +80,7 @@ export const columns: ColumnDef<Product>[] = [
       const imgs: string[] = row.getValue('images');
 
       return (
-        <section className="bg-layer-one border rounded flex jusitfy-center items-center aspect-square overflow-hidden w-[60px] max-w-[60px]">
+        <section className="jusitfy-center flex aspect-square w-[60px] max-w-[60px] items-center overflow-hidden rounded border bg-layer-one">
           <Image
             src={imgs[0]}
             width="60"
@@ -100,7 +100,7 @@ export const columns: ColumnDef<Product>[] = [
           <Button
             variant="ghost"
             onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
-            className="p-0 bg-inherit hover:bg-inherit text-foreground"
+            className="bg-inherit p-0 text-foreground hover:bg-inherit"
           >
             Product
             <FontAwesomeIcon className="icon ml-[5px]" icon={faArrowDown} />
@@ -111,7 +111,7 @@ export const columns: ColumnDef<Product>[] = [
           <Button
             variant="ghost"
             onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
-            className="p-0 bg-inherit hover:bg-inherit text-foreground"
+            className="bg-inherit p-0 text-foreground hover:bg-inherit"
           >
             Product
             <FontAwesomeIcon className="icon ml-[5px]" icon={faArrowUp} />
@@ -122,11 +122,11 @@ export const columns: ColumnDef<Product>[] = [
         <Button
           variant="ghost"
           onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
-          className="p-0 bg-inherit hover:bg-inherit"
+          className="bg-inherit p-0 hover:bg-inherit"
         >
           Product
           <FontAwesomeIcon
-            className="icon text-muted-foreground hover:text-foreground ml-[5px]"
+            className="icon ml-[5px] text-muted-foreground hover:text-foreground"
             icon={faArrowDown}
           />
         </Button>
@@ -141,7 +141,7 @@ export const columns: ColumnDef<Product>[] = [
           <Button
             variant="ghost"
             onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
-            className="p-0 bg-inherit hover:bg-inherit text-foreground"
+            className="bg-inherit p-0 text-foreground hover:bg-inherit"
           >
             Type
             <FontAwesomeIcon className="icon ml-[5px]" icon={faArrowDown} />
@@ -152,7 +152,7 @@ export const columns: ColumnDef<Product>[] = [
           <Button
             variant="ghost"
             onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
-            className="p-0 bg-inherit hover:bg-inherit text-foreground"
+            className="bg-inherit p-0 text-foreground hover:bg-inherit"
           >
             Type
             <FontAwesomeIcon className="icon ml-[5px]" icon={faArrowUp} />
@@ -163,11 +163,11 @@ export const columns: ColumnDef<Product>[] = [
         <Button
           variant="ghost"
           onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
-          className="p-0 bg-inherit hover:bg-inherit"
+          className="bg-inherit p-0 hover:bg-inherit"
         >
           Type
           <FontAwesomeIcon
-            className="icon text-muted-foregroun hover:text-foreground ml-[5px]"
+            className="icon text-muted-foregroun ml-[5px] hover:text-foreground"
             icon={faArrowDown}
           />
         </Button>
@@ -182,7 +182,7 @@ export const columns: ColumnDef<Product>[] = [
           <Button
             variant="ghost"
             onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
-            className="p-0 bg-inherit hover:bg-inherit text-foreground"
+            className="bg-inherit p-0 text-foreground hover:bg-inherit"
           >
             Status
             <FontAwesomeIcon className="icon ml-[5px]" icon={faArrowDown} />
@@ -193,7 +193,7 @@ export const columns: ColumnDef<Product>[] = [
           <Button
             variant="ghost"
             onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
-            className="p-0 bg-inherit hover:bg-inherit text-foreground"
+            className="bg-inherit p-0 text-foreground hover:bg-inherit"
           >
             Status
             <FontAwesomeIcon className="icon ml-[5px]" icon={faArrowUp} />
@@ -204,11 +204,11 @@ export const columns: ColumnDef<Product>[] = [
         <Button
           variant="ghost"
           onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
-          className="p-0 bg-inherit hover:bg-inherit"
+          className="bg-inherit p-0 hover:bg-inherit"
         >
           Status
           <FontAwesomeIcon
-            className="icon text-muted-foregroun hover:text-foreground ml-[5px]"
+            className="icon text-muted-foregroun ml-[5px] hover:text-foreground"
             icon={faArrowDown}
           />
         </Button>
@@ -216,11 +216,11 @@ export const columns: ColumnDef<Product>[] = [
     },
     cell: ({ row }) => {
       return row.getValue('status') === 'Public' ? (
-        <span className="bg-success text-success-foreground text-xs font-medium mr-2 px-2.5 py-0.5 rounded">
+        <span className="mr-2 rounded bg-success px-2.5 py-0.5 text-xs font-medium text-success-foreground">
           {row.getValue('status')}
         </span>
       ) : (
-        <span className="bg-destructive text-destructive-foreground text-xs font-medium mr-2 px-2.5 py-0.5 rounded">
+        <span className="mr-2 rounded bg-destructive px-2.5 py-0.5 text-xs font-medium text-destructive-foreground">
           {row.getValue('status')}
         </span>
       );
@@ -234,7 +234,7 @@ export const columns: ColumnDef<Product>[] = [
           <Button
             variant="ghost"
             onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
-            className="p-0 bg-inherit hover:bg-inherit text-foreground"
+            className="bg-inherit p-0 text-foreground hover:bg-inherit"
           >
             Units Sold
             <FontAwesomeIcon className="icon ml-[5px]" icon={faArrowDown} />
@@ -245,7 +245,7 @@ export const columns: ColumnDef<Product>[] = [
           <Button
             variant="ghost"
             onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
-            className="p-0 bg-inherit hover:bg-inherit text-foreground"
+            className="bg-inherit p-0 text-foreground hover:bg-inherit"
           >
             Units Sold
             <FontAwesomeIcon className="icon ml-[5px]" icon={faArrowUp} />
@@ -256,11 +256,11 @@ export const columns: ColumnDef<Product>[] = [
         <Button
           variant="ghost"
           onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
-          className="p-0 bg-inherit hover:bg-inherit"
+          className="bg-inherit p-0 hover:bg-inherit"
         >
           Units Sold
           <FontAwesomeIcon
-            className="icon text-muted-foregroun hover:text-foreground ml-[5px]"
+            className="icon text-muted-foregroun ml-[5px] hover:text-foreground"
             icon={faArrowDown}
           />
         </Button>
@@ -275,7 +275,7 @@ export const columns: ColumnDef<Product>[] = [
           <Button
             variant="ghost"
             onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
-            className="p-0 bg-inherit hover:bg-inherit text-foreground"
+            className="bg-inherit p-0 text-foreground hover:bg-inherit"
           >
             Views
             <FontAwesomeIcon className="icon ml-[5px]" icon={faArrowDown} />
@@ -286,7 +286,7 @@ export const columns: ColumnDef<Product>[] = [
           <Button
             variant="ghost"
             onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
-            className="p-0 bg-inherit hover:bg-inherit text-foreground"
+            className="bg-inherit p-0 text-foreground hover:bg-inherit"
           >
             Views
             <FontAwesomeIcon className="icon ml-[5px]" icon={faArrowUp} />
@@ -297,11 +297,11 @@ export const columns: ColumnDef<Product>[] = [
         <Button
           variant="ghost"
           onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
-          className="p-0 bg-inherit hover:bg-inherit"
+          className="bg-inherit p-0 hover:bg-inherit"
         >
           Views
           <FontAwesomeIcon
-            className="icon text-muted-foregroun hover:text-foreground ml-[5px]"
+            className="icon text-muted-foregroun ml-[5px] hover:text-foreground"
             icon={faArrowDown}
           />
         </Button>
@@ -316,7 +316,7 @@ export const columns: ColumnDef<Product>[] = [
           <Button
             variant="ghost"
             onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
-            className="p-0 bg-inherit hover:bg-inherit text-foreground"
+            className="bg-inherit p-0 text-foreground hover:bg-inherit"
           >
             Likes
             <FontAwesomeIcon className="icon ml-[5px]" icon={faArrowDown} />
@@ -327,7 +327,7 @@ export const columns: ColumnDef<Product>[] = [
           <Button
             variant="ghost"
             onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
-            className="p-0 bg-inherit hover:bg-inherit text-foreground"
+            className="bg-inherit p-0 text-foreground hover:bg-inherit"
           >
             Likes
             <FontAwesomeIcon className="icon ml-[5px]" icon={faArrowUp} />
@@ -338,11 +338,11 @@ export const columns: ColumnDef<Product>[] = [
         <Button
           variant="ghost"
           onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
-          className="p-0 bg-inherit hover:bg-inherit"
+          className="bg-inherit p-0 hover:bg-inherit"
         >
           Likes
           <FontAwesomeIcon
-            className="icon text-muted-foregroun hover:text-foreground ml-[5px]"
+            className="icon text-muted-foregroun ml-[5px] hover:text-foreground"
             icon={faArrowDown}
           />
         </Button>
@@ -357,7 +357,7 @@ export const columns: ColumnDef<Product>[] = [
           <Button
             variant="ghost"
             onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
-            className="p-0 bg-inherit hover:bg-inherit text-foreground"
+            className="bg-inherit p-0 text-foreground hover:bg-inherit"
           >
             Revenue
             <FontAwesomeIcon className="icon ml-[5px]" icon={faArrowDown} />
@@ -368,7 +368,7 @@ export const columns: ColumnDef<Product>[] = [
           <Button
             variant="ghost"
             onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
-            className="p-0 bg-inherit hover:bg-inherit text-foreground"
+            className="bg-inherit p-0 text-foreground hover:bg-inherit"
           >
             Revenue
             <FontAwesomeIcon className="icon ml-[5px]" icon={faArrowUp} />
@@ -379,11 +379,11 @@ export const columns: ColumnDef<Product>[] = [
         <Button
           variant="ghost"
           onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
-          className="p-0 bg-inherit hover:bg-inherit"
+          className="bg-inherit p-0 hover:bg-inherit"
         >
           Revenue
           <FontAwesomeIcon
-            className="icon text-muted-foregroun hover:text-foreground ml-[5px]"
+            className="icon text-muted-foregroun ml-[5px] hover:text-foreground"
             icon={faArrowDown}
           />
         </Button>
@@ -407,7 +407,7 @@ export const columns: ColumnDef<Product>[] = [
       const id = row.getValue('id') as string;
       const store_id = row.getValue('store_id') as string;
       return (
-        <section className="flex gap-4 justify-end">
+        <section className="flex justify-end gap-4">
           <Button asChild variant="link" className="p-0 text-foreground">
             <Link href={`/dashboard/products/${id}`} aria-label="Edit Product">
               <FontAwesomeIcon className="icon" icon={faPenToSquare} />

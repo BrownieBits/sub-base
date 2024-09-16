@@ -1,5 +1,4 @@
 import ContentfulImage from '@/components/sb-ui/ConentfulImage';
-import { HeroBanner } from '@/components/sb-ui/HeroBanner';
 import { Separator } from '@/components/ui/separator';
 import { client } from '@/lib/contentful';
 import { Metadata } from 'next';
@@ -61,35 +60,34 @@ export default async function Blog() {
 
   return (
     <section>
-      <section className="w-full max-w-[2428px] mx-auto">
-        <section className="flex w-full justify-between items-center px-4 py-4 gap-4">
+      <section className="mx-auto w-full max-w-[2428px]">
+        <section className="flex w-full items-center justify-between gap-4 px-4 py-4">
           <h1>Blog</h1>
         </section>
-        <HeroBanner page_slug="creator-blog" />
       </section>
       <Separator />
-      <section className="w-full max-w-[2428px] mx-auto">
+      <section className="mx-auto w-full max-w-[2428px]">
         {data.length! > 0 ? (
-          <section className="grid grid-cols-1 md:grid-cols-3 xl:grid-cols-6 gap-8 p-4">
+          <section className="grid grid-cols-1 gap-8 p-4 md:grid-cols-3 xl:grid-cols-6">
             {data.map((blog) => {
               const date = new Date(blog.created_at);
               return (
                 <section
-                  className="w-full bg-layer-one rounded border overflow-hidden"
+                  className="w-full overflow-hidden rounded border bg-layer-one"
                   key={blog.title}
                 >
-                  <section className="w-full aspect-square flex justify-center items-center bg-layer-two">
+                  <section className="flex aspect-square w-full items-center justify-center bg-layer-two">
                     {blog.banner && (
                       <ContentfulImage
                         alt={blog.title}
                         src={`https:${blog.banner.fields.file.url}`}
                         width={blog.banner.fields.file.details.image.width}
                         height={blog.banner.fields.file.details.image.height}
-                        className="flex w-full mb-[5px]"
+                        className="mb-[5px] flex w-full"
                       />
                     )}
                   </section>
-                  <p className="w-full px-4 pt-4 pb-2">
+                  <p className="w-full px-4 pb-2 pt-4">
                     <b>{blog.title}</b>
                   </p>
                   <p className="w-full px-4 pb-4 text-sm text-muted-foreground">

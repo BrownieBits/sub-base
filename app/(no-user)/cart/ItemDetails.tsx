@@ -122,13 +122,13 @@ export default function ItemDetails(props: Props) {
     setSelectableQuantity(selectable);
   }, []);
   return (
-    <section className="w-full flex flex-col md:flex-row gap-4">
-      <section className="flex-1 w-full flex gap-4">
+    <section className="flex w-full flex-col gap-4 md:flex-row">
+      <section className="flex w-full flex-1 gap-4">
         {props.item.images.length > 0 && (
           <section>
             <Link
               href={`/product/${props.item.id}`}
-              className="aspect-square w-[100px] flex justify-center items-center bg-layer-one border rounded overflow-hidden group"
+              className="group flex aspect-square w-[100px] items-center justify-center overflow-hidden rounded border bg-layer-one"
             >
               <Image
                 src={props.item.images[0]}
@@ -140,17 +140,17 @@ export default function ItemDetails(props: Props) {
             </Link>
           </section>
         )}
-        <section className="w-full flex-1 flex flex-col">
+        <section className="flex w-full flex-1 flex-col">
           <p>
             <b>{props.item.name}</b>
           </p>
-          <p className="text-sm text-muted-foreground pb-2">
+          <p className="pb-2 text-sm text-muted-foreground">
             {props.item.product_type}
           </p>
           <p>{props.item.options.join(', ')}</p>
         </section>
       </section>
-      <section className="w-full md:w-auto flex flex-row-reverse md:flex-col justify-between items-end gap-4">
+      <section className="flex w-full flex-row-reverse items-end justify-between gap-4 md:w-auto md:flex-col">
         <section className="flex flex-col">
           {props.item.compare_at > 0 &&
           props.item.compare_at < props.item.price ? (

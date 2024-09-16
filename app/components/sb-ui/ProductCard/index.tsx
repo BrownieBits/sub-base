@@ -40,10 +40,10 @@ export default function ProductCard({
     return `Just Now`;
   }
   return (
-    <section className="flex flex-col w-full">
+    <section className="flex w-full flex-col">
       <Link
         href={`/product/${product.id}`}
-        className="aspect-square flex justify-center items-center bg-layer-one border rounded overflow-hidden group"
+        className="group flex aspect-square items-center justify-center overflow-hidden rounded border bg-layer-one"
       >
         {product.images.length > 1 ? (
           <>
@@ -52,14 +52,14 @@ export default function ProductCard({
               width="300"
               height="300"
               alt={product.name}
-              className="flex group-hover:hidden w-full"
+              className="flex w-full group-hover:hidden"
             />
             <Image
               src={product.images[1]}
               width="300"
               height="300"
               alt={product.name}
-              className="hidden group-hover:flex w-full"
+              className="hidden w-full group-hover:flex"
             />
           </>
         ) : (
@@ -72,7 +72,7 @@ export default function ProductCard({
           />
         )}
       </Link>
-      <section className="w-full flex pt-4 gap-4">
+      <section className="flex w-full gap-4 pt-4">
         {show_creator ? (
           <Link
             href={`/store/${product.store_id}`}
@@ -83,7 +83,7 @@ export default function ProductCard({
         ) : (
           <></>
         )}
-        <aside className="flex-1 flex justify-between">
+        <aside className="flex flex-1 justify-between">
           <section className="flex flex-col gap-1">
             <Link
               href={`/product/${product.id}`}
@@ -115,7 +115,7 @@ export default function ProductCard({
           <section>
             <Link
               href={`/product/${product.id}`}
-              className="w-full flex flex-col items-end gap-1"
+              className="flex w-full flex-col items-end gap-1"
             >
               {product.compare_at > 0 && product.price != product.compare_at ? (
                 <>

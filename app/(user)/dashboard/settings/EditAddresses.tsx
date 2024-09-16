@@ -117,7 +117,7 @@ export default function EditAddresses(props: {
   }, [props.addresses]);
 
   return (
-    <section className="flex flex-col md:flex-row gap-8">
+    <section className="flex flex-col gap-8 md:flex-row">
       <aside className="w-full md:w-[200px] lg:w-[300px] xl:w-[600px]">
         <p className="pb-4">
           <b>Addresses</b>
@@ -128,14 +128,14 @@ export default function EditAddresses(props: {
         </p>
         <AddAddress setValidated={setValidated} />
       </aside>
-      <aside className="w-full flex flex-1 flex-col gap-8 bg-layer-one p-8 rounded drop-shadow">
+      <aside className="flex w-full flex-1 flex-col gap-8 rounded bg-layer-one p-8 drop-shadow">
         {props.addresses.length === 0 ? (
           <p>You currently have no stored addresses.</p>
         ) : (
           <>
             {addressData.map((doc) => (
               <section
-                className="flex  items-center bg-layer-two rounded-lg border p-3 shadow-sm gap-8"
+                className="flex items-center gap-8 rounded-lg border bg-layer-two p-3 shadow-sm"
                 key={doc.id}
               >
                 {doc.id === props.default_address ? (

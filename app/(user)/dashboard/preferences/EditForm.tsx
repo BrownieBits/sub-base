@@ -281,10 +281,10 @@ export default function EditForm(props: {
 
   return (
     <section>
-      <section className="w-full max-w-[1754px] mx-auto">
-        <section className="flex w-full justify-between items-center px-4 py-4 gap-4">
+      <section className="mx-auto w-full max-w-[1754px]">
+        <section className="flex w-full items-center justify-between gap-4 px-4 py-4">
           <h1>Preferences</h1>
-          <div className="flex gap-4 items-center">
+          <div className="flex items-center gap-4">
             {disabled ? (
               <></>
             ) : (
@@ -302,13 +302,13 @@ export default function EditForm(props: {
         </section>
       </section>
       <Separator />
-      <section className="w-full max-w-[1754px] mx-auto">
+      <section className="mx-auto w-full max-w-[1754px]">
         <Form {...form}>
           <form
             onSubmit={form.handleSubmit(onSubmit)}
-            className="flex flex-col px-4 py-8 w-full gap-8"
+            className="flex w-full flex-col gap-8 px-4 py-8"
           >
-            <section className="flex flex-col md:flex-row gap-8">
+            <section className="flex flex-col gap-8 md:flex-row">
               <aside className="w-full md:w-[200px] lg:w-[300px] xl:w-[600px]">
                 <p className="pb-4">
                   <b>Name and meta description</b>
@@ -318,7 +318,7 @@ export default function EditForm(props: {
                   up on search engines.
                 </p>
               </aside>
-              <aside className="w-full flex flex-1 flex-col gap-8 bg-layer-one p-8 rounded drop-shadow">
+              <aside className="flex w-full flex-1 flex-col gap-8 rounded bg-layer-one p-8 drop-shadow">
                 <FormField
                   control={form.control}
                   name="name"
@@ -389,7 +389,7 @@ export default function EditForm(props: {
               </aside>
             </section>
 
-            <section className="flex flex-col md:flex-row gap-8">
+            <section className="flex flex-col gap-8 md:flex-row">
               <aside className="w-full md:w-[200px] lg:w-[300px] xl:w-[600px]">
                 <p className="pb-4">
                   <b>Avatar and Store Banner</b>
@@ -399,7 +399,7 @@ export default function EditForm(props: {
                   brand and personality.
                 </p>
               </aside>
-              <aside className="w-full flex flex-1 flex-col gap-8 bg-layer-one p-8 rounded drop-shadow">
+              <aside className="flex w-full flex-1 flex-col gap-8 rounded bg-layer-one p-8 drop-shadow">
                 <FormField
                   control={form.control}
                   name="avatar"
@@ -489,7 +489,7 @@ export default function EditForm(props: {
                         <FormLabel>Store Banner</FormLabel>
                         <FormControl>
                           {selectedBanner ? (
-                            <section className="w-full flex items-center gap-8">
+                            <section className="flex w-full items-center gap-8">
                               <section className="flex flex-1">
                                 <Image
                                   src={selectedBanner}
@@ -561,19 +561,19 @@ export default function EditForm(props: {
               </aside>
             </section>
 
-            <section className="flex flex-col md:flex-row gap-8">
+            <section className="flex flex-col gap-8 md:flex-row">
               <aside className="w-full md:w-[200px] lg:w-[300px] xl:w-[600px]">
                 <p className="pb-4">
                   <b>Restrict Store Access</b>
                 </p>
                 <p>Limit who can access your online store.</p>
               </aside>
-              <aside className="w-full flex flex-1 flex-col gap-8 bg-layer-one p-8 rounded drop-shadow">
+              <aside className="flex w-full flex-1 flex-col gap-8 rounded bg-layer-one p-8 drop-shadow">
                 <FormField
                   control={form.control}
                   name="password_protected"
                   render={({ field }) => (
-                    <FormItem className="flex flex-row items-center justify-between rounded-lg border p-3 shadow-sm gap-8">
+                    <FormItem className="flex flex-row items-center justify-between gap-8 rounded-lg border p-3 shadow-sm">
                       <div className="space-y-0.5">
                         <FormLabel>Password protection</FormLabel>
                         <FormDescription>
