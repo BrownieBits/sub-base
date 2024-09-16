@@ -9,10 +9,17 @@ export async function GET(
   request: NextRequest,
   { params }: { params: { store: string } }
 ) {
+  const {
+    nextUrl: { search },
+  } = request;
+  const urlSearchParams = new URLSearchParams(search);
+  const searchItems = Object.fromEntries(urlSearchParams.entries());
+
   const searchParams = request.nextUrl.searchParams;
+
   const image = searchParams.get('image');
   const storeName = searchParams.get('store');
-  console.log('PARAMS', image, storeName);
+  console.log('PARAMS', image, storeName, searchItems);
   if (storeName === null || image === null) {
     return new ImageResponse(
       (
